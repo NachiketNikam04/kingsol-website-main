@@ -1,0 +1,28 @@
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@100,200,300,400,500,700,800,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    font-family: 'Cabinet Grotesk', sans-serif;
+  }
+  body {
+    background-color: #fdfcf8;
+    color: #0f172a;
+  }
+  h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, div {
+    font-family: 'Cabinet Grotesk', sans-serif;
+  }
+}
+
+/* Force react-easy-crop container, image, and media wrapper to be completely transparent */
+.reactEasyCrop_Container,
+.reactEasyCrop_Image,
+.reactEasyCrop_Video,
+.reactEasyCrop_Contain {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+

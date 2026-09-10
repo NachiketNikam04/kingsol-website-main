@@ -1,0 +1,203 @@
+import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
+import React, { useState, useEffect } from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+export interface DynamicSolutionCard {
+  id: number;
+  tag: string;
+  title: string;
+  description: string;
+  image_url: string;
+  category_slug: string;
+  sort_order?: number;
+}
+
+export interface SolutionsSettingsData {
+  tagline?: string;
+  headline?: string;
+  highlight_word?: string;
+}
+
+const DEFAULT_CARDS: DynamicSolutionCard[] = [
+  {
+    id: 1,
+    tag: 'PV MODULES',
+    title: 'Monocrystalline Solar Modules',
+    description: 'Authorized Tier-1 photovoltaic panels with up to 22.8% module efficiency and 25-year performance warranty.',
+    image_url: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80',
+    category_slug: 'solar-modules',
+  },
+  {
+    id: 2,
+    tag: 'POWER CONVERSION',
+    title: 'Grid-Tie & Hybrid Inverters',
+    description: 'High-efficiency string and central inverters with integrated smart telemetry, MPPT trackers, and grid sync.',
+    image_url: 'https://images.unsplash.com/photo-1620283085439-3f721bc62f92?auto=format&fit=crop&w=800&q=80',
+    category_slug: 'solar-inverters',
+  },
+  {
+    id: 3,
+    tag: 'ENERGY STORAGE',
+    title: 'C&I Battery Storage Systems',
+    description: 'Scalable LiFePO4 battery energy storage solutions (BESS) for peak shaving, load shifting, and microgrids.',
+    image_url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
+    category_slug: 'solar-inverters',
+  },
+  {
+    id: 4,
+    tag: 'ELECTRICAL BOS',
+    title: 'Solar DC Cables & Connectors',
+    description: 'TÜV certified 1500V DC cabling, MC4 connectors, combiner boxes, and DC isolator switches.',
+    image_url: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=800&q=80',
+    category_slug: 'solar-cables',
+  },
+];
+
+export const PremiumProductsSection: React.FC = () => {
+  // Dynamic Data State
+  const [settings, setSettings] = useState<SolutionsSettingsData>({
+    tagline: 'OUR SOLUTIONS',
+    headline: 'Powering the Future , one panel at a time.',
+    highlight_word: 'Future',
+  });
+  const [cards, setCards] = useState<DynamicSolutionCard[]>(DEFAULT_CARDS);
+
+  useEffect(() => {
+    async function loadSolutionsData() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/solutions`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.success && json.data) {
+          if (json.data.settings) setSettings((prev) => ({ ...prev, ...json.data.settings }));
+          if (json.data.cards && json.data.cards.length > 0) setCards(json.data.cards);
+        }
+      } catch (err) {
+        console.warn('⚠️ [SolutionsSection] Fetch offline, using defaults:', err);
+      }
+    }
+    loadSolutionsData();
+  }, []);
+
+  // Case-Insensitive Headline Highlight Renderer
+  const renderHighlightedHeadline = (headline?: string, highlightWord?: string) => {
+    const text = headline || 'Powering the Future , one panel at a time.';
+    const word = highlightWord || 'Future';
+
+    if (!word.trim()) return text;
+
+    const regex = new RegExp(`(${word})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, idx) =>
+      part.toLowerCase() === word.toLowerCase() ? (
+        <span key={idx} className="text-[#44a0e3]">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
+  // Double the dynamic cards array for seamless infinite marquee scrolling
+  const duplicatedCards = [...cards, ...cards];
+
+  return (
+    <section className="w-full pt-24 pb-30 bg-[#fdfcf8] relative overflow-hidden text-slate-900">
+      {/* Keyframe Marquee Animations */}
+      <style>
+        {`
+          @keyframes marqueeSolutions {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee-solutions {
+            animation: marqueeSolutions 35s linear infinite;
+          }
+          .animate-marquee-solutions:hover {
+            animation-play-state: paused;
+          }
+        `}
+      </style>
+
+      {/* Header Area */}
+      <div className="max-w-7xl mx-auto px-6 mb-16">
+        <div>
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+          >
+            {settings.tagline || 'OUR SOLUTIONS'}
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight"
+          >
+            {renderHighlightedHeadline(settings.headline, settings.highlight_word)}
+          </motion.h2>
+        </div>
+      </div>
+
+      {/* Infinite Auto-Scrolling Marquee Container (Pauses on Hover) */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+        className="max-w-[100vw] overflow-hidden w-full relative"
+      >
+        <div className="flex gap-8 w-max animate-marquee-solutions pl-6">
+          {duplicatedCards.map((product, idx) => (
+            <Link
+              to={`/products/${product.category_slug}`}
+              key={`${product.id}-${idx}`}
+              className="w-[80vw] sm:w-[380px] shrink-0 bg-white rounded-2xl p-5 flex flex-col transition-all duration-500 hover:shadow-lg border border-slate-200/60 group cursor-pointer"
+            >
+              {/* Top Image Container */}
+              <div className="w-full h-40 bg-slate-100 rounded-xl mb-4 overflow-hidden relative border border-slate-200">
+                <span className="absolute top-4 left-4 z-10 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md bg-white text-brand-orange shadow-md leading-relaxed mb">
+                  {product.tag}
+                </span>
+                <img
+                  src={getAssetUrl(product.image_url)}
+                  alt={product.title}
+                  draggable={false}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                />
+              </div>
+
+              {/* Title */}
+              <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3 line-clamp-1 group-hover:text-[#44a0e3] transition-colors">
+                {product.title}
+              </h3>
+
+              {/* Body */}
+              <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-5">
+                {product.description}
+              </p>
+
+              {/* Footer text (Changed from Link to div) */}
+              <div
+                className="mt-auto pt-6 border-t border-slate-300/60 flex items-center justify-between font-bold text-slate-600 leading-relaxed group-hover:text-brand-green transition-colors"
+              >
+                <span>Explore Technology</span>
+                <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default PremiumProductsSection;

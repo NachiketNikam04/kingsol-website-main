@@ -1,0 +1,73 @@
+services:
+  # ----------------------------------------------------------------------------
+  # PostgreSQL Database Service
+  # ----------------------------------------------------------------------------
+  db:
+    image: postgres:15-alpine
+    container_name: kingsol-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-kingsol_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kingsol_secure_password_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-kingsol_solar_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/config/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-kingsol_user} -d ${POSTGRES_DB:-kingsol_solar_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kingsol-network
+    # Port 5432 is strictly isolated inside the Docker network (not mapped to host)
+
+  # ----------------------------------------------------------------------------
+  # Kingsol Monolith Application (Client + Admin Panel + Express Backend)
+  # ----------------------------------------------------------------------------
+  kingsol-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kingsol-monolith
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://${POSTGRES_USER:-kingsol_user}:${POSTGRES_PASSWORD:-kingsol_secure_password_2026}@db:5432/${POSTGRES_DB:-kingsol_solar_db}?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-kingsol_super_secret_jwt_key_2026_solar_admin}
+      # Email notification configuration
+      EMAIL_USER: ${EMAIL_USER:-nikamnachiket2004@gmail.com}
+      EMAIL_APP_PASSWORD: ${EMAIL_APP_PASSWORD:-}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-nikamnachiket2004@gmail.com}
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-nikamnachiket2004@gmail.com}
+      SMTP_PASS: ${SMTP_PASS:-}
+      EMAIL_RECEIVER: ${EMAIL_RECEIVER:-nikamnachiket2004@gmail.com}
+      ADMIN_ALERT_EMAIL: ${ADMIN_ALERT_EMAIL:-nikamnachiket2004@gmail.com}
+    volumes:
+      - backend_uploads:/app/backend/uploads
+      - backend_logs:/app/backend/logs
+    networks:
+      - kingsol-network
+
+# ------------------------------------------------------------------------------
+# Persistent Volumes & Network Definitions
+# ------------------------------------------------------------------------------
+volumes:
+  postgres_data:
+    driver: local
+  backend_uploads:
+    driver: local
+  backend_logs:
+    driver: local
+
+networks:
+  kingsol-network:
+    driver: bridge

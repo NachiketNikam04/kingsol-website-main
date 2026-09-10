@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Secrets & Environment variables
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Log files
+logs/
+*.log
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
