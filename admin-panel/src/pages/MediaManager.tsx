@@ -29,11 +29,12 @@ export const MediaManager: React.FC = () => {
     sort_order: 0,
   });
 
-  const extractYouTubeThumbnail = (url: string) => {
+  const extractYouTubeThumbnail = (url?: string) => {
     if (!url) return '';
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
     if (match && match[2].length === 11) {
+      // Guaranteed to exist, preventing 404s
       return `https://img.youtube.com/vi/${match[2]}/hqdefault.jpg`;
     }
     return '';
@@ -52,7 +53,7 @@ export const MediaManager: React.FC = () => {
     try {
       setLoading(true);
       const res = await api.get('/media/all');
-      if (res.data.success) {
+      if (res.data?.success && Array.isArray(res.data.data)) {
         setItems(res.data.data);
       }
     } catch (err) {
@@ -70,11 +71,11 @@ export const MediaManager: React.FC = () => {
     if (item) {
       setEditingItem(item);
       setForm({
-        title: item.title,
-        youtube_url: item.youtube_url,
+        title: item.title || '',
+        youtube_url: item.youtube_url || '',
         thumbnail_url: item.thumbnail_url || extractYouTubeThumbnail(item.youtube_url),
         description: item.description || '',
-        is_active: item.is_active,
+        is_active: item.is_active ?? true,
         sort_order: item.sort_order || 0,
       });
     } else {
@@ -99,7 +100,7 @@ export const MediaManager: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (editingItem) {
+      if (editingItem?.id) {
         await api.put(`/media/${editingItem.id}`, form);
       } else {
         await api.post('/media', form);
@@ -112,8 +113,8 @@ export const MediaManager: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm('Are you sure you want to delete this media item?')) return;
+  const handleDelete = async (id?: number) => {
+    if (!id || !window.confirm('Are you sure you want to delete this media item?')) return;
     try {
       await api.delete(`/media/${id}`);
       fetchItems();
@@ -124,6 +125,7 @@ export const MediaManager: React.FC = () => {
   };
 
   const handleToggleActive = async (item: MediaItem) => {
+    if (!item?.id) return;
     try {
       await api.put(`/media/${item.id}`, {
         ...item,
@@ -172,13 +174,20 @@ export const MediaManager: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {items?.map((item) => {
-            const itemTitle = item?.title ?? 'Video';
-            const itemUrl = item?.youtube_url ?? '';
-            const itemThumb = getAssetUrl(item?.thumbnail_url) || extractYouTubeThumbnail(itemUrl);
+            if (!item) return null; // Defensive check for bad DB rows
+
+            const itemTitle = item.title || 'Untitled Video';
+            const itemUrl = item.youtube_url || '#';
+            const isActive = item.is_active ?? true;
+            
+            // Prefer custom local thumbnail, fallback to YT generation
+            const itemThumb = item.thumbnail_url?.startsWith('/uploads') 
+              ? getAssetUrl(item.thumbnail_url) 
+              : extractYouTubeThumbnail(itemUrl);
 
             return (
               <div
-                key={item?.id}
+                key={item.id || Math.random()}
                 className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
               >
                 <div>
@@ -188,11 +197,8 @@ export const MediaManager: React.FC = () => {
                       alt={itemTitle}
                       onError={(e) => {
                         const target = e.currentTarget;
-                        if (target.src.includes('maxresdefault.jpg')) {
-                          target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
-                        } else if (!target.src.includes('hqdefault.jpg')) {
-                          target.src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop';
-                        }
+                        target.onerror = null; // Prevent infinite loop
+                        target.src = 'https://placehold.co/600x400/0f172a/ffffff?text=Video+Thumbnail';
                       }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                     />
@@ -206,13 +212,13 @@ export const MediaManager: React.FC = () => {
                     <button
                       onClick={() => handleToggleActive(item)}
                       className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm z-20 ${
-                        item?.is_active
+                        isActive
                           ? 'bg-emerald-500 text-white'
                           : 'bg-slate-700/80 text-slate-200'
                       }`}
                     >
-                      {item?.is_active ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
-                      <span>{item?.is_active ? 'Active' : 'Inactive'}</span>
+                      {isActive ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
+                      <span>{isActive ? 'Active' : 'Inactive'}</span>
                     </button>
                   </div>
 
@@ -226,7 +232,7 @@ export const MediaManager: React.FC = () => {
 
               <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
                 <a
-                  href={item.youtube_url}
+                  href={itemUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-brand-green hover:underline flex items-center gap-1 font-semibold"
@@ -307,13 +313,12 @@ export const MediaManager: React.FC = () => {
                 {form.thumbnail_url && (
                   <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-950 mt-2">
                     <img
-                      src={getAssetUrl(form.thumbnail_url)}
+                      src={form.thumbnail_url.startsWith('/uploads') ? getAssetUrl(form.thumbnail_url) : form.thumbnail_url}
                       alt="Thumbnail Preview"
                       onError={(e) => {
                         const target = e.currentTarget;
-                        if (target.src.includes('maxresdefault.jpg')) {
-                          target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
-                        }
+                        target.onerror = null;
+                        target.src = 'https://placehold.co/600x400/0f172a/ffffff?text=Video+Thumbnail';
                       }}
                       className="w-full h-full object-cover"
                     />
