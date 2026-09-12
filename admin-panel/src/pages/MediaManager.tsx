@@ -182,25 +182,25 @@ export const MediaManager: React.FC = () => {
             
             // Prefer custom local thumbnail, fallback to YT generation
             const itemThumb = item.thumbnail_url?.startsWith('/uploads') 
-              ? getAssetUrl(item.thumbnail_url) 
-              : extractYouTubeThumbnail(itemUrl);
+  ? getAssetUrl(item.thumbnail_url) 
+  : extractYouTubeThumbnail(itemUrl);
 
-            return (
-              <div
-                key={item.id || Math.random()}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
-              >
-                <div>
-                  <div className="relative aspect-video bg-slate-950 overflow-hidden flex items-center justify-center">
-                    <img
-                      src={form.thumbnail_url.startsWith('/uploads') ? getAssetUrl(form.thumbnail_url) : form.thumbnail_url}
-                      alt="Thumbnail Preview"
-                      onError={(e) => {
-                        // Instantly hides the broken image
-                        e.currentTarget.style.display = 'none';
-                      }}
-                      className="w-full h-full object-cover"
-                    />
+return (
+  <div
+    key={item.id || Math.random()}
+    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
+  >
+    <div>
+      <div className="relative aspect-video bg-slate-950 overflow-hidden flex items-center justify-center">
+        {/* MAKE SURE src={itemThumb} IS HERE */}
+        <img
+          src={itemThumb}
+          alt={itemTitle}
+          onError={(e) => {
+            e.currentTarget.style.display = 'none'; 
+          }}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+        />
                     <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors" />
 
                     {/* Play Button Overlay */}
