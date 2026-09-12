@@ -295,61 +295,56 @@ export const FooterManager: React.FC = () => {
                   <Share2 className="w-5 h-5 text-brand-blue" /> Dynamic Social Media Links ({socialLinks.length})
                 </h3>
 
-                {socialLinks.length === 0 ? (
-                  <div className="text-center py-10 text-slate-400 text-xs">
-                    No social media links added yet. Click 'Add Social Link' above.
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {socialLinks.map((link) => (
-                      <div
-                        key={link.id}
-                        className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between gap-3"
-                      >
-                        <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
-                          <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0">
-                            {renderIconPreview(link.icon_name)}
-                          </div>
-                          <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
-                            <h4 className="text-xs font-bold text-slate-900 truncate">{link.platform_name}</h4>
-                            <a
-                              href={link.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[11px] text-slate-500 hover:text-brand-blue truncate block"
-                            >
-                              {link.url}
-                            </a>
-                          </div>
-                        </div>
+                {socialLinks.map((link) => (
+  <div
+    key={link.id}
+    className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between gap-3"
+  >
+    {/* Corrected Wrapper: Removed h-screen and changed to standard flex row */}
+    <div className="flex items-center gap-3 overflow-hidden">
+      <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0">
+        {renderIconPreview(link.icon_name)}
+      </div>
+      
+      {/* Corrected Text Wrapper: Changed to flex-col so title and URL stack vertically */}
+      <div className="flex flex-col overflow-hidden">
+        <h4 className="text-xs font-bold text-slate-900 truncate">{link.platform_name}</h4>
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[11px] text-slate-500 hover:text-brand-blue truncate block"
+        >
+          {link.url}
+        </a>
+      </div>
+    </div>
 
-                        <div className="flex items-center gap-1 shrink-0">
-                          <button
-                            onClick={() => {
-                              setEditingSocial(link);
-                              setSocialForm({
-                                platform_name: link.platform_name,
-                                url: link.url,
-                                icon_name: link.icon_name || 'Globe',
-                                sort_order: link.sort_order || 0,
-                              });
-                              setIsSocialModalOpen(true);
-                            }}
-                            className="p-2 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors cursor-pointer"
-                          >
-                            <Edit className="w-3.5 h-3.5 text-brand-blue" />
-                          </button>
-                          <button
-                            onClick={() => handleSocialDelete(link.id, link.platform_name)}
-                            className="p-2 rounded-lg bg-white hover:bg-red-50 border border-slate-200 text-slate-400 hover:text-red-600 transition-colors cursor-pointer"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+    <div className="flex items-center gap-1 shrink-0">
+      <button
+        onClick={() => {
+          setEditingSocial(link);
+          setSocialForm({
+            platform_name: link.platform_name,
+            url: link.url,
+            icon_name: link.icon_name || 'Globe',
+            sort_order: link.sort_order || 0,
+          });
+          setIsSocialModalOpen(true);
+        }}
+        className="p-2 rounded-lg bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors cursor-pointer"
+      >
+        <Edit className="w-3.5 h-3.5 text-brand-blue" />
+      </button>
+      <button
+        onClick={() => handleSocialDelete(link.id, link.platform_name)}
+        className="p-2 rounded-lg bg-white hover:bg-red-50 border border-slate-200 text-slate-400 hover:text-red-600 transition-colors cursor-pointer"
+      >
+        <Trash2 className="w-3.5 h-3.5" />
+      </button>
+    </div>
+  </div>
+))}
               </div>
             </div>
           </div>

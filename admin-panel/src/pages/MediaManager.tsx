@@ -193,14 +193,13 @@ export const MediaManager: React.FC = () => {
                 <div>
                   <div className="relative aspect-video bg-slate-950 overflow-hidden flex items-center justify-center">
                     <img
-                      src={itemThumb}
-                      alt={itemTitle}
+                      src={form.thumbnail_url.startsWith('/uploads') ? getAssetUrl(form.thumbnail_url) : form.thumbnail_url}
+                      alt="Thumbnail Preview"
                       onError={(e) => {
-                        const target = e.currentTarget;
-                        target.onerror = null; // Prevent infinite loop
-                        target.src = 'https://placehold.co/600x400/0f172a/ffffff?text=Video+Thumbnail';
+                        // Instantly hides the broken image
+                        e.currentTarget.style.display = 'none';
                       }}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors" />
 
