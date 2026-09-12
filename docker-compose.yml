@@ -52,7 +52,7 @@ services:
       EMAIL_RECEIVER: ${EMAIL_RECEIVER:-nikamnachiket2004@gmail.com}
       ADMIN_ALERT_EMAIL: ${ADMIN_ALERT_EMAIL:-nikamnachiket2004@gmail.com}
     volumes:
-      - backend_uploads:/app/backend/uploads
+      - ./backend/uploads:/app/backend/uploads
       - backend_logs:/app/backend/logs
     networks:
       - kingsol-network
