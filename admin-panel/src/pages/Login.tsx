@@ -74,7 +74,7 @@ export const Login: React.FC = () => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="admin or admin@kingsol.com"
+                placeholder="admin id"
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-12 pr-4 py-3.5 text-sm focus:ring-2 focus:ring-brand-green outline-none text-slate-900 transition-all placeholder:text-slate-400"
               />
             </div>
