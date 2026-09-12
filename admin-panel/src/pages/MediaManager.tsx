@@ -171,40 +171,53 @@ export const MediaManager: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
-            >
-              <div>
-                <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
-                  <img
-                    src={getAssetUrl(item.thumbnail_url) || extractYouTubeThumbnail(item.youtube_url)}
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
-                  />
-                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors" />
+          {items?.map((item) => {
+            const itemTitle = item?.title ?? 'Video';
+            const itemUrl = item?.youtube_url ?? '';
+            const itemThumb = getAssetUrl(item?.thumbnail_url) || extractYouTubeThumbnail(itemUrl);
 
-                  {/* Play Button Overlay */}
-                  <div className="w-12 h-12 rounded-full bg-brand-green/90 text-white flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 transition-transform">
-                    <Play className="w-6 h-6 fill-current translate-x-0.5" />
+            return (
+              <div
+                key={item?.id}
+                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
+              >
+                <div>
+                  <div className="relative aspect-video bg-slate-950 overflow-hidden flex items-center justify-center">
+                    <img
+                      src={itemThumb}
+                      alt={itemTitle}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src.includes('maxresdefault.jpg')) {
+                          target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                        } else if (!target.src.includes('hqdefault.jpg')) {
+                          target.src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop';
+                        }
+                      }}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                    />
+                    <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors" />
+
+                    {/* Play Button Overlay */}
+                    <div className="w-12 h-12 rounded-full bg-brand-green/90 text-white flex items-center justify-center shadow-lg relative z-10 group-hover:scale-110 transition-transform">
+                      <Play className="w-6 h-6 fill-current translate-x-0.5" />
+                    </div>
+
+                    <button
+                      onClick={() => handleToggleActive(item)}
+                      className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm z-20 ${
+                        item?.is_active
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-slate-700/80 text-slate-200'
+                      }`}
+                    >
+                      {item?.is_active ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
+                      <span>{item?.is_active ? 'Active' : 'Inactive'}</span>
+                    </button>
                   </div>
 
-                  <button
-                    onClick={() => handleToggleActive(item)}
-                    className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-sm z-20 ${
-                      item.is_active
-                        ? 'bg-emerald-500 text-white'
-                        : 'bg-slate-700/80 text-slate-200'
-                    }`}
-                  >
-                    {item.is_active ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
-                    <span>{item.is_active ? 'Active' : 'Inactive'}</span>
-                  </button>
-                </div>
-
-                <div className="p-5">
-                  <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-2 mb-2">{item.title}</h3>
+                  <div className="p-5">
+                    <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-2 mb-2">{itemTitle}</h3>
                   {item.description && (
                     <p className="text-slate-500 text-xs line-clamp-2 leading-relaxed">{item.description}</p>
                   )}
@@ -238,7 +251,8 @@ export const MediaManager: React.FC = () => {
                 </div>
               </div>
             </div>
-          ))}
+          );
+        })}
         </div>
       )}
 
@@ -291,8 +305,18 @@ export const MediaManager: React.FC = () => {
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-brand-green outline-none text-sm"
                 />
                 {form.thumbnail_url && (
-                  <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
-                    <img src={getAssetUrl(form.thumbnail_url)} alt="Thumbnail Preview" className="w-full h-full object-cover" />
+                  <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-950 mt-2">
+                    <img
+                      src={getAssetUrl(form.thumbnail_url)}
+                      alt="Thumbnail Preview"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src.includes('maxresdefault.jpg')) {
+                          target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                        }
+                      }}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 )}
               </div>

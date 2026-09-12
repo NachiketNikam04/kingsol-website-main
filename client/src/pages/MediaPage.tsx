@@ -6,13 +6,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export interface MediaItem {
-  id: number;
-  title: string;
-  youtube_url: string;
-  thumbnail_url: string;
-  description: string;
-  is_active: boolean;
-  sort_order: number;
+  id?: number | string;
+  title?: string;
+  youtube_url?: string;
+  url?: string;
+  thumbnail_url?: string;
+  thumbnail?: string;
+  description?: string;
+  is_active?: boolean;
+  sort_order?: number;
+  startTime?: number | string;
+  start_time?: number | string;
 }
 
 export const MediaPage: React.FC = () => {
@@ -27,7 +31,7 @@ export const MediaPage: React.FC = () => {
         const res = await fetch(`${API_BASE_URL}/media/public`);
         if (!res.ok) return;
         const json = await res.json();
-        if (json.success && json.data) {
+        if (json?.success && Array.isArray(json?.data)) {
           setItems(json.data);
         }
       } catch (err) {
@@ -44,35 +48,38 @@ export const MediaPage: React.FC = () => {
       id: 1,
       title: 'Kingsol Corporate Profile - Engineering Renewable Excellence',
       youtube_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      thumbnail_url: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+      thumbnail_url: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
       description:
         'An overview of Kingsol Energy procurement capabilities, rooftop solar installations, and Tier-1 partners across India.',
       is_active: true,
       sort_order: 1,
+      startTime: 0,
     },
     {
       id: 2,
       title: 'Utility-Scale Solar EPC Workflows & On-Site Quality Assurance',
       youtube_url: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ',
-      thumbnail_url: 'https://img.youtube.com/vi/3JZ_D3ELwOQ/maxresdefault.jpg',
+      thumbnail_url: 'https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg',
       description:
         'Step-by-step walkthrough of our high-voltage transformer integration and grid synchronization process.',
       is_active: true,
       sort_order: 2,
+      startTime: 0,
     },
     {
       id: 3,
       title: 'Smart Inverter Telemetry & Remote Monitoring Demonstration',
       youtube_url: 'https://www.youtube.com/watch?v=L_LUpnjgPso',
-      thumbnail_url: 'https://img.youtube.com/vi/L_LUpnjgPso/maxresdefault.jpg',
+      thumbnail_url: 'https://img.youtube.com/vi/L_LUpnjgPso/hqdefault.jpg',
       description:
         'Discover how our real-time SCADA telemetry tracks MPPT efficiency and remote fault isolation.',
       is_active: true,
       sort_order: 3,
+      startTime: 0,
     },
   ];
 
-  const activeVideos = items.length > 0 ? items : defaultItems;
+  const activeVideos = items?.length > 0 ? items : defaultItems;
 
   const tagline = 'VIDEO CENTER';
   const headline = 'Media & Presentations.';
@@ -80,12 +87,13 @@ export const MediaPage: React.FC = () => {
   const subtitle =
     'Watch product demonstrations, technical EPC engineering walkthroughs, and grid-tie solar telemetry webinars.';
 
-  const renderDynamicHeadline = (text: string, word: string) => {
+  const renderDynamicHeadline = (text?: string, word?: string) => {
+    if (!text) return '';
     if (!word) return text;
     const regex = new RegExp(`(${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     const parts = text.split(regex);
     return parts.map((part, idx) =>
-      part.toLowerCase() === word.toLowerCase() ? (
+      part?.toLowerCase() === word?.toLowerCase() ? (
         <span key={idx} className="text-[#44a0e3]">
           {part}
         </span>
@@ -95,12 +103,23 @@ export const MediaPage: React.FC = () => {
     );
   };
 
-  const getEmbedUrl = (url: string) => {
+  const getYouTubeThumbnail = (url?: string) => {
+    if (!url) return 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop';
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2]?.length === 11) {
+      return `https://img.youtube.com/vi/${match[2]}/hqdefault.jpg`;
+    }
+    return 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop';
+  };
+
+  const getEmbedUrl = (url?: string, startTime?: number | string) => {
     if (!url) return '';
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    if (match && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}?autoplay=1`;
+    const startParam = startTime ? `&start=${startTime}` : '';
+    if (match && match[2]?.length === 11) {
+      return `https://www.youtube.com/embed/${match[2]}?autoplay=1${startParam}`;
     }
     return url;
   };
@@ -143,59 +162,78 @@ export const MediaPage: React.FC = () => {
           <div className="text-center py-20 text-slate-500 font-medium">Loading video media...</div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {activeVideos.map((video, index) => (
-              <motion.div
-                key={video.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7, delay: (index % 3) * 0.1, ease: "easeOut" }}
-                onClick={() => setActiveMedia(video)}
-                className="group bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col justify-between"
-              >
-                <div>
-                  <div className="relative aspect-video bg-slate-950 overflow-hidden flex items-center justify-center">
-                    <img
-                      src={getAssetUrl(video.thumbnail_url)}
-                      alt={video.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
-                    />
-                    <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors" />
+            {activeVideos?.map((video, index) => {
+              const videoId = video?.id ?? `media-fallback-${index}`;
+              const videoTitle = video?.title ?? 'Kingsol Solar Media Video';
+              const videoUrl = video?.youtube_url ?? video?.url ?? '';
+              const rawThumbnail = video?.thumbnail_url ?? video?.thumbnail ?? getYouTubeThumbnail(videoUrl);
+              const videoThumbnail = getAssetUrl(rawThumbnail) || getYouTubeThumbnail(videoUrl);
+              const videoDescription = video?.description ?? '';
 
-                    {/* Play Button Icon Overlay */}
-                    <div className="w-14 h-14 rounded-full bg-brand-green text-slate-900 flex items-center justify-center shadow-xl relative z-10 group-hover:scale-110 transition-transform">
-                      <Play className="w-7 h-7 fill-current translate-x-0.5" />
+              return (
+                <motion.div
+                  key={videoId}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.7, delay: (index % 3) * 0.1, ease: "easeOut" }}
+                  onClick={() => setActiveMedia(video)}
+                  className="group bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="relative aspect-video bg-slate-950 overflow-hidden flex items-center justify-center">
+                      <img
+                        src={videoThumbnail}
+                        alt={videoTitle}
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (target.src.includes('maxresdefault.jpg')) {
+                            target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                          } else if (!target.src.includes('hqdefault.jpg')) {
+                            target.src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop';
+                          }
+                        }}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                      />
+                      <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/10 transition-colors" />
+
+                      {/* Play Button Icon Overlay */}
+                      <div className="w-14 h-14 rounded-full bg-brand-green text-slate-900 flex items-center justify-center shadow-xl relative z-10 group-hover:scale-110 transition-transform">
+                        <Play className="w-7 h-7 fill-current translate-x-0.5" />
+                      </div>
+                    </div>
+
+                    <div className="p-6">
+                      <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
+                        {videoTitle}
+                      </h3>
+                      {videoDescription && (
+                        <p className="text-base md:text-lg text-slate-600 leading-relaxed">{videoDescription}</p>
+                      )}
                     </div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
-                      {video.title}
-                    </h3>
-                    {video.description && (
-                      <p className="text-base md:text-lg text-slate-600 leading-relaxed">{video.description}</p>
+                  <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs font-bold text-brand-green flex items-center gap-1.5">
+                      <span>Watch Video</span>
+                      <Play className="w-3.5 h-3.5 fill-current" />
+                    </span>
+                    {videoUrl && (
+                      <a
+                        href={videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs text-slate-400 hover:text-slate-700 flex items-center gap-1"
+                      >
+                        <span>YouTube</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
                     )}
                   </div>
-                </div>
-
-                <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-bold text-brand-green flex items-center gap-1.5">
-                    <span>Watch Video</span>
-                    <Play className="w-3.5 h-3.5 fill-current" />
-                  </span>
-                  <a
-                    href={video.youtube_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-xs text-slate-400 hover:text-slate-700 flex items-center gap-1"
-                  >
-                    <span>YouTube</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -219,15 +257,18 @@ export const MediaPage: React.FC = () => {
             >
               <button
                 onClick={() => setActiveMedia(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-slate-950/80 text-white flex items-center justify-center hover:bg-slate-900 transition-colors"
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-slate-950/80 text-white flex items-center justify-center hover:bg-slate-900 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
 
               <div className="w-full aspect-video bg-black">
                 <iframe
-                  src={getEmbedUrl(activeMedia.youtube_url)}
-                  title={activeMedia.title}
+                  src={getEmbedUrl(
+                    activeMedia?.youtube_url ?? activeMedia?.url,
+                    activeMedia?.startTime ?? activeMedia?.start_time
+                  )}
+                  title={activeMedia?.title ?? 'Video Presentation'}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="w-full h-full border-0"
@@ -235,9 +276,13 @@ export const MediaPage: React.FC = () => {
               </div>
 
               <div className="p-6 md:p-8 bg-slate-900 text-white">
-                <h3 className="text-xl md:text-2xl font-bold font-lato mb-2">{activeMedia.title}</h3>
-                {activeMedia.description && (
-                  <p className="text-slate-400 text-base md:text-lg leading-relaxed">{activeMedia.description}</p>
+                <h3 className="text-xl md:text-2xl font-bold font-lato mb-2">
+                  {activeMedia?.title ?? 'Kingsol Video Presentation'}
+                </h3>
+                {activeMedia?.description && (
+                  <p className="text-slate-400 text-base md:text-lg leading-relaxed">
+                    {activeMedia?.description}
+                  </p>
                 )}
               </div>
             </motion.div>

@@ -49,9 +49,9 @@ async function seedContents() {
       console.log('🎥 Seeding initial media items...');
       await pool.query(`
         INSERT INTO media_items (title, youtube_url, thumbnail_url, description, is_active, sort_order) VALUES
-        ('Kingsol Corporate Profile - Engineering Renewable Excellence', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg', 'An overview of Kingsol Energy procurement capabilities, rooftop solar installations, and Tier-1 partners across India.', true, 1),
-        ('Utility-Scale Solar EPC Workflows & On-Site Quality Assurance', 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ', 'https://img.youtube.com/vi/3JZ_D3ELwOQ/maxresdefault.jpg', 'Step-by-step walkthrough of our high-voltage transformer integration and grid synchronization process.', true, 2),
-        ('Smart Inverter Telemetry & Remote Monitoring Demonstration', 'https://www.youtube.com/watch?v=L_LUpnjgPso', 'https://img.youtube.com/vi/L_LUpnjgPso/maxresdefault.jpg', 'Discover how our real-time SCADA telemetry tracks MPPT efficiency and remote fault isolation.', true, 3)
+        ('Kingsol Corporate Profile - Engineering Renewable Excellence', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg', 'An overview of Kingsol Energy procurement capabilities, rooftop solar installations, and Tier-1 partners across India.', true, 1),
+        ('Utility-Scale Solar EPC Workflows & On-Site Quality Assurance', 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ', 'https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg', 'Step-by-step walkthrough of our high-voltage transformer integration and grid synchronization process.', true, 2),
+        ('Smart Inverter Telemetry & Remote Monitoring Demonstration', 'https://www.youtube.com/watch?v=L_LUpnjgPso', 'https://img.youtube.com/vi/L_LUpnjgPso/hqdefault.jpg', 'Discover how our real-time SCADA telemetry tracks MPPT efficiency and remote fault isolation.', true, 3)
       `);
     }
 
