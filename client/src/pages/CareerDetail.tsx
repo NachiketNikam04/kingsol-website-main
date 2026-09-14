@@ -236,7 +236,7 @@ export default function CareerDetail() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
           >
             {job.department}
           </motion.span>
@@ -244,7 +244,7 @@ export default function CareerDetail() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0 mb-4"
+            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0 mb-4"
           >
             {job.title}
           </motion.h1>
@@ -395,7 +395,7 @@ export default function CareerDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5 "
+                className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
                 Role Overview
               </motion.h2>
@@ -416,7 +416,7 @@ export default function CareerDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
+                  className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                 >
                   Key Responsibilities
                 </motion.h2>
@@ -445,7 +445,7 @@ export default function CareerDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
+                  className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                 >
                   Requirements & Qualifications
                 </motion.h2>

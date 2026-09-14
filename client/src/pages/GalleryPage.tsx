@@ -131,7 +131,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
           >
             {tagline}
           </motion.span>
@@ -139,7 +139,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
+            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
           >
             {renderDynamicHeadline(headline, highlightWord)}
           </motion.h1>
@@ -244,7 +244,7 @@ export const GalleryPage: React.FC = () => {
                 <span className="text-brand-green text-xs font-black uppercase tracking-widest block mb-1">
                   {activeItem.category}
                 </span>
-                <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900">{activeItem.title}</h3>
+                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 line-clamp-1 group-hover:text-[#44a0e3] transition-colors">{activeItem.title}</h3>
               </div>
             </div>
           </div>

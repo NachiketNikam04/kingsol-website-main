@@ -299,7 +299,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
           >
             <span>{currentHeroTagline}</span>
           </motion.span>
@@ -307,7 +307,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
+            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
           >
             {renderDynamicHeadline(currentHeroHeadline, currentHeroHighlight)}
           </motion.h1>
@@ -446,7 +446,7 @@ export default function Contact() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-sm"
           >
-            <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">{currentFormHeadline}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">{currentFormHeadline}</h2>
             <p className="text-slate-500 text-sm mb-8">{currentFormSubtitle}</p>
 
             {error && (
@@ -534,10 +534,10 @@ export default function Contact() {
             className="lg:col-span-5 flex flex-col justify-between bg-white rounded-[2.5rem] p-8 md:p-10 text-slate-900 border border-slate-200 shadow-[0_20px_40px_rgba(68,160,227,0.15)]"
           >
             <div>
-              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
+              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
                 <span>{currentHqTagline}</span>
               </span>
-              <h3 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">
+              <h3 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">
                 {renderDynamicHeadline(currentHqHeadline, currentHqHighlight)}
               </h3>
               <p className="text-slate-700 text-base md:text-lg mt-2 leading-relaxed font-normal">
@@ -574,7 +574,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
             >
               <span>{currentInfraTagline}</span>
             </motion.span>
@@ -583,7 +583,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
             >
               {renderDynamicHeadline(currentInfraHeadline, currentInfraHighlight)}
             </motion.h2>
@@ -619,7 +619,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
             >
               <span>{currentFaqTagline}</span>
             </motion.span>
@@ -628,7 +628,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight -mb-5"
+              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
             >
               {currentFaqHeadline}
             </motion.h2>

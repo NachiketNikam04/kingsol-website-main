@@ -125,7 +125,7 @@ export default function BrandPage() {
           className="bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-xs mb-12 flex flex-col lg:flex-row gap-8 items-start justify-between"
         >
           <div className="max-w-3xl">
-            <span className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold">
+            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
               AUTHORIZED MANUFACTURER
             </span>
             <h1 className="mt-2 text-4xl md:text-6xl font-extrabold font-poppins text-slate-900 mb-4">{brand.name}</h1>
