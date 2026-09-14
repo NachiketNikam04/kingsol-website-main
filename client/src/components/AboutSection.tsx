@@ -91,7 +91,7 @@ const StatItem: React.FC<CountUpProps> = ({ endValue, prefix = '', suffix = '+',
         {count.toLocaleString()}
         {suffix}
       </div>
-      <p className="text-slate-200 text-base sm:text-lg p-0 m-0 font-medium">{label}</p>
+      <p className="text-slate-600 text-base sm:text-lg p-0 m-0 font-medium">{label}</p>
     </div>
   );
 };
@@ -149,9 +149,9 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full z-10 bg-transparent text-white pt-8 pb-16 lg:pt-12 lg:pb-20 flex flex-col justify-center">
+    <section className="relative w-full bg-white text-slate-900 py-16 sm:py-24 border-b border-slate-100 flex flex-col justify-center">
       {/* Main Content Wrapper */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 py-6 w-full">
+      <div className="relative max-w-7xl mx-auto px-6 w-full">
         {/* Top 2-Column Flex */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-center">
           
@@ -182,7 +182,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="mt-4 font-poppins text-base md:text-lg text-slate-200 leading-relaxed whitespace-pre-line"
+              className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line"
             >
               {currentSubtitle}
             </motion.p>
@@ -193,7 +193,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-              className="mt-6 bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white flex items-center gap-2 cursor-pointer border border-white/20"
+              className="mt-6 bg-slate-900 text-white hover:bg-brand-green hover:text-slate-900 px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md flex items-center gap-2 cursor-pointer"
             >
               <span>About Company</span>
               <ArrowRight className="w-4 h-4" />
@@ -209,7 +209,7 @@ export const AboutSection: React.FC = () => {
             className="w-full lg:w-[42%] relative pb-12 lg:pb-0"
           >
             {/* Top Aligned Solar Image */}
-            <div className="w-[90%] sm:w-[88%] ml-auto h-72 sm:h-80 overflow-hidden rounded-2xl shadow-2xl border border-white/20">
+            <div className="w-[90%] sm:w-[88%] ml-auto h-72 sm:h-80 overflow-hidden rounded-2xl shadow-xl border border-slate-100">
               <img
                 src={getAssetUrl(currentMainImage)}
                 alt="About Us"
@@ -218,17 +218,17 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Overlapping Card */}
-            <div className="absolute -bottom-16 left-0 w-4/5 bg-[#b7f07a] p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#9beb46]/50 text-slate-950">
+            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-[#b7f07a] p-6 sm:p-8 rounded-2xl shadow-xl border border-[#9beb46]/50 text-slate-950">
               <div className="flex items-center space-x-2 mb-3">
                 <Sun className="w-5 h-5 text-slate-950 fill-current" />
-                <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
+                <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
               </div>
 
-              <p className="mt-4 font-poppins text-base md:text-lg text-slate-900 leading-relaxed mb-1">{currentCardBody}</p>
+              <p className="mt-2 font-poppins text-sm sm:text-base text-slate-900 leading-relaxed mb-1">{currentCardBody}</p>
 
               <a
                 href="/services"
-                className="inline-flex items-center space-x-1 mt-4 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 group"
+                className="inline-flex items-center space-x-1 mt-3 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 group"
               >
                 <span>Learn more</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -243,7 +243,7 @@ export const AboutSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-          className="flex flex-wrap items-center justify-between md:justify-start gap-12 sm:gap-16 text-center md:text-left mt-20 mb-4 relative z-20"
+          className="flex flex-wrap items-center justify-between md:justify-start gap-12 sm:gap-16 text-center md:text-left mt-20 sm:mt-24 mb-4"
         >
           {activeStats.map((stat, idx) => (
             <StatItem

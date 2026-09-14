@@ -1,7 +1,7 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, Variants, useScroll, useTransform } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 interface PartnersSettings {
   tagline: string;
@@ -34,37 +34,23 @@ const containerVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // Delay between each logo sliding up
-      delayChildren: 0.1,    // Initial delay before the first element animates
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] },
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
 export const PartnersSection: React.FC = () => {
   const [partnersData, setPartnersData] = useState<PartnersData | null>(null);
-
-  // Ref used to track this section's own scroll position, so the headline can
-  // fade from faint to fully bold as the section rides into view (matching the
-  // reference "sliding overlap" animation) instead of only reacting to a fixed
-  // in-view threshold.
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'start 0.35'],
-  });
-
-  const headlineOpacity = useTransform(scrollYProgress, [0, 1], [0.15, 1]);
-  const headlineColor = useTransform(scrollYProgress, [0, 1], ['#cbd5e1', '#0f172a']);
 
   useEffect(() => {
     async function loadPartnersData() {
@@ -117,31 +103,27 @@ export const PartnersSection: React.FC = () => {
 
   return (
     <motion.section
-      ref={sectionRef}
       key={activeLogos.length}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="relative w-full py-16 lg:py-5"
+      className="relative w-full py-16 sm:py-24 bg-[#fdfcf8] border-b border-slate-100"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Heading */}
         <motion.div variants={itemVariants}>
-          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
+          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
             {currentTagline}
           </span>
 
-          <motion.h2
-            style={{ opacity: headlineOpacity, color: headlineColor }}
-            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
-          >
+          <h2 className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0">
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-          </motion.h2>
+          </h2>
         </motion.div>
 
         {/* Strict 4-Column Grid Container */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mt-14">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mt-12 sm:mt-14">
           {activeLogos.map((logo, idx) => {
             const destination = logo.linked_brand
               ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
@@ -150,17 +132,17 @@ export const PartnersSection: React.FC = () => {
             const isExternal =
               destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
 
-            const cardClasses = `bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-sm transition-all duration-300 group border border-slate-200/60 ${
+            const cardClasses = `bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
               destination
-                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:shadow-brand-orange/20'
-                : 'hover:shadow-brand-orange'
+                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-brand-green/50'
+                : 'hover:shadow-md'
             }`;
 
             const logoImg = (
               <img
                 src={getAssetUrl(logo.image_url)}
                 alt={logo.name}
-                className="h-16 sm:h-24 w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-14 sm:h-20 w-full object-contain transition-transform duration-300 group-hover:scale-105"
               />
             );
 
