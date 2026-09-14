@@ -87,7 +87,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight mb-5"
+            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h1>

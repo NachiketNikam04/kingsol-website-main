@@ -134,7 +134,7 @@ export const PartnersSection: React.FC = () => {
 
           <motion.h2
             style={{ opacity: headlineOpacity, color: headlineColor }}
-            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight"
+            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>

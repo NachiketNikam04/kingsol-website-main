@@ -140,7 +140,7 @@ export const PremiumProductsSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight"
+            className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
           >
             {renderHighlightedHeadline(settings.headline, settings.highlight_word)}
           </motion.h2>
