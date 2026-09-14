@@ -321,7 +321,7 @@ export const Landing: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.6, delay: 0.05, ease: [0.76, 0, 0.24, 1] }}
-                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold font-lato tracking-tight text-white leading-[1.08] max-w-4xl"
+                    className="text-5xl md:text-7xl font-poppins font-semibold mb-6 leading-tight [text-shadow:0_2px_24px_rgba(0,0,0,0.85),0_4px_40px_rgba(0,0,0,0.5)] text-white max-w-4xl"
                   >
                     {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
                   </motion.h1>
@@ -333,7 +333,7 @@ export const Landing: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-                className="text-lg sm:text-xl md:text-2xl text-slate-200 max-w-2xl font-normal leading-relaxed"
+                className="mt-4 font-poppins text-base md:text-lg text-slate-200 max-w-2xl leading-relaxed"
               >
                 {currentSubtitle}
               </motion.p>

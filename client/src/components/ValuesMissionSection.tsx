@@ -124,7 +124,7 @@ export default function ValuesMissionSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold font-lato text-slate-900 leading-[1.15] tracking-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold font-poppins text-slate-900 leading-[1.15] tracking-tight"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -155,7 +155,7 @@ export default function ValuesMissionSection() {
                   ↗
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-lato text-slate-900 leading-snug">
+              <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug">
                 {currentVisionDesc}
               </h3>
             </div>
@@ -178,7 +178,7 @@ export default function ValuesMissionSection() {
                   ↗
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-lato text-slate-900 leading-snug">
+              <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug">
                 {currentMissionDesc}
               </h3>
             </div>
@@ -209,11 +209,11 @@ export default function ValuesMissionSection() {
                   </span>
                 </div>
 
-                <h4 className="text-xl sm:text-2xl font-bold font-lato text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-2.5 relative z-10">
+                <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-2.5 relative z-10">
                   {value.title}
                 </h4>
 
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed relative z-10">
+                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed relative z-10">
                   {value.description}
                 </p>
               </div>

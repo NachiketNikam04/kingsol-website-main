@@ -59,7 +59,7 @@ export default function CategoryPage() {
         <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-2xl mb-4">
           ?
         </div>
-        <h1 className="text-4xl font-extrabold font-lato mb-3">Category Not Found</h1>
+        <h1 className="text-4xl font-extrabold font-poppins mb-3">Category Not Found</h1>
         <p className="text-slate-600 mb-8 max-w-md">
           The product category <strong className="text-slate-900">'{categorySlug}'</strong> does not exist in our catalog database.
         </p>
@@ -91,7 +91,7 @@ export default function CategoryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             PRODUCT CATEGORY
           </motion.span>
@@ -99,7 +99,7 @@ export default function CategoryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight"
+            className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl"
           >
             {category.name} <span className="text-[#44a0e3]">Catalog</span>
           </motion.h1>
@@ -121,7 +121,7 @@ export default function CategoryPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-1 mb-1 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+              className="mt-1 mb-1 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
             >
               Authorized Brands in {category.name}
             </motion.h2>
@@ -146,7 +146,7 @@ export default function CategoryPage() {
                     </div>
 
                     {/* 2. Brand Name & Truncated Description */}
-                    <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-2 tracking-tight">
+                    <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-2 tracking-tight">
                       {brand.name}
                     </h3>
                     <p className="text-base md:text-lg text-slate-600 line-clamp-3 leading-relaxed mb-4">
@@ -193,7 +193,7 @@ export default function CategoryPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+            className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
           >
             All {category.name} Components
           </motion.h2>
@@ -232,7 +232,7 @@ export default function CategoryPage() {
                       </div>
 
                       {/* 2. Text & Description Truncation */}
-                      <h3 className="text-base md:text-lg font-bold font-lato text-slate-900 leading-snug truncate mb-1">
+                      <h3 className="text-base md:text-lg font-bold font-poppins text-slate-900 leading-snug truncate mb-1">
                         {product.name}
                       </h3>
                       <p className="text-base md:text-lg text-slate-500 line-clamp-2 leading-relaxed mb-3">

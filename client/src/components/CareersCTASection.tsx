@@ -79,7 +79,7 @@ export default function CareersCTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="text-brand-green uppercase tracking-widest text-xs sm:text-sm font-extrabold flex items-center gap-2 mb-3 relative z-20"
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green flex items-center gap-2 relative z-20"
         >
           <span>{currentTagline}</span>
         </motion.span>
@@ -89,7 +89,7 @@ export default function CareersCTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold font-lato text-slate-900 leading-[1.15] max-w-4xl tracking-tight relative z-20"
+          className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-[1.15] max-w-4xl relative z-20"
         >
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>

@@ -162,7 +162,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
             >
               {currentTagline}
             </motion.span>
@@ -172,7 +172,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="mt-1 text-5xl md:text-6xl font-bold font-lato text-white leading-tight tracking-tight"
+              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h2>
@@ -182,7 +182,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="text-slate-200 text-base md:text-lg mt-6 leading-relaxed font-normal whitespace-pre-line"
+              className="mt-4 font-poppins text-base md:text-lg text-slate-200 leading-relaxed whitespace-pre-line"
             >
               {currentSubtitle}
             </motion.p>
@@ -221,10 +221,10 @@ export const AboutSection: React.FC = () => {
             <div className="absolute -bottom-16 left-0 w-4/5 bg-[#b7f07a] p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#9beb46]/50 text-slate-950">
               <div className="flex items-center space-x-2 mb-3">
                 <Sun className="w-5 h-5 text-slate-950 fill-current" />
-                <span className="font-extrabold text-xs uppercase tracking-wider">{currentCardHeading}</span>
+                <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
               </div>
 
-              <p className="text-slate-900 leading-relaxed mb-1 font-medium">{currentCardBody}</p>
+              <p className="mt-4 font-poppins text-base md:text-lg text-slate-900 leading-relaxed mb-1">{currentCardBody}</p>
 
               <a
                 href="/services"

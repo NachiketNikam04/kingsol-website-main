@@ -79,7 +79,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             <span>{currentTagline}</span>
           </motion.span>
@@ -87,7 +87,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight mb-5"
+            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight mb-5"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h1>
@@ -141,7 +141,7 @@ export default function Blogs() {
                     </span>
                   </div>
 
-                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight group-hover:text-[#44a0e3] transition-colors leading-tight mb-5">
+                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight group-hover:text-[#44a0e3] transition-colors leading-tight mb-5">
                     {blogs[0].title}
                   </h2>
 
@@ -164,7 +164,7 @@ export default function Blogs() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="mt-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+                    className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                   >
                     All Recent Articles
                   </motion.h3>
@@ -198,7 +198,7 @@ export default function Blogs() {
                           </span>
                         </div>
 
-                        <h4 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-4 group-hover:text-[#44a0e3] transition-colors leading-snug">
+                        <h4 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-4 group-hover:text-[#44a0e3] transition-colors leading-snug">
                           {post.title}
                         </h4>
 

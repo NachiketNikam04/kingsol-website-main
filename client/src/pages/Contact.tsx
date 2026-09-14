@@ -299,7 +299,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             <span>{currentHeroTagline}</span>
           </motion.span>
@@ -307,7 +307,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight"
+            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight"
           >
             {renderDynamicHeadline(currentHeroHeadline, currentHeroHighlight)}
           </motion.h1>
@@ -336,7 +336,7 @@ export default function Contact() {
                   </span>
                 </div>
 
-                <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 group-hover:text-[#44a0e3] mb-3 transition-colors">
+                <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 group-hover:text-[#44a0e3] mb-3 transition-colors">
                   {dept.title}
                 </h3>
                 <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-7">
@@ -399,7 +399,7 @@ export default function Contact() {
             <span className="text-xs font-bold text-brand-green uppercase tracking-wider block mb-1">
               Direct Channels
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold font-lato text-slate-900 tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">
               Connect with Kingsol
             </h3>
             <p className="text-slate-600 text-xs sm:text-sm mt-1">
@@ -446,7 +446,7 @@ export default function Contact() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-sm"
           >
-            <h2 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-2">{currentFormHeadline}</h2>
+            <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">{currentFormHeadline}</h2>
             <p className="text-slate-500 text-sm mb-8">{currentFormSubtitle}</p>
 
             {error && (
@@ -460,7 +460,7 @@ export default function Contact() {
                 <div className="w-12 h-12 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center font-bold text-xl mx-auto mb-3">
                   ✓
                 </div>
-                <h3 className="text-2xl font-bold font-lato text-slate-900 mb-2">Message Received!</h3>
+                <h3 className="text-2xl font-bold font-poppins text-slate-900 mb-2">Message Received!</h3>
                 <p className="text-slate-600 text-sm">{currentFormSuccess}</p>
               </div>
             ) : (
@@ -534,10 +534,10 @@ export default function Contact() {
             className="lg:col-span-5 flex flex-col justify-between bg-white rounded-[2.5rem] p-8 md:p-10 text-slate-900 border border-slate-200 shadow-[0_20px_40px_rgba(68,160,227,0.15)]"
           >
             <div>
-              <span className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block">
+              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
                 <span>{currentHqTagline}</span>
               </span>
-              <h3 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-2">
+              <h3 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">
                 {renderDynamicHeadline(currentHqHeadline, currentHqHighlight)}
               </h3>
               <p className="text-slate-700 text-base md:text-lg mt-2 leading-relaxed font-normal">
@@ -574,7 +574,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentInfraTagline}</span>
             </motion.span>
@@ -583,7 +583,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
             >
               {renderDynamicHeadline(currentInfraHeadline, currentInfraHighlight)}
             </motion.h2>
@@ -601,7 +601,7 @@ export default function Contact() {
                 key={card.id || idx}
                 className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] max-w-[400px] p-6 rounded-2xl bg-[#FDFCF8] border border-slate-200/80"
               >
-                <h4 className="text-xl md:text-2xl font-bold font-lato text-[#44a0e3] mb-4 mt-2">{card.title}</h4>
+                <h4 className="text-xl md:text-2xl font-bold font-poppins text-[#44a0e3] mb-4 mt-2">{card.title}</h4>
                 <p className="text-base md:text-lg text-slate-600 leading-relaxed">
                   <span className="text-brand-green mr-2">•</span>
                   {card.description}
@@ -619,7 +619,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentFaqTagline}</span>
             </motion.span>
@@ -628,7 +628,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight -mb-5"
+              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight -mb-5"
             >
               {currentFaqHeadline}
             </motion.h2>
@@ -679,7 +679,7 @@ export default function Contact() {
           className="bg-slate-900 rounded-[2.5rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-xl"
         >
           <div className="relative z-10 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-bold font-lato leading-tight mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold font-poppins leading-tight mb-6">
               {currentQuoteText}
             </h2>
             <p className="text-[#44a0e3] font-semibold tracking-widest text-xs uppercase">

@@ -131,7 +131,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {tagline}
           </motion.span>
@@ -139,7 +139,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight"
+            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight"
           >
             {renderDynamicHeadline(headline, highlightWord)}
           </motion.h1>
@@ -147,7 +147,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed max-w-2xl"
+            className="mt-4 font-poppins text-base md:text-lg text-slate-700 leading-relaxed max-w-2xl"
           >
             {subtitle}
           </motion.p>
@@ -208,7 +208,7 @@ export const GalleryPage: React.FC = () => {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
+                  <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
                     {item.title}
                   </h3>
                 </div>
@@ -244,7 +244,7 @@ export const GalleryPage: React.FC = () => {
                 <span className="text-brand-green text-xs font-black uppercase tracking-widest block mb-1">
                   {activeItem.category}
                 </span>
-                <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900">{activeItem.title}</h3>
+                <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900">{activeItem.title}</h3>
               </div>
             </div>
           </div>

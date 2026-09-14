@@ -143,7 +143,7 @@ export default function CareerDetail() {
   if (!job) {
     return (
       <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-24 text-slate-900 flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-extrabold font-lato mb-4">Position Not Found</h1>
+        <h1 className="text-4xl font-extrabold font-poppins mb-4">Position Not Found</h1>
         <p className="text-slate-600 mb-8">The job opening you are looking for does not exist or has been filled.</p>
         <Link
           to="/careers"
@@ -236,7 +236,7 @@ export default function CareerDetail() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {job.department}
           </motion.span>
@@ -244,7 +244,7 @@ export default function CareerDetail() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight mb-4"
+            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight mb-4"
           >
             {job.title}
           </motion.h1>
@@ -276,7 +276,7 @@ export default function CareerDetail() {
                 <div className="w-16 h-16 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center font-bold text-2xl mx-auto mb-4">
                   ✓
                 </div>
-                <h3 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-5">Application Received!</h3>
+                <h3 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5">Application Received!</h3>
                 <p className="text-slate-600 text-base leading-relaxed max-w-md mx-auto mb-8">
                   Thank you for applying for the <strong className="text-slate-900">{job.title}</strong> position. Our recruiting team has received your application and attached resume.
                 </p>
@@ -289,7 +289,7 @@ export default function CareerDetail() {
               </div>
             ) : (
               <>
-                <h2 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-3">Submit Candidate Application</h2>
+                <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-3">Submit Candidate Application</h2>
                 <p className="text-slate-600 text-sm mb-8">
                   Applying for: <strong className="text-slate-900">{job.title}</strong>
                 </p>
@@ -395,7 +395,7 @@ export default function CareerDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-5 "
+                className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5 "
               >
                 Role Overview
               </motion.h2>
@@ -416,7 +416,7 @@ export default function CareerDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-5"
+                  className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
                 >
                   Key Responsibilities
                 </motion.h2>
@@ -445,7 +445,7 @@ export default function CareerDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-5"
+                  className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
                 >
                   Requirements & Qualifications
                 </motion.h2>
@@ -474,7 +474,7 @@ export default function CareerDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-2"
+                  className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2"
                 >
                   Ready to apply for this position?
                 </motion.h3>

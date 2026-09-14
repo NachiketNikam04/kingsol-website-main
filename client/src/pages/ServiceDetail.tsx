@@ -210,7 +210,7 @@ export default function ServiceDetail() {
   if (!currentService) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#FDFCF8] text-slate-900">
-        <h1 className="text-3xl font-extrabold font-lato mb-4">Service Not Found</h1>
+        <h1 className="text-3xl font-extrabold font-poppins mb-4">Service Not Found</h1>
         <button
           onClick={() => navigate('/services')}
           className="bg-[#78C257] text-slate-900 font-medium px-6 py-3 rounded-full hover:bg-slate-900 hover:text-white transition-colors cursor-pointer"
@@ -240,7 +240,7 @@ export default function ServiceDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               KINGSOL SERVICE
             </motion.span>
@@ -248,7 +248,7 @@ export default function ServiceDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 mb-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight"
+              className="mt-5 mb-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl"
             >
               {currentService.title}
             </motion.h1>
@@ -297,7 +297,7 @@ export default function ServiceDetail() {
             className="lg:col-span-4"
           >
             <div className="lg:sticky lg:top-32 bg-white rounded-[2.5rem] p-6 border border-slate-200 shadow-sm flex flex-col gap-3">
-              <h3 className="mt-5 mb-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+              <h3 className="mt-5 mb-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight">
                 All Services
               </h3>
               {sidebarServicesList.map((s) => {
@@ -322,7 +322,7 @@ export default function ServiceDetail() {
                 <span className="text-brand-orange text-xs font-bold uppercase tracking-widest block mb-2">
                   {emergencySettings.emergency_tagline || 'Emergency Support'}
                 </span>
-                <h4 className="text-xl md:text-2xl font-bold font-lato text-white mb-4 mt-3">{emergencySettings.emergency_title || 'Technical Dispatch Unit'}</h4>
+                <h4 className="text-xl md:text-2xl font-bold font-poppins text-white mb-4 mt-3">{emergencySettings.emergency_title || 'Technical Dispatch Unit'}</h4>
                 <a
                   href={`tel:${emergencySettings.emergency_phone || '+91 1234567890'}`}
                   className="inline-block bg-white text-slate-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-brand-green transition-colors"
@@ -347,7 +347,7 @@ export default function ServiceDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-5"
+                className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight mb-5"
               >
                 {currentService.detail_title || currentService.title}
               </motion.h2>
@@ -373,7 +373,7 @@ export default function ServiceDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-5"
+                  className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
                 >
                   Key Value <span className="text-[#44a0e3]">Propositions</span>
                 </motion.h3>

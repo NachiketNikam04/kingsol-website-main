@@ -18,7 +18,7 @@ export default function JobApplication() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-4xl md:text-5xl font-extrabold font-lato text-slate-900 mb-4"
+            className="text-4xl md:text-5xl font-extrabold font-poppins text-slate-900 mb-4"
           >
             Apply for Position
           </motion.h1>

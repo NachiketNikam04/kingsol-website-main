@@ -118,7 +118,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-xs sm:text-sm font-extrabold block mb-3"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {currentTagline}
           </motion.span>
@@ -129,7 +129,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold font-lato text-slate-900 leading-[1.15] tracking-tight mb-5"
+            className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-[1.15] mb-5"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -140,7 +140,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-slate-500 text-base sm:text-lg leading-relaxed font-normal mb-8"
+            className="mt-4 font-poppins text-base md:text-lg text-slate-500 leading-relaxed mb-8"
           >
             {currentDescription}
           </motion.p>

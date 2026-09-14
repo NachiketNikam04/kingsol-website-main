@@ -70,7 +70,7 @@ export const CTASection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="text-[#78C257] font-extrabold tracking-widest text-xs sm:text-sm mb-3 uppercase drop-shadow-xs"
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-[#78C257] drop-shadow-xs"
         >
           {currentTagline}
         </motion.span>
@@ -79,7 +79,7 @@ export const CTASection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mt-5 text-5xl md:text-6xl font-bold font-lato text-white leading-tight max-w-2xl tracking-tight"
+          className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-white leading-tight max-w-2xl"
         >
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>

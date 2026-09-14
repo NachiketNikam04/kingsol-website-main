@@ -143,7 +143,7 @@ export default function AboutDetailsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-xs sm:text-sm font-extrabold flex items-center gap-2 mb-3"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green flex items-center gap-2"
           >
             <span>{currentTagline}</span>
           </motion.span>
@@ -152,7 +152,7 @@ export default function AboutDetailsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-4xl md:text-5xl font-bold font-lato text-slate-900 leading-tight max-w-2xl tracking-tight"
+            className="mt-5 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight max-w-2xl shrink-0"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -180,7 +180,7 @@ export default function AboutDetailsSection() {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >
                   <div className="flex justify-between items-center gap-4">
-                    <h3 className="text-lg sm:text-xl font-bold font-lato text-slate-900 group-hover:text-[#44a0e3] transition-colors leading-snug">
+                    <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors leading-snug">
                       {item.title}
                     </h3>
                     <button
@@ -200,7 +200,7 @@ export default function AboutDetailsSection() {
                       isOpen ? 'max-h-48 opacity-100 mt-3 pt-3 border-t border-slate-100' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line">
+                    <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line">
                       {item.content}
                     </p>
                   </div>
@@ -219,7 +219,7 @@ export default function AboutDetailsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3"
+            className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3"
           >
             {renderDynamicHeadline(currentMarqueeHeadline, currentMarqueeHighlightWord)}
           </motion.h4>

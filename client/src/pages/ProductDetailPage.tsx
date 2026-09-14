@@ -48,7 +48,7 @@ export default function ProductDetailPage() {
   if (!product || !brand || !category) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#fdfcf8] text-slate-900 pt-48 pb-24">
-        <h1 className="text-3xl font-extrabold font-lato mb-4">Product Not Found</h1>
+        <h1 className="text-3xl font-extrabold font-poppins mb-4">Product Not Found</h1>
         <p className="text-slate-600 mb-8">The requested component does not exist in our catalog database.</p>
         <button
           onClick={() => navigate('/products')}
@@ -147,7 +147,7 @@ export default function ProductDetailPage() {
                 <span className="text-xs font-semibold text-slate-500 uppercase">{category.name}</span>
               </div>
 
-              <h1 className="mt-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight">
+              <h1 className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
                 {product.name}
               </h1>
 
@@ -208,7 +208,7 @@ export default function ProductDetailPage() {
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                 className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xs mb-8"
               >
-                <h3 className="text-xl font-bold font-lato text-slate-900 mb-3">Engineering Expertise & Track Record</h3>
+                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3">Engineering Expertise & Track Record</h3>
                 <p className="text-slate-600 text-sm leading-relaxed">{product.expertise}</p>
               </motion.div>
             )}
@@ -222,7 +222,7 @@ export default function ProductDetailPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl font-bold font-lato text-slate-900 mb-8"
+            className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-8"
           >
             Full Technical Specifications
           </motion.h2>

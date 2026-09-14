@@ -89,7 +89,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
                 <div className="w-16 h-16 rounded-full bg-[#78C257]/20 text-[#78C257] flex items-center justify-center font-bold text-2xl mx-auto mb-4">
                   ✓
                 </div>
-                <h3 className="text-2xl font-bold font-lato text-slate-900 mb-2">Inquiry Submitted!</h3>
+                <h3 className="text-2xl font-bold font-poppins text-slate-900 mb-2">Inquiry Submitted!</h3>
                 <p className="text-slate-600 text-sm leading-relaxed mb-6">
                   Thank you for your interest in <strong className="text-slate-900">{itemName || 'Kingsol Solar'}</strong>. Our enterprise solar team will contact you within 2-4 hours. An automated email notification has been dispatched to our sales desk.
                 </p>
@@ -102,10 +102,10 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
               </div>
             ) : (
               <>
-                <span className="text-xs font-semibold tracking-widest text-[#44a0e3] uppercase block mb-2">
+                <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-[#44a0e3] block">
                   OFFICIAL INQUIRY
                 </span>
-                <h3 className="text-2xl md:text-3xl font-bold font-lato text-slate-900 mb-2">Request Information</h3>
+                <h3 className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2">Request Information</h3>
                 {itemName && (
                   <p className="text-slate-600 text-sm mb-6">
                     Inquiring about <strong className="text-slate-900">{itemName}</strong>

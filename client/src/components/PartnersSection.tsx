@@ -128,13 +128,13 @@ export const PartnersSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Heading */}
         <motion.div variants={itemVariants}>
-          <span className="text-brand-green uppercase tracking-widest text-sm mb-8 font-bold block">
+          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
             {currentTagline}
           </span>
 
           <motion.h2
             style={{ opacity: headlineOpacity, color: headlineColor }}
-            className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight"
+            className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>

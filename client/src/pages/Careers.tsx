@@ -198,7 +198,7 @@ export default function Careers() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentTagline}</span>
             </motion.span>
@@ -207,7 +207,7 @@ export default function Careers() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-5xl md:text-6xl font-bold font-lato leading-tight max-w-4xl tracking-tight"
+              className="text-5xl md:text-6xl font-bold font-poppins leading-tight max-w-4xl tracking-tight"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h1>
@@ -263,7 +263,7 @@ export default function Careers() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors leading-tight line-clamp-2">
+                  <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors leading-tight line-clamp-2">
                     {job.title}
                   </h3>
 
@@ -322,7 +322,7 @@ export default function Careers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+                className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
                 {currentGenHeadline}
               </motion.h2>
@@ -354,7 +354,7 @@ export default function Careers() {
                   <div className="w-16 h-16 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center font-bold text-3xl mx-auto mb-6">
                     ✓
                   </div>
-                  <h3 className="mt-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-4">
+                  <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
                     Resume Submitted!
                   </h3>
                   <p className="text-slate-600 text-base md:text-lg mt-6 leading-relaxed font-normal">

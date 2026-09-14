@@ -141,7 +141,7 @@ export const ProductCategoriesSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="text-4xl md:text-5xl font-bold font-lato text-slate-900 tracking-tight"
+              className="text-4xl md:text-5xl font-bold font-poppins text-slate-900 tracking-tight"
             >
               Explore Our Products
             </motion.h2>
@@ -204,12 +204,12 @@ export const ProductCategoriesSection: React.FC = () => {
               </div>
 
               {/* Title */}
-              <h3 className="text-2xl font-bold font-lato text-slate-900 mb-2 group-hover:text-brand-orange transition-colors">
+              <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2 group-hover:text-brand-orange transition-colors">
                 {item.title}
               </h3>
 
               {/* Description */}
-              <p className="text-base md:text-lg text-slate-600 mb-6 leading-relaxed">
+              <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 mb-6 leading-relaxed">
                 {item.description}
               </p>
 

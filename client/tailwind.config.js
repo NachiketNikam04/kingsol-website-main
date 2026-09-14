@@ -6,15 +6,13 @@ export default {
   ],
   theme: {
     fontFamily: {
-      lato: ['Lato', 'sans-serif'],
-      cabinet: ['"Cabinet Grotesk"', 'sans-serif'],
-      sans: ['"Cabinet Grotesk"', 'sans-serif'],
+      poppins: ['Poppins', 'sans-serif'],
+      sans: ['Poppins', 'sans-serif'],
     },
     extend: {
       fontFamily: {
-        lato: ['Lato', 'sans-serif'],
-        cabinet: ['"Cabinet Grotesk"', 'sans-serif'],
-        sans: ['"Cabinet Grotesk"', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
       },
       colors: {
         brand: {

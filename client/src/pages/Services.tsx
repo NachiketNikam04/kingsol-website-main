@@ -124,7 +124,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {settings.tagline || 'EXPERT SERVICES'}
           </motion.span>
@@ -132,7 +132,7 @@ export default function Services() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight"
+            className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl"
           >
             {renderHeadline()}
           </motion.h1>
@@ -168,11 +168,11 @@ export default function Services() {
 
               <div className="flex-grow">
                 <Link to={`/services/${service.slug}`}>
-                  <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-3">
+                  <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-3">
                     {service.title}
                   </h3>
                 </Link>
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-8">{service.short_desc}</p>
+                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8">{service.short_desc}</p>
               </div>
 
               <div className="pt-6 border-t border-slate-100 mt-auto">

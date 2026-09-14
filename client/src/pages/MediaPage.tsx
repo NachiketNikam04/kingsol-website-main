@@ -135,7 +135,7 @@ export const MediaPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {tagline}
           </motion.span>
@@ -143,7 +143,7 @@ export const MediaPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight"
+            className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl"
           >
             {renderDynamicHeadline(headline, highlightWord)}
           </motion.h1>
@@ -151,7 +151,7 @@ export const MediaPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed max-w-2xl"
+            className="mt-4 font-poppins text-base md:text-lg text-slate-700 leading-relaxed max-w-2xl"
           >
             {subtitle}
           </motion.p>
@@ -204,7 +204,7 @@ export const MediaPage: React.FC = () => {
                     </div>
 
                     <div className="p-6">
-                      <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
+                      <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
                         {videoTitle}
                       </h3>
                       {videoDescription && (
@@ -276,7 +276,7 @@ export const MediaPage: React.FC = () => {
               </div>
 
               <div className="p-6 md:p-8 bg-slate-900 text-white">
-                <h3 className="text-xl md:text-2xl font-bold font-lato mb-2">
+                <h3 className="text-xl md:text-2xl font-bold font-poppins mb-2">
                   {activeMedia?.title ?? 'Kingsol Video Presentation'}
                 </h3>
                 {activeMedia?.description && (

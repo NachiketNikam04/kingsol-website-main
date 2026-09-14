@@ -74,7 +74,7 @@ export default function BrandPage() {
   if (!brand || !category) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#fdfcf8] text-slate-900 pt-48 pb-24">
-        <h1 className="text-3xl font-extrabold font-lato mb-4">Brand Not Found</h1>
+        <h1 className="text-3xl font-extrabold font-poppins mb-4">Brand Not Found</h1>
         <p className="text-slate-600 mb-8">The requested brand or category listing could not be found.</p>
         <button
           onClick={() => navigate('/products')}
@@ -128,7 +128,7 @@ export default function BrandPage() {
             <span className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold">
               AUTHORIZED MANUFACTURER
             </span>
-            <h1 className="mt-2 text-4xl md:text-6xl font-extrabold font-lato text-slate-900 mb-4">{brand.name}</h1>
+            <h1 className="mt-2 text-4xl md:text-6xl font-extrabold font-poppins text-slate-900 mb-4">{brand.name}</h1>
             <p className="text-slate-600 text-lg leading-relaxed mb-6">{brand.description}</p>
 
             {/* Certifications Badges */}
@@ -231,7 +231,7 @@ export default function BrandPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="text-3xl font-bold font-lato text-slate-900"
+              className="text-3xl font-bold font-poppins text-slate-900"
             >
               {activeSubcategory === 'all' ? 'All Products' : `${subcategories.find((s) => s.slug === activeSubcategory)?.name || activeSubcategory}`}
             </motion.h2>
@@ -265,7 +265,7 @@ export default function BrandPage() {
 
                   <div className="flex-grow">
                     <Link to={`/products/${category.slug}/${brand.slug}/${product.slug}`}>
-                      <h3 className="text-2xl font-bold font-lato text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors leading-tight">
+                      <h3 className="text-2xl font-bold font-poppins text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors leading-tight">
                         {product.name}
                       </h3>
                     </Link>

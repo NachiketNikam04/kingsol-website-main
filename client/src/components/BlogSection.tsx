@@ -95,7 +95,7 @@ export const BlogSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold"
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
         >
           {currentTagline}
         </motion.div>
@@ -105,7 +105,7 @@ export const BlogSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="mt-5 text-5xl md:text-6xl font-bold font-lato text-slate-900 leading-tight max-w-2xl mx-auto text-center tracking-tight"
+          className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight max-w-2xl mx-auto text-center"
         >
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>
@@ -114,7 +114,7 @@ export const BlogSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="text-slate-700 text-base md:text-lg mt-4 leading-relaxed font-normal"
+          className="mt-4 font-poppins text-base md:text-lg text-slate-700 leading-relaxed max-w-2xl mx-auto"
         >
           {currentSubtitle}
         </motion.p>
@@ -151,10 +151,10 @@ export const BlogSection: React.FC = () => {
                     <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-slate-900 mb-8 shadow-sm">
                       <IconComponent className="w-6 h-6 text-brand-orange stroke-[2.5]" />
                     </div>
-                    <h3 className="text-3xl font-bold font-lato text-slate-900 mb-4 leading-tight">
+                    <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-4 leading-tight">
                       {blog.title}
                     </h3>
-                    <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-8">{blog.excerpt}</p>
+                    <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8">{blog.excerpt}</p>
                     <Link
                       to={`/blogs/${blog.slug}`}
                       className="group w-fit bg-white text-[#44a0e3] border border-slate-200 px-6 py-3 rounded-full font-medium text-sm transition-all hover:bg-slate-900 hover:text-white flex items-center gap-2 shadow-sm hover:shadow-md"

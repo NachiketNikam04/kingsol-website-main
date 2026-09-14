@@ -221,7 +221,7 @@ export default function BrandDetail() {
       <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 text-center">
         <div className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-slate-200">
           <Building2 className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold font-lato text-slate-900 mb-2">Brand Showcase Not Found</h2>
+          <h2 className="text-2xl font-bold font-poppins text-slate-900 mb-2">Brand Showcase Not Found</h2>
           <p className="text-slate-600 text-sm mb-6">
             The requested manufacturer brand slug does not exist in our catalog database.
           </p>
@@ -290,7 +290,7 @@ export default function BrandDetail() {
               </span>
             </div>
 
-            <h1 className="mt-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight">
+            <h1 className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
               {brand.name}
             </h1>
 
@@ -310,7 +310,7 @@ export default function BrandDetail() {
               ))}
             </div>
 
-            <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal mb-5">
+            <p className="mt-4 font-poppins text-base md:text-lg text-slate-700 leading-relaxed mb-5">
               {brand.description}
             </p>
 
@@ -390,10 +390,10 @@ export default function BrandDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-16 w-full max-w-none"
         >
-          <span className="text-brand-green uppercase tracking-widest text-xs font-bold block mb-2">
+          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
-          <h2 className="mt-2 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
           <p className="text-slate-600 leading-relaxed font-normal text-base md:text-lg mt-6 mb-8">
@@ -402,7 +402,7 @@ export default function BrandDetail() {
 
           {/* Key Features & Standards Checklist (2-Column Grid) */}
           <div className="pt-8 border-t border-slate-100 mt-6">
-            <h3 className="mb-4 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+            <h3 className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
               {settings.features_title || 'Key Features & Standards'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -433,10 +433,10 @@ export default function BrandDetail() {
           className="bg-white text-slate-900 border border-slate-100 rounded-[2.5rem] p-8 sm:p-10 shadow-xs mb-20"
         >
           <div className="max-w-3xl mb-8">
-            <span className="text-brand-green uppercase tracking-widest text-xs font-bold block mb-2">
+            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
               {brand.capabilities_tagline || (typeof brand.brand_highlights === 'object' && !Array.isArray(brand.brand_highlights) ? (brand.brand_highlights as any)?.tagline : null) || 'CORPORATE CAPABILITIES'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mt-2">
+            <h2 className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mt-2">
               {brand.capabilities_heading || (typeof brand.brand_highlights === 'object' && !Array.isArray(brand.brand_highlights) ? (brand.brand_highlights as any)?.heading : null) || settings.capabilities_title || 'Brand Highlights'}
             </h2>
           </div>
@@ -489,10 +489,10 @@ export default function BrandDetail() {
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <div>
-                  <span className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block">
+                  <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
                     {settings.docs_tagline || 'TECHNICAL DOCUMENTATION'}
                   </span>
-                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
                     {settings.docs_title || 'Downloadable Specs & Certifications'}
                   </h2>
                 </div>
@@ -515,7 +515,7 @@ export default function BrandDetail() {
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-xs md:text-sm font-bold font-lato text-slate-600 leading-relaxed line-clamp-1 group-hover:text-[#44a0e3] transition-colors">
+                        <h4 className="text-xs md:text-sm font-bold font-poppins text-slate-600 leading-relaxed line-clamp-1 group-hover:text-[#44a0e3] transition-colors">
                           {doc.title}
                         </h4>
                         <span className="text-[10px] text-slate-400 font-medium">PDF Document</span>
@@ -539,10 +539,10 @@ export default function BrandDetail() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-7"
           >
-            <span className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block">
+            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
               PRODUCT SPECIFICATIONS
             </span>
-            <h2 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-4">
+            <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
               {brand.name} Certifications & Specs
             </h2>
             <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal mb-8">
@@ -550,7 +550,7 @@ export default function BrandDetail() {
             </p>
 
             <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-xs">
-              <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3">
+              <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3">
                 Standards & Certifications
               </h3>
               <ul className="space-y-3">
@@ -594,7 +594,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               PRODUCT RANGE
             </motion.span>
@@ -603,7 +603,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-2 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+              className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
             >
               Available Product Ranges
             </motion.h2>
@@ -628,14 +628,14 @@ export default function BrandDetail() {
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="lg:col-span-7"
             >
-              <h3 className="mt-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-2">
+              <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">
                 {brand.name} Company Profile
               </h3>
               <p className="mt-1 text-slate-700 text-base md:text-lg leading-relaxed font-normal mb-5">
                 {brand.company_profile_text || `${brand.name} is one of India's leading and trusted solar photovoltaic (PV) module manufacturers, with extensive experience in the renewable energy sector.`}
               </p>
 
-              <h4 className="mt-5 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight mb-2">Features:</h4>
+              <h4 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">Features:</h4>
 
               {/* Dynamic Categorized Features */}
               <div className="space-y-8">
@@ -699,7 +699,7 @@ export default function BrandDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+                className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
               >
                 {settings.slider_tagline || 'COMPONENT CATALOG PORTFOLIO'}
               </motion.span>
@@ -708,7 +708,7 @@ export default function BrandDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+                className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
                 {brand.name} Components Range
               </motion.h2>
@@ -837,7 +837,7 @@ export default function BrandDetail() {
                           </span>
                         </div>
 
-                        <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3">
+                        <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3">
                           {product.title || product.name}
                         </h3>
 

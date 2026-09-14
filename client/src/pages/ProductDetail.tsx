@@ -179,7 +179,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
               )}
             </div>
 
-            <h2 className="text-xl md:text-2xl font-bold font-lato text-slate-900 leading-snug">
+            <h2 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 leading-snug">
               {product.title || product.name}
             </h2>
             {product.description && (
@@ -191,7 +191,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
 
           {/* Key Features Bulleted List */}
           <div className="space-y-2 pt-1">
-            <h3 className="text-xs font-bold font-lato text-slate-400 uppercase tracking-wider">Key Features</h3>
+            <h3 className="text-xs font-bold font-poppins text-slate-400 uppercase tracking-wider">Key Features</h3>
             <ul className="space-y-2">
               {visibleFeatures.map((feature, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-xs md:text-sm text-slate-700 font-medium leading-normal">
@@ -219,7 +219,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
           {/* Technical Specs Grid */}
           {specEntries.length > 0 && (
             <div className="pt-3 border-t border-slate-100">
-              <h3 className="text-xs font-bold font-lato text-slate-400 uppercase tracking-wider mb-2.5">Technical Specs</h3>
+              <h3 className="text-xs font-bold font-poppins text-slate-400 uppercase tracking-wider mb-2.5">Technical Specs</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 {specEntries.slice(0, 6).map(([key, val], idx) => (
                   <div key={idx} className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
@@ -901,10 +901,10 @@ export default function ProductDetail() {
 
             {/* The Content (Text & Badges) */}
             <div className="relative z-20 p-8 md:p-12 lg:p-16 max-w-3xl">
-              <span className="px-3.5 py-1 text-brand-green font-bold text-xs uppercase tracking-wider inline-block mb-3">
+              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green inline-block">
                 Solar Inverters Portfolio
               </span>
-              <h1 className="text-3xl md:text-5xl font-extrabold font-lato text-slate-900 capitalize tracking-tight">
+              <h1 className="font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 capitalize">
                 {formattedBrand} — {formattedCategory}
               </h1>
               <p className="text-slate-600 text-sm md:text-base mt-3 leading-relaxed">
@@ -1032,7 +1032,7 @@ export default function ProductDetail() {
             {displayedInverters.length === 0 ? (
               <div className="p-12 bg-white rounded-3xl border border-slate-200 text-center space-y-3">
                 <Package className="w-12 h-12 text-slate-300 mx-auto" />
-                <h3 className="text-lg font-bold font-lato text-slate-800">No Inverters Found</h3>
+                <h3 className="text-lg font-bold font-poppins text-slate-800">No Inverters Found</h3>
                 <p className="text-slate-500 text-xs max-w-md mx-auto">
                   {selectedPhaseFilter !== 'All'
                     ? `No ${selectedPhaseFilter} inverter models found under category '${formattedCategory}'.`
@@ -1091,7 +1091,7 @@ export default function ProductDetail() {
       <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 text-center">
         <div className="max-w-md mx-auto bg-white p-8 rounded-3xl border border-slate-200">
           <Package className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold font-lato text-slate-900 mb-2">Product Specification Not Found</h2>
+          <h2 className="text-2xl font-bold font-poppins text-slate-900 mb-2">Product Specification Not Found</h2>
           <p className="text-slate-600 text-sm mb-6">
             The requested product component slug does not exist in our catalog database.
           </p>
@@ -1196,7 +1196,7 @@ export default function ProductDetail() {
               </Link>
             </div>
 
-            <h1 className="mt-5 text-4xl md:text-5xl font-extrabold font-lato text-slate-900 leading-tight max-w-3xl tracking-tight">
+            <h1 className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
               {prodTitle}
             </h1>
 
@@ -1293,10 +1293,10 @@ export default function ProductDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-20 w-full max-w-none"
         >
-          <span className="text-brand-green uppercase tracking-widest text-xs font-bold block mb-2">
+          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
-          <h2 className="mt-2 mb-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+          <h2 className="mt-2 mb-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
           <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
@@ -1305,7 +1305,7 @@ export default function ProductDetail() {
 
           {/* Key Features & Standards Checklist (2-Column Grid) */}
           <div className="pt-8 border-t mb-5 mt-6 border-slate-100">
-            <h3 className="mb-4 text-2xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+            <h3 className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
               {settings.features_title || 'Key Features & Standards'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1336,10 +1336,10 @@ export default function ProductDetail() {
           className="bg-white text-slate-900 border border-slate-100 rounded-[2.5rem] p-8 sm:p-10 shadow-xs mb-20"
         >
           <div className="max-w-3xl mb-8">
-            <span className="text-brand-green uppercase tracking-widest text-xs font-bold block mb-2">
+            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
               {product.capabilities_tagline || (typeof product.brand_highlights === 'object' && !Array.isArray(product.brand_highlights) ? (product.brand_highlights as any)?.tagline : null) || 'CORPORATE CAPABILITIES'}
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight mt-2">
+            <h2 className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight mt-2">
               {product.capabilities_heading || (typeof product.brand_highlights === 'object' && !Array.isArray(product.brand_highlights) ? (product.brand_highlights as any)?.heading : null) || settings.capabilities_title || 'Brand Highlights'}
             </h2>
           </div>
@@ -1396,10 +1396,10 @@ export default function ProductDetail() {
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <div>
-                  <span className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block">
+                  <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
                     {settings.docs_tagline || 'TECHNICAL DOCUMENTATION'}
                   </span>
-                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight">
+                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
                     {settings.docs_title || 'Downloadable Specs & Certifications'}
                   </h2>
                 </div>
@@ -1422,7 +1422,7 @@ export default function ProductDetail() {
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-xs md:text-sm font-bold font-lato text-slate-900 group-hover:text-[#44a0e3] transition-colors line-clamp-1">
+                        <h4 className="text-xs md:text-sm font-bold font-poppins text-slate-900 group-hover:text-[#44a0e3] transition-colors line-clamp-1">
                           {doc.title}
                         </h4>
                         <span className="text-[10px] text-slate-400 font-medium">PDF Document</span>
@@ -1446,7 +1446,7 @@ export default function ProductDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                  className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+                  className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
                 >
                   {settings.slider_tagline || 'COMPONENT CATALOG PORTFOLIO'}
                 </motion.span>
@@ -1455,7 +1455,7 @@ export default function ProductDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+                  className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                 >
                   Related Products ({relatedProducts.length})
                 </motion.h2>
@@ -1520,7 +1520,7 @@ export default function ProductDetail() {
                         </div>
 
                         {/* 2. Title & Description Truncation */}
-                        <h3 className="text-base md:text-lg font-bold font-lato text-slate-900 leading-snug line-clamp-1 mb-1">
+                        <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug line-clamp-1 mb-1">
                           {relProd.title || relProd.name}
                         </h3>
                         <p className="text-base md:text-lg text-slate-600 line-clamp-2 leading-relaxed mb-3">

@@ -105,7 +105,7 @@ export default function AboutUs() {
           <div className="overflow-visible">
             <motion.h1
               variants={itemVariants}
-              className="mt-5 text-5xl md:text-6xl font-bold font-lato text-slate-900 leading-tight max-w-2xl tracking-tight"
+              className="mt-5 text-5xl md:text-6xl font-bold font-poppins text-slate-900 leading-tight max-w-2xl tracking-tight"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h1>

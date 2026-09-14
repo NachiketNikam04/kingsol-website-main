@@ -132,7 +132,7 @@ export default function Products() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {settings.tagline || 'PORTFOLIO & PRODUCTS'}
           </motion.span>
@@ -140,7 +140,7 @@ export default function Products() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-5xl md:text-6xl font-bold font-lato text-slate-900 leading-tight max-w-2xl tracking-tight"
+            className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-2xl"
           >
             {renderHeadline()}
           </motion.h1>
@@ -238,7 +238,7 @@ export default function Products() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                    className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+                    className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
                   >
                     {settings.brands_tagline || 'AUTHORIZED MANUFACTURERS'}
                   </motion.span>
@@ -247,7 +247,7 @@ export default function Products() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+                    className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight"
                   >
                     {settings.brands_title || 'Partner Brands'}
                   </motion.h2>
@@ -288,7 +288,7 @@ export default function Products() {
                         </div>
 
                         {/* 2. Brand Name & Truncated Description */}
-                        <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-2 tracking-tight">
+                        <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2 tracking-tight">
                           {brand.name}
                         </h3>
                         <p className="text-base md:text-lg text-slate-600 line-clamp-3 leading-relaxed mb-4">
@@ -353,7 +353,7 @@ export default function Products() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                  className="text-brand-green uppercase tracking-widest text-sm mb-4 font-bold block"
+                  className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
                 >
                   {settings.products_tagline || 'COMPONENT SPECIFICATIONS'}
                 </motion.span>
@@ -362,7 +362,7 @@ export default function Products() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-3xl md:text-4xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+                  className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight"
                 >
                   {settings.products_title || 'Featured Components'}
                 </motion.h2>
@@ -468,7 +468,7 @@ export default function Products() {
                             </div>
 
                             {/* 2. Title & Description Truncation */}
-                            <h3 className="text-base md:text-lg font-bold font-lato text-slate-900 leading-snug line-clamp-1 mb-1">
+                            <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug line-clamp-1 mb-1">
                               {product.name}
                             </h3>
                             <p className="text-base md:text-lg text-slate-600 line-clamp-2 leading-relaxed mb-3">

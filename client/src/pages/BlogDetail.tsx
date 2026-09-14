@@ -49,7 +49,7 @@ export default function BlogDetail() {
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#fdfcf8] text-slate-900 pt-48 pb-24">
-        <h1 className="text-3xl font-extrabold font-lato text-slate-900 mb-4">Article Not Found</h1>
+        <h1 className="text-3xl font-extrabold font-poppins text-slate-900 mb-4">Article Not Found</h1>
         <p className="text-slate-600 mb-8">The requested journal post does not exist in our database.</p>
         <button
           onClick={() => navigate('/blogs')}
@@ -87,7 +87,7 @@ export default function BlogDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 text-3xl md:text-4xl font-bold font-lato text-white leading-tight tracking-tight mb-8"
+              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-white leading-tight tracking-tight mb-8"
             >
               {post.title}
             </motion.h1>

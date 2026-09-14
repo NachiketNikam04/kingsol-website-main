@@ -97,7 +97,7 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div className="md:col-span-2">
-            <h4 className="text-xs uppercase font-bold font-lato text-brand-orange tracking-wider mb-6">
+            <h4 className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-orange mb-6">
               Solutions
             </h4>
             <ul className="space-y-3 text-sm text-slate-600 font-medium">
@@ -126,7 +126,7 @@ export const Footer: React.FC = () => {
 
           {/* Enterprise */}
           <div className="md:col-span-2">
-            <h4 className="text-xs uppercase font-bold font-lato text-brand-orange tracking-wider mb-6">
+            <h4 className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-orange mb-6">
               Company
             </h4>
             <ul className="space-y-3 text-sm text-slate-600 font-medium">
@@ -155,7 +155,7 @@ export const Footer: React.FC = () => {
 
           {/* Contact Details */}
           <div className="md:col-span-3">
-            <h4 className="text-xs uppercase font-bold font-lato text-[#44a0e3] tracking-wider mb-6">
+            <h4 className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-[#44a0e3] mb-6">
               {settings.hq_label || 'Global HQ'}
             </h4>
             <ul className="space-y-4 text-sm text-slate-600 font-medium">

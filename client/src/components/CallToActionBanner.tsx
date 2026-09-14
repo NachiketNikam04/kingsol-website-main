@@ -62,7 +62,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="text-[#78C257] font-extrabold tracking-widest text-xs sm:text-sm uppercase mb-3 drop-shadow-xs"
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-[#78C257] drop-shadow-xs"
         >
           {tagline}
         </motion.span>
@@ -73,7 +73,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-lato text-white leading-tight max-w-3xl tracking-tight drop-shadow-sm"
+          className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-white leading-tight max-w-3xl drop-shadow-sm"
         >
           {renderDynamicHeadline(headline, highlightWord)}
         </motion.h2>

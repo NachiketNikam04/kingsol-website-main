@@ -143,7 +143,7 @@ export const TestimonialsSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="mt-5 text-5xl md:text-6xl font-bold font-lato text-slate-900 leading-tight max-w-2xl tracking-tight"
+              className="mt-5 text-5xl md:text-6xl font-bold font-poppins text-slate-900 leading-tight max-w-2xl tracking-tight"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h2>
@@ -192,7 +192,7 @@ export const TestimonialsSection: React.FC = () => {
                         )}
                       </div>
                       <div>
-                        <h4 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb">{item.name}</h4>
+                        <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb">{item.name}</h4>
                         <p className="text-slate-600 leading-relaxed mb">{item.role}</p>
                       </div>
                     </div>
@@ -201,7 +201,7 @@ export const TestimonialsSection: React.FC = () => {
                       {'★'.repeat(item.rating || 5)}
                     </div>
 
-                    <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-4">
+                    <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-4">
                       "{item.review}"
                     </p>
                   </div>
@@ -230,7 +230,7 @@ export const TestimonialsSection: React.FC = () => {
                           )}
                         </div>
                         <div>
-                          <h4 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb">{item.name}</h4>
+                          <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb">{item.name}</h4>
                           <p className="text-slate-600 leading-relaxed mb">{item.role}</p>
                         </div>
                       </div>
@@ -239,7 +239,7 @@ export const TestimonialsSection: React.FC = () => {
                         {'★'.repeat(item.rating || 5)}
                       </div>
 
-                      <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-4">
+                      <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-4">
                         "{item.review}"
                       </p>
                     </div>
@@ -271,7 +271,7 @@ export const TestimonialsSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mt-5 text-4xl sm:text-5xl font-bold font-lato text-slate-900 leading-tight tracking-tight"
+            className="mt-5 text-4xl sm:text-5xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -310,7 +310,7 @@ export const TestimonialsSection: React.FC = () => {
                     )}
                   </div>
                   <div>
-                    <h4 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb">{item.name}</h4>
+                    <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb">{item.name}</h4>
                     <p className="text-slate-600 leading-relaxed mb">{item.role}</p>
                   </div>
                 </div>
@@ -319,7 +319,7 @@ export const TestimonialsSection: React.FC = () => {
                   {'★'.repeat(item.rating || 5)}
                 </div>
 
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-4">
+                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-4">
                   "{item.review}"
                 </p>
               </div>

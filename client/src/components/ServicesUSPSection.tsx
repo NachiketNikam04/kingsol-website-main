@@ -134,7 +134,7 @@ export const ServicesUSPSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mt-5 text-5xl md:text-6xl font-bold font-lato text-slate-900 leading-tight max-w-2xl tracking-tight"
+            className="mt-5 text-5xl md:text-6xl font-bold font-poppins text-slate-900 leading-tight max-w-2xl tracking-tight"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -193,12 +193,12 @@ export const ServicesUSPSection: React.FC = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl md:text-2xl font-bold font-lato text-slate-900 mb-3">
+                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3">
                   {service.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-8">
+                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8">
                   {service.description}
                 </p>
               </div>
