@@ -149,7 +149,7 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full bg-white text-slate-900 py-16 sm:py-24 border-b border-slate-100 flex flex-col justify-center">
+    <section className="relative w-full bg-[#fdfcf8] text-slate-900 py-16 sm:py-24 border-b border-slate-100 flex flex-col justify-center">
       {/* Main Content Wrapper */}
       <div className="relative max-w-7xl mx-auto px-6 w-full">
         {/* Top 2-Column Flex */}

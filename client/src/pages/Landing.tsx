@@ -166,7 +166,7 @@ export const Landing: React.FC = () => {
   return (
     <div className="w-full relative bg-[#fdfcf8] text-slate-900 font-poppins">
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen w-full flex flex-col justify-center bg-slate-950 overflow-hidden pt-28 sm:pt-36 pb-14 sm:pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen w-full flex flex-col justify-center bg-slate-950 overflow-hidden pt-28 sm:pt-36 pb-20 sm:pb-28 lg:pb-32 px-4 sm:px-6 lg:px-8">
         {/* Background Crossfade Carousel Layer */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           {/* Outgoing Slide Fixed Background Base */}
@@ -356,6 +356,26 @@ export const Landing: React.FC = () => {
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Cloud Shape Divider Transition */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] z-30 pointer-events-none">
+          <svg
+            className="relative block w-full h-10 sm:h-14 md:h-18 lg:h-24 fill-white"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Soft background cloud layer */}
+            <path
+              d="M0,0 C150,90 350,-40 500,50 C650,140 900,-20 1200,40 L1200,120 L0,120 Z"
+              opacity="0.3"
+            />
+            {/* Solid foreground cloud layer */}
+            <path
+              d="M0,40 C120,10 240,70 380,40 C520,10 640,60 780,30 C920,0 1060,50 1200,20 L1200,120 L0,120 Z"
+            />
+          </svg>
         </div>
       </section>
 
