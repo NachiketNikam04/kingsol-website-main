@@ -1,7 +1,7 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Sun, Zap, BatteryCharging, Factory } from 'lucide-react';
+import { ShieldCheck, Sun, Zap, BatteryCharging, Factory } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { AboutSection } from '../components/AboutSection';
 import { PartnersSection } from '../components/PartnersSection';
@@ -338,173 +338,128 @@ export const Landing: React.FC = () => {
                 {currentSubtitle}
               </motion.p>
 
-              {/* Action & Brands Row (Inline on XL, stacked on smaller screens) */}
+              {/* Brand Marquee Row (Full-width breakout directly below hero description) */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-                className="flex flex-col xl:flex-row items-start xl:items-center gap-6 mt-8 w-full max-w-full"
+                className="w-full mt-4 sm:mt-6 flex flex-col gap-3"
               >
-                {/* The Buttons */}
-                <div className="flex flex-wrap items-center gap-4 flex-shrink-0">
-                  
-                  {/* Primary Button ("Request a Free Quote") */}
-                  <motion.div whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
-                    <Link
-                      to="/contact"
-                      className="relative overflow-hidden group flex items-center justify-between gap-4 rounded-full pl-8 pr-2 py-2 bg-[#78C257] border border-[#78C257] shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto cursor-pointer"
-                    >
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white transition-transform duration-500 ease-[cubic-bezier(0.3,1,0.8,1)] group-hover:scale-[25] z-0 pointer-events-none" />
-                      <span className="relative z-10 font-bold text-sm uppercase tracking-wider text-white group-hover:text-[#78C257] transition-colors duration-300">
-                        REQUEST A FREE QUOTE
-                      </span>
-                      <span className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full text-white group-hover:text-[#78C257] transition-colors duration-300">
-                        <ArrowRight className="w-5 h-5 text-[#78C257] group-hover:translate-x-0.5 transition-transform duration-300" />
-                      </span>
-                    </Link>
-                  </motion.div>
+                {/* Overline Label */}
+                <span className="text-xs uppercase tracking-widest text-slate-300 whitespace-nowrap font-bold font-poppins">
+                  TRUSTED BY LEADING BRANDS
+                </span>
 
-                  {/* Secondary Button ("Explore Solutions") */}
-                  <motion.div whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
-                    <Link
-                      to="/products"
-                      className="relative overflow-hidden group flex items-center justify-between gap-4 rounded-full pl-8 pr-2 py-2 bg-white/90 backdrop-blur-xs border border-slate-300/90 shadow-md hover:shadow-xl transition-all duration-300 w-full sm:w-auto cursor-pointer"
-                    >
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#44a0e3] transition-transform duration-500 ease-[cubic-bezier(0.3,1,0.8,1)] group-hover:scale-[25] z-0 pointer-events-none" />
-                      <span className="relative z-10 font-bold text-sm uppercase tracking-wider text-[#44a0e3] group-hover:text-white transition-colors duration-300">
-                        EXPLORE SOLUTIONS
-                      </span>
-                      <span className="relative z-10 flex items-center justify-center w-10 h-10 rounded-full text-slate-800 group-hover:text-white transition-colors duration-300">
-                        <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-0.5 transition-transform duration-300" />
-                      </span>
-                    </Link>
-                  </motion.div>
-                </div>
+                {/* Full-Width Viewport-Spanning Marquee Container */}
+                <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,white_5%,white_95%,transparent)]">
+                  <div className="flex w-max animate-marquee gap-8 md:gap-12 items-center pr-8 md:pr-12">
+                    {/* Set 1 */}
+                    {activeMarqueeLogos.map((logo, index) => {
+                      const destination = logo.linked_brand
+                        ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
+                        : (logo.route_url?.trim() || null);
 
-                {/* The Divider */}
-                <div className="hidden xl:block w-px h-12 bg-slate-300/60 mx-2 flex-shrink-0" />
+                      const isExternal =
+                        destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
 
-                {/* The Brand Marquee */}
-                <div className="flex-1 min-w-0 w-full overflow-hidden flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 [mask-image:linear-gradient(to_right,white_20%,transparent)]">
-                  {/* Text flipped to slate-300 to stand out against dark gradient */}
-                  <span className="text-xs uppercase tracking-widest text-slate-300 whitespace-nowrap flex-shrink-0 font-bold">
-                    TRUSTED BY LEADING BRANDS
-                  </span>
+                      const itemClasses = `flex-shrink-0 flex items-center justify-center space-x-3 text-slate-900 font-bold tracking-tight text-sm md:text-base transition-all duration-300 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-xl px-6 py-2 shadow-sm ${
+                        destination ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''
+                      }`;
 
-                  {/* Marquee Wrapper */}
-                  <div className="relative overflow-hidden flex-1 min-w-0 w-full group py-2">
-                    
-                    {/* Animated Track */}
-                    <div className="flex w-max animate-marquee gap-8 md:gap-12 items-center pr-8 md:pr-12">
-                      
-                      {/* Set 1 */}
-                      {activeMarqueeLogos.map((logo, index) => {
-                        const destination = logo.linked_brand
-                          ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
-                          : (logo.route_url?.trim() || null);
+                      const logoContent = logo.image_url ? (
+                        <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="h-8 md:h-12 object-contain max-w-[180px]" />
+                      ) : (
+                        <span>{logo.name}</span>
+                      );
 
-                        const isExternal =
-                          destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
-
-                        const itemClasses = `flex-shrink-0 flex items-center justify-center space-x-3 text-slate-900 font-bold tracking-tight text-sm md:text-base transition-all duration-300 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-xl px-6 py-2 shadow-sm ${
-                          destination ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''
-                        }`;
-
-                        const logoContent = logo.image_url ? (
-                          <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="h-8 md:h-12 object-contain max-w-[180px]" />
-                        ) : (
-                          <span>{logo.name}</span>
-                        );
-
-                        if (destination) {
-                          if (isExternal) {
-                            return (
-                              <a
-                                key={`set1-${logo.name}-${index}`}
-                                href={destination}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={itemClasses}
-                              >
-                                {logoContent}
-                              </a>
-                            );
-                          }
+                      if (destination) {
+                        if (isExternal) {
                           return (
-                            <Link
+                            <a
                               key={`set1-${logo.name}-${index}`}
-                              to={destination}
+                              href={destination}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className={itemClasses}
                             >
                               {logoContent}
-                            </Link>
+                            </a>
                           );
                         }
-
                         return (
-                          <div
+                          <Link
                             key={`set1-${logo.name}-${index}`}
+                            to={destination}
                             className={itemClasses}
                           >
                             {logoContent}
-                          </div>
+                          </Link>
                         );
-                      })}
+                      }
 
-                      {/* Set 2 (Identical Duplicate for Infinite Loop) */}
-                      {activeMarqueeLogos.map((logo, index) => {
-                        const destination = logo.linked_brand
-                          ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
-                          : (logo.route_url?.trim() || null);
+                      return (
+                        <div
+                          key={`set1-${logo.name}-${index}`}
+                          className={itemClasses}
+                        >
+                          {logoContent}
+                        </div>
+                      );
+                    })}
 
-                        const isExternal =
-                          destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
+                    {/* Set 2 (Identical Duplicate for Infinite Loop) */}
+                    {activeMarqueeLogos.map((logo, index) => {
+                      const destination = logo.linked_brand
+                        ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
+                        : (logo.route_url?.trim() || null);
 
-                        const itemClasses = `flex-shrink-0 flex items-center justify-center space-x-3 text-slate-900 font-bold tracking-tight text-sm md:text-base transition-all duration-300 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-xl px-6 py-2 shadow-sm ${
-                          destination ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''
-                        }`;
+                      const isExternal =
+                        destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
 
-                        const logoContent = logo.image_url ? (
-                          <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="h-8 md:h-12 object-contain max-w-[180px]" />
-                        ) : (
-                          <span>{logo.name}</span>
-                        );
+                      const itemClasses = `flex-shrink-0 flex items-center justify-center space-x-3 text-slate-900 font-bold tracking-tight text-sm md:text-base transition-all duration-300 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-xl px-6 py-2 shadow-sm ${
+                        destination ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''
+                      }`;
 
-                        if (destination) {
-                          if (isExternal) {
-                            return (
-                              <a
-                                key={`set2-${logo.name}-${index}`}
-                                href={destination}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={itemClasses}
-                              >
-                                {logoContent}
-                              </a>
-                            );
-                          }
+                      const logoContent = logo.image_url ? (
+                        <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="h-8 md:h-12 object-contain max-w-[180px]" />
+                      ) : (
+                        <span>{logo.name}</span>
+                      );
+
+                      if (destination) {
+                        if (isExternal) {
                           return (
-                            <Link
+                            <a
                               key={`set2-${logo.name}-${index}`}
-                              to={destination}
+                              href={destination}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className={itemClasses}
                             >
                               {logoContent}
-                            </Link>
+                            </a>
                           );
                         }
-
                         return (
-                          <div
+                          <Link
                             key={`set2-${logo.name}-${index}`}
+                            to={destination}
                             className={itemClasses}
                           >
                             {logoContent}
-                          </div>
+                          </Link>
                         );
-                      })}
-                    </div>
+                      }
+
+                      return (
+                        <div
+                          key={`set2-${logo.name}-${index}`}
+                          className={itemClasses}
+                        >
+                          {logoContent}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </motion.div>

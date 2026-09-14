@@ -2,8 +2,7 @@ import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X, ExternalLink } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+
 
 export interface MediaItem {
   id?: number | string;
@@ -126,8 +125,6 @@ export const MediaPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-16 text-slate-900 overflow-x-clip">
-      <Navbar />
-
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Block */}
         <div className="mb-16">
@@ -290,7 +287,6 @@ export const MediaPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <Footer />
     </div>
   );
 };

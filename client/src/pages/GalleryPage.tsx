@@ -2,8 +2,7 @@ import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, ZoomIn } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+
 
 export interface GalleryItem {
   id: number;
@@ -122,8 +121,6 @@ export const GalleryPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-16 text-slate-900 overflow-x-clip">
-      <Navbar />
-
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Block */}
         <div className="mb-12">
@@ -250,8 +247,6 @@ export const GalleryPage: React.FC = () => {
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 };
