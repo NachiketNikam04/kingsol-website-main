@@ -358,22 +358,22 @@ export const Landing: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Cloud Shape Divider Transition */}
+        {/* Cloud Shape Divider Transition (Asymmetrical Low-to-High) */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] z-30 pointer-events-none">
           <svg
-            className="relative block w-full h-10 sm:h-14 md:h-18 lg:h-24 fill-white"
-            viewBox="0 0 1200 120"
+            className="relative block w-full h-12 sm:h-18 md:h-24 lg:h-32 xl:h-36 fill-[#fdfcf8]"
+            viewBox="0 0 1440 160"
             preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* Soft background cloud layer */}
+            {/* Background Billowing Cloud Puff Layer (for depth) */}
             <path
-              d="M0,0 C150,90 350,-40 500,50 C650,140 900,-20 1200,40 L1200,120 L0,120 Z"
-              opacity="0.3"
+              d="M0,142 C60,138 120,126 180,130 C230,105 300,98 360,110 C410,58 485,54 540,72 C600,28 680,24 740,42 C800,2 895,-2 960,18 C1020,-18 1120,-16 1180,4 C1240,-4 1310,-2 1360,16 C1390,8 1420,12 1440,24 L1440,160 L0,160 Z"
+              opacity="0.4"
             />
-            {/* Solid foreground cloud layer */}
+            {/* Foreground Asymmetrical Fluffy Cloud Path (Low on Left -> High & Fluffy on Right) */}
             <path
-              d="M0,40 C120,10 240,70 380,40 C520,10 640,60 780,30 C920,0 1060,50 1200,20 L1200,120 L0,120 Z"
+              d="M0,135 C35,130 75,122 120,125 C160,110 220,112 260,118 C295,98 350,92 390,102 C425,78 480,72 520,82 C555,56 605,52 640,68 C675,40 730,36 770,54 C805,22 870,18 910,38 C950,5 1020,4 1060,22 C1100,-8 1170,-6 1210,12 C1250,2 1300,6 1340,26 C1375,18 1415,22 1440,38 L1440,160 L0,160 Z"
             />
           </svg>
         </div>
