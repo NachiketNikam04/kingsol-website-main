@@ -132,7 +132,7 @@ export const FeaturedProductsSection: React.FC = () => {
   const defaultImageFallback = 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=600&q=80';
 
   return (
-    <section className="w-full py-[72px] bg-[#fdfcf8] overflow-hidden text-slate-900">
+    <section className="w-full py-[64px] bg-[#fdfcf8] overflow-hidden text-slate-900">
       {/* Header Area */}
       <div className="text-center max-w-3xl mx-auto px-6 mb-10">
         <motion.span
