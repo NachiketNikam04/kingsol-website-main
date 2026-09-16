@@ -361,7 +361,7 @@ export const Landing: React.FC = () => {
         {/* Cloud Shape Divider Transition (Asymmetrical Low-to-High) */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform translate-y-[1px] z-30 pointer-events-none">
           <svg
-            className="relative block w-full h-12 sm:h-18 md:h-24 lg:h-32 xl:h-36 fill-[#fdfcf8]"
+            className="relative block w-full h-[30px] sm:h-[45px] md:h-[60px] fill-[#fdfcf8]"
             viewBox="0 0 1440 160"
             preserveAspectRatio="none"
             xmlns="http://www.w3.org/2000/svg"
