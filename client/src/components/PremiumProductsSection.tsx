@@ -66,9 +66,11 @@ export const PremiumProductsSection: React.FC = () => {
 
   // Slider State & Refs
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const isDown = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
+  const hasDragged = useRef(false);
 
   useEffect(() => {
     async function loadSolutionsData() {
@@ -99,22 +101,29 @@ export const PremiumProductsSection: React.FC = () => {
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
     isDown.current = true;
+    setIsDragging(true);
+    hasDragged.current = false;
     startX.current = e.pageX - scrollRef.current.offsetLeft;
     scrollLeft.current = scrollRef.current.scrollLeft;
   };
 
   const handleMouseLeave = () => {
     isDown.current = false;
+    setIsDragging(false);
   };
 
   const handleMouseUp = () => {
     isDown.current = false;
+    setIsDragging(false);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDown.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
+    if (Math.abs(x - startX.current) > 5) {
+      hasDragged.current = true;
+    }
     const walk = (x - startX.current) * 2;
     scrollRef.current.scrollLeft = scrollLeft.current - walk;
   };
@@ -180,12 +189,16 @@ export const PremiumProductsSection: React.FC = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className="flex gap-6 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-8 scrollbar-hide cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className={`flex gap-6 w-full overflow-x-auto px-6 pb-8 scrollbar-hide select-none transition-all [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden ${isDragging ? 'snap-none cursor-grabbing' : 'snap-x snap-mandatory cursor-grab scroll-smooth'}`}
         >
           {cards.map((product) => (
             <Link
               to={`/products/${product.category_slug}`}
               key={product.id}
+              draggable={false}
+              onClick={(e) => {
+                if (hasDragged.current) e.preventDefault();
+              }}
               className="w-[80vw] sm:w-[320px] shrink-0 bg-white rounded-2xl p-4 flex flex-col transition-all duration-500 hover:shadow-lg border border-slate-200/60 group cursor-pointer snap-start select-none"
             >
               {/* Top Image Container (Reduced to 136px) */}
