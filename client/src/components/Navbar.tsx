@@ -211,9 +211,23 @@ export const Navbar: React.FC = () => {
   const activeCategories = productCategories.length > 0 ? productCategories : fallbackCategories;
   const activeServices = servicesList.length > 0 ? servicesList : fallbackServices;
 
-  const priorityOrder = ['Solar Module', 'Solar Inverter', 'BESS', 'Solar Cable'];
+  const isBessCat = (cat: CategoryNav) => {
+    const slug = (cat.slug || '').toLowerCase();
+    const name = (cat.name || '').toLowerCase();
+    return slug === 'bess' || name === 'bess' || name.includes('battery energy');
+  };
 
-  const sortedCategories = [...activeCategories].sort((a, b) => {
+  const fallbackBessCategory = fallbackCategories.find(isBessCat)!;
+  const bessCategory = activeCategories.find(isBessCat) || fallbackBessCategory;
+  const nonBessCategories = activeCategories.filter((cat) => !isBessCat(cat));
+  const bessBrands = (bessCategory?.brands && bessCategory.brands.length > 0)
+    ? bessCategory.brands
+    : (fallbackBessCategory?.brands || []);
+  const bessSlug = bessCategory?.slug || 'bess';
+
+  const priorityOrder = ['Solar Module', 'Solar Inverter', 'Solar Cable'];
+
+  const sortedCategories = [...nonBessCategories].sort((a, b) => {
     const indexA = priorityOrder.findIndex((name) =>
       a.name.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(a.name.toLowerCase())
     );
@@ -385,14 +399,12 @@ export const Navbar: React.FC = () => {
                 {/* Level 2: Dynamic Categories */}
                 {sortedCategories.map((cat, catIdx) => {
                   const cSlug = cat.slug || toSlug(cat.name);
-                  const isBessCat = cSlug.toLowerCase() === 'bess' || cat.name.toLowerCase() === 'bess' || cat.name.toLowerCase().includes('battery energy');
-                  const catDisplayName = isBessCat ? 'BESS' : cat.name;
 
                   return (
                     <li key={cat.id || catIdx} className="relative group/category">
                       <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
                         <Link to={`/products/${cSlug}`} className="hover:text-slate-900 flex-1">
-                          {catDisplayName}
+                          {cat.name}
                         </Link>
                         {cat.brands && cat.brands.length > 0 && (
                           <span className="text-xl font-light leading-none transition-transform group-hover/category:translate-x-1 shrink-0 ml-2">
@@ -406,7 +418,7 @@ export const Navbar: React.FC = () => {
                         <ul className="absolute top-0 left-full -ml-2 w-64 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/category:opacity-100 group-hover/category:visible transition-all duration-200">
                           {cat.brands.map((brand, brandIdx) => {
                             const bSlug = brand.slug || toSlug(brand.name);
-                            const isSeriesCat = cSlug.toLowerCase().includes('inverter') || cat.name.toLowerCase().includes('inverter') || isBessCat || cSlug.toLowerCase().includes('bess');
+                            const isSeriesCat = cSlug.toLowerCase().includes('inverter') || cat.name.toLowerCase().includes('inverter');
                             const rawSubItems = isSeriesCat ? (brand.subcategories && brand.subcategories.length > 0 ? brand.subcategories : (brand.products || [])) : (brand.products || []);
 
                             // Strictly deduplicate by lowercase name / slug
@@ -451,6 +463,81 @@ export const Navbar: React.FC = () => {
                                     })}
                                   </ul>
                                 )}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </li>
+
+            {/* BESS Dropdown */}
+            <li className="relative group py-2">
+              <Link
+                className="hover:text-brand-green transition-colors flex items-center gap-1.5"
+                to={`/products/${bessSlug}`}
+              >
+                BESS <span className="text-xs">▼</span>
+              </Link>
+
+              {/* Level 1: Main Dropdown */}
+              <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
+                <li>
+                  <Link
+                    className="block px-5 py-3.5 hover:bg-slate-50 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
+                    to={`/products/${bessSlug}`}
+                  >
+                    All BESS
+                  </Link>
+                </li>
+
+                {/* Level 2: Dynamic BESS Brands */}
+                {bessBrands.map((brand, brandIdx) => {
+                  const bSlug = brand.slug || toSlug(brand.name);
+                  const rawSubItems = (brand.subcategories && brand.subcategories.length > 0)
+                    ? brand.subcategories
+                    : (brand.products || []);
+
+                  // Strictly deduplicate by lowercase name / slug
+                  const uniqueItemsMap = new Map<string, any>();
+                  rawSubItems.forEach((item: any) => {
+                    const nameKey = (item.name || item.title || '').trim().toLowerCase();
+                    if (nameKey && !uniqueItemsMap.has(nameKey)) {
+                      uniqueItemsMap.set(nameKey, item);
+                    }
+                  });
+                  const itemsToMap = Array.from(uniqueItemsMap.values());
+                  const hasSubItems = itemsToMap.length > 0;
+
+                  return (
+                    <li key={brand.id || brandIdx} className="relative group/bessBrand">
+                      <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                        <Link to={`/products/${bessSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
+                          {brand.name}
+                        </Link>
+                        {hasSubItems && (
+                          <span className="text-xl font-light leading-none transition-transform group-hover/bessBrand:translate-x-1 shrink-0 ml-2">
+                            →
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Level 3: Sub-Categories / Series / Products under Brand */}
+                      {hasSubItems && (
+                        <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/bessBrand:opacity-100 group-hover/bessBrand:visible transition-all duration-200">
+                          {itemsToMap.map((item: any, itemIdx: number) => {
+                            const subSlug = item.slug || toSlug(item.name);
+                            return (
+                              <li key={item.id || itemIdx}>
+                                <Link
+                                  className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
+                                  to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
+                                >
+                                  <span className="line-clamp-2">{item.name}</span>
+                                </Link>
                               </li>
                             );
                           })}
@@ -584,6 +671,14 @@ export const Navbar: React.FC = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Products
+            </Link>
+
+            <Link
+              className="hover:text-brand-green transition-colors py-1 text-base"
+              to={`/products/${bessSlug}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              BESS
             </Link>
 
             {featureFlags.show_services && (
