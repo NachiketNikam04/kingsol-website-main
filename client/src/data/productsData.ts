@@ -1,4 +1,4 @@
-import { getAssetUrl, parseDatasheets } from '../utils/assetUrl';
+import { API_BASE_URL, getAssetUrl, parseDatasheets } from '../utils/assetUrl';
 
 export interface Product {
   id: string | number;
@@ -240,8 +240,6 @@ export function getBrandBySlug(brandSlug: string): Brand | undefined {
 export function getProductBySlug(productSlug: string): Product | undefined {
   return initialProducts.find((p) => p.slug === productSlug);
 }
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '${API_BASE_URL}';
 
 export async function fetchLiveCategories(): Promise<Category[]> {
   try {

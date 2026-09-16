@@ -291,7 +291,7 @@ export default function Products() {
                         <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2 tracking-tight">
                           {brand.name}
                         </h3>
-                        <p className="text-base md:text-lg text-slate-600 line-clamp-3 leading-relaxed mb-4">
+                        <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1 line-clamp-3 mb-4">
                           {brand.description || 'Authorized tier-1 solar component manufacturer providing high-performance equipment and factory support.'}
                         </p>
 
@@ -471,7 +471,7 @@ export default function Products() {
                             <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug line-clamp-1 mb-1">
                               {product.name}
                             </h3>
-                            <p className="text-base md:text-lg text-slate-600 line-clamp-2 leading-relaxed mb-3">
+                            <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1 line-clamp-2 mb-3">
                               {product.description || 'High-efficiency engineered solar component with factory direct warranty support.'}
                             </p>
 

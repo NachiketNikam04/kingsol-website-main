@@ -269,7 +269,7 @@ export default function BrandPage() {
                         {product.name}
                       </h3>
                     </Link>
-                    <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-6 line-clamp-2">{product.description}</p>
+                    <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1 mb-6 line-clamp-2">{product.description}</p>
 
                     <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6 flex flex-col gap-2 text-xs text-slate-700 font-medium">
                       {product.specs?.wattage && (
