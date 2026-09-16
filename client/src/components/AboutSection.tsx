@@ -1,6 +1,6 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, Sun } from 'lucide-react';
+import { ArrowRight, Sun, Users, Award, Package } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface CountUpProps {
@@ -9,6 +9,7 @@ interface CountUpProps {
   suffix?: string;
   label: string;
   duration?: number;
+  icon?: React.ReactNode;
 }
 
 interface AboutSettings {
@@ -81,17 +82,32 @@ function useCountUp(endValue: number, duration: number = 2000) {
   return { count, ref: elementRef };
 }
 
-const StatItem: React.FC<CountUpProps> = ({ endValue, prefix = '', suffix = '+', label, duration = 2000 }) => {
+const StatItem: React.FC<CountUpProps> = ({
+  endValue,
+  prefix = '',
+  suffix = '+',
+  label,
+  duration = 2000,
+  icon,
+}) => {
   const { count, ref } = useCountUp(endValue, duration);
 
   return (
-    <div ref={ref} className="flex flex-col gap-1 items-center md:items-start min-w-[200px] flex-1">
-      <div className="text-5xl sm:text-6xl font-bold text-brand-orange leading-none p-0 m-0">
-        {prefix}
-        {count.toLocaleString()}
-        {suffix}
+    <div
+      ref={ref}
+      className="flex-1 min-w-[250px] bg-white rounded-[2rem] border border-slate-200/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+    >
+      {icon && (
+        <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-brand-orange shadow-sm border border-slate-100">
+          {icon}
+        </div>
+      )}
+      <div className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 flex items-center gap-1">
+        {prefix && <span>{prefix}</span>}
+        <span>{count.toLocaleString()}</span>
+        {suffix && <span className="text-brand-orange">{suffix}</span>}
       </div>
-      <p className="text-slate-600 text-base sm:text-lg p-0 m-0 font-medium">{label}</p>
+      <p className="text-slate-600 font-medium text-sm sm:text-base">{label}</p>
     </div>
   );
 };
@@ -243,7 +259,7 @@ export const AboutSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-          className="flex flex-wrap items-center justify-between md:justify-start gap-12 sm:gap-16 text-center md:text-left mt-12 sm:mt-14 mb-2"
+          className="flex flex-wrap items-stretch justify-center gap-6 mt-12 sm:mt-16 w-full"
         >
           {activeStats.map((stat, idx) => (
             <StatItem
@@ -253,6 +269,15 @@ export const AboutSection: React.FC = () => {
               suffix={stat.suffix || '+'}
               label={stat.label}
               duration={2000}
+              icon={
+                idx === 0 ? (
+                  <Users className="w-7 h-7" />
+                ) : idx === 1 ? (
+                  <Award className="w-7 h-7" />
+                ) : (
+                  <Package className="w-7 h-7" />
+                )
+              }
             />
           ))}
         </motion.div>
