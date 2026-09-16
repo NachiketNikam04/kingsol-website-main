@@ -154,11 +154,13 @@ export const WhyChooseUsSection: React.FC = () => {
                 </h3>
 
                 {/* Compact List Items */}
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col gap-3">
                   {step.features?.map((feature, idx) => (
-                    <li key={idx} className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-green shrink-0" />
-                      <span>{feature}</span>
+                    <li key={idx} className="flex items-start gap-3 text-gray-600 font-poppins text-sm leading-relaxed">
+                      {/* The Bullet Dot */}
+                      <span className="w-2 h-2 mt-1.5 rounded-full bg-brand-green shrink-0 block" />
+                      {/* The Text */}
+                      <span className="flex-1">{feature}</span>
                     </li>
                   ))}
                 </ul>
