@@ -64,11 +64,11 @@ export const PremiumProductsSection: React.FC = () => {
   });
   const [cards, setCards] = useState<DynamicSolutionCard[]>(DEFAULT_CARDS);
 
-  // Slider State & Ref
+  // Slider State & Refs
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeftPos, setScrollLeftPos] = useState(0);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   useEffect(() => {
     async function loadSolutionsData() {
@@ -98,25 +98,25 @@ export const PremiumProductsSection: React.FC = () => {
   // Mouse drag handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollRef.current.offsetLeft);
-    setScrollLeftPos(scrollRef.current.scrollLeft);
+    isDown.current = true;
+    startX.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeft.current = scrollRef.current.scrollLeft;
   };
 
   const handleMouseLeave = () => {
-    setIsDragging(false);
+    isDown.current = false;
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false);
+    isDown.current = false;
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollRef.current) return;
+    if (!isDown.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    scrollRef.current.scrollLeft = scrollLeftPos - walk;
+    const walk = (x - startX.current) * 2;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   // Case-Insensitive Headline Highlight Renderer
@@ -180,7 +180,7 @@ export const PremiumProductsSection: React.FC = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className="flex gap-6 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-8 scrollbar-hide cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="flex gap-6 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-8 scrollbar-hide cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
           {cards.map((product) => (
             <Link
