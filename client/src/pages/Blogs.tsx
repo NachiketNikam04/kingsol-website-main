@@ -145,7 +145,7 @@ export default function Blogs() {
                     {blogs[0].title}
                   </h2>
 
-                  <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">{blogs[0].excerpt}</p>
+                  <p className="text-slate-700 text-base md:text-lg mt-1 leading-relaxed font-normal mb-5">{blogs[0].excerpt}</p>
 
                   <div className="flex items-center text-sm font-semibold text-slate-900 border-b border-slate-900 pb-1 group-hover:text-[#44a0e3] group-hover:border-[#44a0e3] transition-colors">
                     <span>Read Full Article</span>

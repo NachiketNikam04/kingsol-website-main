@@ -154,7 +154,7 @@ export const BlogSection: React.FC = () => {
                     <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-4 leading-tight">
                       {blog.title}
                     </h3>
-                    <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8">{blog.excerpt}</p>
+                    <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">{blog.excerpt}</p>
                     <Link
                       to={`/blogs/${blog.slug}`}
                       className="group w-fit bg-white text-[#44a0e3] border border-slate-200 px-6 py-3 rounded-full font-medium text-sm transition-all hover:bg-slate-900 hover:text-white flex items-center gap-2 shadow-sm hover:shadow-md"
