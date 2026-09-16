@@ -83,7 +83,7 @@ export default function AboutUs() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-16 relative overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] relative overflow-x-clip">
       {/* Subtle Background Glow Orbs for Depth */}
       {/* <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-brand-green/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-96 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#44a0e3]/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" /> */}

@@ -71,7 +71,7 @@ export default function Blogs() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] text-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         {/* Dynamic Header Hero Section */}
         <div className="mb-10">

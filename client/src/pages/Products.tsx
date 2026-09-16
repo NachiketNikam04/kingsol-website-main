@@ -124,7 +124,7 @@ export default function Products() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 text-slate-900 overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-10">

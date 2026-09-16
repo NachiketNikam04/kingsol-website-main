@@ -149,7 +149,7 @@ export const TestimonialsSection: React.FC = () => {
   );
 
   return (
-    <section className="w-full py-12 bg-[#fdfcf8] relative text-slate-900">
+    <section className="w-full py-[72px] bg-[#fdfcf8] relative text-slate-900">
       <style>{`
         @keyframes marquee-up {
           0% { transform: translateY(0); }

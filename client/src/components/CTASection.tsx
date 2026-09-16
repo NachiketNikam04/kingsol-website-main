@@ -52,7 +52,7 @@ export const CTASection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full py-12 flex items-center justify-center bg-slate-900 overflow-hidden">
+    <section className="relative w-full py-[72px] flex items-center justify-center bg-slate-900 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img

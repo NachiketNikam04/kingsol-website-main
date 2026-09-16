@@ -120,7 +120,7 @@ export const GalleryPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-16 text-slate-900 overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Block */}
         <div className="mb-10">

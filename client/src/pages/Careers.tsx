@@ -172,7 +172,7 @@ export default function Careers() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 overflow-x-clip text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] overflow-x-clip text-slate-900">
       
       {/* Redesigned Premium "Bento" Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">

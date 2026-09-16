@@ -239,7 +239,7 @@ export default function BrandDetail() {
   const formattedCategoryName = brand.category_name || (categorySlug ? categorySlug.replace(/-/g, ' ') : 'Category');
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-36 pb-24 text-slate-900 overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] pt-36 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Dynamic Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-8 overflow-x-auto whitespace-nowrap">

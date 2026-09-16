@@ -291,7 +291,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-16 text-slate-900 overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Dynamic Hero Header */}
         <div className="mb-10 sm:mb-12">

@@ -100,7 +100,7 @@ export const WhyChooseUsSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-12 bg-[#fdfcf8] relative text-slate-900">
+    <section className="w-full py-[72px] bg-[#fdfcf8] relative text-slate-900">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12">
         {/* Left Column (Sticky Header on Desktop) */}
         <div className="lg:sticky lg:top-32 self-start flex flex-col">

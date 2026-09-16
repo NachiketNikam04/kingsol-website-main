@@ -106,7 +106,7 @@ export default function ValuesMissionSection() {
   };
 
   return (
-    <section className="w-full bg-[#FDFCF8] py-12 px-4 sm:px-6 lg:px-8 text-slate-900">
+    <section className="w-full bg-[#FDFCF8] py-[72px] px-4 sm:px-6 lg:px-8 text-slate-900">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="mb-10">

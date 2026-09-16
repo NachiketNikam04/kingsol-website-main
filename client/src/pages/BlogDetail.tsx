@@ -62,7 +62,7 @@ export default function BlogDetail() {
   }
 
   return (
-    <article className="min-h-screen bg-[#fdfcf8] pb-32 text-slate-900">
+    <article className="min-h-screen bg-[#fdfcf8] pb-[72px] text-slate-900">
       {/* Hero Image */}
       <div className="w-full h-[60vh] md:h-[75vh] relative bg-slate-900 overflow-hidden">
         <img

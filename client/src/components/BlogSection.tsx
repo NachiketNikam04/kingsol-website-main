@@ -87,7 +87,7 @@ export const BlogSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-16 bg-[#fdfcf8] relative text-slate-900">
+    <section className="w-full py-[72px] bg-[#fdfcf8] relative text-slate-900">
       {/* Section Header */}
       <div className="text-center mb-10 max-w-7xl mx-auto px-6">
         <motion.div

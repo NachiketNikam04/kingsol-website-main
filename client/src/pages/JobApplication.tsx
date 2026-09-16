@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export default function JobApplication() {
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] text-slate-900">
       <div className="max-w-3xl mx-auto px-6">
         {/* Header */}
         <div className="mb-12">

@@ -193,7 +193,7 @@ export default function CareerDetail() {
   const requirementsList = Array.isArray(job.requirements) ? job.requirements : [];
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-24 text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-[72px] text-slate-900">
       <div className="max-w-5xl mx-auto px-6">
         {/* Dynamic Breadcrumb Navigation Bar */}
         <div className="flex items-center justify-between gap-4 mb-12 flex-wrap">

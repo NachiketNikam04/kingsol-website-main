@@ -74,7 +74,7 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-sm text-slate-500 mb-8 font-medium">
