@@ -224,7 +224,7 @@ export const AboutSection: React.FC = () => {
                 <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
               </div>
 
-              <p className="mt-2 font-poppins text-sm sm:text-base text-slate-900 leading-relaxed mb-1">{currentCardBody}</p>
+              <p className="mt-2 text-gray-900 font-montserrat text-sm leading-relaxed flex-1">{currentCardBody}</p>
 
               <a
                 href="/services"

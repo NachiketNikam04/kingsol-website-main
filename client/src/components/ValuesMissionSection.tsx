@@ -213,7 +213,7 @@ export default function ValuesMissionSection() {
                   {value.title}
                 </h4>
 
-                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed relative z-10">
+                <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
                   {value.description}
                 </p>
               </div>
