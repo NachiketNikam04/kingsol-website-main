@@ -28,6 +28,7 @@ import {
   Image as ImageIcon,
   Video,
   ToggleLeft,
+  Zap,
 } from 'lucide-react';
 import api from '../api/api';
 
@@ -93,6 +94,7 @@ export const Sidebar: React.FC = () => {
     { name: 'Job Applications', path: '/dashboard/careers', icon: UserCheck, badge: unreadApps },
     { name: 'Services Hub', path: '/dashboard/services', icon: Wrench },
     { name: 'Products & Brands', path: '/dashboard/products', icon: Package },
+    { name: 'BESS Management', path: '/dashboard/bess', icon: Zap },
     { name: 'Blogs & News', path: '/dashboard/blogs', icon: FileText },
     { name: 'Gallery Hub', path: '/dashboard/gallery', icon: ImageIcon },
     { name: 'Media Videos', path: '/dashboard/media', icon: Video },

@@ -177,6 +177,25 @@ export const Navbar: React.FC = () => {
         },
       ],
     },
+    {
+      id: 4,
+      name: 'BESS',
+      slug: 'bess',
+      brands: [
+        {
+          id: 5,
+          name: 'Kingsol BESS',
+          slug: 'kingsol-bess',
+          subcategories: [
+            { id: 1, name: 'C&I Energy Storage Cabinets', slug: 'ci-energy-storage' },
+            { id: 2, name: 'Containerized Utility BESS', slug: 'utility-bess' },
+          ],
+          products: [
+            { id: 1, name: 'Kingsol 100kWh All-In-One C&I Storage Cabinet', slug: 'kingsol-100kwh-storage' },
+          ],
+        },
+      ],
+    },
   ];
 
   // Fallback Services Data
@@ -192,7 +211,7 @@ export const Navbar: React.FC = () => {
   const activeCategories = productCategories.length > 0 ? productCategories : fallbackCategories;
   const activeServices = servicesList.length > 0 ? servicesList : fallbackServices;
 
-  const priorityOrder = ['Solar Module', 'Solar Inverter', 'Solar Cable'];
+  const priorityOrder = ['Solar Module', 'Solar Inverter', 'BESS', 'Solar Cable'];
 
   const sortedCategories = [...activeCategories].sort((a, b) => {
     const indexA = priorityOrder.findIndex((name) =>
@@ -366,11 +385,14 @@ export const Navbar: React.FC = () => {
                 {/* Level 2: Dynamic Categories */}
                 {sortedCategories.map((cat, catIdx) => {
                   const cSlug = cat.slug || toSlug(cat.name);
+                  const isBessCat = cSlug.toLowerCase() === 'bess' || cat.name.toLowerCase() === 'bess' || cat.name.toLowerCase().includes('battery energy');
+                  const catDisplayName = isBessCat ? 'BESS' : cat.name;
+
                   return (
                     <li key={cat.id || catIdx} className="relative group/category">
                       <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
                         <Link to={`/products/${cSlug}`} className="hover:text-slate-900 flex-1">
-                          {cat.name}
+                          {catDisplayName}
                         </Link>
                         {cat.brands && cat.brands.length > 0 && (
                           <span className="text-xl font-light leading-none transition-transform group-hover/category:translate-x-1 shrink-0 ml-2">
@@ -384,8 +406,8 @@ export const Navbar: React.FC = () => {
                         <ul className="absolute top-0 left-full -ml-2 w-64 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/category:opacity-100 group-hover/category:visible transition-all duration-200">
                           {cat.brands.map((brand, brandIdx) => {
                             const bSlug = brand.slug || toSlug(brand.name);
-                            const isInverterCat = cSlug.toLowerCase().includes('inverter') || cat.name.toLowerCase().includes('inverter');
-                            const rawSubItems = isInverterCat ? (brand.subcategories || []) : (brand.products || []);
+                            const isSeriesCat = cSlug.toLowerCase().includes('inverter') || cat.name.toLowerCase().includes('inverter') || isBessCat || cSlug.toLowerCase().includes('bess');
+                            const rawSubItems = isSeriesCat ? (brand.subcategories && brand.subcategories.length > 0 ? brand.subcategories : (brand.products || [])) : (brand.products || []);
 
                             // Strictly deduplicate by lowercase name / slug
                             const uniqueItemsMap = new Map<string, any>();

@@ -427,4 +427,40 @@ INSERT INTO site_settings (id, show_services, show_videos)
 VALUES (1, false, false)
 ON CONFLICT (id) DO NOTHING;
 
+-- 21. BESS (Battery Energy Storage Systems) Table
+CREATE TABLE IF NOT EXISTS bess (
+  id SERIAL PRIMARY KEY,
+  category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
+  brand_id INTEGER REFERENCES brands(id) ON DELETE CASCADE,
+  subcategory_id INTEGER REFERENCES subcategories(id) ON DELETE SET NULL,
+  title VARCHAR(255) NOT NULL,
+  name VARCHAR(255),
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  short_description TEXT,
+  description TEXT,
+  image_url TEXT,
+  card_image TEXT DEFAULT '',
+  category_banner_image TEXT DEFAULT '',
+  datasheet_url TEXT,
+  expertise TEXT,
+  phase_type VARCHAR(255) DEFAULT '',
+  gallery TEXT[] DEFAULT '{}',
+  long_description TEXT DEFAULT '',
+  key_features TEXT[] DEFAULT '{}',
+  documents JSONB DEFAULT '[]'::jsonb,
+  specs JSONB DEFAULT '{}'::jsonb,
+  features TEXT[] DEFAULT '{}',
+  is_featured BOOLEAN DEFAULT FALSE,
+  capabilities_tagline VARCHAR(255) DEFAULT '',
+  capabilities_heading VARCHAR(255) DEFAULT '',
+  brand_highlights JSONB DEFAULT NULL,
+  footer_note TEXT DEFAULT '',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_bess_slug ON bess(slug);
+CREATE INDEX IF NOT EXISTS idx_bess_brand_id ON bess(brand_id);
+CREATE INDEX IF NOT EXISTS idx_bess_category_id ON bess(category_id);
+
+
 

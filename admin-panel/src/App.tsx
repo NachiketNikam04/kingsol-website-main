@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProductsManager from './pages/ProductsManager';
+import BessManager from './pages/BessManager';
 import InquiriesManager from './pages/InquiriesManager';
 import ApplicationsManager from './pages/ApplicationsManager';
 import BlogsManager from './pages/BlogsManager';
@@ -56,6 +57,7 @@ export const App: React.FC = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/services" element={<ServicesManager />} />
           <Route path="/dashboard/products" element={<ProductsManager />} />
+          <Route path="/dashboard/bess" element={<BessManager />} />
           <Route path="/dashboard/inquiries" element={<InquiriesManager />} />
           <Route path="/dashboard/careers" element={<ApplicationsManager />} />
           <Route path="/dashboard/blogs" element={<BlogsManager />} />

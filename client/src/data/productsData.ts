@@ -70,6 +70,13 @@ export const initialCategories: Category[] = [
     brand_count: 1,
     product_count: 1,
   },
+  {
+    slug: 'bess',
+    name: 'BESS',
+    tagline: 'Scalable commercial & industrial battery energy storage systems (BESS) engineered for peak shaving, backup, and microgrids.',
+    brand_count: 1,
+    product_count: 1,
+  },
 ];
 
 export const initialBrands: Brand[] = [
@@ -112,6 +119,16 @@ export const initialBrands: Brand[] = [
     description: 'TUV-certified DC solar cables engineered for electron-beam cross-linked insulation.',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop',
     certifications: ['TUV 2PfG 1169', 'EN 50618', 'Halogen Free', '25-Year Lifespan'],
+  },
+  {
+    id: 5,
+    slug: 'kingsol-bess',
+    name: 'Kingsol BESS',
+    category: 'bess',
+    categorySlug: 'bess',
+    description: 'Scalable Commercial & Industrial LiFePO4 Battery Energy Storage Systems with intelligent BMS integration.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop',
+    certifications: ['IEC 62619', 'UL 9540A', 'UN 38.3', '10-Year Warranty'],
   },
 ];
 
@@ -231,6 +248,30 @@ export const initialProducts: Product[] = [
     },
     subcategory_slug: 'dc-solar-cables',
   },
+  {
+    id: 5,
+    slug: 'kingsol-100kwh-storage',
+    name: 'Kingsol 100kWh All-In-One C&I Storage Cabinet',
+    category: 'bess',
+    categorySlug: 'bess',
+    brand: 'kingsol-bess',
+    brandSlug: 'kingsol-bess',
+    brandName: 'Kingsol BESS',
+    description: '100kWh / 50kW Outdoor Energy Storage Cabinet with LiFePO4 chemistry and liquid cooling.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop',
+    datasheetUrl: '/datasheets/kingsol-bess-100kwh.pdf',
+    expertise: 'Complete turn-key C&I energy storage cabinet featuring integrated HVAC and active fire suppression.',
+    gallery: ['https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop'],
+    specs: {
+      capacity: '100kWh',
+      power: '50kW',
+      battery_chemistry: 'LiFePO4',
+      cycle_life: '6000+ Cycles',
+      protection: 'IP55 / IP65 Rated',
+      warranty: '10 Years',
+    },
+    subcategory_slug: 'ci-energy-storage',
+  },
 ];
 
 export function getBrandBySlug(brandSlug: string): Brand | undefined {
@@ -261,10 +302,11 @@ export async function fetchLiveCatalog(): Promise<{
   products: Product[];
 }> {
   try {
-    const [catRes, brandRes, prodRes] = await Promise.all([
+    const [catRes, brandRes, prodRes, bessRes] = await Promise.all([
       fetch(`${API_BASE_URL}/categories`),
       fetch(`${API_BASE_URL}/brands`),
       fetch(`${API_BASE_URL}/products`),
+      fetch(`${API_BASE_URL}/bess`).catch(() => null),
     ]);
 
     if (!catRes.ok || !brandRes.ok || !prodRes.ok) throw new Error('Catalog fetch failed');
@@ -272,6 +314,13 @@ export async function fetchLiveCatalog(): Promise<{
     const catJson = await catRes.json();
     const brandJson = await brandRes.json();
     const prodJson = await prodRes.json();
+    let bessData: any[] = [];
+    if (bessRes && bessRes.ok) {
+      const bessJson = await bessRes.json();
+      if (bessJson.success && Array.isArray(bessJson.data)) {
+        bessData = bessJson.data;
+      }
+    }
 
     const categories: Category[] = catJson.success ? catJson.data : initialCategories;
 
@@ -294,33 +343,33 @@ export async function fetchLiveCatalog(): Promise<{
         }))
       : initialBrands;
 
-    const products: Product[] = prodJson.success
-      ? prodJson.data.map((p: any) => ({
-          id: p.id,
-          slug: p.slug,
-          name: p.title || p.name,
-          category: p.category_slug || p.category_name,
-          categorySlug: p.category_slug,
-          brand: p.brand_slug || p.brand_name,
-          brandSlug: p.brand_slug,
-          brandName: p.brand_name,
-          description: p.description || '',
-          image: p.card_image
-            ? getAssetUrl(p.card_image)
-            : getAssetUrl(p.image_url || (Array.isArray(p.gallery) && p.gallery[0]) || ''),
-          card_image: p.card_image ? getAssetUrl(p.card_image) : undefined,
-          cardImage: p.card_image ? getAssetUrl(p.card_image) : undefined,
-          datasheetUrl: getAssetUrl(p.datasheet_url),
-          datasheet_url: getAssetUrl(p.datasheet_url),
-          documents: parseDatasheets(p.documents),
-          expertise: p.expertise || '',
-          gallery: Array.isArray(p.gallery) && p.gallery.length > 0
-            ? p.gallery.map((url: string) => getAssetUrl(url))
-            : [getAssetUrl(p.image_url)],
-          specs: p.specs || {},
-          subcategory_slug: p.subcategory_slug || '',
-        }))
-      : initialProducts;
+    const rawAllProducts = [...(prodJson.success ? prodJson.data : initialProducts), ...bessData];
+
+    const products: Product[] = rawAllProducts.map((p: any) => ({
+      id: p.id,
+      slug: p.slug,
+      name: p.title || p.name,
+      category: p.category_slug || p.category_name,
+      categorySlug: p.category_slug,
+      brand: p.brand_slug || p.brand_name,
+      brandSlug: p.brand_slug,
+      brandName: p.brand_name,
+      description: p.description || '',
+      image: p.card_image
+        ? getAssetUrl(p.card_image)
+        : getAssetUrl(p.image_url || (Array.isArray(p.gallery) && p.gallery[0]) || ''),
+      card_image: p.card_image ? getAssetUrl(p.card_image) : undefined,
+      cardImage: p.card_image ? getAssetUrl(p.card_image) : undefined,
+      datasheetUrl: getAssetUrl(p.datasheet_url),
+      datasheet_url: getAssetUrl(p.datasheet_url),
+      documents: parseDatasheets(p.documents),
+      expertise: p.expertise || '',
+      gallery: Array.isArray(p.gallery) && p.gallery.length > 0
+        ? p.gallery.map((url: string) => getAssetUrl(url))
+        : [getAssetUrl(p.image_url)],
+      specs: p.specs || {},
+      subcategory_slug: p.subcategory_slug || '',
+    }));
 
     return { categories, brands, products };
   } catch (error) {

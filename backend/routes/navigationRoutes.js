@@ -28,11 +28,21 @@ router.get('/menu', async (req, res) => {
     );
     const subcategories = subResult.rows;
 
-    // 4. Fetch Products with brand_id and subcategory_id
+    // 4. Fetch Products and BESS items with brand_id and subcategory_id
+    let bessRows = [];
+    try {
+      const bessResult = await pool.query(
+        `SELECT id, category_id, brand_id, subcategory_id, title, name, slug FROM bess ORDER BY id ASC`
+      );
+      bessRows = bessResult.rows;
+    } catch {
+      bessRows = [];
+    }
+
     const prodResult = await pool.query(
       `SELECT id, category_id, brand_id, subcategory_id, title, name, slug FROM products ORDER BY id ASC`
     );
-    const products = prodResult.rows;
+    const products = [...prodResult.rows, ...bessRows];
 
     // Build Nested Tree: Category -> Brands -> Products / Subcategories
     const productCategories = categories.map((cat) => {

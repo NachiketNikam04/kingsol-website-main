@@ -31,6 +31,7 @@ import footerRoutes from './routes/footerRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import mediaRoutes from './routes/mediaRoutes.js';
 import settingsRoutes from './routes/settingsRoutes.js';
+import bessRoutes from './routes/bessRoutes.js';
 
 // Secret Management Protocol: Only load .env file in non-production environments
 if (process.env.NODE_ENV !== 'production') {
@@ -117,6 +118,7 @@ app.use('/api/footer', footerRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/bess', bessRoutes);
 
 // Server Health Check
 app.get('/api/health', (req, res) => {

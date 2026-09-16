@@ -691,7 +691,9 @@ export default function ProductDetail() {
     return () => clearInterval(interval);
   }, [activeGallery.length]);
 
+  const isBessRoute = categorySlug?.toLowerCase() === 'bess' || categorySlug?.toLowerCase().includes('bess');
   const isInverterRoute = categorySlug?.toLowerCase().includes('inverter') || categorySlug === 'solar-inverters';
+  const isCardLayoutRoute = isInverterRoute || isBessRoute;
 
   useEffect(() => {
     async function loadData() {
@@ -699,55 +701,66 @@ export default function ProductDetail() {
       setLoading(true);
       setCurrentImageIndex(0);
       try {
-        if (isInverterRoute) {
-          const [allProdRes, settingsRes] = await Promise.all([
+        if (isCardLayoutRoute) {
+          const [allProdRes, bessRes, settingsRes] = await Promise.all([
             fetch(`${API_BASE_URL}/products`),
+            fetch(`${API_BASE_URL}/bess`).catch(() => null),
             fetch(`${API_BASE_URL}/catalog/page-settings`).then((r) => r.json()).catch(() => null),
           ]);
 
+          const combinedData: any[] = [];
           if (allProdRes.ok) {
             const json = await allProdRes.json();
             if (json.success && Array.isArray(json.data)) {
-              const cleanCategory = (categorySlug || '').toLowerCase();
-              const cleanBrand = (brandSlug || '').toLowerCase().replace(/-inverters?$/, '');
-              const cleanTarget = (targetSlug || '').toLowerCase().replace(/-inverters?$/, '').replace(/[^a-z0-9]/g, '');
-
-              const matched = json.data.filter((p: any) => {
-                // Category match
-                const pCatSlug = (p.category_slug || '').toLowerCase();
-                const matchCategory =
-                  !categorySlug ||
-                  pCatSlug === cleanCategory ||
-                  pCatSlug.includes('inverter') ||
-                  cleanCategory.includes('inverter');
-
-                // Brand match
-                const pBrandSlug = (p.brand_slug || '').toLowerCase().replace(/-inverters?$/, '');
-                const pBrandName = (p.brand_name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-                const matchBrand =
-                  !brandSlug ||
-                  pBrandSlug === cleanBrand ||
-                  pBrandName.includes(cleanBrand) ||
-                  cleanBrand.includes(pBrandSlug);
-
-                // Subcategory / Category match
-                const pSubSlug = (p.subcategory_slug || '').toLowerCase().replace(/-inverters?$/, '').replace(/[^a-z0-9]/g, '');
-                const pSubName = (p.subcategory_name || '').toLowerCase().replace(/-inverters?$/, '').replace(/[^a-z0-9]/g, '');
-
-                const matchSub =
-                  !targetSlug ||
-                  (pSubSlug && pSubSlug === cleanTarget) ||
-                  (pSubName && pSubName === cleanTarget) ||
-                  (pSubSlug && cleanTarget.includes(pSubSlug)) ||
-                  (pSubName && cleanTarget.includes(pSubName)) ||
-                  (pSubSlug && pSubSlug.includes(cleanTarget));
-
-                return matchCategory && matchBrand && matchSub;
-              });
-
-              // Strictly set matched products only — no fallback to mismatched inverters!
-              setInverterCategoryProducts(matched);
+              combinedData.push(...json.data);
             }
+          }
+          if (bessRes && bessRes.ok) {
+            const bJson = await bessRes.json();
+            if (bJson.success && Array.isArray(bJson.data)) {
+              combinedData.push(...bJson.data);
+            }
+          }
+
+          if (combinedData.length > 0) {
+            const cleanCategory = (categorySlug || '').toLowerCase();
+            const cleanBrand = (brandSlug || '').toLowerCase().replace(/-(inverters?|bess)$/, '');
+            const cleanTarget = (targetSlug || '').toLowerCase().replace(/-(inverters?|bess)$/, '').replace(/[^a-z0-9]/g, '');
+
+            const matched = combinedData.filter((p: any) => {
+              // Category match
+              const pCatSlug = (p.category_slug || '').toLowerCase();
+              const matchCategory =
+                !categorySlug ||
+                pCatSlug === cleanCategory ||
+                (isBessRoute && (pCatSlug === 'bess' || pCatSlug.includes('bess'))) ||
+                (isInverterRoute && (pCatSlug.includes('inverter') || cleanCategory.includes('inverter')));
+
+              // Brand match
+              const pBrandSlug = (p.brand_slug || '').toLowerCase().replace(/-(inverters?|bess)$/, '');
+              const pBrandName = (p.brand_name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+              const matchBrand =
+                !brandSlug ||
+                pBrandSlug === cleanBrand ||
+                pBrandName.includes(cleanBrand) ||
+                cleanBrand.includes(pBrandSlug);
+
+              // Subcategory / Category match
+              const pSubSlug = (p.subcategory_slug || '').toLowerCase().replace(/-(inverters?|bess)$/, '').replace(/[^a-z0-9]/g, '');
+              const pSubName = (p.subcategory_name || '').toLowerCase().replace(/-(inverters?|bess)$/, '').replace(/[^a-z0-9]/g, '');
+
+              const matchSub =
+                !targetSlug ||
+                (pSubSlug && pSubSlug === cleanTarget) ||
+                (pSubName && pSubName === cleanTarget) ||
+                (pSubSlug && cleanTarget.includes(pSubSlug)) ||
+                (pSubName && cleanTarget.includes(pSubName)) ||
+                (pSubSlug && pSubSlug.includes(cleanTarget));
+
+              return matchCategory && matchBrand && matchSub;
+            });
+
+            setInverterCategoryProducts(matched);
           }
 
           if (settingsRes && settingsRes.success && settingsRes.data) {
@@ -801,20 +814,22 @@ export default function ProductDetail() {
     );
   }
 
-  // Inverter Category Page View with Wide Horizontal Inverter Cards (Task 3 Specification)
-  if (isInverterRoute) {
+  // Inverter & BESS Category Page View with Wide Horizontal Cards
+  if (isCardLayoutRoute) {
     const rawBrand = brandSlug ? brandSlug.replace(/-/g, ' ') : 'All Brands';
-    const cleanBrand = rawBrand.replace(/\s*inverters?$/gi, '').trim() || 'All Brands';
+    const cleanBrand = rawBrand.replace(/\s*(inverters?|bess)$/gi, '').trim() || 'All Brands';
     const formattedBrand = cleanBrand;
 
     // Safely extract and sanitize category / subcategory string (prevents "Inverters Inverters" duplication)
     const rawCategory = targetSlug
       ? targetSlug.replace(/-/g, ' ')
-      : (inverterCategoryProducts[0]?.subcategory_name || inverterCategoryProducts[0]?.category_name || 'Solar');
-    const sanitizedCategory = rawCategory.replace(/\s*inverters?/gi, '').trim();
-    const formattedCategory = sanitizedCategory ? `${sanitizedCategory} Inverters` : 'Solar Inverters';
+      : (inverterCategoryProducts[0]?.subcategory_name || inverterCategoryProducts[0]?.category_name || (isBessRoute ? 'BESS' : 'Solar'));
+    const sanitizedCategory = rawCategory.replace(/\s*(inverters?|bess)/gi, '').trim();
+    const formattedCategory = isBessRoute
+      ? (sanitizedCategory ? `${sanitizedCategory} BESS` : 'BESS')
+      : (sanitizedCategory ? `${sanitizedCategory} Inverters` : 'Solar Inverters');
 
-    // Extract unique phase types from category products dynamically
+    // Extract unique phase / system types from category products dynamically
     const availablePhaseTypes = Array.from(
       new Set(
         inverterCategoryProducts
@@ -839,7 +854,7 @@ export default function ProductDetail() {
       return pType === selectedPhaseFilter.trim().toLowerCase();
     });
 
-    // Numerically sort products from lowest specification to highest (e.g., 3.3kW -> 5kW -> 10kW -> 100kW)
+    // Numerically sort products from lowest specification to highest (e.g., 3.3kW -> 5kW -> 10kW -> 100kW / 100kWh)
     const displayedInverters = [...filteredInverters].sort((a, b) => {
       const valA = extractInverterSortValue(a);
       const valB = extractInverterSortValue(b);
@@ -857,14 +872,17 @@ export default function ProductDetail() {
               Products
             </Link>
             <span>/</span>
-            <Link to="/products/solar-inverters" className="hover:text-brand-green transition-colors">
-              Solar Inverters
+            <Link 
+              to={isBessRoute ? "/products/bess" : "/products/solar-inverters"} 
+              className="hover:text-brand-green transition-colors"
+            >
+              {isBessRoute ? "BESS" : "Solar Inverters"}
             </Link>
             {brandSlug && (
               <>
                 <span>/</span>
                 <Link 
-                  to={`/products/solar-inverters/${brandSlug}`} 
+                  to={isBessRoute ? `/products/bess/${brandSlug}` : `/products/solar-inverters/${brandSlug}`} 
                   className="capitalize text-slate-700 hover:text-brand-green transition-colors"
                 >
                   {formattedBrand}
@@ -879,7 +897,7 @@ export default function ProductDetail() {
             )}
           </div>
 
-          {/* Split-Layout Editorial Inverter Banner */}
+          {/* Split-Layout Editorial Banner */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -891,7 +909,9 @@ export default function ProductDetail() {
               <img
                 src={getAssetUrl(
                   inverterCategoryProducts.find((p: any) => p.category_banner_image)?.category_banner_image ||
-                  'https://images.unsplash.com/photo-1509391366360-1e5088f170af?auto=format&fit=crop&w=1600&q=80'
+                  (isBessRoute
+                    ? 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80'
+                    : 'https://images.unsplash.com/photo-1509391366360-1e5088f170af?auto=format&fit=crop&w=1600&q=80')
                 )}
                 alt={formattedCategory}
                 className="absolute right-0 top-0 w-full md:w-3/4 h-full object-cover"
@@ -902,13 +922,15 @@ export default function ProductDetail() {
             {/* The Content (Text & Badges) */}
             <div className="relative z-20 p-8 md:p-12 lg:p-16 max-w-3xl">
               <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green inline-block">
-                Solar Inverters Portfolio
+                {isBessRoute ? 'BESS Portfolio' : 'Solar Inverters Portfolio'}
               </span>
               <h1 className="font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 capitalize">
                 {formattedBrand} — {formattedCategory}
               </h1>
               <p className="text-slate-600 text-sm md:text-base mt-3 leading-relaxed">
-                Explore high-efficiency grid-tied, hybrid, and off-grid solar string inverters backed by manufacturer direct warranties and complete technical datasheets.
+                {isBessRoute
+                  ? 'Explore high-density scalable LiFePO4 battery energy storage systems (BESS) engineered for peak shaving, backup power, and C&I microgrids backed by manufacturer warranties.'
+                  : 'Explore high-efficiency grid-tied, hybrid, and off-grid solar string inverters backed by manufacturer direct warranties and complete technical datasheets.'}
               </p>
 
               {/* Dynamic Brand Certifications Pill Badges */}
