@@ -106,10 +106,10 @@ export default function ValuesMissionSection() {
   };
 
   return (
-    <section className="w-full bg-[#FDFCF8] py-14 sm:py-16 px-4 sm:px-6 lg:px-8 text-slate-900">
+    <section className="w-full bg-[#FDFCF8] py-24 px-4 sm:px-6 lg:px-8 text-slate-900">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-8 sm:mb-10">
+        <div className="mb-16">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

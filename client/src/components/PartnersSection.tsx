@@ -108,11 +108,11 @@ export const PartnersSection: React.FC = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="relative w-full py-16 sm:py-24 bg-[#fdfcf8] border-b border-slate-100"
+      className="relative w-full py-24 bg-[#fdfcf8]"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Heading */}
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="mb-16">
           <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
             {currentTagline}
           </span>
@@ -123,7 +123,7 @@ export const PartnersSection: React.FC = () => {
         </motion.div>
 
         {/* Strict 4-Column Grid Container */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mt-12 sm:mt-14">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {activeLogos.map((logo, idx) => {
             const destination = logo.linked_brand
               ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`

@@ -104,7 +104,7 @@ export default function AboutDetailsSection() {
   };
 
   return (
-    <section className="w-full bg-[#fdfcf8] py-14 sm:py-16 text-slate-900">
+    <section className="w-full bg-[#fdfcf8] py-24 text-slate-900">
       {/* CSS for Marquee */}
       <style>{`
         @keyframes marquee-horizontal {
@@ -212,7 +212,7 @@ export default function AboutDetailsSection() {
       </div>
 
       {/* Marquee Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-200/80 pt-10 sm:pt-12 flex flex-col md:flex-row items-center gap-6 sm:gap-8 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 flex flex-col md:flex-row items-center gap-6 sm:gap-8 overflow-hidden">
         <div className="shrink-0 whitespace-nowrap">
           <motion.h4
             initial={{ opacity: 0, y: 30 }}

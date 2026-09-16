@@ -113,7 +113,7 @@ export default function AboutUs() {
         </div>
 
         {/* Bottom Section: Two Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-8 sm:mt-39">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-8 sm:mt-12">
           {/* Left Text */}
           <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
             <p className="text-slate-600 text-base sm:text-lg md:text-xl leading-relaxed font-normal whitespace-pre-line">

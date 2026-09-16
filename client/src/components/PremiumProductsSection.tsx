@@ -106,7 +106,7 @@ export const PremiumProductsSection: React.FC = () => {
   const duplicatedCards = [...cards, ...cards];
 
   return (
-    <section className="w-full pt-24 pb-30 bg-[#fdfcf8] relative overflow-hidden text-slate-900">
+    <section className="w-full py-24 bg-[#fdfcf8] relative overflow-hidden text-slate-900">
       {/* Keyframe Marquee Animations */}
       <style>
         {`

@@ -86,7 +86,7 @@ export default function CategoryPage() {
         </div>
 
         {/* Category Header Banner */}
-        <div className="mb-14 border-b border-slate-200 pb-10">
+        <div className="mb-16">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -116,15 +116,17 @@ export default function CategoryPage() {
         {/* PARTNER BRANDS FOR THIS CATEGORY */}
         {brands.length > 0 && (
           <section className="mb-16">
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-1 mb-1 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
-            >
-              Authorized Brands in {category.name}
-            </motion.h2>
+            <div className="mb-16">
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="mt-1 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+              >
+                Authorized Brands in {category.name}
+              </motion.h2>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {brands.map((brand, idx) => (
                 <motion.div
@@ -188,15 +190,17 @@ export default function CategoryPage() {
 
         {/* PRODUCTS LIST IN THIS CATEGORY */}
         <section className="mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
-          >
-            All {category.name} Components
-          </motion.h2>
+          <div className="mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+            >
+              All {category.name} Components
+            </motion.h2>
+          </div>
           {products.length === 0 ? (
             <div className="bg-white rounded-[2rem] p-12 text-center text-slate-500 border border-slate-200">
               No products currently available in this category.

@@ -43,7 +43,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({
   };
 
   return (
-    <section className={`relative w-full py-20 sm:py-24 flex items-center justify-center bg-slate-900 overflow-hidden ${className}`}>
+    <section className={`relative w-full py-24 flex items-center justify-center bg-slate-900 overflow-hidden ${className}`}>
       {/* Background Image with Dark Overlay */}
       <div className="absolute inset-0 z-0">
         <img

@@ -158,7 +158,7 @@ export default function Blogs() {
             {/* Divider */}
             {blogs.length > 1 && (
               <>
-                <div className="flex items-center justify-between border-b border-slate-200 pb-4 mb-12">
+                <div className="flex items-center justify-between mb-16">
                   <motion.h3
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
