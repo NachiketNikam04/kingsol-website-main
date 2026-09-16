@@ -140,7 +140,7 @@ export const FeaturedProductsSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="text-brand-green uppercase tracking-widest text-sm mt-10 mb-4 font-bold block"
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
         >
           {currentTagline}
         </motion.span>
