@@ -79,15 +79,16 @@ export const TestimonialsSection: React.FC = () => {
   const currentSubtitle = testimonialData?.settings?.subtitle || 'Real feedback from homeowners and businesses who trust our solar solutions.';
 
   const activeReviews = testimonialData?.reviews && testimonialData.reviews.length > 0 ? testimonialData.reviews : defaultReviews;
+  const limitedTestimonials = activeReviews.slice(0, 30);
 
   // Split reviews across 3 columns
-  const columnOne = activeReviews.filter((_, idx) => idx % 3 === 0);
-  const columnTwo = activeReviews.filter((_, idx) => idx % 3 === 1);
-  const columnThree = activeReviews.filter((_, idx) => idx % 3 === 2);
+  const columnOne = limitedTestimonials.filter((_, idx) => idx % 3 === 0);
+  const columnTwo = limitedTestimonials.filter((_, idx) => idx % 3 === 1);
+  const columnThree = limitedTestimonials.filter((_, idx) => idx % 3 === 2);
 
   // Helper to ensure each column has enough cards to loop smoothly
   const ensureMinCards = (arr: TestimonialReview[], minCount = 3): TestimonialReview[] => {
-    if (arr.length === 0) return activeReviews;
+    if (arr.length === 0) return limitedTestimonials;
     let result = [...arr];
     while (result.length < minCount) {
       result = [...result, ...arr];
