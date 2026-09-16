@@ -147,10 +147,6 @@ export const WhyChooseUsSection: React.FC = () => {
                 key={step.id || index}
                 className="bg-white rounded-2xl p-6 md:p-8 shadow-sm flex flex-col transition-all hover:shadow-[0_10px_30px_rgba(243,156,18,0.2)]"
               >
-                {/* Compact Number Badge */}
-                <div className="w-12 h-12 bg-[#b7f07a] rounded-xl flex items-center justify-center text-slate-900 font-semibold text-lg mb-4">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
 
                 {/* Card Title */}
                 <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3">
@@ -160,7 +156,7 @@ export const WhyChooseUsSection: React.FC = () => {
                 {/* Compact List Items */}
                 <ul className="flex flex-col gap-2">
                   {step.features?.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-slate-600 leading-relaxed">
+                    <li key={idx} className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-green shrink-0" />
                       <span>{feature}</span>
                     </li>
