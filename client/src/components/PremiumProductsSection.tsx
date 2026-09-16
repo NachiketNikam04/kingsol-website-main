@@ -106,7 +106,7 @@ export const PremiumProductsSection: React.FC = () => {
   const duplicatedCards = [...cards, ...cards];
 
   return (
-    <section className="w-full py-24 bg-[#fdfcf8] relative overflow-hidden text-slate-900">
+    <section className="w-full py-12 bg-[#fdfcf8] relative overflow-hidden text-slate-900">
       {/* Keyframe Marquee Animations */}
       <style>
         {`
@@ -124,7 +124,7 @@ export const PremiumProductsSection: React.FC = () => {
       </style>
 
       {/* Header Area */}
-      <div className="max-w-7xl mx-auto px-6 mb-16">
+      <div className="max-w-7xl mx-auto px-6 mb-10">
         <div>
           <motion.span
             initial={{ opacity: 0, y: 30 }}

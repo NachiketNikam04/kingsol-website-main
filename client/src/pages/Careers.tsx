@@ -172,10 +172,10 @@ export default function Careers() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 overflow-x-clip text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 overflow-x-clip text-slate-900">
       
       {/* Redesigned Premium "Bento" Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-14 sm:mb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1133,7 +1133,7 @@ export default function ProductDetail() {
         </div>
 
         {/* HERO SECTION: IMAGE ON LEFT (lg:col-span-6), TEXT ON RIGHT (lg:col-span-6) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-10">
           {/* Main Hero Cover Image & Auto-Rotating Carousel */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}

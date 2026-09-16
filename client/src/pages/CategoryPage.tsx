@@ -74,7 +74,7 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
         <div className="flex items-center gap-2 text-sm text-slate-500 mb-8 font-medium">
@@ -86,7 +86,7 @@ export default function CategoryPage() {
         </div>
 
         {/* Category Header Banner */}
-        <div className="mb-16">
+        <div className="mb-10">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,8 +115,8 @@ export default function CategoryPage() {
 
         {/* PARTNER BRANDS FOR THIS CATEGORY */}
         {brands.length > 0 && (
-          <section className="mb-16">
-            <div className="mb-16">
+          <section className="mb-12">
+            <div className="mb-10">
               <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -189,8 +189,8 @@ export default function CategoryPage() {
         )}
 
         {/* PRODUCTS LIST IN THIS CATEGORY */}
-        <section className="mb-16">
-          <div className="mb-16">
+        <section className="mb-12">
+          <div className="mb-10">
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

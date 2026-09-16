@@ -149,7 +149,7 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full bg-[#fdfcf8] text-slate-900 py-24 flex flex-col justify-center">
+    <section className="relative w-full bg-[#fdfcf8] text-slate-900 py-12 flex flex-col justify-center">
       {/* Main Content Wrapper */}
       <div className="relative max-w-7xl mx-auto px-6 w-full">
         {/* Top 2-Column Flex */}
@@ -243,7 +243,7 @@ export const AboutSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-          className="flex flex-wrap items-center justify-between md:justify-start gap-12 sm:gap-16 text-center md:text-left mt-20 sm:mt-24 mb-4"
+          className="flex flex-wrap items-center justify-between md:justify-start gap-12 sm:gap-16 text-center md:text-left mt-12 sm:mt-14 mb-2"
         >
           {activeStats.map((stat, idx) => (
             <StatItem

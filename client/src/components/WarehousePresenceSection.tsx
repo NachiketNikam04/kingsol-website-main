@@ -93,7 +93,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
   };
 
   return (
-    <section className="w-full bg-[#fdfcf8] py-24 text-slate-900">
+    <section className="w-full bg-[#fdfcf8] py-12 text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
         {/* Left Column: Map Image - Strictly NO border, NO box, NO card, NO shadow */}
         <motion.div

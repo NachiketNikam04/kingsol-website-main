@@ -108,11 +108,11 @@ export const PartnersSection: React.FC = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="relative w-full py-24 bg-[#fdfcf8]"
+      className="relative w-full py-12 bg-[#fdfcf8]"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Heading */}
-        <motion.div variants={itemVariants} className="mb-16">
+        <motion.div variants={itemVariants} className="mb-10">
           <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
             {currentTagline}
           </span>

@@ -258,7 +258,7 @@ export default function BrandDetail() {
         </div>
 
         {/* HERO SECTION: IMAGE ON LEFT (lg:col-span-6), TEXT ON RIGHT (lg:col-span-6) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-10">
           {/* Main Hero Cover Image */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -388,7 +388,7 @@ export default function BrandDetail() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-16 w-full max-w-none"
+          className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-10 w-full max-w-none"
         >
           <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
@@ -530,7 +530,7 @@ export default function BrandDetail() {
         })()}
 
         {/* 1. PRODUCT SPECIFICATIONS & CERTIFICATIONS */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-10 mt-8">
           {/* Left: Text & Bullets */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -586,7 +586,7 @@ export default function BrandDetail() {
         </div>
 
         {/* 2. AVAILABLE PRODUCT RANGES & COMPANY PROFILE */}
-        <div className="mb-16">
+        <div className="mb-10">
           {/* Centered Header */}
           <div className="text-center max-w-3xl mx-auto mb-8">
             <motion.span

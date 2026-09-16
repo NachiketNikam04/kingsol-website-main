@@ -105,7 +105,7 @@ export const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-24 bg-[#fdfcf8] relative flex justify-center text-slate-900">
+    <section className="w-full py-12 bg-[#fdfcf8] relative flex justify-center text-slate-900">
       <style>{`
         /* FIX: Single shared keyframe for both columns. Direction is flipped
            purely via CSS animation-direction: reverse — no second keyframe needed. */

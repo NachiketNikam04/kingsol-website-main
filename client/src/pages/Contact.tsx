@@ -393,7 +393,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="mb-14 sm:mb-16 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6"
+          className="mb-10 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6"
         >
           <div>
             <span className="text-xs font-bold text-brand-green uppercase tracking-wider block mb-1">
@@ -437,7 +437,7 @@ export default function Contact() {
         </motion.div>
 
         {/* Split Section: Form & Head Office Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-14 sm:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10">
           {/* Form (7 Columns) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -567,14 +567,14 @@ export default function Contact() {
         </div>
 
         {/* Left-Aligned Infrastructure & Reach Cards Container */}
-        <section className="mb-14 sm:mb-16 bg-white rounded-[2.5rem] p-8 sm:p-12 md:p-14 border border-slate-200 shadow-xs">
+        <section className="mb-10 bg-white rounded-[2.5rem] p-8 sm:p-12 md:p-14 border border-slate-200 shadow-xs">
           <div className="max-w-3xl mb-10">
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentInfraTagline}</span>
             </motion.span>
@@ -612,8 +612,8 @@ export default function Contact() {
         </section>
 
         {/* Frequently Asked Questions */}
-        <section className="mb-14 sm:mb-16">
-          <div className="text-center max-w-2xl mx-auto mb-16">
+        <section className="mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

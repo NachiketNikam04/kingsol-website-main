@@ -87,15 +87,15 @@ export const BlogSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-24 bg-[#fdfcf8] relative text-slate-900">
+    <section className="w-full py-12 bg-[#fdfcf8] relative text-slate-900">
       {/* Section Header */}
-      <div className="text-center mb-16 max-w-7xl mx-auto px-6">
+      <div className="text-center mb-10 max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
         >
           {currentTagline}
         </motion.div>

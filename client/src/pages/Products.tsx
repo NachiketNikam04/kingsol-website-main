@@ -124,10 +124,10 @@ export default function Products() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 text-slate-900 overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="mb-10">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -230,7 +230,7 @@ export default function Products() {
         ) : (
           <>
             {/* PARTNER BRANDS SECTION */}
-            <section className="mb-16">
+            <section className="mb-12">
               <div className="flex justify-between items-end mb-8">
                 <div>
                   <motion.span
@@ -345,7 +345,7 @@ export default function Products() {
             </section>
 
             {/* INDIVIDUAL PRODUCTS GRID */}
-            <section className="mb-16">
+            <section className="mb-12">
               {/* Top Row: Section Title & Kicker */}
               <div className="mb-6">
                 <motion.span

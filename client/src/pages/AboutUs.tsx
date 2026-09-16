@@ -89,7 +89,7 @@ export default function AboutUs() {
       <div className="absolute top-96 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#44a0e3]/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" /> */}
 
       <motion.div
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between mb-12 sm:mb-16"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between mb-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

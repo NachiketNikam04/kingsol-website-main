@@ -104,7 +104,7 @@ export default function AboutDetailsSection() {
   };
 
   return (
-    <section className="w-full bg-[#fdfcf8] py-24 text-slate-900">
+    <section className="w-full bg-[#fdfcf8] py-12 text-slate-900">
       {/* CSS for Marquee */}
       <style>{`
         @keyframes marquee-horizontal {

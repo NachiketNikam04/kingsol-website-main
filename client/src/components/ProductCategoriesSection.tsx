@@ -122,10 +122,10 @@ export const ProductCategoriesSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full py-24 bg-white text-slate-900">
+    <section className="w-full py-12 bg-white text-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Area */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
             <motion.span
               initial={{ opacity: 0, y: 30 }}

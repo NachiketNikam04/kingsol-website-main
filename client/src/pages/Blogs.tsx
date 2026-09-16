@@ -71,10 +71,10 @@ export default function Blogs() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-12 text-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         {/* Dynamic Header Hero Section */}
-        <div className="mb-20">
+        <div className="mb-10">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ export default function Blogs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="mb-24 group"
+              className="mb-12 group"
             >
               <Link
                 className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
@@ -158,7 +158,7 @@ export default function Blogs() {
             {/* Divider */}
             {blogs.length > 1 && (
               <>
-                <div className="flex items-center justify-between mb-16">
+                <div className="flex items-center justify-between mb-10">
                   <motion.h3
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}

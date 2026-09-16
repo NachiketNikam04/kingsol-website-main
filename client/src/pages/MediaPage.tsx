@@ -127,7 +127,7 @@ export const MediaPage: React.FC = () => {
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-16 text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Block */}
-        <div className="mb-16">
+        <div className="mb-10">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

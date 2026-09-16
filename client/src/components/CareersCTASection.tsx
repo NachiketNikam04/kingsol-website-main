@@ -54,7 +54,7 @@ export default function CareersCTASection() {
   };
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-24 bg-[#FDFCF8]">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 bg-[#FDFCF8]">
       {/* Redesigned Premium "Bento" Container */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}

@@ -119,7 +119,7 @@ export default function Services() {
     <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-0 text-slate-900 flex flex-col justify-between">
       <div className="max-w-7xl mx-auto px-6 w-full">
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="mb-10">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
