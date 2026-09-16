@@ -118,7 +118,7 @@ export const Navbar: React.FC = () => {
     loadFeatureFlags();
   }, []);
 
-  // Fallback Product Categories Data
+  // Fallback Product Categories Data (Pure fallback defaults if API offline, NO hardcoded BESS)
   const fallbackCategories: CategoryNav[] = [
     {
       id: 1,
@@ -177,25 +177,6 @@ export const Navbar: React.FC = () => {
         },
       ],
     },
-    {
-      id: 4,
-      name: 'BESS',
-      slug: 'bess',
-      brands: [
-        {
-          id: 5,
-          name: 'Kingsol BESS',
-          slug: 'kingsol-bess',
-          subcategories: [
-            { id: 1, name: 'C&I Energy Storage Cabinets', slug: 'ci-energy-storage' },
-            { id: 2, name: 'Containerized Utility BESS', slug: 'utility-bess' },
-          ],
-          products: [
-            { id: 1, name: 'Kingsol 100kWh All-In-One C&I Storage Cabinet', slug: 'kingsol-100kwh-storage' },
-          ],
-        },
-      ],
-    },
   ];
 
   // Fallback Services Data
@@ -208,26 +189,28 @@ export const Navbar: React.FC = () => {
     { title: 'Rooftop solar panel installation', slug: 'rooftop-solar-installation' },
   ];
 
-  const activeCategories = productCategories.length > 0 ? productCategories : fallbackCategories;
-  const activeServices = servicesList.length > 0 ? servicesList : fallbackServices;
-
   const isBessCat = (cat: CategoryNav) => {
     const slug = (cat.slug || '').toLowerCase();
     const name = (cat.name || '').toLowerCase();
     return slug === 'bess' || name === 'bess' || name.includes('battery energy');
   };
 
-  const fallbackBessCategory = fallbackCategories.find(isBessCat)!;
-  const bessCategory = activeCategories.find(isBessCat) || fallbackBessCategory;
-  const nonBessCategories = activeCategories.filter((cat) => !isBessCat(cat));
-  const bessBrands = (bessCategory?.brands && bessCategory.brands.length > 0)
-    ? bessCategory.brands
-    : (fallbackBessCategory?.brands || []);
+  // Purely dynamic BESS category & brands from backend database
+  const bessCategory = productCategories.find(isBessCat);
+  const bessBrands = bessCategory?.brands || [];
   const bessSlug = bessCategory?.slug || 'bess';
+
+  // Products dropdown strictly excludes BESS and sorts active categories
+  const rawProductCategories = productCategories.length > 0
+    ? productCategories.filter((cat) => !isBessCat(cat))
+    : fallbackCategories;
+
+  const activeCategories = rawProductCategories;
+  const activeServices = servicesList.length > 0 ? servicesList : fallbackServices;
 
   const priorityOrder = ['Solar Module', 'Solar Inverter', 'Solar Cable'];
 
-  const sortedCategories = [...nonBessCategories].sort((a, b) => {
+  const sortedCategories = [...activeCategories].sort((a, b) => {
     const indexA = priorityOrder.findIndex((name) =>
       a.name.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(a.name.toLowerCase())
     );
