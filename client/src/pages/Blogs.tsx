@@ -202,7 +202,7 @@ export default function Blogs() {
                           {post.title}
                         </h4>
 
-                        <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
+                        <p className="mt-2 text-gray-600 font-poppins text-sm leading-relaxed line-clamp-3">
                           {post.excerpt}
                         </p>
                       </Link>

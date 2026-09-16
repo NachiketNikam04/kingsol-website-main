@@ -80,12 +80,24 @@ export const TestimonialsSection: React.FC = () => {
 
   const activeReviews = testimonialData?.reviews && testimonialData.reviews.length > 0 ? testimonialData.reviews : defaultReviews;
 
-  const columnOne = activeReviews.filter((_, idx) => idx % 2 === 0);
-  const columnTwo = activeReviews.filter((_, idx) => idx % 2 !== 0);
+  // Split reviews across 3 columns
+  const columnOne = activeReviews.filter((_, idx) => idx % 3 === 0);
+  const columnTwo = activeReviews.filter((_, idx) => idx % 3 === 1);
+  const columnThree = activeReviews.filter((_, idx) => idx % 3 === 2);
 
-  // FIX: Use ONE shared duration for both columns, based on the longer column,
-  // so both marquees move at the exact same speed. Only direction differs (via animation-direction: reverse).
-  const marqueeDuration = Math.max(Math.max(columnOne.length, columnTwo.length) * 15, 15);
+  // Helper to ensure each column has enough cards to loop smoothly
+  const ensureMinCards = (arr: TestimonialReview[], minCount = 3): TestimonialReview[] => {
+    if (arr.length === 0) return activeReviews;
+    let result = [...arr];
+    while (result.length < minCount) {
+      result = [...result, ...arr];
+    }
+    return result;
+  };
+
+  const col1Cards = ensureMinCards(columnOne);
+  const col2Cards = ensureMinCards(columnTwo);
+  const col3Cards = ensureMinCards(columnThree);
 
   const renderDynamicHeadline = (headline: string, highlightWord: string) => {
     if (!highlightWord || !headline) return headline;
@@ -104,227 +116,124 @@ export const TestimonialsSection: React.FC = () => {
     );
   };
 
+  const renderTestimonialCard = (item: TestimonialReview, key: string) => (
+    <div
+      key={key}
+      className="bg-[#a4dfeb] rounded-2xl p-6 md:p-8 flex flex-col justify-between shrink-0 cursor-pointer w-full mb-6 shadow-xs"
+    >
+      <div>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-full bg-slate-200 overflow-hidden shrink-0 flex items-center justify-center border border-slate-300">
+            {item.image_url ? (
+              <img src={getAssetUrl(item.image_url)} alt={item.name} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-slate-700 font-bold text-lg">{item.name.charAt(0).toUpperCase()}</span>
+            )}
+          </div>
+          <div>
+            <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900">{item.name}</h4>
+            <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">{item.role}</p>
+          </div>
+        </div>
+
+        <div className="flex gap-1 text-slate-900 mb-4 text-sm font-bold">
+          {'★'.repeat(item.rating || 5)}
+        </div>
+
+        <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
+          "{item.review}"
+        </p>
+      </div>
+    </div>
+  );
+
   return (
-    <section className="w-full py-12 bg-[#fdfcf8] relative flex justify-center text-slate-900">
+    <section className="w-full py-12 bg-[#fdfcf8] relative text-slate-900">
       <style>{`
-        /* FIX: Single shared keyframe for both columns. Direction is flipped
-           purely via CSS animation-direction: reverse — no second keyframe needed. */
-        @keyframes marquee-vertical {
+        @keyframes marquee-up {
           0% { transform: translateY(0); }
           100% { transform: translateY(-50%); }
         }
-        .animate-marquee-vertical {
-          animation-name: marquee-vertical;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
+        @keyframes marquee-down {
+          0% { transform: translateY(-50%); }
+          100% { transform: translateY(0); }
         }
-        .animate-marquee-vertical:hover {
+        .animate-marquee-up {
+          animation: marquee-up 28s linear infinite;
+        }
+        .animate-marquee-down {
+          animation: marquee-down 28s linear infinite;
+        }
+        .animate-marquee-up:hover,
+        .animate-marquee-down:hover {
           animation-play-state: paused;
         }
       `}</style>
 
-      {/* DESKTOP VIEW (Vertical Marquees) */}
-      <div className="hidden md:block w-full">
-        <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column (Static Text) */}
-          <div className="lg:col-span-4 flex flex-col">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
-            >
-              {currentTagline}
-            </motion.div>
+      {/* 1. Centered Header at the Top */}
+      <div className="text-center max-w-3xl mx-auto mb-12 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+        >
+          {currentTagline}
+        </motion.div>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
-            >
-              {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-            </motion.h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
+        >
+          {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
+        </motion.h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal"
-            >
-              {currentSubtitle}
-            </motion.p>
-          </div>
-
-          {/* Right Column (Tight Centered Flex Container with Bi-Directional Vertical Marquees) */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-            className="lg:col-span-8 h-[600px] overflow-hidden relative [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)] flex justify-center gap-6"
-          >
-
-            {/* Column 1 (Even Cards - Downward Animation) */}
-            {/* FIX: same class + same duration as Column 2, direction flipped via inline style */}
-            <div
-              className="flex flex-col w-full max-w-[300px] animate-marquee-vertical"
-              style={{
-                animationDuration: `${marqueeDuration / 2.0}s`,
-                animationDirection: 'reverse',
-              }}
-            >
-              {[...columnOne, ...columnOne].map((item, index) => (
-                <div
-                  key={`${item.id || index}-${index}`}
-                  className="bg-[#a4dfeb] rounded-2xl p-6 md:p-8 flex flex-col justify-between shrink-0 cursor-pointer w-full min-h-[340px] mb-6"
-                >
-                  <div>
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-full bg-slate-200 overflow-hidden shrink-0 flex items-center justify-center border border-slate-300">
-                        {item.image_url ? (
-                          <img src={getAssetUrl(item.image_url)} alt={item.name} className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-slate-700 font-bold text-lg">{item.name.charAt(0).toUpperCase()}</span>
-                        )}
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb">{item.name}</h4>
-                        <p className="text-slate-600 leading-relaxed mb">{item.role}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-1 text-slate-900 mb-4 text-sm font-bold">
-                      {'★'.repeat(item.rating || 5)}
-                    </div>
-
-                    <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-4">
-                      "{item.review}"
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Column 2 Wrapper (Odd Cards - Staggered Offset & Upward Animation) */}
-            <div className="pt-12">
-              <div
-                className="flex flex-col w-full max-w-[300px] animate-marquee-vertical"
-                style={{ animationDuration: `${marqueeDuration}s` }}
-              >
-                {[...columnTwo, ...columnTwo].map((item, index) => (
-                  <div
-                    key={`${item.id || index}-${index}`}
-                    className="bg-[#a4dfeb] rounded-2xl p-6 md:p-8 flex flex-col justify-between shrink-0 cursor-pointer w-full min-h-[340px] mb-6"
-                  >
-                    <div>
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 rounded-full bg-slate-200 overflow-hidden shrink-0 flex items-center justify-center border border-slate-300">
-                          {item.image_url ? (
-                            <img src={getAssetUrl(item.image_url)} alt={item.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <span className="text-slate-700 font-bold text-lg">{item.name.charAt(0).toUpperCase()}</span>
-                          )}
-                        </div>
-                        <div>
-                          <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb">{item.name}</h4>
-                          <p className="text-slate-600 leading-relaxed mb">{item.role}</p>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-1 text-slate-900 mb-4 text-sm font-bold">
-                        {'★'.repeat(item.rating || 5)}
-                      </div>
-
-                      <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-4">
-                        "{item.review}"
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </motion.div>
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          className="text-slate-700 text-base md:text-lg mt-4 leading-relaxed font-normal max-w-2xl mx-auto"
+        >
+          {currentSubtitle}
+        </motion.p>
       </div>
 
-      {/* MOBILE VIEW (Horizontal Swipeable Carousel) */}
-      <div className="block md:hidden w-full">
-        {/* Mobile Header */}
-        <div className="px-6 mb-8 text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
-          >
-            {currentTagline}
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="mt-5 text-4xl sm:text-5xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
-          >
-            {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="text-slate-700 text-base sm:text-lg mt-4 leading-relaxed font-normal"
-          >
-            {currentSubtitle}
-          </motion.p>
-        </div>
-
-        {/* Swipeable Scroll-Snap Carousel */}
+      {/* 2. 3-Column Grid with Alternating Scroll Animations */}
+      <div className="max-w-7xl mx-auto px-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-          className="w-full overflow-x-auto snap-x snap-mandatory flex gap-4 px-6 pb-6 pt-2 select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="h-[600px] overflow-hidden relative [mask-image:linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]"
         >
-          {activeReviews.map((item, index) => (
-            <div
-              key={item.id || index}
-              className="snap-center min-w-[85vw] sm:min-w-[300px] shrink-0 bg-[#a4dfeb] rounded-2xl p-6 sm:p-8 flex flex-col justify-between cursor-pointer min-h-[340px]"
-            >
-              <div>
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-slate-200 overflow-hidden shrink-0 flex items-center justify-center border border-slate-300">
-                    {item.image_url ? (
-                      <img src={getAssetUrl(item.image_url)} alt={item.name} className="w-full h-full object-cover" />
-                    ) : (
-                      <span className="text-slate-700 font-bold text-lg">{item.name.charAt(0).toUpperCase()}</span>
-                    )}
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb">{item.name}</h4>
-                    <p className="text-slate-600 leading-relaxed mb">{item.role}</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-1 text-slate-900 mb-4 text-sm font-bold">
-                  {'★'.repeat(item.rating || 5)}
-                </div>
-
-                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-4">
-                  "{item.review}"
-                </p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Column 1: Animates DOWN */}
+            <div className="flex flex-col animate-marquee-down">
+              {[...col1Cards, ...col1Cards].map((item, index) =>
+                renderTestimonialCard(item, `col1-${item.id || index}-${index}`)
+              )}
             </div>
-          ))}
+
+            {/* Column 2: Animates UP */}
+            <div className="hidden md:flex flex-col animate-marquee-up">
+              {[...col2Cards, ...col2Cards].map((item, index) =>
+                renderTestimonialCard(item, `col2-${item.id || index}-${index}`)
+              )}
+            </div>
+
+            {/* Column 3: Animates DOWN */}
+            <div className="hidden md:flex flex-col animate-marquee-down">
+              {[...col3Cards, ...col3Cards].map((item, index) =>
+                renderTestimonialCard(item, `col3-${item.id || index}-${index}`)
+              )}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
