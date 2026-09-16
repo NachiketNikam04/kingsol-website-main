@@ -181,7 +181,7 @@ export const PremiumProductsSection: React.FC = () => {
               </h3>
 
               {/* Body */}
-              <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-5">
+              <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
                 {product.description}
               </p>
 
