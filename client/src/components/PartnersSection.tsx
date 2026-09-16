@@ -108,7 +108,7 @@ export const PartnersSection: React.FC = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="relative w-full py-18 bg-[#fdfcf8]"
+      className="relative w-full py-16 bg-[#fdfcf8]"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Heading */}
