@@ -1,6 +1,6 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
-import React, { useState, useEffect } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -64,6 +64,12 @@ export const PremiumProductsSection: React.FC = () => {
   });
   const [cards, setCards] = useState<DynamicSolutionCard[]>(DEFAULT_CARDS);
 
+  // Slider State & Ref
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftPos, setScrollLeftPos] = useState(0);
+
   useEffect(() => {
     async function loadSolutionsData() {
       try {
@@ -80,6 +86,38 @@ export const PremiumProductsSection: React.FC = () => {
     }
     loadSolutionsData();
   }, []);
+
+  // Smooth scroll handler
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -340 : 340;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Mouse drag handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeftPos(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollRef.current.scrollLeft = scrollLeftPos - walk;
+  };
 
   // Case-Insensitive Headline Highlight Renderer
   const renderHighlightedHeadline = (headline?: string, highlightWord?: string) => {
@@ -102,27 +140,8 @@ export const PremiumProductsSection: React.FC = () => {
     );
   };
 
-  // Double the dynamic cards array for seamless infinite marquee scrolling
-  const duplicatedCards = [...cards, ...cards];
-
   return (
     <section className="w-full py-[72px] bg-[#fdfcf8] relative overflow-hidden text-slate-900">
-      {/* Keyframe Marquee Animations */}
-      <style>
-        {`
-          @keyframes marqueeSolutions {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-marquee-solutions {
-            animation: marqueeSolutions 35s linear infinite;
-          }
-          .animate-marquee-solutions:hover {
-            animation-play-state: paused;
-          }
-        `}
-      </style>
-
       {/* Header Area */}
       <div className="max-w-7xl mx-auto px-6 mb-10">
         <div>
@@ -147,24 +166,31 @@ export const PremiumProductsSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Infinite Auto-Scrolling Marquee Container (Pauses on Hover) */}
+      {/* Interactive Drag & Slide Carousel Container */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-        className="max-w-[100vw] overflow-hidden w-full relative"
+        className="w-full relative"
       >
-        <div className="flex gap-8 w-max animate-marquee-solutions pl-6">
-          {duplicatedCards.map((product, idx) => (
+        <div
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className="flex gap-6 w-full overflow-x-auto snap-x snap-mandatory px-6 pb-8 scrollbar-hide cursor-grab active:cursor-grabbing [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {cards.map((product) => (
             <Link
               to={`/products/${product.category_slug}`}
-              key={`${product.id}-${idx}`}
-              className="w-[80vw] sm:w-[380px] shrink-0 bg-white rounded-2xl p-5 flex flex-col transition-all duration-500 hover:shadow-lg border border-slate-200/60 group cursor-pointer"
+              key={product.id}
+              className="w-[80vw] sm:w-[320px] shrink-0 bg-white rounded-2xl p-4 flex flex-col transition-all duration-500 hover:shadow-lg border border-slate-200/60 group cursor-pointer snap-start select-none"
             >
-              {/* Top Image Container */}
-              <div className="w-full h-40 bg-slate-100 rounded-xl mb-4 overflow-hidden relative border border-slate-200">
-                <span className="absolute top-4 left-4 z-10 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md bg-white text-brand-orange shadow-md leading-relaxed mb">
+              {/* Top Image Container (Reduced to 136px) */}
+              <div className="w-full h-[136px] bg-slate-100 rounded-xl mb-4 overflow-hidden relative border border-slate-200">
+                <span className="absolute top-4 left-4 z-10 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md bg-white text-brand-orange shadow-md leading-relaxed">
                   {product.tag}
                 </span>
                 <img
@@ -185,7 +211,7 @@ export const PremiumProductsSection: React.FC = () => {
                 {product.description}
               </p>
 
-              {/* Footer text (Changed from Link to div) */}
+              {/* Footer text */}
               <div
                 className="mt-auto pt-6 border-t border-slate-300/60 flex items-center justify-between font-bold text-slate-600 leading-relaxed group-hover:text-brand-green transition-colors"
               >
@@ -194,6 +220,27 @@ export const PremiumProductsSection: React.FC = () => {
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Minimalist Navigation Buttons */}
+        <div className="flex justify-center items-center gap-4 mt-2">
+          <button
+            type="button"
+            onClick={() => handleScroll('left')}
+            aria-label="Previous solution"
+            className="p-2 cursor-pointer focus:outline-none"
+          >
+            <ChevronLeft className="w-5 h-5 text-slate-400 hover:text-slate-900 transition-colors" />
+          </button>
+          <div className="w-16 h-[1px] bg-slate-300"></div>
+          <button
+            type="button"
+            onClick={() => handleScroll('right')}
+            aria-label="Next solution"
+            className="p-2 cursor-pointer focus:outline-none"
+          >
+            <ChevronRight className="w-5 h-5 text-slate-400 hover:text-slate-900 transition-colors" />
+          </button>
         </div>
       </motion.div>
     </section>
