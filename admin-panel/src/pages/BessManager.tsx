@@ -83,6 +83,8 @@ interface BessItem {
 const initialBessForm = {
   category_id: '',
   brand_id: '',
+  is_creating_new_brand: false,
+  new_brand_name: '',
   subcategory_id: '',
   new_category_name: '',
   is_creating_new_subcategory: false,
@@ -321,6 +323,8 @@ export const BessManager: React.FC = () => {
     setForm({
       category_id: item.category_id ? item.category_id.toString() : '',
       brand_id: item.brand_id ? item.brand_id.toString() : '',
+      is_creating_new_brand: false,
+      new_brand_name: '',
       subcategory_id: item.subcategory_id ? item.subcategory_id.toString() : '',
       new_category_name: '',
       is_creating_new_subcategory: false,
@@ -358,6 +362,41 @@ export const BessManager: React.FC = () => {
         return;
       }
 
+      if (!form.category_id) {
+        alert('Please select a Category.');
+        return;
+      }
+
+      if (!form.brand_id && (!form.is_creating_new_brand || !form.new_brand_name.trim())) {
+        alert('Please select an existing Brand or enter a new Brand name.');
+        return;
+      }
+
+      let finalBrandId = form.brand_id ? parseInt(form.brand_id) : null;
+
+      // Handle "Create New Brand" on the fly
+      if (form.is_creating_new_brand && form.new_brand_name.trim()) {
+        try {
+          const newBrandName = form.new_brand_name.trim();
+          const brandRes = await api.post('/brands', {
+            category_id: parseInt(form.category_id),
+            name: newBrandName,
+            slug: slugify(newBrandName),
+            description: `${newBrandName} BESS Energy Storage Solutions`,
+          });
+          if (brandRes.data.success && brandRes.data.data) {
+            finalBrandId = brandRes.data.data.id;
+          }
+        } catch (e) {
+          console.warn('Brand creation notice:', e);
+        }
+      }
+
+      if (!finalBrandId) {
+        alert('Failed to determine Brand ID. Please select or enter a valid brand.');
+        return;
+      }
+
       let finalSubcategoryId = form.subcategory_id ? parseInt(form.subcategory_id) : null;
 
       // Handle "Create New Category" on the fly
@@ -366,7 +405,7 @@ export const BessManager: React.FC = () => {
           const newSubName = form.new_category_name.trim();
           const subRes = await api.post('/subcategories', {
             category_id: parseInt(form.category_id),
-            brand_id: parseInt(form.brand_id),
+            brand_id: finalBrandId,
             name: newSubName,
             slug: slugify(newSubName),
           });
@@ -395,7 +434,7 @@ export const BessManager: React.FC = () => {
 
       const payload = {
         category_id: parseInt(form.category_id),
-        brand_id: parseInt(form.brand_id),
+        brand_id: finalBrandId,
         subcategory_id: finalSubcategoryId,
         title: form.title,
         slug: slugify(form.slug || form.title),
@@ -453,11 +492,6 @@ export const BessManager: React.FC = () => {
       });
     }
   };
-
-  // Filter available brands based on selected category in form
-  const availableBrandsForForm = form.category_id
-    ? brands.filter((b) => b.category_id.toString() === form.category_id)
-    : brands;
 
   // Filtered table items
   const filteredItems = bessItems.filter((item) => {
@@ -792,18 +826,92 @@ export const BessManager: React.FC = () => {
                             Brand Showcase
                           </label>
                           <select
-                            required
-                            value={form.brand_id}
-                            onChange={(e) => setForm({ ...form, brand_id: e.target.value })}
+                            required={!form.is_creating_new_brand}
+                            value={
+                              form.is_creating_new_brand ? 'create_new' : form.brand_id
+                            }
+                            onChange={(e) => {
+                              if (e.target.value === 'create_new') {
+                                setForm({
+                                  ...form,
+                                  is_creating_new_brand: true,
+                                  brand_id: '',
+                                });
+                              } else {
+                                setForm({
+                                  ...form,
+                                  is_creating_new_brand: false,
+                                  brand_id: e.target.value,
+                                });
+                              }
+                            }}
                             className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
                           >
                             <option value="">Select Brand</option>
-                            {availableBrandsForForm.map((b) => (
-                              <option key={b.id} value={b.id}>
-                                {b.name}
-                              </option>
-                            ))}
+                            {(() => {
+                              const categoryBrands = form.category_id
+                                ? brands.filter(
+                                    (b) => b.category_id?.toString() === form.category_id?.toString()
+                                  )
+                                : brands;
+                              const otherBrands = form.category_id
+                                ? brands.filter(
+                                    (b) => b.category_id?.toString() !== form.category_id?.toString()
+                                  )
+                                : [];
+
+                              if (categoryBrands.length > 0 && otherBrands.length > 0) {
+                                return (
+                                  <>
+                                    <optgroup label="BESS Category Brands">
+                                      {categoryBrands.map((b) => (
+                                        <option key={b.id} value={b.id.toString()}>
+                                          {b.name}
+                                        </option>
+                                      ))}
+                                    </optgroup>
+                                    <optgroup label="Other Available Brands">
+                                      {otherBrands.map((b) => (
+                                        <option key={b.id} value={b.id.toString()}>
+                                          {b.name}
+                                        </option>
+                                      ))}
+                                    </optgroup>
+                                  </>
+                                );
+                              }
+
+                              if (categoryBrands.length > 0) {
+                                return categoryBrands.map((b) => (
+                                  <option key={b.id} value={b.id.toString()}>
+                                    {b.name}
+                                  </option>
+                                ));
+                              }
+
+                              return brands.map((b) => (
+                                <option key={b.id} value={b.id.toString()}>
+                                  {b.name}
+                                </option>
+                              ));
+                            })()}
+                            <option value="create_new">+ Create New Brand</option>
                           </select>
+
+                          {form.is_creating_new_brand && (
+                            <div className="mt-2">
+                              <input
+                                type="text"
+                                value={form.new_brand_name}
+                                onChange={(e) =>
+                                  setForm({ ...form, new_brand_name: e.target.value })
+                                }
+                                className="w-full bg-white border border-brand-green rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none"
+                                placeholder="Type custom brand name (e.g. Kingsol BESS, BYD, Growatt BESS)"
+                                required
+                              />
+                            </div>
+                          )}
                         </div>
 
                         <div>
