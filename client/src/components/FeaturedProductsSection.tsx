@@ -182,10 +182,10 @@ export const FeaturedProductsSection: React.FC = () => {
               <Link
                 key={`${product.id}-${index}`}
                 to={detailRoute}
-                className="w-[320px] md:w-[380px] shrink-0 bg-white border border-slate-200/60 rounded-2xl p-6 md:p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:border-white hover:shadow-[0_10px_30px_rgba(68,160,227,0.2)] hover:-translate-y-1 group/card"
+                className="w-[270px] md:w-[320px] shrink-0 bg-white border border-slate-200/60 rounded-2xl p-5 md:p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 hover:border-white hover:shadow-[0_10px_30px_rgba(68,160,227,0.2)] hover:-translate-y-1 group/card"
               >
-                {/* Image Container (h-48) */}
-                <div className="w-full h-48 bg-white rounded-xl mb-6 overflow-hidden relative border border-slate-200/50 flex items-center justify-center p-2">
+                {/* Image Container (h-40) */}
+                <div className="w-full h-40 bg-white rounded-xl mb-6 overflow-hidden relative border border-slate-200/50 flex items-center justify-center p-2">
                   <img
                     src={displayImg}
                     alt={product.title || product.name}
@@ -202,7 +202,7 @@ export const FeaturedProductsSection: React.FC = () => {
                 </span>
 
                 {/* Product Name */}
-                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 whitespace-normal line-clamp-2 leading-snug group-hover/card:text-[#44a0e3] transition-colors">
+                <h3 className="text-base md:text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 whitespace-normal line-clamp-2 leading-snug group-hover/card:text-[#44a0e3] transition-colors">
                   {product.title || product.name}
                 </h3>
               </Link>
