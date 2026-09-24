@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Phone, Instagram, Facebook, Youtube, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import QuoteModal from './QuoteModal';
 
 interface ProductNav {
   id: number;
@@ -35,6 +36,7 @@ export const Navbar: React.FC = () => {
   const [productCategories, setProductCategories] = useState<CategoryNav[]>([]);
   const [servicesList, setServicesList] = useState<ServiceNav[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [featureFlags, setFeatureFlags] = useState<{ show_services: boolean; show_videos: boolean }>({
     show_services: false,
@@ -608,16 +610,23 @@ export const Navbar: React.FC = () => {
                 )}
               </ul>
             </li>
+
+            {/* Contact Us Navigation Link */}
+            <li>
+              <Link className="hover:text-brand-green transition-colors font-medium" to="/contact">
+                Contact Us
+              </Link>
+            </li>
           </ul>
 
-          {/* Right: Green Contact Us Button */}
+          {/* Right: Green Get Quote Button */}
           <div className="hidden lg:block">
-            <Link
-              className="bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer"
-              to="/contact"
+            <button
+              onClick={() => setIsQuoteOpen(true)}
+              className="bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer shadow-xs"
             >
-              Contact Us
-            </Link>
+              Get Quote
+            </button>
           </div>
         </div>
       </div>
@@ -708,6 +717,15 @@ export const Navbar: React.FC = () => {
               </Link>
             )}
 
+            {/* Contact Us Link on Mobile */}
+            <Link
+              className="hover:text-brand-green transition-colors py-1 text-base font-medium"
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact Us
+            </Link>
+
             {/* Contact Quick Info on Mobile */}
             <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5 text-xs text-slate-600 font-medium">
               <a href="tel:18002037228" className="flex items-center gap-2 hover:text-brand-green">
@@ -722,17 +740,22 @@ export const Navbar: React.FC = () => {
             </div>
 
             <div className="pt-2 border-t border-slate-100">
-              <Link
-                className="bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-3 rounded-full font-medium text-center text-sm shadow-sm block transition-colors"
-                to="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                className="w-full bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-3 rounded-full font-semibold text-center text-sm shadow-sm block transition-colors cursor-pointer"
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsQuoteOpen(true);
+                }}
               >
-                Contact Us
-              </Link>
+                Get Quote
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Reusable Quote Modal */}
+      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
     </motion.header>
   );
 };

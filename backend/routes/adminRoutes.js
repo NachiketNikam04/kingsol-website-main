@@ -7,7 +7,7 @@ const router = express.Router();
 // GET /api/admin/dashboard-stats (Protected)
 router.get('/dashboard-stats', verifyToken, async (req, res) => {
   try {
-    const [inquiriesRes, appsRes, brandsRes, productsRes] = await Promise.all([
+    const [inquiriesRes, appsRes, brandsRes, productsRes, quotesRes] = await Promise.all([
       pool.query(`
         SELECT 
           COUNT(*)::int as total_inquiries,
@@ -24,6 +24,13 @@ router.get('/dashboard-stats', verifyToken, async (req, res) => {
 
       pool.query(`SELECT COUNT(*)::int as total_brands FROM brands`).catch(() => ({ rows: [{ total_brands: 0 }] })),
       pool.query(`SELECT COUNT(*)::int as total_products FROM products`).catch(() => ({ rows: [{ total_products: 0 }] })),
+
+      pool.query(`
+        SELECT 
+          COUNT(*)::int as total_quotes,
+          COUNT(CASE WHEN status = 'New' OR status IS NULL THEN 1 END)::int as unread_quotes
+        FROM quotes
+      `).catch(() => ({ rows: [{ total_quotes: 0, unread_quotes: 0 }] })),
     ]);
 
     const stats = {
@@ -33,6 +40,8 @@ router.get('/dashboard-stats', verifyToken, async (req, res) => {
       unreadApplications: appsRes.rows[0]?.unread_applications || 0,
       totalBrands: brandsRes.rows[0]?.total_brands || 0,
       totalProducts: productsRes.rows[0]?.total_products || 0,
+      totalQuotes: quotesRes.rows[0]?.total_quotes || 0,
+      unreadQuotes: quotesRes.rows[0]?.unread_quotes || 0,
     };
 
     return res.status(200).json({

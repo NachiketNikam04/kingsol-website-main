@@ -5,6 +5,10 @@ export async function sendInquiryEmailAlert(payload = {}) {
     name = 'Anonymous',
     email = '',
     phone = '',
+    company_name,
+    company,
+    state,
+    product_interest,
     message = '',
     inquiry_type,
     type,
@@ -35,9 +39,20 @@ export async function sendInquiryEmailAlert(payload = {}) {
       },
     });
 
-    const formType = type || inquiry_type || (productName || product ? 'Product Quick Quote' : 'General Contact Form');
-    const targetProduct = productName || product || '';
-    const subject = customSubject || `[Kingsol Alert] ${formType} - ${targetProduct ? `${targetProduct} - ` : ''}${name}`;
+    const resolvedCompany = company_name || company || '';
+    const resolvedState = state || '';
+    const targetProduct = product_interest || productName || product || '';
+    const formType =
+      type ||
+      inquiry_type ||
+      (product_interest
+        ? 'Product Quotation Request'
+        : productName || product
+        ? 'Product Quick Quote'
+        : 'General Contact Form');
+    const subject =
+      customSubject ||
+      `[Kingsol Alert] ${formType} - ${targetProduct ? `${targetProduct} - ` : ''}${name}`;
 
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; background-color: #ffffff;">
@@ -48,14 +63,14 @@ export async function sendInquiryEmailAlert(payload = {}) {
         
         <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px;">
           <tr>
-            <td style="padding: 10px 0; font-weight: bold; width: 140px; color: #64748b; border-bottom: 1px solid #f1f5f9;">Inquiry Type:</td>
+            <td style="padding: 10px 0; font-weight: bold; width: 140px; color: #64748b; border-bottom: 1px solid #f1f5f9;">Submission Type:</td>
             <td style="padding: 10px 0; font-weight: bold; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${formType}</td>
           </tr>
           ${
             targetProduct && targetProduct !== 'N/A'
               ? `
           <tr>
-            <td style="padding: 10px 0; font-weight: bold; color: #64748b; border-bottom: 1px solid #f1f5f9;">Product Inquired:</td>
+            <td style="padding: 10px 0; font-weight: bold; color: #64748b; border-bottom: 1px solid #f1f5f9;">Product / System Interest:</td>
             <td style="padding: 10px 0; color: #0284c7; font-weight: bold; border-bottom: 1px solid #f1f5f9;">${targetProduct}</td>
           </tr>
           `
@@ -75,6 +90,26 @@ export async function sendInquiryEmailAlert(payload = {}) {
             <td style="padding: 10px 0; font-weight: bold; color: #64748b; border-bottom: 1px solid #f1f5f9;">Customer Name:</td>
             <td style="padding: 10px 0; font-weight: bold; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${name}</td>
           </tr>
+          ${
+            resolvedCompany
+              ? `
+          <tr>
+            <td style="padding: 10px 0; font-weight: bold; color: #64748b; border-bottom: 1px solid #f1f5f9;">Company / Org:</td>
+            <td style="padding: 10px 0; font-weight: 500; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${resolvedCompany}</td>
+          </tr>
+          `
+              : ''
+          }
+          ${
+            resolvedState
+              ? `
+          <tr>
+            <td style="padding: 10px 0; font-weight: bold; color: #64748b; border-bottom: 1px solid #f1f5f9;">State / Region:</td>
+            <td style="padding: 10px 0; font-weight: 500; color: #0f172a; border-bottom: 1px solid #f1f5f9;">${resolvedState}</td>
+          </tr>
+          `
+              : ''
+          }
           <tr>
             <td style="padding: 10px 0; font-weight: bold; color: #64748b; border-bottom: 1px solid #f1f5f9;">Email Address:</td>
             <td style="padding: 10px 0; border-bottom: 1px solid #f1f5f9;"><a href="mailto:${email}" style="color: #0284c7; text-decoration: none; font-weight: 500;">${email || 'N/A'}</a></td>
@@ -86,7 +121,7 @@ export async function sendInquiryEmailAlert(payload = {}) {
         </table>
         
         <div style="margin-top: 16px; padding: 16px; background-color: #f8fafc; border-radius: 10px; border-left: 4px solid #78C257;">
-          <h4 style="margin: 0 0 6px 0; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Message / Requirements:</h4>
+          <h4 style="margin: 0 0 6px 0; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Message / Project Specifications:</h4>
           <p style="margin: 0; font-size: 14px; color: #334155; white-space: pre-line;">${message || 'No additional message provided.'}</p>
         </div>
         

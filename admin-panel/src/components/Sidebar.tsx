@@ -38,6 +38,7 @@ export const Sidebar: React.FC = () => {
 
   const [unreadInquiries, setUnreadInquiries] = useState(0);
   const [unreadApps, setUnreadApps] = useState(0);
+  const [unreadQuotes, setUnreadQuotes] = useState(0);
   const [logoUrl, setLogoUrl] = useState<string>('');
 
   // Dropdown Toggle States
@@ -63,6 +64,7 @@ export const Sidebar: React.FC = () => {
         if (resStats.data.success) {
           setUnreadInquiries(resStats.data.data.unreadInquiries || 0);
           setUnreadApps(resStats.data.data.unreadApplications || 0);
+          setUnreadQuotes(resStats.data.data.unreadQuotes || 0);
         }
       } catch {
         // Silent catch
@@ -90,7 +92,8 @@ export const Sidebar: React.FC = () => {
 
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Inquiries & Quotes', path: '/dashboard/inquiries', icon: MessageSquare, badge: unreadInquiries },
+    { name: 'Quote Requests', path: '/dashboard/quotes', icon: MessageSquareQuote, badge: unreadQuotes },
+    { name: 'Contact Inquiries', path: '/dashboard/inquiries', icon: MessageSquare, badge: unreadInquiries },
     { name: 'Job Applications', path: '/dashboard/careers', icon: UserCheck, badge: unreadApps },
     { name: 'Services Hub', path: '/dashboard/services', icon: Wrench },
     { name: 'Products & Brands', path: '/dashboard/products', icon: Package },
