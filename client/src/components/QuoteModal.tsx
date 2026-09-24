@@ -292,10 +292,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           {/* Modal Header */}
           <div className="px-6 sm:px-8 pt-6 pb-4 flex items-start justify-between border-b border-slate-100 bg-slate-50/50">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight font-montserrat">
+              <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
                 Request a Custom Quote
               </h2>
-              <p className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
                 Connect with our technical solar team for Tier-1 pricing, project sizing & datasheets.
               </p>
             </div>
