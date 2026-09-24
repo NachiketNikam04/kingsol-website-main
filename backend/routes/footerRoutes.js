@@ -20,12 +20,22 @@ router.get('/', async (req, res) => {
       address: 'Third floor Shop. no. 326, Vardhaman Moonstone, Pune.',
       phone: '+1 (800) 555-SOLAR',
       email: 'b2b@kingsol-energy.com',
+      distribution_title: 'Pan India distribution',
+      distribution_description: 'Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide.',
+    };
+
+    const row = settingsRes.rows[0] || {};
+    const settings = {
+      ...defaultSettings,
+      ...row,
+      distribution_title: row.distribution_title || defaultSettings.distribution_title,
+      distribution_description: row.distribution_description || defaultSettings.distribution_description,
     };
 
     res.status(200).json({
       success: true,
       data: {
-        settings: settingsRes.rows[0] || defaultSettings,
+        settings,
         socialLinks: socialRes.rows,
       },
     });
@@ -37,26 +47,30 @@ router.get('/', async (req, res) => {
 
 // PUT /api/footer/settings (Protected - Update Footer Contact Details)
 router.put('/settings', verifyToken, async (req, res) => {
-  const { description, hq_label, address, phone, email } = req.body;
+  const { description, hq_label, address, phone, email, distribution_title, distribution_description } = req.body;
 
   try {
     const result = await pool.query(
-      `INSERT INTO footer_settings (id, description, hq_label, address, phone, email, updated_at)
-       VALUES (1, $1, $2, $3, $4, $5, NOW())
+      `INSERT INTO footer_settings (id, description, hq_label, address, phone, email, distribution_title, distribution_description, updated_at)
+       VALUES (1, $1, $2, $3, $4, $5, $6, $7, NOW())
        ON CONFLICT (id) DO UPDATE
        SET description = EXCLUDED.description,
            hq_label = EXCLUDED.hq_label,
            address = EXCLUDED.address,
            phone = EXCLUDED.phone,
            email = EXCLUDED.email,
+           distribution_title = EXCLUDED.distribution_title,
+           distribution_description = EXCLUDED.distribution_description,
            updated_at = NOW()
        RETURNING *`,
       [
-        description || 'High-efficiency solar components...',
+        description || 'High-efficiency solar components, utility-scale storage, and turnkey B2B procurement engineered for a sustainable planet.',
         hq_label || 'Global HQ',
         address || 'Third floor Shop. no. 326, Vardhaman Moonstone, Pune.',
         phone || '+1 (800) 555-SOLAR',
         email || 'b2b@kingsol-energy.com',
+        distribution_title || 'Pan India distribution',
+        distribution_description || 'Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide.',
       ]
     );
 

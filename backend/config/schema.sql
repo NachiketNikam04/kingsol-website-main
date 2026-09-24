@@ -221,6 +221,8 @@ CREATE TABLE IF NOT EXISTS footer_settings (
   address TEXT DEFAULT 'Third floor Shop. no. 326, Vardhaman Moonstone, Pune.',
   phone VARCHAR(100) DEFAULT '+1 (800) 555-SOLAR',
   email VARCHAR(255) DEFAULT 'b2b@kingsol-energy.com',
+  distribution_title VARCHAR(255) DEFAULT 'Pan India distribution',
+  distribution_description TEXT DEFAULT 'Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide.',
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 

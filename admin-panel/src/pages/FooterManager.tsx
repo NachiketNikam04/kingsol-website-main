@@ -24,6 +24,8 @@ interface FooterSettings {
   address: string;
   phone: string;
   email: string;
+  distribution_title?: string;
+  distribution_description?: string;
 }
 
 interface SocialLink {
@@ -41,6 +43,8 @@ export const FooterManager: React.FC = () => {
     address: 'Third floor Shop. no. 326, Vardhaman Moonstone, Pune.',
     phone: '+1 (800) 555-SOLAR',
     email: 'b2b@kingsol-energy.com',
+    distribution_title: 'Pan India distribution',
+    distribution_description: 'Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide.',
   });
 
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
@@ -278,12 +282,46 @@ export const FooterManager: React.FC = () => {
                   />
                 </div>
 
+                {/* Distribution Banner Settings (Tier 1 Top Bar) */}
+                <div className="pt-5 border-t border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-brand-green inline-block"></span>
+                    Tier 1: Distribution Section (Top Bar)
+                  </h4>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-2">
+                        Distribution Section Title
+                      </label>
+                      <input
+                        type="text"
+                        value={settings.distribution_title || ''}
+                        onChange={(e) => setSettings({ ...settings, distribution_title: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
+                        placeholder="Pan India distribution"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase mb-2">
+                        Distribution Description
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={settings.distribution_description || ''}
+                        onChange={(e) => setSettings({ ...settings, distribution_description: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
+                        placeholder="Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide."
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <button
                   type="submit"
                   disabled={savingSettings}
                   className="bg-brand-green text-slate-900 px-8 py-3.5 rounded-full font-bold text-sm hover:bg-slate-900 hover:text-white transition-colors cursor-pointer"
                 >
-                  {savingSettings ? 'Saving Details...' : 'Save Footer Contact Details'}
+                  {savingSettings ? 'Saving Settings...' : 'Save Footer Settings'}
                 </button>
               </form>
             </div>

@@ -11,6 +11,14 @@ interface FooterSettingsData {
   address?: string;
   phone?: string;
   email?: string;
+  distribution_title?: string;
+  distribution_description?: string;
+}
+
+interface CategoryItem {
+  id?: number;
+  name: string;
+  slug: string;
 }
 
 export const Footer: React.FC = () => {
@@ -20,20 +28,43 @@ export const Footer: React.FC = () => {
   const [settings, setSettings] = useState<FooterSettingsData>({
     description:
       'High-efficiency solar components, utility-scale storage, and turnkey B2B procurement engineered for a sustainable planet.',
-    hq_label: 'Global HQ',
+    hq_label: 'Main Office',
     address: 'Third floor Shop. no. 326, Vardhaman Moonstone, Pune.',
     phone: '+1 (800) 555-SOLAR',
     email: 'b2b@kingsol-energy.com',
+    distribution_title: 'Pan India distribution',
+    distribution_description:
+      'Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide.',
   });
 
   const [socialLinks, setSocialLinks] = useState<DynamicSocialLink[]>([]);
 
+  const [warehouseLocations, setWarehouseLocations] = useState<string[]>([
+    'Bhiwandi, Maharashtra',
+    'Ahmedabad, Gujarat',
+    'Bengaluru, Karnataka',
+    'Chennai, Tamil Nadu',
+    'Jaipur, Rajasthan',
+    'Kolkata, West Bengal',
+    'Hyderabad, Telangana',
+    'Noida, Delhi NCR',
+  ]);
+
+  const [categories, setCategories] = useState<CategoryItem[]>([
+    { id: 1, name: 'Solar Inverters', slug: 'solar-inverters' },
+    { id: 2, name: 'Solar Modules', slug: 'solar-modules' },
+    { id: 3, name: 'Solar Cables', slug: 'solar-cables' },
+    { id: 4, name: 'BESS Storage', slug: 'bess' },
+  ]);
+
   useEffect(() => {
     async function loadFooterAndBranding() {
       try {
-        const [brandRes, footerRes] = await Promise.all([
+        const [brandRes, footerRes, warehouseRes, navRes] = await Promise.all([
           fetch(`${API_BASE_URL}/branding`).then((r) => r.json()).catch(() => null),
           fetch(`${API_BASE_URL}/footer`).then((r) => r.json()).catch(() => null),
+          fetch(`${API_BASE_URL}/about/warehouse`).then((r) => r.json()).catch(() => null),
+          fetch(`${API_BASE_URL}/navigation/menu`).then((r) => r.json()).catch(() => null),
         ]);
 
         if (brandRes && brandRes.success && brandRes.data) {
@@ -48,6 +79,29 @@ export const Footer: React.FC = () => {
           if (footerRes.data.socialLinks && footerRes.data.socialLinks.length > 0) {
             setSocialLinks(footerRes.data.socialLinks);
           }
+        }
+
+        if (warehouseRes && warehouseRes.success && warehouseRes.data) {
+          const locs = warehouseRes.data.warehouseLocations || warehouseRes.data.locations;
+          if (Array.isArray(locs) && locs.length > 0) {
+            setWarehouseLocations(locs);
+          }
+        }
+
+        if (
+          navRes &&
+          navRes.success &&
+          navRes.data &&
+          Array.isArray(navRes.data.productCategories) &&
+          navRes.data.productCategories.length > 0
+        ) {
+          setCategories(
+            navRes.data.productCategories.map((c: any) => ({
+              id: c.id,
+              name: c.name,
+              slug: c.slug,
+            }))
+          );
         }
       } catch (err) {
         console.warn('⚠️ [Footer] Fetch offline, using default settings:', err);
@@ -70,15 +124,65 @@ export const Footer: React.FC = () => {
   const facebookUrl = getLink('face', 'https://facebook.com/kingsolenergy');
 
   return (
-    <footer className="relative bg-[#0b0b0f] text-slate-300 pt-16 md:pt-20 overflow-hidden">
-      {/* Phase 1: Top-Right Ambient Glow */}
+    <footer className="relative bg-[#0b0b0f] text-slate-300 overflow-hidden">
+      {/* Ambient Glow */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-[#44a0e3]/40 to-brand-green/20 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Phase 1 & 2: Top (Links & Info) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-16">
-          {/* Brand & Mission Column */}
-          <div className="lg:col-span-4 space-y-6">
+      {/* Tier 1: Distribution Section (Top Bar of Footer) */}
+      <div className="relative z-10 border-b border-slate-800/80">
+        <div className="max-w-7xl mx-auto px-6 py-10 md:py-12">
+          <div className="space-y-4">
+            {/* Title & Description */}
+            <div>
+              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                {settings.distribution_title || 'Pan India distribution'}
+              </h3>
+              <p className="text-slate-400 text-sm md:text-base mt-2 max-w-4xl leading-relaxed">
+                {settings.distribution_description ||
+                  'Kingsol supplies solar modules, inverters, and energy storage systems across major industrial and commercial hubs nationwide.'}
+              </p>
+            </div>
+
+            {/* Dynamic Locations Inline List */}
+            <div className="pt-1">
+              <div className="flex flex-wrap items-center text-sm md:text-base text-slate-300 font-medium leading-relaxed">
+                {warehouseLocations.map((loc, idx) => (
+                  <React.Fragment key={idx}>
+                    <span className="hover:text-white transition-colors duration-200">{loc}</span>
+                    {idx < warehouseLocations.length - 1 && (
+                      <span className="mx-2.5 text-slate-600 font-bold select-none">·</span>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Links */}
+            <div className="pt-2 flex flex-wrap items-center gap-6 text-sm font-semibold">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-1.5 text-brand-green hover:text-white transition-colors duration-300 group"
+              >
+                <span>Contact us for supply in your state</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+              <Link
+                to="/products"
+                className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors duration-300 group"
+              >
+                <span>Browse products</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tier 2: Main Links Restructure */}
+      <div className="max-w-7xl mx-auto px-6 pt-14 md:pt-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-16">
+          {/* Logo & Bio Column */}
+          <div className="lg:col-span-3 space-y-6">
             <Link className="inline-block flex items-center gap-3 w-fit" to="/">
               <img
                 src={getAssetUrl(activeFooterLogo)}
@@ -90,7 +194,7 @@ export const Footer: React.FC = () => {
               />
             </Link>
 
-            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-sm whitespace-pre-line">
+            <p className="text-slate-400 text-sm leading-relaxed max-w-sm whitespace-pre-line">
               {settings.description}
             </p>
 
@@ -104,7 +208,7 @@ export const Footer: React.FC = () => {
               </Link>
             </div>
 
-            {/* Phase 2: Brand-Colored Social Media SVGs */}
+            {/* Social Media SVGs with Authentic Brand Colors */}
             <div className="pt-2 flex items-center gap-4">
               {/* Instagram */}
               <a
@@ -163,48 +267,26 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick links / Solutions */}
+          {/* Solutions Column (Dynamic) */}
           <div className="lg:col-span-2">
             <h4 className="text-white font-semibold mb-4 text-sm md:text-base tracking-wide">
               Solutions
             </h4>
             <ul className="space-y-3 text-sm">
-              <li>
-                <Link
-                  to="/products/solar-modules"
-                  className="text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer"
-                >
-                  PV Panels
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/products/solar-inverters"
-                  className="text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer"
-                >
-                  Solar Inverters
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/products/bess"
-                  className="text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer"
-                >
-                  BESS Storage
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/products/solar-modules"
-                  className="text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer"
-                >
-                  Microgrid Systems
-                </Link>
-              </li>
+              {categories.map((cat) => (
+                <li key={cat.id || cat.slug}>
+                  <Link
+                    to={`/products/${cat.slug}`}
+                    className="text-slate-400 hover:text-white transition-colors duration-300 cursor-pointer block"
+                  >
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company Column */}
           <div className="lg:col-span-2">
             <h4 className="text-white font-semibold mb-4 text-sm md:text-base tracking-wide">
               Company
@@ -261,10 +343,10 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Legal Column */}
+          {/* Quick Links Column */}
           <div className="lg:col-span-2">
             <h4 className="text-white font-semibold mb-4 text-sm md:text-base tracking-wide">
-              Legal
+              Quick Links
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
@@ -294,15 +376,15 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact / HQ Column */}
-          <div className="lg:col-span-2">
+          {/* Main Office Column - Wider width allocation (lg:col-span-3) */}
+          <div className="lg:col-span-3">
             <h4 className="text-white font-semibold mb-4 text-sm md:text-base tracking-wide">
-              {settings.hq_label || 'Contact Us'}
+              {settings.hq_label || 'Main Office'}
             </h4>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start space-x-3 text-slate-400">
                 <MapPin className="w-5 h-5 text-brand-green mt-0.5 shrink-0" />
-                <span className="leading-snug">{settings.address}</span>
+                <span className="leading-relaxed text-sm break-words">{settings.address}</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-brand-green shrink-0" />
@@ -369,7 +451,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* Phase 3: Bottom (Giant 'KINGSOL' Gradient Text) */}
+      {/* Giant 'KINGSOL' Gradient Text Watermark */}
       <div className="w-full overflow-hidden flex justify-center items-end mt-12">
         <motion.div
           initial={{ y: 100, opacity: 0 }}
