@@ -8,6 +8,7 @@ const router = express.Router();
 // Auto-migrate category_banner_image and card_image column if not present
 pool.query(`
   ALTER TABLE products ADD COLUMN IF NOT EXISTS category_banner_image TEXT DEFAULT '';
+  ALTER TABLE products ADD COLUMN IF NOT EXISTS banner_images TEXT[] DEFAULT '{}';
   ALTER TABLE categories ADD COLUMN IF NOT EXISTS category_banner_image TEXT DEFAULT '';
   ALTER TABLE brands ADD COLUMN IF NOT EXISTS category_banner_image TEXT DEFAULT '';
   ALTER TABLE products ADD COLUMN IF NOT EXISTS card_image TEXT DEFAULT '';
@@ -263,11 +264,15 @@ router.post('/', verifyToken, async (req, res) => {
     };
 
     const finalPhaseType = req.body.phase_type || req.body.phaseType || expertise || '';
+    const bannerImagesArray = parseArrayOrString(req.body.banner_images || req.body.category_banner_images, [category_banner_image].filter(Boolean))
+      .filter((u) => typeof u === 'string' && u.trim() !== '')
+      .slice(0, 4);
+    const primaryCategoryBanner = bannerImagesArray[0] || category_banner_image || '';
 
     const result = await pool.query(
       `INSERT INTO products 
-       (category_id, brand_id, subcategory_id, title, name, slug, description, short_description, long_description, image_url, card_image, category_banner_image, datasheet_url, expertise, phase_type, gallery, key_features, documents, specs, features, is_featured, capabilities_tagline, capabilities_heading, brand_highlights, footer_note)
-       VALUES ($1, $2, $3, $4, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24)
+       (category_id, brand_id, subcategory_id, title, name, slug, description, short_description, long_description, image_url, card_image, category_banner_image, banner_images, datasheet_url, expertise, phase_type, gallery, key_features, documents, specs, features, is_featured, capabilities_tagline, capabilities_heading, brand_highlights, footer_note)
+       VALUES ($1, $2, $3, $4, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)
        RETURNING *`,
       [
         finalCategoryId,
@@ -280,7 +285,8 @@ router.post('/', verifyToken, async (req, res) => {
         cleanLongDesc,
         image_url || '',
         card_image || '',
-        category_banner_image || '',
+        primaryCategoryBanner,
+        bannerImagesArray,
         datasheet_url || '',
         finalPhaseType,
         finalPhaseType,
@@ -418,14 +424,18 @@ router.put('/:id', verifyToken, async (req, res) => {
     };
 
     const finalPhaseType = req.body.phase_type || req.body.phaseType || expertise || '';
+    const bannerImagesArray = parseArrayOrString(req.body.banner_images || req.body.category_banner_images, [category_banner_image].filter(Boolean))
+      .filter((u) => typeof u === 'string' && u.trim() !== '')
+      .slice(0, 4);
+    const primaryCategoryBanner = bannerImagesArray[0] || category_banner_image || '';
 
     const result = await pool.query(
       `UPDATE products
        SET category_id = $1, brand_id = $2, subcategory_id = $3, title = $4, name = $4, slug = $5,
-           description = $6, short_description = $7, long_description = $8, image_url = $9, card_image = $10, category_banner_image = $11, datasheet_url = $12,
-           expertise = $13, phase_type = $14, gallery = $15, key_features = $16, documents = $17, specs = $18, features = $19, is_featured = $20,
-           capabilities_tagline = $21, capabilities_heading = $22, brand_highlights = $23, footer_note = $24
-       WHERE id = $25
+           description = $6, short_description = $7, long_description = $8, image_url = $9, card_image = $10, category_banner_image = $11, banner_images = $12, datasheet_url = $13,
+           expertise = $14, phase_type = $15, gallery = $16, key_features = $17, documents = $18, specs = $19, features = $20, is_featured = $21,
+           capabilities_tagline = $22, capabilities_heading = $23, brand_highlights = $24, footer_note = $25
+       WHERE id = $26
        RETURNING *`,
       [
         finalCategoryId,
@@ -438,7 +448,8 @@ router.put('/:id', verifyToken, async (req, res) => {
         cleanLongDesc,
         image_url || '',
         card_image || '',
-        category_banner_image || '',
+        primaryCategoryBanner,
+        bannerImagesArray,
         datasheet_url || '',
         finalPhaseType,
         finalPhaseType,

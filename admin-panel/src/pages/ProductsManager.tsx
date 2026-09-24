@@ -89,6 +89,7 @@ interface Product {
   image_url: string;
   card_image?: string;
   category_banner_image?: string;
+  banner_images?: string[];
   datasheet_url: string;
   expertise?: string;
   gallery?: string[];
@@ -231,6 +232,7 @@ export const ProductsManager: React.FC = () => {
     image_url: '',
     card_image: '',
     category_banner_image: '',
+    banner_images: ['', '', '', ''] as string[],
     content_image_url: '',
     gallery_urls: ['', '', '', ''] as string[],
     datasheet_url: '',
@@ -679,6 +681,16 @@ function slugify(text: string): string {
     }
 
     const existingGallery = prod.gallery && Array.isArray(prod.gallery) && prod.gallery.length > 0 ? prod.gallery : [heroImg].filter(Boolean);
+    const existingBanners = prod.banner_images && Array.isArray(prod.banner_images) && prod.banner_images.length > 0
+      ? prod.banner_images
+      : prod.category_banner_image ? [prod.category_banner_image] : [];
+    const banner_images = [
+      existingBanners[0] || '',
+      existingBanners[1] || '',
+      existingBanners[2] || '',
+      existingBanners[3] || '',
+    ];
+
     const gallery_urls = [
       existingGallery[0] || '',
       existingGallery[1] || '',
@@ -714,6 +726,7 @@ function slugify(text: string): string {
       image_url: heroImg,
       card_image: (prod as any).card_image || '',
       category_banner_image: (prod as any).category_banner_image || '',
+      banner_images,
       content_image_url: contentImg,
       gallery_urls,
       datasheet_url: parsedDocs[0]?.url || prod.datasheet_url || '',
@@ -773,6 +786,9 @@ function slugify(text: string): string {
       const cleanDocs = productForm.documents.filter((d) => d.title.trim() !== '' || d.url.trim() !== '');
       const primaryDatasheet = cleanDocs.find((d) => d.url.trim() !== '')?.url || '';
 
+      const cleanBannerImages = (productForm.banner_images || []).map((u: string) => u.trim()).filter(Boolean).slice(0, 4);
+      const primaryCategoryBanner = cleanBannerImages[0] || productForm.category_banner_image || '';
+
       const cleanGallery = productForm.gallery_urls.map((u) => u.trim()).filter(Boolean).slice(0, 4);
       if (cleanGallery.length === 0 && productForm.image_url.trim()) {
         cleanGallery.push(productForm.image_url.trim());
@@ -793,7 +809,8 @@ function slugify(text: string): string {
         long_description: isInverter ? '' : (productForm.long_description || productForm.description),
         image_url: primaryImage,
         card_image: productForm.card_image || '',
-        category_banner_image: productForm.category_banner_image || '',
+        category_banner_image: primaryCategoryBanner,
+        banner_images: cleanBannerImages,
         datasheet_url: primaryDatasheet,
         expertise: finalPhaseType,
         phase_type: finalPhaseType,
@@ -981,6 +998,7 @@ function slugify(text: string): string {
                   image_url: '',
                   card_image: '',
                   category_banner_image: '',
+                  banner_images: ['', '', '', ''],
                   content_image_url: '',
                   gallery_urls: ['', '', '', ''],
                   datasheet_url: '',
@@ -2747,45 +2765,98 @@ function slugify(text: string): string {
                       </div>
 
                       {categories.find((c) => c.id.toString() === productForm.category_id)?.name?.toLowerCase().includes('inverter') && (
-                        <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200/80 space-y-2.5">
+                        <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200/80 space-y-3">
                           <div className="flex items-center justify-between">
                             <label className="block text-xs font-bold text-emerald-950 uppercase tracking-wide">
-                              Upload Inverter Category Banner (Displays on Portfolio Page)
+                              Upload Inverter Category / Portfolio Banners (Up to 4 Images)
                             </label>
-                            <span className="text-[11px] text-emerald-700 font-medium">Split-layout hero image</span>
+                            <span className="text-[11px] text-emerald-700 font-semibold">
+                              Auto-Rotating Carousel (Max 4)
+                            </span>
                           </div>
-                          <div className="flex gap-2">
-                            <input
-                              type="text"
-                              value={productForm.category_banner_image || ''}
-                              onChange={(e) => setProductForm({ ...productForm, category_banner_image: e.target.value })}
-                              className="flex-1 bg-white border border-emerald-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
-                              placeholder="https://... or /uploads/inverter_banner.jpg"
-                            />
-                            <label className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
-                              <Upload className="w-4 h-4" />
-                              <span>{uploading ? '...' : 'Upload Banner'}</span>
-                              <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) =>
-                                  handleFileUpload(e, (url) => {
-                                    setProductForm((prev) => ({ ...prev, category_banner_image: url }));
-                                  })
-                                }
-                                className="hidden"
-                              />
-                            </label>
+                          <p className="text-xs text-slate-600 leading-relaxed">
+                            Upload up to 4 banner images. These will cycle automatically every 4 seconds in a smooth fade carousel on the category/portfolio header.
+                          </p>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {[0, 1, 2, 3].map((bIdx) => (
+                              <div
+                                key={bIdx}
+                                className="bg-white p-3 rounded-xl border border-emerald-200/90 shadow-2xs space-y-2"
+                              >
+                                <div className="flex items-center justify-between">
+                                  <span className="text-xs font-bold text-slate-800">
+                                    Banner {bIdx + 1} {bIdx === 0 ? '(Primary / Fallback)' : ''}
+                                  </span>
+                                  {productForm.banner_images[bIdx] && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        const updated = [...productForm.banner_images];
+                                        updated[bIdx] = '';
+                                        setProductForm({
+                                          ...productForm,
+                                          banner_images: updated,
+                                          category_banner_image: updated.find(Boolean) || '',
+                                        });
+                                      }}
+                                      className="text-red-500 hover:text-red-700 text-[11px] font-semibold cursor-pointer"
+                                    >
+                                      Remove
+                                    </button>
+                                  )}
+                                </div>
+
+                                <div className="flex gap-2">
+                                  <input
+                                    type="text"
+                                    value={productForm.banner_images[bIdx] || ''}
+                                    onChange={(e) => {
+                                      const updated = [...productForm.banner_images];
+                                      updated[bIdx] = e.target.value;
+                                      setProductForm({
+                                        ...productForm,
+                                        banner_images: updated,
+                                        category_banner_image: updated.find(Boolean) || '',
+                                      });
+                                    }}
+                                    className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
+                                    placeholder={`https://... or upload banner ${bIdx + 1}`}
+                                  />
+                                  <label className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg cursor-pointer flex items-center gap-1 text-xs font-bold shrink-0 transition-colors shadow-xs">
+                                    <Upload className="w-3.5 h-3.5" />
+                                    <span>Upload</span>
+                                    <input
+                                      type="file"
+                                      accept="image/*"
+                                      onChange={(e) =>
+                                        handleFileUpload(e, (url) => {
+                                          const updated = [...productForm.banner_images];
+                                          updated[bIdx] = url;
+                                          setProductForm({
+                                            ...productForm,
+                                            banner_images: updated,
+                                            category_banner_image: updated.find(Boolean) || url,
+                                          });
+                                        })
+                                      }
+                                      className="hidden"
+                                    />
+                                  </label>
+                                </div>
+
+                                {productForm.banner_images[bIdx] && (
+                                  <div className="h-20 w-full rounded-lg overflow-hidden border border-emerald-200 bg-slate-900">
+                                    <img
+                                      src={getAssetUrl(productForm.banner_images[bIdx])}
+                                      alt={`Banner ${bIdx + 1} Preview`}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            ))}
                           </div>
-                          {productForm.category_banner_image && (
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
-                              <img
-                                src={getAssetUrl(productForm.category_banner_image)}
-                                alt="Category Banner Preview"
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
                         </div>
                       )}
 

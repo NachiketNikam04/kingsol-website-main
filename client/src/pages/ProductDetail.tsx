@@ -439,6 +439,7 @@ interface ProductData {
   brand_highlights?: any;
   footer_note?: string;
   category_banner_image?: string;
+  banner_images?: string[];
   brand_certifications?: string | string[];
   brand_certifications_list?: string[];
   certifications?: string | string[];
@@ -595,6 +596,15 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [inverterCategoryProducts, setInverterCategoryProducts] = useState<ProductData[]>([]);
   const [selectedPhaseFilter, setSelectedPhaseFilter] = useState<string>('All');
+  const [bannerIndex, setBannerIndex] = useState<number>(0);
+
+  // Auto-rotate Category / Portfolio banner every 4 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setBannerIndex((prev) => prev + 1);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Horizontal Slider Ref for Related Products
   const relatedSliderRef = useRef<HTMLDivElement>(null);
@@ -862,6 +872,53 @@ export default function ProductDetail() {
       return (a.title || a.name || '').localeCompare(b.title || b.name || '');
     });
 
+    // Extract dynamic Category / Portfolio Banner Images (up to 4 images)
+    const activeCategoryBanners = (() => {
+      const list: string[] = [];
+      for (const p of inverterCategoryProducts) {
+        if (p.banner_images && Array.isArray(p.banner_images)) {
+          for (const url of p.banner_images) {
+            if (typeof url === 'string' && url.trim() && !list.includes(url.trim())) {
+              list.push(url.trim());
+            }
+          }
+        } else if (typeof (p as any).banner_images === 'string') {
+          try {
+            const parsed = JSON.parse((p as any).banner_images);
+            if (Array.isArray(parsed)) {
+              for (const url of parsed) {
+                if (typeof url === 'string' && url.trim() && !list.includes(url.trim())) {
+                  list.push(url.trim());
+                }
+              }
+            }
+          } catch {}
+        }
+      }
+
+      if (list.length === 0) {
+        for (const p of inverterCategoryProducts) {
+          if (p.category_banner_image && typeof p.category_banner_image === 'string' && p.category_banner_image.trim()) {
+            if (!list.includes(p.category_banner_image.trim())) {
+              list.push(p.category_banner_image.trim());
+            }
+          }
+        }
+      }
+
+      if (list.length === 0) {
+        list.push(
+          isBessRoute
+            ? 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80'
+            : 'https://images.unsplash.com/photo-1509391366360-1e5088f170af?auto=format&fit=crop&w=1600&q=80'
+        );
+      }
+
+      return list.slice(0, 4);
+    })();
+
+    const safeBannerIndex = bannerIndex % (activeCategoryBanners.length || 1);
+
     return (
       <div className="min-h-screen bg-[#fdfcf8] pt-32 flex flex-col justify-between">
         {/* Main Content Area */}
@@ -904,19 +961,40 @@ export default function ProductDetail() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative overflow-hidden bg-white rounded-[2rem] shadow-xl min-h-[350px] md:min-h-[450px] flex items-center mb-8 border border-slate-200/90"
           >
-            {/* The Image & Fade Effect */}
-            <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
-              <img
-                src={getAssetUrl(
-                  inverterCategoryProducts.find((p: any) => p.category_banner_image)?.category_banner_image ||
-                  (isBessRoute
-                    ? 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80'
-                    : 'https://images.unsplash.com/photo-1509391366360-1e5088f170af?auto=format&fit=crop&w=1600&q=80')
-                )}
-                alt={formattedCategory}
-                className="absolute right-0 top-0 w-full md:w-3/4 h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent w-full md:w-3/4 z-10" />
+            {/* The Image & Fade Effect Carousel */}
+            <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={activeCategoryBanners[safeBannerIndex]}
+                  src={getAssetUrl(activeCategoryBanners[safeBannerIndex])}
+                  alt={`${formattedCategory} Banner ${safeBannerIndex + 1}`}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute right-0 top-0 w-full md:w-3/4 h-full object-cover"
+                />
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent w-full md:w-3/4 z-10 pointer-events-none" />
+
+              {/* Navigation Dots (Only shown when multiple banner images exist) */}
+              {activeCategoryBanners.length > 1 && (
+                <div className="absolute bottom-5 right-6 md:right-10 z-30 flex items-center gap-2 bg-slate-900/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-lg">
+                  {activeCategoryBanners.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setBannerIndex(idx)}
+                      aria-label={`Go to slide ${idx + 1}`}
+                      className={`transition-all duration-300 rounded-full cursor-pointer ${
+                        idx === safeBannerIndex
+                          ? 'w-6 h-2 bg-brand-green'
+                          : 'w-2 h-2 bg-white/60 hover:bg-white'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* The Content (Text & Badges) */}
