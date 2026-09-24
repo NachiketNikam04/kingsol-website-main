@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import CTASection from '../components/CTASection';
 import { InquiryModal } from '../components/InquiryModal';
+import QuoteModal from '../components/QuoteModal';
 
 /* ==========================================================================
    INTERACTIVE SOLAR INVERTER CARD COMPONENT (Task 3 Specification)
@@ -612,6 +613,7 @@ export default function ProductDetail() {
   // Inquiry Modal State
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<ProductData | null>(null);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   // Top Expandable Datasheets State & Ref
   const [isDatasheetOpen, setIsDatasheetOpen] = useState<boolean>(false);
@@ -1040,6 +1042,17 @@ export default function ProductDetail() {
                   </div>
                 );
               })()}
+
+              {/* Free Quote CTA Button */}
+              <div className="mt-8 flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer shadow-xs"
+                >
+                  Get a Free Quote
+                </button>
+              </div>
             </div>
           </motion.div>
 
@@ -1181,6 +1194,12 @@ export default function ProductDetail() {
           isOpen={isInquiryModalOpen}
           onClose={() => setIsInquiryModalOpen(false)}
           product={selectedProductForInquiry || undefined}
+        />
+
+        {/* Free Quote Modal */}
+        <QuoteModal
+          isOpen={isQuoteOpen}
+          onClose={() => setIsQuoteOpen(false)}
         />
       </div>
     );
@@ -1680,6 +1699,12 @@ export default function ProductDetail() {
         isOpen={isInquiryModalOpen}
         onClose={() => setIsInquiryModalOpen(false)}
         productName={selectedProductForInquiry?.title || selectedProductForInquiry?.name || prodTitle}
+      />
+
+      {/* Free Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
       />
 
       {/* CTA Section */}
