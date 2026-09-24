@@ -13,7 +13,6 @@ import {
   User,
   ChevronDown,
   Loader2,
-  Sparkles,
 } from 'lucide-react';
 import { API_BASE_URL } from '../utils/assetUrl';
 
