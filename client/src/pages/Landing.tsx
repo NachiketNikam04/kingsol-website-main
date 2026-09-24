@@ -8,7 +8,7 @@ import { PartnersSection } from '../components/PartnersSection';
 import { PremiumProductsSection } from '../components/PremiumProductsSection';
 import { FeaturedProductsSection } from '../components/FeaturedProductsSection';
 import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
-import { ServicesUSPSection } from '../components/ServicesUSPSection';
+import { MaintenanceSupportSection } from '../components/MaintenanceSupportSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { BlogSection } from '../components/BlogSection';
 import { CTASection } from '../components/CTASection';
@@ -388,7 +388,7 @@ export const Landing: React.FC = () => {
         <PremiumProductsSection />
         <FeaturedProductsSection />
         <WhyChooseUsSection />
-        <ServicesUSPSection />
+        <MaintenanceSupportSection />
         <TestimonialsSection />
         <BlogSection />
         <CTASection />

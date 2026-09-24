@@ -884,8 +884,8 @@ router.delete('/why-choose/steps/:id', verifyToken, async (req, res) => {
    MAINTENANCE & SUPPORT SECTION ROUTES
    ========================================================================== */
 
-// GET /api/home/maintenance (Public - Returns home_maintenance_settings and home_maintenance_cards)
-router.get('/maintenance', async (req, res) => {
+// GET /api/home/maintenance and /api/home/support (Public - Returns maintenance/support settings and cards)
+router.get(['/maintenance', '/support'], async (req, res) => {
   try {
     const settingsResult = await pool.query(`SELECT * FROM home_maintenance_settings WHERE id = 1`);
     const cardsResult = await pool.query(`SELECT * FROM home_maintenance_cards ORDER BY sort_order ASC, id ASC`);
