@@ -293,14 +293,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           {/* Modal Header */}
           <div className="px-6 sm:px-8 pt-6 pb-4 flex items-start justify-between border-b border-slate-100 bg-slate-50/50">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold tracking-wider uppercase mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-brand-green" />
-                <span>Direct B2B Procurement</span>
-              </div>
               <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight font-montserrat">
                 Request a Custom Quote
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
+              <p className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
                 Connect with our technical solar team for Tier-1 pricing, project sizing & datasheets.
               </p>
             </div>
