@@ -319,7 +319,7 @@ export default function BrandDetail() {
                 onClick={() => handleOpenInquiry()}
                 className="bg-slate-900 text-white hover:bg-[#44a0e3] hover:text-slate-900 px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md"
               >
-                Request Procurement Quote →
+                Request Procurement Quote <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>
 
               {/* Top Expandable Datasheet Action Button & Dropdown */}

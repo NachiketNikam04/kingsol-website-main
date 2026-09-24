@@ -149,7 +149,7 @@ export default function Blogs() {
 
                   <div className="flex items-center text-sm font-semibold text-slate-900 border-b border-slate-900 pb-1 group-hover:text-[#44a0e3] group-hover:border-[#44a0e3] transition-colors">
                     <span>Read Full Article</span>
-                    <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                   </div>
                 </div>
               </Link>
@@ -211,7 +211,7 @@ export default function Blogs() {
                         to={`/blogs/${post.slug}`}
                         className="w-full bg-slate-50 group-hover:bg-[#44a0e3] group-hover:text-white text-slate-800 text-xs font-semibold py-3 rounded-xl block text-center transition-colors"
                       >
-                        Read Article →
+                        Read Article <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </Link>
                     </motion.div>
                   ))}

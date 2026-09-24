@@ -92,7 +92,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({
               className="mt-8 sm:mt-10 bg-white hover:bg-[#44a0e3] text-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl flex items-center gap-2.5 cursor-pointer border border-transparent"
             >
               <span>{buttonText}</span>
-              <span className="text-base leading-none">→</span>
+              <span className="text-base leading-none"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
             </button>
           ) : (
             <Link
@@ -100,7 +100,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({
               className="mt-8 sm:mt-10 bg-white hover:bg-[#44a0e3] text-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl flex items-center gap-2.5 cursor-pointer border border-transparent"
             >
               <span>{buttonText}</span>
-              <span className="text-base leading-none">→</span>
+              <span className="text-base leading-none"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
             </Link>
           )}
         </motion.div>

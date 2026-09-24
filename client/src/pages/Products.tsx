@@ -257,7 +257,7 @@ export default function Products() {
                     to={`/products/${activeCategory}`}
                     className="text-xs font-bold text-[#44a0e3] hover:underline"
                   >
-                    View Dedicated Category Page →
+                    View Dedicated Category Page <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </Link>
                 )}
               </div>
@@ -336,7 +336,7 @@ export default function Products() {
                       </div>
 
                       <div className="w-full bg-slate-900 group-hover:bg-brand-green group-hover:text-slate-900 text-white text-xs font-bold py-3 rounded-full block text-center transition-colors shadow-xs">
-                        Explore {brand.name} Range →
+                        Explore {brand.name} Range <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </div>
                     </Link>
                   </motion.div>

@@ -484,7 +484,7 @@ export default function CareerDetail() {
                 onClick={() => setIsApplying(true)}
                 className="bg-brand-green text-slate-900 px-8 py-4 rounded-full font-bold text-sm hover:bg-white hover:text-slate-900 transition-colors shrink-0 cursor-pointer"
               >
-                Apply for this Position →
+                Apply for this Position <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>
             </motion.div>
           </div>

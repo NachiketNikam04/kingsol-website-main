@@ -160,7 +160,7 @@ export default function ProductDetailPage() {
                   className="bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#9beb46] hover:text-slate-900 hover:shadow-[0_20px_40px_rgba(243,156,18,0.15)] flex items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent justify-center"
                 >
                   <span>Request Quote / Inquiry</span>
-                  <span>→</span>
+                  <span><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                 </button>
 
                 {product.datasheetUrl && (

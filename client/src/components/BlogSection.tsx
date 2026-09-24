@@ -160,7 +160,7 @@ export const BlogSection: React.FC = () => {
                       className="group w-fit bg-white text-[#44a0e3] border border-slate-200 px-6 py-3 rounded-full font-medium text-sm transition-all hover:bg-slate-900 hover:text-white flex items-center gap-2 shadow-sm hover:shadow-md"
                     >
                       <span>Read Full Article</span>
-                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                      <span className="transition-transform duration-300 group-hover:translate-x-1"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                     </Link>
                   </div>
 
@@ -192,7 +192,7 @@ export const BlogSection: React.FC = () => {
           to="/blogs"
         >
           <span>View All Articles</span>
-          <span>→</span>
+          <span><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
         </Link>
       </motion.div>
     </section>

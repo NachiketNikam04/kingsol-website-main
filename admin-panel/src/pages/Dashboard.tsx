@@ -171,7 +171,7 @@ export const Dashboard: React.FC = () => {
               </div>
             </div>
             <Link to="/dashboard/products" className="text-xs font-bold text-brand-blue hover:underline">
-              Manage Brands →
+              Manage Brands <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
           </div>
 
@@ -186,7 +186,7 @@ export const Dashboard: React.FC = () => {
               </div>
             </div>
             <Link to="/dashboard/products" className="text-xs font-bold text-brand-blue hover:underline">
-              Manage Products →
+              Manage Products <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </Link>
           </div>
         </div>

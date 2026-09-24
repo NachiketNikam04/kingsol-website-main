@@ -271,7 +271,7 @@ export default function ServiceDetail() {
                 className="inline-flex bg-white text-slate-900 px-8 py-4 rounded-full font-medium text-sm hover:bg-[#44a0e3] hover:text-slate-900 transition-colors shadow-lg items-center gap-2 cursor-pointer border border-slate-200"
               >
                 <span>Get Free Consultation</span>
-                <span>→</span>
+                <span><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
               </Link>
             </motion.div>
           </div>
@@ -313,7 +313,7 @@ export default function ServiceDetail() {
                     }`}
                   >
                     <span className="text-slate-900 leading-relaxed">{s.title}</span>
-                    <span className="text-lg font-light shrink-0">→</span>
+                    <span className="text-lg font-light shrink-0"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                   </button>
                 );
               })}
