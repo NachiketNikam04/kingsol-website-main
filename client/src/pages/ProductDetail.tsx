@@ -1218,7 +1218,7 @@ export default function ProductDetail() {
               </Link>
             </div>
 
-            <h1 className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0">
+            <h1 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
               {prodTitle}
             </h1>
 
@@ -1318,7 +1318,7 @@ export default function ProductDetail() {
           <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
-          <h2 className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0">
+          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
           <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
@@ -1477,7 +1477,7 @@ export default function ProductDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
+                  className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
                 >
                   Related Products ({relatedProducts.length})
                 </motion.h2>
