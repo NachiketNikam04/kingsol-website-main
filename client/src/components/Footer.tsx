@@ -201,13 +201,13 @@ export const Footer: React.FC = () => {
         <div className="py-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 font-normal">
           <p>© {new Date().getFullYear()} Kingsol Energy Inc. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="/about" className="hover:text-slate-900 transition-colors">
+            <Link to="/privacy-policy" className="hover:text-slate-900 transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/about" className="hover:text-slate-900 transition-colors">
+            <Link to="/terms-of-supply" className="hover:text-slate-900 transition-colors">
               Terms of Supply
             </Link>
-            <Link to="/about" className="hover:text-slate-900 transition-colors">
+            <Link to="/certificates" className="hover:text-slate-900 transition-colors">
               Certifications
             </Link>
           </div>

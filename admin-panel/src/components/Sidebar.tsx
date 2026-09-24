@@ -2,6 +2,7 @@ import { getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
+  Award,
   LayoutDashboard,
   MessageSquare,
   Briefcase,
@@ -101,6 +102,7 @@ export const Sidebar: React.FC = () => {
     { name: 'Blogs & News', path: '/dashboard/blogs', icon: FileText },
     { name: 'Gallery Hub', path: '/dashboard/gallery', icon: ImageIcon },
     { name: 'Media Videos', path: '/dashboard/media', icon: Video },
+    { name: 'Certificates', path: '/dashboard/certificates', icon: Award },
     { name: 'Contact Page', path: '/dashboard/contact', icon: MapPin },
     { name: 'Footer Manager', path: '/dashboard/footer', icon: SlidersHorizontal },
     { name: 'Brand Settings', path: '/dashboard/branding', icon: Palette },

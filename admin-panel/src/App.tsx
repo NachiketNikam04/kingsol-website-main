@@ -13,6 +13,7 @@ import ServicesManager from './pages/services/ServicesManager';
 import FooterManager from './pages/FooterManager';
 import GalleryManager from './pages/GalleryManager';
 import MediaManager from './pages/MediaManager';
+import CertificatesManager from './pages/CertificatesManager';
 import FeatureFlagsManager from './pages/FeatureFlagsManager';
 
 // Home Page Managers
@@ -65,6 +66,7 @@ export const App: React.FC = () => {
           <Route path="/dashboard/blogs" element={<BlogsManager />} />
           <Route path="/dashboard/gallery" element={<GalleryManager />} />
           <Route path="/dashboard/media" element={<MediaManager />} />
+          <Route path="/dashboard/certificates" element={<CertificatesManager />} />
           <Route path="/dashboard/contact" element={<ContactManager />} />
           <Route path="/dashboard/footer" element={<FooterManager />} />
           <Route path="/dashboard/branding" element={<BrandingManager />} />

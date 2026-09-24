@@ -23,6 +23,7 @@ import MediaPage from './pages/MediaPage';
 import Careers from './pages/Careers';
 import CareerDetail from './pages/CareerDetail';
 import Contact from './pages/Contact';
+import CertificatesPage from './pages/CertificatesPage';
 
 export default function App() {
   return (
@@ -53,6 +54,7 @@ export default function App() {
             <Route path="/brands" element={<Products />} />
 
             {/* Blogs & Article Routes */}
+            <Route path="/certificates" element={<CertificatesPage />} />
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/:slug" element={<BlogDetail />} />
 
