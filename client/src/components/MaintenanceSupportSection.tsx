@@ -240,12 +240,12 @@ export const MaintenanceSupportSection: React.FC = () => {
                 className="bg-white rounded-2xl p-8 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 group flex flex-col items-start"
               >
                 {/* 14x14 Soft-tinted square wrapper for icon */}
-                <div className="w-14 h-14 rounded-2xl bg-brand-green/10 flex items-center justify-center text-brand-green mb-6 group-hover:bg-brand-green group-hover:text-white transition-all duration-300 shadow-xs shrink-0">
+                <div className="w-14 h-14 rounded-2xl bg-brand-orange/10 flex items-center justify-center text-brand-orange mb-6 group-hover:bg-brand-orange group-hover:text-white transition-all duration-300 shadow-xs shrink-0">
                   <IconComponent className="w-7 h-7 stroke-[2.2]" />
                 </div>
 
                 {/* Card Title */}
-                <h3 className="font-poppins text-xl font-bold mb-3 group-hover:text-brand-green transition-colors duration-300 text-slate-900">
+                <h3 className="font-poppins text-xl font-bold mb-3 transition-colors duration-300 text-slate-900">
                   {card.title}
                 </h3>
 
