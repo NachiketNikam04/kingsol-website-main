@@ -166,7 +166,7 @@ export const Landing: React.FC = () => {
   return (
     <div className="w-full relative bg-[#fdfcf8] text-slate-900 font-poppins">
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-screen w-full flex flex-col justify-center bg-slate-950 overflow-hidden pt-28 sm:pt-36 pb-20 sm:pb-28 lg:pb-32 px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen w-full flex flex-col justify-center bg-slate-950 overflow-hidden pt-36 sm:pt-44 md:pt-48 lg:pt-52 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 lg:px-8">
         {/* Background Crossfade Carousel Layer */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           {/* Outgoing Slide Fixed Background Base */}
@@ -204,7 +204,7 @@ export const Landing: React.FC = () => {
         </div>
 
         {/* Foreground Hero Content */}
-        <div className="relative z-30 flex flex-col items-start justify-center gap-6 md:gap-8 w-full max-w-[90rem] mx-auto my-auto text-left">
+        <div className="relative z-30 flex flex-col items-start justify-center gap-6 md:gap-8 w-full max-w-[90rem] mx-auto my-auto pt-4 sm:pt-8 md:pt-10 text-left">
           {/* Animated Headline in Natural Document Flow */}
           <div className="w-full max-w-4xl">
             <AnimatePresence mode="wait" initial={false}>
