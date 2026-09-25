@@ -454,19 +454,7 @@ interface CatalogSettings {
   docs_tagline?: string;
   docs_title?: string;
   docs_subtitle?: string;
-  slider_tagline?: string;
   alternate_layout?: boolean;
-}
-
-function getSpecValue(specs: any, keyNames: string[], fallback: string): string {
-  if (!specs || typeof specs !== 'object') return fallback;
-  for (const k of keyNames) {
-    const matched = Object.keys(specs).find(
-      (key) => key.toLowerCase() === k.toLowerCase() || key.toLowerCase().includes(k.toLowerCase())
-    );
-    if (matched && specs[matched]) return String(specs[matched]);
-  }
-  return fallback;
 }
 
 /**
@@ -580,7 +568,6 @@ export default function ProductDetail() {
 
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [product, setProduct] = useState<ProductData | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<ProductData[]>([]);
   const [settings, setSettings] = useState<CatalogSettings>({
     brand_story_tagline: 'BRAND BACKGROUND & ARCHITECTURE',
     brand_story_title: 'Engineering & Technology Story',
@@ -590,7 +577,6 @@ export default function ProductDetail() {
     docs_tagline: 'TECHNICAL DOCUMENTATION',
     docs_title: 'Downloadable Specs & Certifications',
     docs_subtitle: 'Official Manufacturer Datasheets & Compliance PDFs',
-    slider_tagline: 'COMPONENT CATALOG PORTFOLIO',
     alternate_layout: true,
   });
   const [loading, setLoading] = useState(true);
@@ -605,9 +591,6 @@ export default function ProductDetail() {
     }, 4000);
     return () => clearInterval(timer);
   }, []);
-
-  // Horizontal Slider Ref for Related Products
-  const relatedSliderRef = useRef<HTMLDivElement>(null);
 
   // Inquiry & Quote Modal State
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
@@ -789,7 +772,6 @@ export default function ProductDetail() {
             const json = await prodRes.json();
             if (json.success && json.data) {
               setProduct(json.data.product);
-              setRelatedProducts(json.data.relatedProducts || []);
             }
           }
 
@@ -810,13 +792,6 @@ export default function ProductDetail() {
     setSelectedProductForInquiry(prod || null);
     setSelectedProductForQuote(prod?.title || prod?.name || product?.title || product?.name || '');
     setIsQuoteOpen(true);
-  };
-
-  const scrollRelatedSlider = (direction: 'left' | 'right') => {
-    if (relatedSliderRef.current) {
-      const scrollAmount = direction === 'left' ? -340 : 340;
-      relatedSliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
   };
 
   if (loading) {
@@ -1456,146 +1431,6 @@ export default function ProductDetail() {
           </div>
         </motion.div>
 
-        {/* DYNAMIC HORIZONTAL RELATED PRODUCTS SLIDER */}
-        {relatedProducts.length > 0 && (
-          <div>
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-              <div>
-                <motion.span
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                  className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
-                >
-                  {settings.slider_tagline || 'COMPONENT CATALOG PORTFOLIO'}
-                </motion.span>
-                <motion.h2
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
-                >
-                  Related Products ({relatedProducts.length})
-                </motion.h2>
-              </div>
-
-              {/* Slider Controls */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => scrollRelatedSlider('left')}
-                  className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
-                  aria-label="Scroll Left"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => scrollRelatedSlider('right')}
-                  className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
-                  aria-label="Scroll Right"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Premium Drag-to-Scroll Horizontal Slider Container */}
-            <div
-              ref={relatedSliderRef}
-              className="flex items-stretch gap-6 overflow-x-auto scrollbar-none pb-4 snap-x snap-mandatory scroll-smooth"
-            >
-              {relatedProducts.map((relProd, idx) => {
-                const relCatSlug = relProd.category_slug || catSlug || 'solar-modules';
-                const relBrSlug = relProd.brand_slug || brSlug || 'goldi-solar';
-                const relItemSlug = relProd.slug || relProd.id;
-                const brandName = relProd.brand_name || brName || 'Goldi Solar';
-
-                const ratingVal = getSpecValue(relProd.specs, ['rating', 'efficiency', 'eff'], '21.5%');
-                const wattageVal = getSpecValue(relProd.specs, ['wattage', 'power', 'watt', 'power output'], '550W');
-                const cellTypeVal = getSpecValue(relProd.specs, ['celltype', 'cell type', 'cell', 'type', 'technology'], 'Mono PERC');
-                const warrantyVal = getSpecValue(relProd.specs, ['warranty', 'guarantee'], '25 Years');
-
-                return (
-                  <motion.div
-                    key={relProd.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
-                    className="w-[300px] md:w-[340px] shrink-0 snap-start flex flex-col"
-                  >
-                    {/* Main Card Container */}
-                    <div className="w-full h-full bg-white rounded-[2rem] p-4 border border-slate-200 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group">
-                      <div>
-                        {/* 1. Image Area with Floating Brand Pill */}
-                        <div className="h-44 rounded-2xl overflow-hidden mb-3 bg-slate-50 relative border border-slate-100">
-                          <img
-                            src={getAssetUrl(relProd.card_image || relProd.image_url)}
-                            alt={relProd.title || relProd.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                          <span className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-extrabold text-slate-800 shadow-xs border border-slate-200/80 z-10 uppercase tracking-wider">
-                            {brandName}
-                          </span>
-                        </div>
-
-                        {/* 2. Title & Description Truncation */}
-                        <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug line-clamp-1 mb-1">
-                          {relProd.title || relProd.name}
-                        </h3>
-                        <p className="text-base md:text-lg text-slate-600 line-clamp-2 leading-relaxed mb-3">
-                          {relProd.short_description || relProd.description || 'High-efficiency engineered solar component with factory direct warranty support.'}
-                        </p>
-
-                        {/* 3. Technical Specs Box (2x2 Grid) */}
-                        <div className="bg-slate-50 rounded-2xl p-3 border border-slate-100/80 mb-4">
-                          <div className="grid grid-cols-2 gap-2 text-left">
-                            <div className="p-2 bg-white rounded-xl border border-slate-100">
-                              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">RATING</span>
-                              <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{ratingVal}</span>
-                            </div>
-                            <div className="p-2 bg-white rounded-xl border border-slate-100">
-                              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">WATTAGE</span>
-                              <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{wattageVal}</span>
-                            </div>
-                            <div className="p-2 bg-white rounded-xl border border-slate-100">
-                              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">CELLTYPE</span>
-                              <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{cellTypeVal}</span>
-                            </div>
-                            <div className="p-2 bg-white rounded-xl border border-slate-100">
-                              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">WARRANTY</span>
-                              <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{warrantyVal}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* 4. Action Buttons (Side-by-Side) */}
-                      <div className="flex items-center gap-2 mt-auto pt-1">
-                        <Link
-                          to={`/products/${relCatSlug}/${relBrSlug}/${relItemSlug}`}
-                          className="flex-1 py-2.5 px-3 rounded-full bg-slate-900 text-white text-xs font-bold text-center hover:bg-slate-800 transition-colors shadow-xs"
-                        >
-                          View Specs
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedProductForQuote(relProd.title || relProd.name || '');
-                            setIsQuoteOpen(true);
-                          }}
-                          className="flex-1 py-2.5 px-3 rounded-full bg-brand-green text-slate-900 text-xs font-bold text-center hover:bg-[#8ee036] transition-colors shadow-xs cursor-pointer"
-                        >
-                          Get Quote
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Inquiry Modal */}
