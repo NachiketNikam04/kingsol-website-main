@@ -10,7 +10,11 @@ interface CtaData {
   bg_image_url: string;
 }
 
-export const CTASection: React.FC = () => {
+interface CTASectionProps {
+  onQuoteClick?: () => void;
+}
+
+export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
   const [ctaData, setCtaData] = useState<CtaData | null>(null);
 
   useEffect(() => {
@@ -84,20 +88,39 @@ export const CTASection: React.FC = () => {
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>
 
-        {/* Single Button linking to contact page */}
+        {/* Single Button linking to contact page or opening quote modal */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         >
-          <Link
-            className="mt-10 bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 ease-out hover:scale-[1.03] active:scale-[0.98] shadow-lg hover:shadow-2xl hover:shadow-[#44a0e3]/30 hover:bg-[#44a0e3] hover:text-white flex items-center gap-2.5 cursor-pointer border border-transparent"
-            to="/contact"
-          >
-            <span>REQUEST A FREE QUOTE</span>
-            <span className="text-base leading-none"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-          </Link>
+          {onQuoteClick ? (
+            <button
+              type="button"
+              onClick={onQuoteClick}
+              className="mt-10 bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 ease-out hover:scale-[1.03] active:scale-[0.98] shadow-lg hover:shadow-2xl hover:shadow-[#44a0e3]/30 hover:bg-[#44a0e3] hover:text-white flex items-center gap-2.5 cursor-pointer border border-transparent"
+            >
+              <span>REQUEST A FREE QUOTE</span>
+              <span className="text-base leading-none">
+                <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </button>
+          ) : (
+            <Link
+              className="mt-10 bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 ease-out hover:scale-[1.03] active:scale-[0.98] shadow-lg hover:shadow-2xl hover:shadow-[#44a0e3]/30 hover:bg-[#44a0e3] hover:text-white flex items-center gap-2.5 cursor-pointer border border-transparent"
+              to="/contact"
+            >
+              <span>REQUEST A FREE QUOTE</span>
+              <span className="text-base leading-none">
+                <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </Link>
+          )}
         </motion.div>
       </div>
     </section>

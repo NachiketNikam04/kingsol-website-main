@@ -12,8 +12,9 @@ import {
   ChevronRight,
   ChevronLeft,
   ChevronDown,
+  ArrowRight,
 } from 'lucide-react';
-import { InquiryModal } from '../components/InquiryModal';
+import QuoteModal from '../components/QuoteModal';
 import { CTASection } from '../components/CTASection';
 
 interface BrandDoc {
@@ -115,9 +116,9 @@ export default function BrandDetail() {
   // Horizontal Slider Ref
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Inquiry Modal State
-  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
-  const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<ProductData | null>(null);
+  // Quote Modal State
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [selectedProductForQuote, setSelectedProductForQuote] = useState<string>('');
 
   // Top Expandable Datasheets State & Ref
   const [isDatasheetOpen, setIsDatasheetOpen] = useState<boolean>(false);
@@ -195,11 +196,6 @@ export default function BrandDetail() {
     }
     loadBrandDetails();
   }, [brandSlug]);
-
-  const handleOpenInquiry = (product?: ProductData) => {
-    setSelectedProductForInquiry(product || null);
-    setIsInquiryModalOpen(true);
-  };
 
   const scrollSlider = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
@@ -316,10 +312,15 @@ export default function BrandDetail() {
 
             <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200/80">
               <button
-                onClick={() => handleOpenInquiry()}
-                className="bg-slate-900 text-white hover:bg-[#44a0e3] hover:text-slate-900 px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md"
+                type="button"
+                onClick={() => {
+                  setSelectedProductForQuote(brand.name);
+                  setIsQuoteOpen(true);
+                }}
+                className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md flex items-center gap-2"
               >
-                Request Procurement Quote <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <span>Get Quote</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
 
               {/* Top Expandable Datasheet Action Button & Dropdown */}
@@ -716,21 +717,34 @@ export default function BrandDetail() {
 
             {/* Slider Controls */}
             {displayedProducts.length > 0 && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <button
-                  onClick={() => scrollSlider('left')}
-                  className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
-                  aria-label="Scroll Left"
+                  type="button"
+                  onClick={() => {
+                    setSelectedProductForQuote(brand.name);
+                    setIsQuoteOpen(true);
+                  }}
+                  className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <span>Get Quote</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <button
-                  onClick={() => scrollSlider('right')}
-                  className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
-                  aria-label="Scroll Right"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => scrollSlider('left')}
+                    className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
+                    aria-label="Scroll Left"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => scrollSlider('right')}
+                    className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
+                    aria-label="Scroll Right"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -862,14 +876,16 @@ export default function BrandDetail() {
                           View Specs
                         </div>
                         <button
+                          type="button"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            handleOpenInquiry(product);
+                            setSelectedProductForQuote(product.title || product.name || brand.name);
+                            setIsQuoteOpen(true);
                           }}
                           className="w-1/2 bg-brand-green text-slate-900 text-xs font-bold py-2.5 rounded-full text-center hover:bg-slate-900 hover:text-white transition-colors cursor-pointer z-10 relative"
                         >
-                          Quick Quote
+                          Get Quote
                         </button>
                       </div>
                     </Link>
@@ -881,15 +897,18 @@ export default function BrandDetail() {
         </div>
       </div> {/* <-- This was the missing closing tag! */}
 
-      {/* Inquiry Modal */}
-      <InquiryModal
-        isOpen={isInquiryModalOpen}
-        onClose={() => setIsInquiryModalOpen(false)}
-        productName={selectedProductForInquiry?.title || selectedProductForInquiry?.name || brand.name}
+      {/* Free Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        initialProduct={selectedProductForQuote || brand.name}
       />
 
       {/* CTA Section Banner */}
-      <CTASection />
+      <CTASection onQuoteClick={() => {
+        setSelectedProductForQuote(brand.name);
+        setIsQuoteOpen(true);
+      }} />
     </div>
   );
 }

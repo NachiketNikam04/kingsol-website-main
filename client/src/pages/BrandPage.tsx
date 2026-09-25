@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchLiveCatalog, Product, Brand, Category } from '../data/productsData';
 import InquiryModal from '../components/InquiryModal';
+import QuoteModal from '../components/QuoteModal';
 import CTASection from '../components/CTASection';
 import { shareUrl } from '../utils/share';
 
@@ -29,6 +30,8 @@ export default function BrandPage() {
 
   const [loading, setLoading] = useState(true);
   const [inquiryProduct, setInquiryProduct] = useState<string | null>(null);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [selectedProductForQuote, setSelectedProductForQuote] = useState<string>('');
 
   useEffect(() => {
     async function loadBrandPageData() {
@@ -144,6 +147,20 @@ export default function BrandPage() {
                 ))}
               </div>
             )}
+
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProductForQuote(brand.name);
+                  setIsQuoteOpen(true);
+                }}
+                className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-7 py-3 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md inline-flex items-center gap-2"
+              >
+                <span>Get Quote</span>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </button>
+            </div>
           </div>
 
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl overflow-hidden bg-slate-50 border border-slate-200 shrink-0 self-center lg:self-start shadow-sm">
@@ -235,6 +252,17 @@ export default function BrandPage() {
             >
               {activeSubcategory === 'all' ? 'All Products' : `${subcategories.find((s) => s.slug === activeSubcategory)?.name || activeSubcategory}`}
             </motion.h2>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedProductForQuote(brand.name);
+                setIsQuoteOpen(true);
+              }}
+              className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer shadow-xs inline-flex items-center gap-1.5"
+            >
+              <span>Get Quote</span>
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
           </div>
 
           {filteredProducts.length === 0 ? (
@@ -316,10 +344,14 @@ export default function BrandPage() {
                     </div>
 
                     <button
-                      onClick={() => setInquiryProduct(product.name)}
-                      className="bg-[#9beb46] text-slate-900 px-5 h-10 rounded-full text-xs font-semibold hover:bg-slate-900 hover:text-white transition-colors cursor-pointer"
+                      type="button"
+                      onClick={() => {
+                        setSelectedProductForQuote(product.name);
+                        setIsQuoteOpen(true);
+                      }}
+                      className="bg-brand-green text-slate-900 px-5 h-10 rounded-full text-xs font-bold hover:bg-slate-900 hover:text-white transition-colors cursor-pointer"
                     >
-                      Send Inquiry
+                      Get Quote
                     </button>
                   </div>
                 </motion.div>
@@ -335,7 +367,17 @@ export default function BrandPage() {
         prefilledItem={inquiryProduct || ''}
       />
 
-      <CTASection />
+      {/* Free Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        initialProduct={selectedProductForQuote || brand.name}
+      />
+
+      <CTASection onQuoteClick={() => {
+        setSelectedProductForQuote(brand.name);
+        setIsQuoteOpen(true);
+      }} />
     </div>
   );
 }

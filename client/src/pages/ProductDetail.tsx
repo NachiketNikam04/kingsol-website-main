@@ -10,7 +10,6 @@ import {
   ChevronRight,
   ChevronLeft,
   Building2,
-  ShieldCheck,
   Check,
   ChevronDown,
   Share2,
@@ -610,10 +609,11 @@ export default function ProductDetail() {
   // Horizontal Slider Ref for Related Products
   const relatedSliderRef = useRef<HTMLDivElement>(null);
 
-  // Inquiry Modal State
+  // Inquiry & Quote Modal State
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<ProductData | null>(null);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [selectedProductForQuote, setSelectedProductForQuote] = useState<string>('');
 
   // Top Expandable Datasheets State & Ref
   const [isDatasheetOpen, setIsDatasheetOpen] = useState<boolean>(false);
@@ -808,7 +808,8 @@ export default function ProductDetail() {
 
   const handleOpenInquiry = (prod?: ProductData) => {
     setSelectedProductForInquiry(prod || null);
-    setIsInquiryModalOpen(true);
+    setSelectedProductForQuote(prod?.title || prod?.name || product?.title || product?.name || '');
+    setIsQuoteOpen(true);
   };
 
   const scrollRelatedSlider = (direction: 'left' | 'right') => {
@@ -1186,7 +1187,10 @@ export default function ProductDetail() {
 
         {/* Existing Working CTA Banner (Edge-to-Edge Full Width) */}
         <div className="w-full">
-          <CTASection />
+          <CTASection onQuoteClick={() => {
+            setSelectedProductForQuote(formattedBrand);
+            setIsQuoteOpen(true);
+          }} />
         </div>
 
         {/* Inquiry Modal */}
@@ -1200,6 +1204,7 @@ export default function ProductDetail() {
         <QuoteModal
           isOpen={isQuoteOpen}
           onClose={() => setIsQuoteOpen(false)}
+          initialProduct={selectedProductForQuote || formattedBrand}
         />
       </div>
     );
@@ -1338,10 +1343,15 @@ export default function ProductDetail() {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200/80">
               <button
-                onClick={() => handleOpenInquiry()}
-                className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md"
+                type="button"
+                onClick={() => {
+                  setSelectedProductForQuote(prodTitle);
+                  setIsQuoteOpen(true);
+                }}
+                className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md flex items-center gap-2"
               >
-                Request Quick Quote <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <span>Get Quote</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
 
               {/* Top Expandable Datasheet Action Button & Dropdown */}
@@ -1445,115 +1455,6 @@ export default function ProductDetail() {
             </div>
           </div>
         </motion.div>
-
-        {/* CORPORATE CAPABILITIES HIGHLIGHTS CARDS */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="bg-white text-slate-900 border border-slate-100 rounded-[2.5rem] p-8 sm:p-10 shadow-xs mb-20"
-        >
-          <div className="max-w-3xl mb-8">
-            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
-              {product.capabilities_tagline || (typeof product.brand_highlights === 'object' && !Array.isArray(product.brand_highlights) ? (product.brand_highlights as any)?.tagline : null) || 'CORPORATE CAPABILITIES'}
-            </span>
-            <h2 className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight mt-2">
-              {product.capabilities_heading || (typeof product.brand_highlights === 'object' && !Array.isArray(product.brand_highlights) ? (product.brand_highlights as any)?.heading : null) || settings.capabilities_title || 'Brand Highlights'}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {((Array.isArray(product.brand_highlights) && product.brand_highlights.length > 0)
-              ? product.brand_highlights
-              : (typeof product.brand_highlights === 'object' && (product.brand_highlights as any)?.cards?.length > 0)
-              ? (product.brand_highlights as any).cards
-              : [
-                  { title: 'Tier-1 Sourced Materials', subtitle: 'Recognized Global PV Manufacturer' },
-                  { title: 'Sub-0.5% Annual Power Degradation', subtitle: 'Linear Power Guarantee' },
-                  { title: '100% EL Double Inspection Certified', subtitle: 'Zero Micro-Crack Assurance' },
-                  { title: 'ISO 9001 Sourcing Quality Standards', subtitle: 'Factory Certified Production' },
-                ]
-            ).map((item: any, idx: number) => (
-              <div
-                key={idx}
-                className="flex items-center gap-4 p-6 bg-slate-50/80 rounded-2xl border border-slate-100 shadow-sm"
-              >
-                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/50 text-amber-600 shrink-0">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="font-bold text-slate-900 leading-tight text-sm md:text-base">
-                    {typeof item === 'string' ? item : item.title}
-                  </p>
-                  {typeof item === 'object' && item.subtitle && (
-                    <p className="text-slate-600 mt-1 text-xs md:text-sm">
-                      {item.subtitle}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-xs text-slate-400 mt-8 pt-4 border-t border-slate-100">
-            {product.footer_note || settings.capabilities_footer || 'Authorized B2B Channel Procurement Partner with Factory Direct Warranty Support.'}
-          </p>
-        </motion.div>
-
-        {/* TECHNICAL DOWNLOADS */}
-        {(() => {
-          if (productDatasheets.length === 0) return null;
-
-          return (
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-20"
-            >
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                <div>
-                  <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
-                    {settings.docs_tagline || 'TECHNICAL DOCUMENTATION'}
-                  </span>
-                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
-                    {settings.docs_title || 'Downloadable Specs & Certifications'}
-                  </h2>
-                </div>
-                <span className="text-xs text-slate-500 font-semibold">
-                  {settings.docs_subtitle || 'Official Manufacturer Datasheets & Compliance PDFs'}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {productDatasheets.map((doc, idx) => (
-                  <a
-                    key={idx}
-                    href={getAssetUrl(doc.file_url || doc.url)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-5 bg-slate-50 hover:bg-[#44a0e3]/10 border border-slate-200 hover:border-[#44a0e3] rounded-2xl transition-all group flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 group-hover:text-[#44a0e3] transition-colors">
-                        <FileText className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <h4 className="text-xs md:text-sm font-bold font-poppins text-slate-900 group-hover:text-[#44a0e3] transition-colors line-clamp-1">
-                          {doc.title}
-                        </h4>
-                        <span className="text-[10px] text-slate-400 font-medium">PDF Document</span>
-                      </div>
-                    </div>
-                    <Download className="w-4 h-4 text-slate-400 group-hover:text-[#44a0e3] transition-colors" />
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          );
-        })()}
 
         {/* DYNAMIC HORIZONTAL RELATED PRODUCTS SLIDER */}
         {relatedProducts.length > 0 && (
@@ -1679,10 +1580,13 @@ export default function ProductDetail() {
                         </Link>
                         <button
                           type="button"
-                          onClick={() => handleOpenInquiry(relProd)}
+                          onClick={() => {
+                            setSelectedProductForQuote(relProd.title || relProd.name || '');
+                            setIsQuoteOpen(true);
+                          }}
                           className="flex-1 py-2.5 px-3 rounded-full bg-brand-green text-slate-900 text-xs font-bold text-center hover:bg-[#8ee036] transition-colors shadow-xs cursor-pointer"
                         >
-                          Quick Quote
+                          Get Quote
                         </button>
                       </div>
                     </div>
@@ -1705,10 +1609,14 @@ export default function ProductDetail() {
       <QuoteModal
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
+        initialProduct={selectedProductForQuote || prodTitle}
       />
 
       {/* CTA Section */}
-      <CTASection />
+      <CTASection onQuoteClick={() => {
+        setSelectedProductForQuote(prodTitle);
+        setIsQuoteOpen(true);
+      }} />
     </div>
   );
 }

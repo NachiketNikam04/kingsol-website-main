@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fetchLiveCatalog, Product, Brand, Category } from '../data/productsData';
 import InquiryModal from '../components/InquiryModal';
+import QuoteModal from '../components/QuoteModal';
 import CTASection from '../components/CTASection';
 import { shareUrl } from '../utils/share';
 
@@ -15,6 +16,7 @@ export default function ProductDetailPage() {
   }>();
   const navigate = useNavigate();
   const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   const [category, setCategory] = useState<Category | null>(null);
   const [brand, setBrand] = useState<Brand | null>(null);
@@ -156,10 +158,11 @@ export default function ProductDetailPage() {
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4 mb-10">
                 <button
-                  onClick={() => setInquiryOpen(true)}
-                  className="bg-white text-slate-900 px-8 py-4 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#9beb46] hover:text-slate-900 hover:shadow-[0_20px_40px_rgba(243,156,18,0.15)] flex items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent justify-center"
+                  type="button"
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="bg-brand-green text-slate-900 px-8 py-4 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-slate-900 hover:text-white flex items-center gap-2 cursor-pointer border border-transparent justify-center"
                 >
-                  <span>Request Quote / Inquiry</span>
+                  <span>Get Quote</span>
                   <span><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
                 </button>
 
@@ -265,7 +268,14 @@ export default function ProductDetailPage() {
         prefilledItem={`${product.name} (${brand.name})`}
       />
 
-      <CTASection />
+      {/* Free Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        initialProduct={product.name}
+      />
+
+      <CTASection onQuoteClick={() => setIsQuoteOpen(true)} />
     </div>
   );
 }
