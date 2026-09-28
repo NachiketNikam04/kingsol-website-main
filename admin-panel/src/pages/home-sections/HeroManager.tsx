@@ -178,6 +178,23 @@ export const HeroManager: React.FC = () => {
     e.target.value = ''; // Reset file input
   };
 
+  const handleDirectUploadSlide = (e: React.ChangeEvent<HTMLInputElement>, slideIdx: number) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      setSettings((prev) => {
+        const nextSlides = [...prev.heroSlides];
+        nextSlides[slideIdx] = { ...nextSlides[slideIdx], image: base64 };
+        return { ...prev, heroSlides: nextSlides };
+      });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = useCallback((_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
@@ -375,9 +392,20 @@ export const HeroManager: React.FC = () => {
                                 className="hidden"
                               />
                             </label>
+
+                            <label className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-semibold hover:bg-emerald-700 transition-colors shadow-xs gap-1.5 shrink-0">
+                              <Upload className="w-3.5 h-3.5" />
+                              <span>Direct Upload</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleDirectUploadSlide(e, index)}
+                                className="hidden"
+                              />
+                            </label>
                           </div>
                           {slide.image && (
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                            <div className="relative w-full h-36 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
                               <img
                                 src={getAssetUrl(slide.image)}
                                 alt={`Slide ${index + 1} Preview`}
@@ -639,8 +667,14 @@ export const HeroManager: React.FC = () => {
 
         {/* MODAL: IMAGE CROPPING TOOL */}
         {cropperModalOpen && imageToCrop && (
-          <div className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6">
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 max-w-2xl w-full flex flex-col shadow-2xl relative">
+          <div
+            className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6"
+            onClick={() => setCropperModalOpen(false)}
+          >
+            <div
+              className="bg-white rounded-3xl border border-slate-200 p-6 max-w-2xl w-full flex flex-col shadow-2xl relative"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => setCropperModalOpen(false)}
                 className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 cursor-pointer z-10"
@@ -657,7 +691,7 @@ export const HeroManager: React.FC = () => {
               </p>
 
               {/* Cropper Container */}
-              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+              <div className="relative w-full h-[50vh] min-h-[350px] max-h-[500px] bg-slate-900 overflow-hidden rounded-xl">
                 <Cropper
                   image={imageToCrop}
                   crop={crop}
@@ -667,12 +701,10 @@ export const HeroManager: React.FC = () => {
                   onZoomChange={setZoom}
                   onCropComplete={onCropComplete}
                   style={{
-                    containerStyle: { backgroundColor: 'transparent' },
-                    mediaStyle: { backgroundColor: 'transparent' },
+                    containerStyle: { width: '100%', height: '100%' },
                   }}
                   classes={{
-                    containerClassName: '!bg-transparent',
-                    mediaClassName: '!bg-transparent',
+                    cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
                   }}
                 />
               </div>

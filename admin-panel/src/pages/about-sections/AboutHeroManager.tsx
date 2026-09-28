@@ -109,6 +109,18 @@ export const AboutHeroManager: React.FC = () => {
     }
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setSettings((prev) => ({ ...prev, image_url: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
@@ -242,24 +254,24 @@ export const AboutHeroManager: React.FC = () => {
                 <label className="text-xs font-bold text-slate-700 uppercase block mb-2">Hero Feature Image</label>
                 <div className="space-y-4">
                   {settings.image_url && (
-                    <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                    <div className="relative w-full h-48 md:h-64 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
                       <img src={getAssetUrl(settings.image_url)} alt="Hero Preview" className="w-full h-full object-cover" />
                     </div>
                   )}
 
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <input
                       type="url"
                       value={settings.image_url}
                       onChange={(e) => setSettings({ ...settings, image_url: e.target.value })}
                       placeholder="Paste Image URL or upload below..."
-                      className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm outline-none"
+                      className="flex-1 min-w-[200px] bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm outline-none"
                     />
 
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2"
+                      className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2 shrink-0"
                     >
                       <Upload className="w-4 h-4 text-brand-blue" />
                       <span>Upload & Crop</span>
@@ -271,6 +283,18 @@ export const AboutHeroManager: React.FC = () => {
                       onChange={handleFileChange}
                       className="hidden"
                     />
+
+                    {/* NEW: Direct Upload Button */}
+                    <label className="cursor-pointer inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-sm text-xs gap-2 shrink-0">
+                      <Upload className="w-4 h-4" />
+                      <span>Direct Upload (Skip Crop)</span>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        onChange={handleDirectUpload} 
+                      />
+                    </label>
                   </div>
                 </div>
               </div>
@@ -290,13 +314,19 @@ export const AboutHeroManager: React.FC = () => {
 
         {/* MODAL: IMAGE CROPPER FOR ABOUT HERO IMAGE */}
         {imageToCrop && (
-          <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="bg-white rounded-[2rem] border border-slate-200 p-6 max-w-2xl w-full shadow-2xl relative text-slate-900">
+          <div
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4"
+            onClick={() => setImageToCrop(null)}
+          >
+            <div
+              className="bg-white rounded-2xl border border-slate-200 p-6 max-w-2xl w-full shadow-2xl relative text-slate-900 flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <ImageIcon className="w-5 h-5 text-brand-blue" />
                 <span>Crop About Hero Feature Image (4:3)</span>
               </h3>
-              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+              <div className="relative w-full h-[50vh] min-h-[350px] max-h-[500px] bg-slate-900 overflow-hidden rounded-xl mb-6">
                 <Cropper
                   image={imageToCrop}
                   crop={crop}
@@ -306,12 +336,10 @@ export const AboutHeroManager: React.FC = () => {
                   onZoomChange={setZoom}
                   onCropComplete={onCropComplete}
                   style={{
-                    containerStyle: { backgroundColor: 'transparent' },
-                    mediaStyle: { backgroundColor: 'transparent' },
+                    containerStyle: { width: '100%', height: '100%' },
                   }}
                   classes={{
-                    containerClassName: '!bg-transparent',
-                    mediaClassName: '!bg-transparent',
+                    cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
                   }}
                 />
               </div>
