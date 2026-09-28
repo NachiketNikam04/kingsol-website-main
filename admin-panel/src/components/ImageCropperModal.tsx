@@ -189,8 +189,14 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
   if (!isOpen || !imageSrc) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl flex flex-col overflow-hidden border border-slate-200">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-4xl max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col border border-slate-200"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-3">
@@ -215,8 +221,8 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
           </button>
         </div>
 
-        {/* Modal Body / Strict Cropper Wrapper */}
-        <div className="relative w-full h-[60vh] min-h-[400px] bg-slate-900 overflow-hidden select-none">
+        {/* 3. CROPPER WRAPPER: Must be relative with a strict fixed height */}
+        <div className="relative w-full h-[60vh] min-h-[400px] bg-slate-900 select-none">
           {/* Subtle Dark Checkered Pattern for Transparency Visibility */}
           <div
             className="absolute inset-0 z-0 pointer-events-none"
@@ -246,19 +252,14 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
             onCropComplete={handleCropComplete}
             showGrid={true}
             cropShape="rect"
-            style={{
-              containerStyle: { backgroundColor: 'transparent', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 },
-              mediaStyle: { backgroundColor: 'transparent' },
-            }}
+            style={{ containerStyle: { width: '100%', height: '100%' } }}
             classes={{
-              containerClassName: '!bg-transparent !w-full !h-full',
-              mediaClassName: '!bg-transparent',
               cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
             }}
           />
         </div>
 
-        {/* Persistent Footer Div / Controls & Action Buttons */}
+        {/* 4. CONTROLS FOOTER: Safe from the cropping area */}
         <div className="p-6 bg-white space-y-4 shrink-0 border-t border-slate-100">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
             {/* Zoom Slider */}
