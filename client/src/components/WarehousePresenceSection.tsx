@@ -47,10 +47,6 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
     'Strategic warehousing across High-demand renewable corridors.';
   const currentHighlightWord =
     data?.warehouseHighlightWord || data?.highlight_word || 'High-demand';
-  const currentDescription =
-    data?.warehouseDescription ||
-    data?.description ||
-    'To guarantee rapid dispatch and zero transit bottlenecks, Kingsol maintains strategically positioned regional fulfillment hubs stocked with Tier-1 modules, inverters, and BOS infrastructure.';
   const currentMapImage =
     data?.warehouseMapImage ||
     data?.map_image_url ||
@@ -94,77 +90,64 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
 
   return (
     <section className="w-full bg-[#fdfcf8] py-[72px] text-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-        {/* Left Column: Map Image - Strictly NO border, NO box, NO card, NO shadow */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="lg:col-span-6 flex items-center justify-center p-0 m-0"
-        >
-          <img
-            src={getAssetUrl(currentMapImage)}
-            alt="India Warehouse & Distribution Map"
-            className="w-full h-auto max-h-[520px] object-contain mix-blend-multiply select-none pointer-events-none"
-          />
-        </motion.div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Map Image (~65% space) */}
+          <div className="lg:col-span-8">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="flex items-center justify-center p-0 m-0 w-full"
+            >
+              <img
+                src={getAssetUrl(currentMapImage)}
+                alt="India Warehouse & Distribution Map"
+                className="w-full h-auto max-h-[640px] object-contain mix-blend-multiply select-none pointer-events-none"
+              />
+            </motion.div>
+          </div>
 
-        {/* Right Column: Typography & Data */}
-        <div className="lg:col-span-6 flex flex-col justify-center">
-          {/* Tagline - Strictly NO green dot */}
-          <motion.span
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
-          >
-            {currentTagline}
-          </motion.span>
+          {/* Right Column: Typography & Content (~35% space) */}
+          <div className="lg:col-span-4 flex flex-col justify-center">
+            {/* Tagline */}
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-4"
+            >
+              {currentTagline}
+            </motion.span>
 
-          {/* Headline with dynamic highlight word */}
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
-          >
-            {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-          </motion.h2>
+            {/* Headline with dynamic highlight word */}
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl"
+            >
+              {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
+            </motion.h2>
 
-          {/* Description in muted text-slate-500 */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-4 font-poppins text-base md:text-lg text-slate-500 leading-relaxed mb-8"
-          >
-            {currentDescription}
-          </motion.p>
-
-          {/* Warehouse Locations Minimalist 2-Column Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-3.5"
-          >
-            {currentLocations.map((loc, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3 text-slate-700 font-semibold text-sm transition-transform duration-200 hover:translate-x-1"
-              >
-                <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
+            {/* Warehouse Locations Vertical Stack */}
+            <div className="mt-8 flex flex-col gap-4">
+              {currentLocations.map((loc, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 text-slate-700 font-semibold text-sm transition-transform duration-200 hover:translate-x-1"
+                >
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
+                  </div>
+                  <span>{loc}</span>
                 </div>
-                <span className="truncate">{loc}</span>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
