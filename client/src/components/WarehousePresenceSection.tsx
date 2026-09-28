@@ -93,7 +93,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column: Map Image (~65% space) */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-9">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -104,13 +104,13 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
               <img
                 src={getAssetUrl(currentMapImage)}
                 alt="India Warehouse & Distribution Map"
-                className="w-full h-auto max-h-[640px] object-contain mix-blend-multiply select-none pointer-events-none"
+                className="w-full h-auto max-h-[850px] object-contain mix-blend-multiply select-none pointer-events-none"
               />
             </motion.div>
           </div>
 
           {/* Right Column: Typography & Content (~35% space) */}
-          <div className="lg:col-span-4 flex flex-col justify-center">
+          <div className="lg:col-span-3 flex flex-col justify-center">
             {/* Tagline */}
             <motion.span
               initial={{ opacity: 0, y: 30 }}
