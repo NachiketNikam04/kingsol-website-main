@@ -133,8 +133,8 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h2>
 
-            {/* Warehouse Locations Vertical Stack */}
-            <div className="mt-8 flex flex-col gap-4">
+            {/* Warehouse Locations Two-Column Grid */}
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
               {currentLocations.map((loc, idx) => (
                 <div
                   key={idx}
