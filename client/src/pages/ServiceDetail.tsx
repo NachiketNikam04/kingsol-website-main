@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CTASection from '../components/CTASection';
+import QuoteModal from '../components/QuoteModal';
 
 export interface ServiceDetailItem {
   id: number;
@@ -42,6 +43,7 @@ export default function ServiceDetail() {
     emergency_phone: '+91 1234567890',
   });
   const [loading, setLoading] = useState(true);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   useEffect(() => {
     async function loadServiceDetail() {
@@ -266,13 +268,14 @@ export default function ServiceDetail() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             >
-              <Link
-                to="/contact"
-                className="inline-flex bg-white text-slate-900 px-8 py-4 rounded-full font-medium text-sm hover:bg-[#44a0e3] hover:text-slate-900 transition-colors shadow-lg items-center gap-2 cursor-pointer border border-slate-200"
+              <button
+                type="button"
+                onClick={() => setIsQuoteOpen(true)}
+                className="inline-flex bg-brand-green text-slate-900 px-8 py-4 rounded-full font-bold text-sm hover:bg-slate-900 hover:text-white transition-all shadow-md items-center gap-2 cursor-pointer"
               >
-                <span>Get Free Consultation</span>
+                <span>Get Quote</span>
                 <span><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-              </Link>
+              </button>
             </motion.div>
           </div>
 
@@ -411,7 +414,14 @@ export default function ServiceDetail() {
       </div>
 
       {/* Edge-to-Edge CTA Section */}
-      <CTASection />
+      <CTASection onQuoteClick={() => setIsQuoteOpen(true)} />
+
+      {/* Free Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteOpen}
+        onClose={() => setIsQuoteOpen(false)}
+        initialProduct={currentService?.title || ''}
+      />
     </div>
   );
 }
