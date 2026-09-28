@@ -258,7 +258,7 @@ export default function ServiceDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal mb-8"
+              className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal mb-8 whitespace-pre-wrap"
             >
               {currentService.paragraph1}
             </motion.p>
@@ -354,10 +354,10 @@ export default function ServiceDetail() {
               >
                 {currentService.detail_title || currentService.title}
               </motion.h2>
-              <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
+              <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal whitespace-pre-wrap">
                 {currentService.paragraph1}
               </p>
-              <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
+              <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal whitespace-pre-wrap">
                 {currentService.paragraph2}
               </p>
             </div>
