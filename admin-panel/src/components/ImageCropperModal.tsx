@@ -190,9 +190,9 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl border border-slate-200 w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="flex flex-col w-full max-w-3xl max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold shadow-xs">
               <Crop className="w-5 h-5" />
@@ -215,18 +215,18 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
           </button>
         </div>
 
-        {/* Modal Body / Cropper Area with Checkered Transparency Background */}
-        <div className="relative w-full h-80 sm:h-96 border-b border-slate-100 overflow-hidden select-none bg-slate-100">
-          {/* Light Checkered Pattern for Transparency Visibility */}
+        {/* Modal Body / Cropper Area with Strict Height Constraints */}
+        <div className="relative w-full h-[50vh] min-h-[400px] max-h-[600px] bg-gray-900 overflow-hidden rounded-lg select-none">
+          {/* Subtle Dark Checkered Pattern for Transparency Visibility */}
           <div
-            className="absolute inset-0 z-0"
+            className="absolute inset-0 z-0 pointer-events-none"
             style={{
-              backgroundColor: '#f8fafc',
+              backgroundColor: '#111827',
               backgroundImage: `
-                linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
-                linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #e2e8f0 75%),
-                linear-gradient(-45deg, transparent 75%, #e2e8f0 75%)
+                linear-gradient(45deg, #1f2937 25%, transparent 25%),
+                linear-gradient(-45deg, #1f2937 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #1f2937 75%),
+                linear-gradient(-45deg, transparent 75%, #1f2937 75%)
               `,
               backgroundSize: '20px 20px',
               backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
@@ -237,6 +237,8 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
             image={imageSrc}
             crop={crop}
             zoom={zoom}
+            minZoom={1}
+            maxZoom={3}
             rotation={rotation}
             aspect={isFreeCrop ? undefined : aspectRatio}
             onCropChange={setCrop}
@@ -251,13 +253,13 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
             classes={{
               containerClassName: '!bg-transparent',
               mediaClassName: '!bg-transparent',
-              cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(15,23,42,0.6)]',
+              cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
             }}
           />
         </div>
 
-        {/* Cropper Controls */}
-        <div className="p-6 bg-white space-y-4">
+        {/* Persistent Footer Div / Controls & Action Buttons */}
+        <div className="p-6 bg-white space-y-4 shrink-0 border-t border-slate-100">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
             {/* Zoom Slider */}
             <div className="flex items-center gap-3 bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-200/80">
@@ -332,7 +334,7 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
                 ) : (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Apply & Export Crop</span>
+                    <span>Crop & Save</span>
                   </>
                 )}
               </button>
