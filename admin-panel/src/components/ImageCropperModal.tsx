@@ -190,7 +190,7 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="flex flex-col w-full max-w-3xl max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden border border-slate-200">
+      <div className="w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl flex flex-col overflow-hidden border border-slate-200">
         {/* Modal Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-3">
@@ -215,18 +215,18 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
           </button>
         </div>
 
-        {/* Modal Body / Cropper Area with Strict Height Constraints */}
-        <div className="relative w-full h-[50vh] min-h-[400px] max-h-[600px] bg-gray-900 overflow-hidden rounded-lg select-none">
+        {/* Modal Body / Strict Cropper Wrapper */}
+        <div className="relative w-full h-[60vh] min-h-[400px] bg-slate-900 overflow-hidden select-none">
           {/* Subtle Dark Checkered Pattern for Transparency Visibility */}
           <div
             className="absolute inset-0 z-0 pointer-events-none"
             style={{
-              backgroundColor: '#111827',
+              backgroundColor: '#0f172a',
               backgroundImage: `
-                linear-gradient(45deg, #1f2937 25%, transparent 25%),
-                linear-gradient(-45deg, #1f2937 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #1f2937 75%),
-                linear-gradient(-45deg, transparent 75%, #1f2937 75%)
+                linear-gradient(45deg, #1e293b 25%, transparent 25%),
+                linear-gradient(-45deg, #1e293b 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #1e293b 75%),
+                linear-gradient(-45deg, transparent 75%, #1e293b 75%)
               `,
               backgroundSize: '20px 20px',
               backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
@@ -247,11 +247,11 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
             showGrid={true}
             cropShape="rect"
             style={{
-              containerStyle: { backgroundColor: 'transparent' },
+              containerStyle: { backgroundColor: 'transparent', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 },
               mediaStyle: { backgroundColor: 'transparent' },
             }}
             classes={{
-              containerClassName: '!bg-transparent',
+              containerClassName: '!bg-transparent !w-full !h-full',
               mediaClassName: '!bg-transparent',
               cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
             }}
@@ -334,7 +334,7 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
                 ) : (
                   <>
                     <Check className="w-4 h-4" />
-                    <span>Crop & Save</span>
+                    <span>Upload & Crop</span>
                   </>
                 )}
               </button>
