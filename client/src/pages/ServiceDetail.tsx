@@ -355,9 +355,6 @@ export default function ServiceDetail() {
                 {currentService.detail_title || currentService.title}
               </motion.h2>
               <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal whitespace-pre-wrap">
-                {currentService.paragraph1}
-              </p>
-              <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal whitespace-pre-wrap">
                 {currentService.paragraph2}
               </p>
             </div>
