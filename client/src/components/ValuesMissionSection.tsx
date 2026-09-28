@@ -1,6 +1,7 @@
 import { API_BASE_URL } from '../utils/assetUrl';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { ShieldCheck, Scale, Clock } from 'lucide-react';
 
 interface FoundationSettings {
   tagline: string;
@@ -55,18 +56,18 @@ export default function ValuesMissionSection() {
   const defaultValues: ValueItem[] = [
     {
       id: 1,
-      title: 'Engineering Rigor',
-      description: 'Every rooftop and ground array is modeled with precise shading tolerances, wind load resistance, and structural durability.',
+      title: 'Uncompromising Quality',
+      description: 'We partner exclusively with Tier-1 OEMs backing performance for 25+ linear generation years with factory direct warranty support.',
     },
     {
       id: 2,
-      title: 'Radical Transparency',
+      title: 'Commercial Transparency',
       description: 'No hidden BOM costs or inflated yield estimates — clear technical datasheets and verifiable metrics from proposal to commissioning.',
     },
     {
       id: 3,
-      title: 'Uncompromising Quality',
-      description: 'We partner exclusively with Tier-1 OEMs backing performance for 25+ linear generation years with factory direct warranty support.',
+      title: 'Logistical Precision',
+      description: 'Every rooftop and ground array is modeled with precise shading tolerances, wind load resistance, and structural durability.',
     },
   ];
 
@@ -90,32 +91,33 @@ export default function ValuesMissionSection() {
     );
   };
 
-  const containerVariants = {
-    hidden: { opacity: 1 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
+  const getValueIcon = (index: number, title?: string) => {
+    const t = (title || '').toLowerCase();
+    if (t.includes('quality') || t.includes('rigor') || t.includes('shield')) {
+      return <ShieldCheck className="w-5 h-5 text-[#0078C8]" />;
+    }
+    if (t.includes('transparency') || t.includes('scale') || t.includes('commercial')) {
+      return <Scale className="w-5 h-5 text-[#0078C8]" />;
+    }
+    if (t.includes('precision') || t.includes('logistical') || t.includes('clock') || t.includes('time')) {
+      return <Clock className="w-5 h-5 text-[#0078C8]" />;
+    }
+    if (index % 3 === 0) return <ShieldCheck className="w-5 h-5 text-[#0078C8]" />;
+    if (index % 3 === 1) return <Scale className="w-5 h-5 text-[#0078C8]" />;
+    return <Clock className="w-5 h-5 text-[#0078C8]" />;
   };
 
   return (
-    <section className="w-full bg-[#FDFCF8] py-[72px] px-4 sm:px-6 lg:px-8 text-slate-900">
+    <section className="w-full bg-[#fdfcf8] py-[72px] px-4 sm:px-6 lg:px-8 text-slate-900">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-10">
+        <div className="mb-10 text-left">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-3"
           >
             <span>{currentTagline}</span>
           </motion.span>
@@ -130,93 +132,63 @@ export default function ValuesMissionSection() {
           </motion.h2>
         </div>
 
-        {/* Top Bento Grid: Vision & Mission */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-5%' }}
-          variants={containerVariants}
-        >
+        {/* Phase 2: Vision & Mission (Top Row) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {/* Vision Card */}
           <motion.div
-            variants={itemVariants}
-            className="bg-white border border-slate-200/80 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.99] shadow-xs hover:shadow-2xl hover:shadow-brand-orange/15 hover:border-brand-orange/30 cursor-default"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+            className="bg-white rounded-2xl p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
           >
-            {/* Ambient Glowing Blur Orb */}
-            <div className="absolute -right-12 -top-12 w-44 h-44 bg-brand-orange/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
-
-            <div>
-              <div className="flex justify-between items-center mb-5">
-                <span className="px-3.5 py-1 bg-brand-orange/10 text-brand-orange text-xs tracking-widest uppercase font-extrabold rounded-full">
-                  {currentVisionTitle}
-                </span>
-                <span className="text-slate-400 group-hover:text-brand-orange text-lg transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
-                  ↗
-                </span>
-              </div>
-              <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug">
-                {currentVisionDesc}
-              </h3>
-            </div>
+            <span className="text-brand-green font-bold text-sm tracking-wider uppercase mb-4 block">
+              {currentVisionTitle}
+            </span>
+            <h3 className="text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+              {currentVisionDesc}
+            </h3>
           </motion.div>
 
           {/* Mission Card */}
           <motion.div
-            variants={itemVariants}
-            className="bg-white border border-slate-200/80 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.99] shadow-xs hover:shadow-2xl hover:shadow-brand-green/20 hover:border-brand-green/30 cursor-default"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+            className="bg-white rounded-2xl p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
           >
-            {/* Ambient Glowing Blur Orb */}
-            <div className="absolute -right-12 -top-12 w-44 h-44 bg-[#9beb46]/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
-
-            <div>
-              <div className="flex justify-between items-center mb-5">
-                <span className="px-3.5 py-1 bg-brand-green/10 text-brand-green text-xs tracking-widest uppercase font-extrabold rounded-full">
-                  {currentMissionTitle}
-                </span>
-                <span className="text-slate-400 group-hover:text-green text-lg transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
-                  ↗
-                </span>
-              </div>
-              <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-snug">
-                {currentMissionDesc}
-              </h3>
-            </div>
+            <span className="text-brand-green font-bold text-sm tracking-wider uppercase mb-4 block">
+              {currentMissionTitle}
+            </span>
+            <h3 className="text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+              {currentMissionDesc}
+            </h3>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* Dynamic Value Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        {/* Phase 3: Core Values (Bottom Row) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {activeValues.map((value, index) => (
             <motion.div
               key={value.id || index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-5%' }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: 'easeOut' }}
-              className="bg-white border border-slate-200/80 rounded-[2rem] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden group transition-all duration-200 ease-out hover:scale-[1.02] active:scale-[0.99] shadow-xs hover:shadow-2xl hover:shadow-[#44a0e3]/15 hover:border-[#44a0e3]/40 cursor-default"
+              className="bg-white rounded-2xl p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
             >
-              {/* Glowing Blur Orb */}
-              <div className="absolute -right-12 -top-12 w-40 h-40 bg-[#44a0e3]/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
-
-              <div>
-                <div className="flex justify-between items-center mb-5 relative z-10">
-                  <span className="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 group-hover:bg-brand-blue/10 group-hover:text-brand-blue font-extrabold text-xs flex items-center justify-center transition-colors">
-                    0{index + 1}
-                  </span>
-                  <span className="text-slate-400 group-hover:text-[#44a0e3] text-lg transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
-                    ↗
-                  </span>
-                </div>
-
-                <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-2.5 relative z-10">
-                  {value.title}
-                </h4>
-
-                <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
-                  {value.description}
-                </p>
+              <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0078C8] shrink-0">
+                {getValueIcon(index, value.title)}
               </div>
+
+              <h4 className="text-lg font-bold text-slate-900 mt-4 mb-2">
+                {value.title}
+              </h4>
+
+              <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+                {value.description}
+              </p>
             </motion.div>
           ))}
         </div>
