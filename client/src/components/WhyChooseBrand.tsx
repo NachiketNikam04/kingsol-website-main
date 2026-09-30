@@ -52,7 +52,7 @@ export const WhyChooseBrand: React.FC<WhyChooseBrandProps> = ({
           variants={itemVariants}
           className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl text-center"
         >
-          Why choose <span className="text-blue-600">{brandName}</span> from{' '}
+          Why choose <span className="text-[#44a0e3]">{brandName}</span> from{' '}
           <span className="text-blue-600">Kingsol Energy India Pvt Ltd</span>?
         </motion.h1>
 
@@ -66,7 +66,7 @@ export const WhyChooseBrand: React.FC<WhyChooseBrandProps> = ({
           <button
             type="button"
             onClick={() => setIsQuoteOpen(true)}
-            className="px-8 py-3 bg-[#d45d29] hover:bg-[#b84e20] text-white rounded text-base font-semibold transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
+            className="px-8 py-3 bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] rounded text-base font-semibold transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
           >
             Buy {brandName} &rarr;
           </button>
