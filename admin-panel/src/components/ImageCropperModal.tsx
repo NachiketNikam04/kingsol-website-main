@@ -190,11 +190,11 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 sm:p-6"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-4xl max-h-[90vh] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col border border-slate-200"
+        className="w-full max-w-3xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
@@ -222,7 +222,7 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
         </div>
 
         {/* 3. CROPPER WRAPPER: Must be relative with a strict fixed height */}
-        <div className="relative w-full h-[60vh] min-h-[400px] bg-slate-900 select-none">
+        <div className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] bg-slate-900 shrink-0">
           {/* Subtle Dark Checkered Pattern for Transparency Visibility */}
           <div
             className="absolute inset-0 z-0 pointer-events-none"
@@ -260,7 +260,8 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
         </div>
 
         {/* 4. CONTROLS FOOTER: Safe from the cropping area */}
-        <div className="p-6 bg-white space-y-4 shrink-0 border-t border-slate-100">
+        <div className="p-4 sm:p-6 bg-white border-t border-slate-100 shrink-0">
+          <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
             {/* Zoom Slider */}
             <div className="flex items-center gap-3 bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-200/80">
@@ -344,7 +345,8 @@ export const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default ImageCropperModal;

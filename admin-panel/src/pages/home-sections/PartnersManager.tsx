@@ -585,8 +585,14 @@ export const PartnersManager: React.FC = () => {
 
         {/* MODAL: IMAGE CROPPING TOOL */}
         {cropperModalOpen && imageToCrop && (
-          <div className="fixed inset-0 z-[100] bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6">
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 max-w-2xl w-full flex flex-col shadow-2xl relative">
+          <div
+            className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center p-4 sm:p-6"
+            onClick={() => setCropperModalOpen(false)}
+          >
+            <div
+              className="w-full max-w-3xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] p-6 text-slate-900 relative"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => setCropperModalOpen(false)}
                 className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 cursor-pointer z-10"
@@ -603,7 +609,7 @@ export const PartnersManager: React.FC = () => {
               </p>
 
               {/* Cropper Container */}
-              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+              <div className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] bg-slate-900 shrink-0 rounded-xl overflow-hidden mb-6">
                 <Cropper
                   image={imageToCrop}
                   crop={crop}
@@ -613,12 +619,10 @@ export const PartnersManager: React.FC = () => {
                   onZoomChange={setZoom}
                   onCropComplete={onCropComplete}
                   style={{
-                    containerStyle: { backgroundColor: 'transparent' },
-                    mediaStyle: { backgroundColor: 'transparent' },
+                    containerStyle: { width: '100%', height: '100%' },
                   }}
                   classes={{
-                    containerClassName: '!bg-transparent',
-                    mediaClassName: '!bg-transparent',
+                    cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
                   }}
                 />
               </div>

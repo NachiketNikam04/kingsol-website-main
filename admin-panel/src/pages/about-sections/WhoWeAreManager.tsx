@@ -327,7 +327,7 @@ export const WhoWeAreManager: React.FC = () => {
                   <label className="text-xs font-bold text-slate-700 uppercase block mb-2">Section Side Image</label>
                   <div className="space-y-4">
                     {settings.image_url && (
-                      <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                      <div className="relative w-full h-48 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
                         <img src={getAssetUrl(settings.image_url)} alt="Section Preview" className="w-full h-full object-cover" />
                       </div>
                     )}
@@ -437,13 +437,19 @@ export const WhoWeAreManager: React.FC = () => {
 
         {/* MODAL: IMAGE CROPPER */}
         {imageToCrop && (
-          <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4">
-            <div className="bg-white rounded-[2rem] border border-slate-200 p-6 max-w-2xl w-full shadow-2xl relative text-slate-900">
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 sm:p-6"
+            onClick={() => setImageToCrop(null)}
+          >
+            <div
+              className="w-full max-w-3xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] p-6 text-slate-900"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <ImageIcon className="w-5 h-5 text-brand-blue" />
                 <span>Crop Who We Are Side Image (4:3)</span>
               </h3>
-              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+              <div className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] bg-slate-900 shrink-0 rounded-xl overflow-hidden mb-6">
                 <Cropper
                   image={imageToCrop}
                   crop={crop}
@@ -453,12 +459,10 @@ export const WhoWeAreManager: React.FC = () => {
                   onZoomChange={setZoom}
                   onCropComplete={onCropComplete}
                   style={{
-                    containerStyle: { backgroundColor: 'transparent' },
-                    mediaStyle: { backgroundColor: 'transparent' },
+                    containerStyle: { width: '100%', height: '100%' },
                   }}
                   classes={{
-                    containerClassName: '!bg-transparent',
-                    mediaClassName: '!bg-transparent',
+                    cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
                   }}
                 />
               </div>
