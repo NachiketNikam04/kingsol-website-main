@@ -150,6 +150,24 @@ export const AboutManager: React.FC = () => {
     e.target.value = '';
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>, target: 'main_img' | 'bg_img' = 'main_img') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      if (target === 'main_img') {
+        setSettings((prev) => ({ ...prev, main_image_url: dataUrl }));
+      } else {
+        setSettings((prev) => ({ ...prev, bg_image_url: dataUrl }));
+      }
+      setMessage({ type: 'success', text: 'Image loaded directly! Click Save Changes to apply.' });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = useCallback((_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
@@ -382,27 +400,39 @@ export const AboutManager: React.FC = () => {
 
                     <div>
                       <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Main Image Link *</label>
-                      <div className="flex gap-3">
+                      <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
                         <input
                           required
                           type="text"
                           value={settings.main_image_url}
                           onChange={(e) => setSettings({ ...settings, main_image_url: e.target.value })}
-                          className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-blue outline-none"
+                          className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-blue outline-none"
                         />
-                        <label className="bg-white border border-slate-200 text-slate-900 hover:text-brand-blue px-4 py-3 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer shrink-0 shadow-xs">
-                          <Upload className="w-4 h-4 text-brand-blue" />
-                          <span>Crop & Upload</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => onFileSelectForCrop(e, 'main_img')}
-                            className="hidden"
-                          />
-                        </label>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <label className="cursor-pointer inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0" title="Direct Upload (Skip Crop)">
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload (Skip Crop)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUpload(e, 'main_img')}
+                              className="hidden"
+                            />
+                          </label>
+                          <label className="bg-white border border-slate-200 text-slate-900 hover:text-brand-blue px-4 py-3 rounded-xl text-xs font-semibold flex items-center gap-2 cursor-pointer shrink-0 shadow-xs">
+                            <Scissors className="w-4 h-4 text-brand-blue" />
+                            <span>Crop & Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => onFileSelectForCrop(e, 'main_img')}
+                              className="hidden"
+                            />
+                          </label>
+                        </div>
                       </div>
                       {settings.main_image_url && (
-                        <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                        <div className="relative w-full h-48 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mt-3">
                           <img src={getAssetUrl(settings.main_image_url)} alt="Main Preview" className="w-full h-full object-cover" />
                         </div>
                       )}

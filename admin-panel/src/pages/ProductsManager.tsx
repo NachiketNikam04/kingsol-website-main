@@ -376,6 +376,44 @@ export const ProductsManager: React.FC = () => {
     e.target.value = '';
   };
 
+  const handleDirectUploadToField = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    targetField: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result as string;
+      if (targetField === 'brand.card_image') {
+        setBrandForm((prev) => ({ ...prev, card_image: dataUrl }));
+      } else if (targetField === 'brand.image_url') {
+        setBrandForm((prev) => ({ ...prev, image_url: dataUrl }));
+      } else if (targetField === 'brand.specs_image_url') {
+        setBrandForm((prev) => ({ ...prev, specs_image_url: dataUrl }));
+      } else if (targetField === 'brand.company_profile_image_url') {
+        setBrandForm((prev) => ({ ...prev, company_profile_image_url: dataUrl }));
+      } else if (targetField === 'product.card_image') {
+        setProductForm((prev) => ({ ...prev, card_image: dataUrl }));
+      } else if (targetField?.startsWith('product.gallery_')) {
+        const slotIdx = parseInt(targetField.replace('product.gallery_', ''), 10);
+        setProductForm((prev) => {
+          const updated = [...prev.gallery_urls];
+          updated[slotIdx] = dataUrl;
+          return {
+            ...prev,
+            gallery_urls: updated,
+            image_url: slotIdx === 0 ? dataUrl : (prev.image_url || dataUrl),
+          };
+        });
+      }
+      setMessage({ type: 'success', text: 'Image loaded directly!' });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   // Upload cropped PNG file and save URL to form state
   const handleCropComplete = async (croppedFile: File) => {
     setUploading(true);
@@ -1734,9 +1772,19 @@ function slugify(text: string): string {
                                 className="flex-1 bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-blue"
                                 placeholder="https://... or /uploads/brand_card_thumbnail.jpg"
                               />
+                              <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                                <Upload className="w-4 h-4" />
+                                <span>Direct Upload</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => handleDirectUploadToField(e, 'brand.card_image')}
+                                  className="hidden"
+                                />
+                              </label>
                               <label className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
                                 <Crop className="w-4 h-4" />
-                                <span>{uploading ? 'Processing...' : 'Upload & Crop Image'}</span>
+                                <span>{uploading ? 'Processing...' : 'Upload & Crop'}</span>
                                 <input
                                   type="file"
                                   accept="image/*"
@@ -1754,7 +1802,7 @@ function slugify(text: string): string {
                             </div>
                             {brandForm.card_image && (
                               <div className="mt-2 flex items-center gap-4 bg-white p-3 rounded-2xl border border-sky-200 shadow-2xs">
-                                <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                                <div className="w-24 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
                                   <img
                                     src={getAssetUrl(brandForm.card_image)}
                                     alt="Card Image Preview"
@@ -1820,9 +1868,19 @@ function slugify(text: string): string {
                             className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
                             placeholder="https://... or upload cropped image"
                           />
+                          <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUploadToField(e, 'brand.image_url')}
+                              className="hidden"
+                            />
+                          </label>
                           <label className="bg-slate-900 hover:bg-brand-green hover:text-slate-900 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
                             <Crop className="w-4 h-4" />
-                            <span>{uploading ? 'Processing...' : 'Upload & Crop Banner'}</span>
+                            <span>{uploading ? 'Processing...' : 'Upload & Crop'}</span>
                             <input
                               type="file"
                               accept="image/*"
@@ -1840,7 +1898,7 @@ function slugify(text: string): string {
                         </div>
                         {brandForm.image_url && (
                           <div className="mt-2 flex items-center gap-4 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                            <div className="w-24 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
                               <img
                                 src={getAssetUrl(brandForm.image_url)}
                                 alt="Hero Cover Preview"
@@ -1905,9 +1963,19 @@ function slugify(text: string): string {
                             className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
                             placeholder="https://... or upload cropped image"
                           />
+                          <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUploadToField(e, 'brand.specs_image_url')}
+                              className="hidden"
+                            />
+                          </label>
                           <label className="bg-slate-900 hover:bg-brand-green hover:text-slate-900 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
                             <Crop className="w-4 h-4" />
-                            <span>{uploading ? 'Processing...' : 'Upload & Crop Specs'}</span>
+                            <span>{uploading ? 'Processing...' : 'Upload & Crop'}</span>
                             <input
                               type="file"
                               accept="image/*"
@@ -1926,7 +1994,7 @@ function slugify(text: string): string {
                         </div>
                         {brandForm.specs_image_url && (
                           <div className="mt-2 flex items-center gap-4 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                            <div className="w-24 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
                               <img
                                 src={getAssetUrl(brandForm.specs_image_url)}
                                 alt="Specs Preview"
@@ -1992,9 +2060,19 @@ function slugify(text: string): string {
                             className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
                             placeholder="https://... or upload cropped image"
                           />
+                          <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUploadToField(e, 'brand.company_profile_image_url')}
+                              className="hidden"
+                            />
+                          </label>
                           <label className="bg-slate-900 hover:bg-brand-green hover:text-slate-900 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
                             <Crop className="w-4 h-4" />
-                            <span>{uploading ? 'Processing...' : 'Upload & Crop Profile'}</span>
+                            <span>{uploading ? 'Processing...' : 'Upload & Crop'}</span>
                             <input
                               type="file"
                               accept="image/*"
@@ -2013,7 +2091,7 @@ function slugify(text: string): string {
                         </div>
                         {brandForm.company_profile_image_url && (
                           <div className="mt-2 flex items-center gap-4 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                            <div className="w-24 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
                               <img
                                 src={getAssetUrl(brandForm.company_profile_image_url)}
                                 alt="Company Profile Preview"
@@ -2921,9 +2999,19 @@ function slugify(text: string): string {
                             className="flex-1 bg-white border border-sky-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-blue"
                             placeholder="https://... or /uploads/card_thumbnail.jpg"
                           />
+                          <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUploadToField(e, 'product.card_image')}
+                              className="hidden"
+                            />
+                          </label>
                           <label className="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
                             <Crop className="w-4 h-4" />
-                            <span>{uploading ? 'Processing...' : 'Upload & Crop Image'}</span>
+                            <span>{uploading ? 'Processing...' : 'Upload & Crop'}</span>
                             <input
                               type="file"
                               accept="image/*"
@@ -2941,7 +3029,7 @@ function slugify(text: string): string {
                         </div>
                         {productForm.card_image && (
                           <div className="mt-2 flex items-center gap-4 bg-white p-3 rounded-2xl border border-sky-200 shadow-2xs">
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                            <div className="w-24 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
                               <img
                                 src={getAssetUrl(productForm.card_image)}
                                 alt="Card Image Preview"
@@ -3018,9 +3106,19 @@ function slugify(text: string): string {
                               className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
                               placeholder={`https://... or upload/crop image ${imgIdx + 1}`}
                             />
+                            <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                              <Upload className="w-4 h-4" />
+                              <span>Direct Upload</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleDirectUploadToField(e, `product.gallery_${imgIdx}`)}
+                                className="hidden"
+                              />
+                            </label>
                             <label className="bg-slate-900 hover:bg-brand-green hover:text-slate-900 text-white px-4 py-2.5 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold shrink-0 transition-colors shadow-xs">
                               <Crop className="w-4 h-4" />
-                              <span>{uploading ? 'Processing...' : 'Upload & Crop (Freeform)'}</span>
+                              <span>{uploading ? 'Processing...' : 'Upload & Crop'}</span>
                               <input
                                 type="file"
                                 accept="image/*"
@@ -3039,7 +3137,7 @@ function slugify(text: string): string {
                           </div>
                           {productForm.gallery_urls[imgIdx] && (
                             <div className="mt-2 flex items-center gap-4 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                              <div className="w-24 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center">
                                 <img
                                   src={getAssetUrl(productForm.gallery_urls[imgIdx])}
                                   alt={`Preview ${imgIdx + 1}`}

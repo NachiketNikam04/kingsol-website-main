@@ -106,6 +106,19 @@ export const QuoteManager: React.FC = () => {
     }
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setSettings((prev) => ({ ...prev, bg_image_url: reader.result as string }));
+      setMessage({ type: 'success', text: 'CTA background image loaded directly! Click Save CTA Settings to apply.' });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
@@ -233,7 +246,7 @@ export const QuoteManager: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
                     <input
                       type="url"
                       value={settings.bg_image_url}
@@ -242,21 +255,33 @@ export const QuoteManager: React.FC = () => {
                       className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm outline-none"
                     />
 
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2"
-                    >
-                      <Upload className="w-4 h-4 text-brand-blue" />
-                      <span>Upload & Crop</span>
-                    </button>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
+                    <div className="flex items-center gap-2 shrink-0">
+                      <label className="cursor-pointer inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0" title="Direct Upload (Skip Crop)">
+                        <Upload className="w-4 h-4" />
+                        <span>Direct Upload (Skip Crop)</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleDirectUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                      >
+                        <Upload className="w-4 h-4 text-brand-blue" />
+                        <span>Upload & Crop</span>
+                      </button>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

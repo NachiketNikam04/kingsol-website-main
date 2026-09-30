@@ -133,6 +133,19 @@ export const SolutionsManager: React.FC = () => {
     }
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCardForm((prev) => ({ ...prev, image_url: reader.result as string }));
+      setMessage({ type: 'success', text: 'Card image loaded directly!' });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   // Submit Card
   const handleCardSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -441,12 +454,22 @@ export const SolutionsManager: React.FC = () => {
                       className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
                       placeholder="https://..."
                     />
+                    <label className="cursor-pointer inline-flex items-center justify-center px-3.5 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Server)">
+                      <Upload className="w-4 h-4" />
+                      <span>Direct Upload</span>
+                      <input type="file" accept="image/*" onChange={handleDirectUpload} className="hidden" />
+                    </label>
                     <label className="bg-slate-100 hover:bg-slate-200 border border-slate-200 px-4 py-3 rounded-xl cursor-pointer flex items-center gap-1.5 text-xs font-bold text-slate-700 shrink-0">
                       <Upload className="w-4 h-4 text-brand-green" />
                       <span>{uploading ? '...' : 'Upload'}</span>
                       <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                     </label>
                   </div>
+                  {cardForm.image_url && (
+                    <div className="mt-2 h-24 w-full bg-slate-50 rounded-xl p-2 border border-slate-200 flex items-center justify-center overflow-hidden">
+                      <img src={getAssetUrl(cardForm.image_url)} alt="Card Preview" className="max-h-full max-w-full object-cover rounded-lg" />
+                    </div>
+                  )}
                 </div>
 
                 <div>

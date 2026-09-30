@@ -111,6 +111,18 @@ export const GalleryManager: React.FC = () => {
     }
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setForm((prev) => ({ ...prev, image_url: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -192,7 +204,7 @@ export const GalleryManager: React.FC = () => {
               className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between group hover:shadow-md transition-shadow"
             >
               <div>
-                <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                   <img
                     src={getAssetUrl(item.image_url)}
                     alt={item.title}
@@ -319,6 +331,11 @@ export const GalleryManager: React.FC = () => {
                     placeholder="https://..."
                     className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:ring-2 focus:ring-brand-green outline-none text-sm"
                   />
+                  <label className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Server)">
+                    <Upload className="w-4 h-4" />
+                    <span>Direct Upload</span>
+                    <input type="file" accept="image/*" className="hidden" onChange={handleDirectUpload} />
+                  </label>
                   <label className="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center gap-2 cursor-pointer transition-colors shrink-0">
                     {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                     <span>{uploading ? 'Uploading...' : 'Upload'}</span>
@@ -326,7 +343,7 @@ export const GalleryManager: React.FC = () => {
                   </label>
                 </div>
                 {form.image_url && (
-                  <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                  <div className="relative w-full h-44 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 mt-2">
                     <img src={getAssetUrl(form.image_url)} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                 )}

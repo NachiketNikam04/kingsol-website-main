@@ -195,6 +195,19 @@ export const HeroManager: React.FC = () => {
     e.target.value = '';
   };
 
+  const handleDirectUploadBrand = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setBrandForm((prev) => ({ ...prev, image_url: reader.result as string }));
+      setMessage({ type: 'success', text: 'Brand logo loaded directly!' });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = useCallback((_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
@@ -620,8 +633,19 @@ export const HeroManager: React.FC = () => {
                       placeholder="Leave blank to use text title"
                       className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-3 py-2.5 text-xs outline-none"
                     />
-                    <label className="bg-white border border-slate-200 text-slate-900 hover:text-brand-blue px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1 cursor-pointer shrink-0">
+                    <label className="cursor-pointer inline-flex items-center justify-center px-3 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Direct Upload</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleDirectUploadBrand}
+                        className="hidden"
+                      />
+                    </label>
+                    <label className="bg-white border border-slate-200 text-slate-900 hover:text-brand-blue px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1 cursor-pointer shrink-0 shadow-xs" title="Crop & Upload">
                       <Scissors className="w-3.5 h-3.5 text-brand-blue" />
+                      <span className="hidden sm:inline">Crop</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -630,6 +654,11 @@ export const HeroManager: React.FC = () => {
                       />
                     </label>
                   </div>
+                  {brandForm.image_url && (
+                    <div className="mt-2 h-16 w-full bg-slate-50 rounded-xl p-2 border border-slate-200 flex items-center justify-center">
+                      <img src={getAssetUrl(brandForm.image_url)} alt="Logo Preview" className="max-h-full max-w-full object-contain" />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex items-center gap-2 pt-2">

@@ -12,6 +12,7 @@ import {
   Trash2,
   X,
   Scissors,
+  Upload,
 } from 'lucide-react';
 
 interface PartnersSettings {
@@ -158,6 +159,19 @@ export const PartnersManager: React.FC = () => {
     reader.onload = () => {
       setImageToCrop(reader.result as string);
       setCropperModalOpen(true);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setLogoForm((prev) => ({ ...prev, image_url: reader.result as string }));
+      setMessage({ type: 'success', text: 'Logo loaded directly! Click Save Partner Logo to apply.' });
     };
     reader.readAsDataURL(file);
     e.target.value = '';
@@ -491,8 +505,19 @@ export const PartnersManager: React.FC = () => {
                       onChange={(e) => setLogoForm({ ...logoForm, image_url: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-3 py-2.5 text-xs outline-none"
                     />
-                    <label className="bg-white border border-slate-200 text-slate-900 hover:text-brand-blue px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1 cursor-pointer shrink-0">
+                    <label className="cursor-pointer inline-flex items-center justify-center px-3 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">Direct Upload</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleDirectUpload}
+                        className="hidden"
+                      />
+                    </label>
+                    <label className="bg-white border border-slate-200 text-slate-900 hover:text-brand-blue px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1 cursor-pointer shrink-0 shadow-xs" title="Crop & Upload">
                       <Scissors className="w-3.5 h-3.5 text-brand-blue" />
+                      <span className="hidden sm:inline">Crop</span>
                       <input
                         type="file"
                         accept="image/*"

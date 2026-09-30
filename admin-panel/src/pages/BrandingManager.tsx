@@ -109,6 +109,22 @@ export const BrandingManager: React.FC = () => {
     }
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>, field: 'logo_url' | 'footer_logo_url') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setFormData((prev) => ({ ...prev, [field]: reader.result as string }));
+      setMessage({
+        type: 'success',
+        text: `${field === 'logo_url' ? 'Main' : 'Footer'} logo loaded directly! Click Save Changes to apply.`,
+      });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
@@ -218,21 +234,33 @@ export const BrandingManager: React.FC = () => {
                       placeholder="https://... or paste image URL"
                       className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-xs outline-none focus:ring-2 focus:ring-brand-blue font-mono"
                     />
-                    <button
-                      type="button"
-                      onClick={() => fileInputRefMain.current?.click()}
-                      className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2 shrink-0"
-                    >
-                      <Upload className="w-4 h-4 text-brand-blue" />
-                      <span>Upload & Crop</span>
-                    </button>
-                    <input
-                      ref={fileInputRefMain}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleFileChange(e, 'logo_url')}
-                      className="hidden"
-                    />
+                    <div className="flex items-center gap-2 shrink-0">
+                      <label className="cursor-pointer inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0" title="Direct Upload (Skip Crop)">
+                        <Upload className="w-4 h-4" />
+                        <span>Direct Upload (Skip Crop)</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleDirectUpload(e, 'logo_url')}
+                          className="hidden"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRefMain.current?.click()}
+                        className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                      >
+                        <Upload className="w-4 h-4 text-brand-blue" />
+                        <span>Upload & Crop</span>
+                      </button>
+                      <input
+                        ref={fileInputRefMain}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(e, 'logo_url')}
+                        className="hidden"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -259,21 +287,33 @@ export const BrandingManager: React.FC = () => {
                       placeholder="Leave blank to reuse main logo URL"
                       className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-xs outline-none focus:ring-2 focus:ring-brand-blue font-mono"
                     />
-                    <button
-                      type="button"
-                      onClick={() => fileInputRefFooter.current?.click()}
-                      className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2 shrink-0"
-                    >
-                      <Upload className="w-4 h-4 text-brand-blue" />
-                      <span>Upload & Crop</span>
-                    </button>
-                    <input
-                      ref={fileInputRefFooter}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleFileChange(e, 'footer_logo_url')}
-                      className="hidden"
-                    />
+                    <div className="flex items-center gap-2 shrink-0">
+                      <label className="cursor-pointer inline-flex items-center justify-center px-4 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0" title="Direct Upload (Skip Crop)">
+                        <Upload className="w-4 h-4" />
+                        <span>Direct Upload (Skip Crop)</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleDirectUpload(e, 'footer_logo_url')}
+                          className="hidden"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRefFooter.current?.click()}
+                        className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-3 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                      >
+                        <Upload className="w-4 h-4 text-brand-blue" />
+                        <span>Upload & Crop</span>
+                      </button>
+                      <input
+                        ref={fileInputRefFooter}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileChange(e, 'footer_logo_url')}
+                        className="hidden"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

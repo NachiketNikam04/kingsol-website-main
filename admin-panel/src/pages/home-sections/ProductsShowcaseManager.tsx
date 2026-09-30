@@ -246,7 +246,7 @@ export const ProductsShowcaseManager: React.FC = () => {
                       {products.map((prod) => (
                         <tr key={prod.id} className="hover:bg-slate-50/80 transition-colors">
                           <td className="px-6 py-4">
-                            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+                            <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
                               <img
                                 src={getAssetUrl(prod.image_url) || 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop'}
                                 alt={prod.title}

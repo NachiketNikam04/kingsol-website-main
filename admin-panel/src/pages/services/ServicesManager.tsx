@@ -419,8 +419,9 @@ export const ServicesManager: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
-              <table className="w-full text-left text-sm text-slate-700">
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-slate-700">
                 <thead className="bg-slate-50 border-b border-slate-200 uppercase text-[11px] font-bold text-slate-700 tracking-wider">
                   <tr>
                     <th className="px-6 py-4">Sort</th>
@@ -468,6 +469,7 @@ export const ServicesManager: React.FC = () => {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         )}

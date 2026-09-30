@@ -252,7 +252,7 @@ export const JobManager: React.FC = () => {
             No active job openings found. Click "Add Job Opening" to create your first listing!
           </div>
         ) : (
-          <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>

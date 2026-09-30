@@ -152,6 +152,19 @@ export const TestimonialsManager: React.FC = () => {
     }
   };
 
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setReviewForm((prev) => ({ ...prev, image_url: reader.result as string }));
+      setMessage({ type: 'success', text: 'Avatar loaded directly! Click Save Review to apply.' });
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
   const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
@@ -494,21 +507,33 @@ export const TestimonialsManager: React.FC = () => {
                         <User className="w-6 h-6" />
                       </div>
                     )}
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="bg-white text-slate-900 border border-slate-200 rounded-full font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-2.5 text-xs flex items-center gap-2"
-                    >
-                      <Upload className="w-4 h-4 text-brand-blue" />
-                      <span>{reviewForm.image_url ? 'Change Avatar' : 'Upload & Crop Avatar'}</span>
-                    </button>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
+                    <div className="flex items-center gap-2">
+                      <label className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 text-white rounded-full font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-1.5 shrink-0" title="Direct Upload (Skip Crop)">
+                        <Upload className="w-4 h-4" />
+                        <span>Direct Upload</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleDirectUpload}
+                          className="hidden"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className="bg-white text-slate-900 border border-slate-200 rounded-full font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-2.5 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                      >
+                        <Upload className="w-4 h-4 text-brand-blue" />
+                        <span>{reviewForm.image_url ? 'Change Avatar' : 'Upload & Crop'}</span>
+                      </button>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                    </div>
                   </div>
                 </div>
 
