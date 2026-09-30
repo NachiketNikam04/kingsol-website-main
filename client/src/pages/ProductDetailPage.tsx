@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { fetchLiveCatalog, Product, Brand, Category } from '../data/productsData';
 import InquiryModal from '../components/InquiryModal';
 import QuoteModal from '../components/QuoteModal';
+import WhyChooseBrand from '../components/WhyChooseBrand';
 import CTASection from '../components/CTASection';
 import { shareUrl } from '../utils/share';
 
@@ -273,6 +274,13 @@ export default function ProductDetailPage() {
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
         initialProduct={product.name}
+      />
+
+      {/* Dynamic Why Choose Brand Section */}
+      <WhyChooseBrand
+        brandName={brand.name}
+        categoryName={category.name}
+        categoryUrl={`/products/${category.slug}`}
       />
 
       <CTASection onQuoteClick={() => setIsQuoteOpen(true)} />

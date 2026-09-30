@@ -18,6 +18,7 @@ import {
 import CTASection from '../components/CTASection';
 import { InquiryModal } from '../components/InquiryModal';
 import QuoteModal from '../components/QuoteModal';
+import { WhyChooseBrand } from '../components/WhyChooseBrand';
 
 /* ==========================================================================
    INTERACTIVE SOLAR INVERTER CARD COMPONENT (Task 3 Specification)
@@ -1445,6 +1446,13 @@ export default function ProductDetail() {
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
         initialProduct={selectedProductForQuote || prodTitle}
+      />
+
+      {/* Dynamic Why Choose Brand Section */}
+      <WhyChooseBrand
+        brandName={brName}
+        categoryName={catName}
+        categoryUrl={`/products/${catSlug}`}
       />
 
       {/* CTA Section */}

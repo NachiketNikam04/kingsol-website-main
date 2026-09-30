@@ -6,6 +6,7 @@ import { fetchLiveCatalog, Product, Brand, Category } from '../data/productsData
 import InquiryModal from '../components/InquiryModal';
 import QuoteModal from '../components/QuoteModal';
 import CTASection from '../components/CTASection';
+import { WhyChooseBrand } from '../components/WhyChooseBrand';
 import { shareUrl } from '../utils/share';
 
 interface SubcategoryItem {
@@ -372,6 +373,13 @@ export default function BrandPage() {
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
         initialProduct={selectedProductForQuote || brand.name}
+      />
+
+      {/* Dynamic Why Choose Brand Section */}
+      <WhyChooseBrand
+        brandName={brand.name}
+        categoryName={category.name}
+        categoryUrl={`/products/${category.slug}`}
       />
 
       <CTASection onQuoteClick={() => {

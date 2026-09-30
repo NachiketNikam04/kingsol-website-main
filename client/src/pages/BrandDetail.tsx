@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import QuoteModal from '../components/QuoteModal';
 import { CTASection } from '../components/CTASection';
+import { WhyChooseBrand } from '../components/WhyChooseBrand';
 
 interface BrandDoc {
   title: string;
@@ -902,6 +903,13 @@ export default function BrandDetail() {
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
         initialProduct={selectedProductForQuote || brand.name}
+      />
+
+      {/* Dynamic Why Choose Brand Section */}
+      <WhyChooseBrand
+        brandName={brand.name}
+        categoryName={formattedCategoryName}
+        categoryUrl={`/products/${brand.category_slug || categorySlug || 'solar-modules'}`}
       />
 
       {/* CTA Section Banner */}
