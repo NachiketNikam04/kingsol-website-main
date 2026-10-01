@@ -55,6 +55,51 @@ router.get('/dashboard-stats', verifyToken, async (req, res) => {
       message: 'Failed to retrieve dashboard analytics.',
     });
   }
+// GET /api/admin/brands (Protected - Returns ALL brands including inactive ones)
+router.get('/brands', verifyToken, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT b.*, c.name as category_name, c.slug as category_slug 
+      FROM brands b 
+      JOIN categories c ON b.category_id = c.id
+      ORDER BY b.id ASC
+    `);
+    res.status(200).json({ success: true, data: result.rows });
+  } catch (error) {
+    console.error('Error fetching admin brands:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// PATCH /api/admin/brands/:id/toggle-status (Protected - Flips or sets is_active status)
+router.patch('/brands/:id/toggle-status', verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { is_active } = req.body;
+  try {
+    let query;
+    let params;
+    if (typeof is_active === 'boolean') {
+      query = `UPDATE brands SET is_active = $1 WHERE id = $2 RETURNING *`;
+      params = [is_active, id];
+    } else {
+      query = `UPDATE brands SET is_active = NOT COALESCE(is_active, true) WHERE id = $1 RETURNING *`;
+      params = [id];
+    }
+
+    const result = await pool.query(query, params);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Brand not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Brand visibility updated to ${result.rows[0].is_active ? 'Active' : 'Inactive'}.`,
+      data: result.rows[0],
+    });
+  } catch (error) {
+    console.error('Error toggling brand status:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
 });
 
 export default router;

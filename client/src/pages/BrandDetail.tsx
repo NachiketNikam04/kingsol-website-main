@@ -1,6 +1,6 @@
 import { API_BASE_URL, getAssetUrl, parseDatasheets } from '../utils/assetUrl';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Building2,
@@ -97,6 +97,7 @@ interface CatalogSettings {
 
 export default function BrandDetail() {
   const { categorySlug, brandSlug } = useParams<{ categorySlug: string; brandSlug: string }>();
+  const navigate = useNavigate();
 
   const [brand, setBrand] = useState<BrandData | null>(null);
   const [products, setProducts] = useState<ProductData[]>([]);
@@ -197,6 +198,13 @@ export default function BrandDetail() {
     }
     loadBrandDetails();
   }, [brandSlug]);
+
+  // If brand is not found or inactive, automatically redirect to main products catalog
+  useEffect(() => {
+    if (!loading && !brand) {
+      navigate('/products', { replace: true });
+    }
+  }, [loading, brand, navigate]);
 
   const scrollSlider = (direction: 'left' | 'right') => {
     if (sliderRef.current) {

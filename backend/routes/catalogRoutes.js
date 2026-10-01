@@ -131,6 +131,7 @@ router.get('/nav-tree', async (req, res) => {
       SELECT DISTINCT c.id, c.name, c.slug, c.tagline
       FROM categories c
       INNER JOIN products p ON p.category_id = c.id
+      INNER JOIN brands b ON b.id = p.brand_id AND COALESCE(b.is_active, true) = true
       ORDER BY c.id ASC
     `);
 
@@ -142,7 +143,7 @@ router.get('/nav-tree', async (req, res) => {
           `SELECT DISTINCT b.id, b.name, b.slug, b.image_url
            FROM brands b
            INNER JOIN products p ON p.brand_id = b.id
-           WHERE b.category_id = $1
+           WHERE b.category_id = $1 AND COALESCE(b.is_active, true) = true
            ORDER BY b.name ASC`,
           [cat.id]
         );

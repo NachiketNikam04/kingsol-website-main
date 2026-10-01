@@ -57,7 +57,7 @@ router.get('/', async (req, res) => {
         s.name as subcategory_name,
         s.slug as subcategory_slug
       FROM products p
-      JOIN brands b ON b.id = p.brand_id
+      JOIN brands b ON b.id = p.brand_id AND COALESCE(b.is_active, true) = true
       JOIN categories c ON c.id = b.category_id
       LEFT JOIN subcategories s ON s.id = p.subcategory_id
     `;
@@ -117,7 +117,7 @@ router.get('/:slug', async (req, res) => {
         s.name as subcategory_name,
         s.slug as subcategory_slug
        FROM products p
-       JOIN brands b ON b.id = p.brand_id
+       JOIN brands b ON b.id = p.brand_id AND COALESCE(b.is_active, true) = true
        JOIN categories c ON c.id = b.category_id
        LEFT JOIN subcategories s ON s.id = p.subcategory_id
        WHERE LOWER(p.slug) = LOWER($1) 
@@ -142,7 +142,7 @@ router.get('/:slug', async (req, res) => {
       `SELECT p.id, p.title, p.name, p.slug, p.short_description, p.image_url, p.specs,
               b.name as brand_name, b.slug as brand_slug, c.slug as category_slug
        FROM products p
-       JOIN brands b ON b.id = p.brand_id
+       JOIN brands b ON b.id = p.brand_id AND COALESCE(b.is_active, true) = true
        JOIN categories c ON c.id = b.category_id
        WHERE (p.brand_id = $1 OR p.category_id = $2) AND p.id != $3
        LIMIT 4`,

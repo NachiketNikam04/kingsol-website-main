@@ -61,6 +61,7 @@ ALTER TABLE brands ADD COLUMN IF NOT EXISTS company_profile_text TEXT DEFAULT ''
 ALTER TABLE brands ADD COLUMN IF NOT EXISTS company_profile_image_url TEXT DEFAULT '';
 ALTER TABLE brands ADD COLUMN IF NOT EXISTS categorized_features JSONB DEFAULT '[]'::jsonb;
 ALTER TABLE brands ADD COLUMN IF NOT EXISTS card_image TEXT DEFAULT '';
+ALTER TABLE brands ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT true;
 
 -- Explicitly enforce composite unique constraint for brands
 ALTER TABLE brands DROP CONSTRAINT IF EXISTS brands_category_id_slug_key;

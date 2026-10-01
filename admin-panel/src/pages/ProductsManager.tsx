@@ -74,6 +74,7 @@ interface Brand {
   footer_note?: string;
   category_name?: string;
   category_slug?: string;
+  is_active?: boolean;
 }
 
 interface Product {
@@ -176,6 +177,7 @@ export const ProductsManager: React.FC = () => {
 
   // Brand Modal States (Strict 2-Image Inputs)
   const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [togglingBrandId, setTogglingBrandId] = useState<number | null>(null);
   const [brandModalTab, setBrandModalTab] = useState<'basic' | 'media' | 'features' | 'docs'>('basic');
   const [editingBrand, setEditingBrand] = useState<Brand | null>(null);
   const [brandForm, setBrandForm] = useState({
@@ -261,7 +263,7 @@ export const ProductsManager: React.FC = () => {
       const [settingsRes, catRes, brandRes, prodRes, subRes] = await Promise.all([
         api.get('/catalog/page-settings'),
         api.get('/categories'),
-        api.get('/brands'),
+        api.get('/admin/brands').catch(() => api.get('/brands?include_inactive=true')),
         api.get('/products'),
         api.get('/subcategories').catch(() => ({ data: { success: false, data: [] } })),
       ]);
@@ -673,6 +675,52 @@ function slugify(text: string): string {
       fetchData();
     } catch {
       setMessage({ type: 'error', text: 'Failed to delete brand.' });
+    }
+  };
+
+  const handleToggleBrandStatus = async (brandId: number, currentActive: boolean) => {
+    setTogglingBrandId(brandId);
+    try {
+      const nextActive = !currentActive;
+      const res = await api.patch(`/admin/brands/${brandId}/toggle-status`, {
+        is_active: nextActive,
+      });
+      if (res.data.success) {
+        const updatedStatus = res.data.data.is_active;
+        setBrands((prev) =>
+          prev.map((b) => (b.id === brandId ? { ...b, is_active: updatedStatus } : b))
+        );
+        setMessage({
+          type: 'success',
+          text: `Brand status updated to ${updatedStatus ? 'Active' : 'Inactive'}.`,
+        });
+      }
+    } catch (err: any) {
+      // Fallback try /brands/:id/toggle-status
+      try {
+        const nextActive = !currentActive;
+        const fallbackRes = await api.patch(`/brands/${brandId}/toggle-status`, {
+          is_active: nextActive,
+        });
+        if (fallbackRes.data.success) {
+          const updatedStatus = fallbackRes.data.data.is_active;
+          setBrands((prev) =>
+            prev.map((b) => (b.id === brandId ? { ...b, is_active: updatedStatus } : b))
+          );
+          setMessage({
+            type: 'success',
+            text: `Brand status updated to ${updatedStatus ? 'Active' : 'Inactive'}.`,
+          });
+          return;
+        }
+      } catch {
+        setMessage({
+          type: 'error',
+          text: err.response?.data?.message || 'Failed to toggle brand visibility status.',
+        });
+      }
+    } finally {
+      setTogglingBrandId(null);
     }
   };
 
@@ -1392,7 +1440,7 @@ function slugify(text: string): string {
 
             {/* TAB 3: BRANDS */}
             {activeTab === 'brands' && (
-              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+              <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-sm text-slate-700">
                     <thead className="bg-slate-50 border-b border-slate-200 uppercase text-[11px] font-bold text-slate-700 tracking-wider">
@@ -1401,6 +1449,7 @@ function slugify(text: string): string {
                         <th className="px-6 py-4">Category</th>
                         <th className="px-6 py-4">Slug</th>
                         <th className="px-6 py-4">2-Image Layout</th>
+                        <th className="px-6 py-4 text-center">Visibility</th>
                         <th className="px-6 py-4 text-right">Actions</th>
                       </tr>
                     </thead>
@@ -1417,6 +1466,37 @@ function slugify(text: string): string {
                             <span className="px-2 py-0.5 bg-brand-green/20 text-slate-900 rounded font-semibold">
                               {brand.gallery && brand.gallery[0] ? 'Content Img Set' : 'No Content Img'}
                             </span>
+                          </td>
+                          <td className="px-6 py-4 text-center">
+                            <div className="flex items-center justify-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => handleToggleBrandStatus(brand.id, brand.is_active !== false)}
+                                disabled={togglingBrandId === brand.id}
+                                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden ${
+                                  brand.is_active !== false ? 'bg-emerald-500' : 'bg-slate-300'
+                                } ${togglingBrandId === brand.id ? 'opacity-50 cursor-wait' : ''}`}
+                                role="switch"
+                                aria-checked={brand.is_active !== false}
+                                title={brand.is_active !== false ? 'Click to deactivate brand' : 'Click to activate brand'}
+                              >
+                                <span
+                                  aria-hidden="true"
+                                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out ${
+                                    brand.is_active !== false ? 'translate-x-5' : 'translate-x-0'
+                                  }`}
+                                />
+                              </button>
+                              <span
+                                className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                                  brand.is_active !== false
+                                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                    : 'bg-slate-100 text-slate-500 border border-slate-200'
+                                }`}
+                              >
+                                {brand.is_active !== false ? 'Active' : 'Hidden'}
+                              </span>
+                            </div>
                           </td>
                           <td className="px-6 py-4 text-right">
                             <div className="flex items-center justify-end gap-2">
@@ -1444,7 +1524,7 @@ function slugify(text: string): string {
 
             {/* TAB 4: PRODUCTS */}
             {activeTab === 'products' && (
-              <div className="flex h-screen w-full overflow-hidden bg-brand-bg text-slate-900">
+              <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-sm text-slate-700">
                     <thead className="bg-slate-50 border-b border-slate-200 uppercase text-[11px] font-bold text-slate-700 tracking-wider">

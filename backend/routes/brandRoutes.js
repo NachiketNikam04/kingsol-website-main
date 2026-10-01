@@ -4,9 +4,10 @@ import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Auto-migrate card_image column on brands table if not present
+// Auto-migrate card_image and is_active column on brands table if not present
 pool.query(`
   ALTER TABLE brands ADD COLUMN IF NOT EXISTS card_image TEXT DEFAULT '';
+  ALTER TABLE brands ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT true;
 `).catch((err) => console.warn('Brand schema auto-migration notice:', err.message));
 
 function parseArrayOrString(val, fallback = []) {
@@ -36,23 +37,33 @@ function parseJsonOrString(val, fallback = []) {
   return fallback;
 }
 
-// GET /api/brands (Public - Filterable by category_id or category_slug)
+// GET /api/brands (Public - Filterable by category_id or category_slug; respects is_active unless requested)
 router.get('/', async (req, res) => {
   try {
-    const { category_id, category_slug } = req.query;
+    const { category_id, category_slug, include_inactive, all } = req.query;
     let query = `
       SELECT b.*, c.name as category_name, c.slug as category_slug 
       FROM brands b 
       JOIN categories c ON b.category_id = c.id
     `;
     const params = [];
+    const conditions = [];
+
+    // Filter active brands only for public consumption
+    if (include_inactive !== 'true' && all !== 'true') {
+      conditions.push(`COALESCE(b.is_active, true) = true`);
+    }
 
     if (category_id) {
-      query += ` WHERE b.category_id = $1`;
       params.push(category_id);
+      conditions.push(`b.category_id = $${params.length}`);
     } else if (category_slug) {
-      query += ` WHERE c.slug = $1`;
       params.push(category_slug);
+      conditions.push(`c.slug = $${params.length}`);
+    }
+
+    if (conditions.length > 0) {
+      query += ` WHERE ` + conditions.join(' AND ');
     }
 
     query += ` ORDER BY b.id ASC`;
@@ -64,18 +75,56 @@ router.get('/', async (req, res) => {
   }
 });
 
+// PATCH /api/brands/:id/toggle-status (Protected - Toggle is_active status)
+router.patch('/:id/toggle-status', verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { is_active } = req.body;
+  try {
+    let query;
+    let params;
+    if (typeof is_active === 'boolean') {
+      query = `UPDATE brands SET is_active = $1 WHERE id = $2 RETURNING *`;
+      params = [is_active, id];
+    } else {
+      query = `UPDATE brands SET is_active = NOT COALESCE(is_active, true) WHERE id = $1 RETURNING *`;
+      params = [id];
+    }
+
+    const result = await pool.query(query, params);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Brand not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Brand visibility updated to ${result.rows[0].is_active ? 'Active' : 'Inactive'}.`,
+      data: result.rows[0],
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // GET /api/brands/:slug (Public - Single Brand Details + Products)
 router.get('/:slug', async (req, res) => {
   const { slug } = req.params;
+  const { include_inactive, all } = req.query;
   try {
+    let whereClause = `
+      (LOWER(b.slug) = LOWER($1) 
+       OR b.slug = LOWER(REPLACE($1, ' ', '-'))
+       OR LOWER(b.name) = LOWER(REPLACE($1, '-', ' '))
+       OR b.id::text = $1)
+    `;
+    if (include_inactive !== 'true' && all !== 'true') {
+      whereClause += ` AND COALESCE(b.is_active, true) = true`;
+    }
+
     const brandResult = await pool.query(
       `SELECT b.*, c.name as category_name, c.slug as category_slug
        FROM brands b
        JOIN categories c ON b.category_id = c.id
-       WHERE LOWER(b.slug) = LOWER($1) 
-          OR b.slug = LOWER(REPLACE($1, ' ', '-'))
-          OR LOWER(b.name) = LOWER(REPLACE($1, '-', ' '))
-          OR b.id::text = $1`,
+       WHERE ${whereClause}`,
       [slug]
     );
 

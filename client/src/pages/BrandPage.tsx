@@ -66,6 +66,12 @@ export default function BrandPage() {
   }, [categorySlug, brandSlug]);
 
   useEffect(() => {
+    if (!loading && (!brand || !category)) {
+      navigate('/products', { replace: true });
+    }
+  }, [loading, brand, category, navigate]);
+
+  useEffect(() => {
     if (subcategorySlug) {
       setActiveSubcategory(subcategorySlug);
     }

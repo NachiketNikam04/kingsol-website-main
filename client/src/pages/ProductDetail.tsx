@@ -789,6 +789,21 @@ export default function ProductDetail() {
     loadData();
   }, [targetSlug, categorySlug, brandSlug, isInverterRoute]);
 
+  // If product/brand is not found or inactive, automatically redirect to main products catalog
+  useEffect(() => {
+    if (!loading) {
+      if (isCardLayoutRoute) {
+        if (brandSlug && inverterCategoryProducts.length === 0) {
+          navigate('/products', { replace: true });
+        }
+      } else {
+        if (!product) {
+          navigate('/products', { replace: true });
+        }
+      }
+    }
+  }, [loading, isCardLayoutRoute, brandSlug, inverterCategoryProducts.length, product, navigate]);
+
   const handleOpenInquiry = (prod?: ProductData) => {
     setSelectedProductForInquiry(prod || null);
     setSelectedProductForQuote(prod?.title || prod?.name || product?.title || product?.name || '');
@@ -799,6 +814,15 @@ export default function ProductDetail() {
     return (
       <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 flex items-center justify-center text-slate-500 font-medium">
         Loading solar component details...
+      </div>
+    );
+  }
+
+  // Guard for non-card layout if product was not found
+  if (!isCardLayoutRoute && !product) {
+    return (
+      <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 flex items-center justify-center text-slate-500 font-medium">
+        Redirecting to products catalog...
       </div>
     );
   }

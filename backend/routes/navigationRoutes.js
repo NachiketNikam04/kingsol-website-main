@@ -16,9 +16,9 @@ router.get('/menu', async (req, res) => {
     );
     const categories = catResult.rows;
 
-    // 2. Fetch Brands with category_id
+    // 2. Fetch Brands with category_id (active brands only)
     const brandResult = await pool.query(
-      `SELECT id, category_id, name, slug FROM brands ORDER BY id ASC`
+      `SELECT id, category_id, name, slug FROM brands WHERE COALESCE(is_active, true) = true ORDER BY id ASC`
     );
     const brands = brandResult.rows;
 

@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
         COUNT(DISTINCT b.id)::int as brand_count,
         COUNT(DISTINCT p.id)::int as product_count
       FROM categories c
-      LEFT JOIN brands b ON b.category_id = c.id
+      LEFT JOIN brands b ON b.category_id = c.id AND COALESCE(b.is_active, true) = true
       LEFT JOIN products p ON p.brand_id = b.id
       GROUP BY c.id
       ORDER BY c.id ASC
@@ -46,7 +46,7 @@ router.get('/:slug', async (req, res) => {
               COUNT(DISTINCT b.id)::int as brand_count,
               COUNT(DISTINCT p.id)::int as product_count
        FROM categories c
-       LEFT JOIN brands b ON b.category_id = c.id
+       LEFT JOIN brands b ON b.category_id = c.id AND COALESCE(b.is_active, true) = true
        LEFT JOIN products p ON p.brand_id = b.id
        WHERE LOWER(c.slug) = LOWER($1) 
           OR c.slug = LOWER(REPLACE($1, ' ', '-'))

@@ -44,6 +44,12 @@ export default function ProductDetailPage() {
     loadData();
   }, [categorySlug, brandSlug, productSlug]);
 
+  useEffect(() => {
+    if (!loading && (!product || !brand || !category)) {
+      navigate('/products', { replace: true });
+    }
+  }, [loading, product, brand, category, navigate]);
+
   if (loading) {
     return <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-24 text-center text-slate-500 font-medium">Loading product specs...</div>;
   }

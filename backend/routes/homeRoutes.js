@@ -668,7 +668,7 @@ router.get('/showcase', async (req, res) => {
        FROM products p
        LEFT JOIN categories c ON p.category_id = c.id
        LEFT JOIN brands b ON p.brand_id = b.id
-       WHERE p.is_featured = TRUE
+       WHERE p.is_featured = TRUE AND (p.brand_id IS NULL OR COALESCE(b.is_active, true) = true)
        ORDER BY p.id DESC`
     );
 
@@ -681,6 +681,7 @@ router.get('/showcase', async (req, res) => {
          FROM products p
          LEFT JOIN categories c ON p.category_id = c.id
          LEFT JOIN brands b ON p.brand_id = b.id
+         WHERE (p.brand_id IS NULL OR COALESCE(b.is_active, true) = true)
          ORDER BY p.id DESC
          LIMIT 10`
       );
