@@ -281,13 +281,15 @@ export default function BrandDetail() {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="lg:col-span-6"
           >
+            {/* 1. Kept mb-3 on the wrapper, but removed it from the span */}
             <div className="flex items-center gap-2 mb-3">
-              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
+              <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
                 AUTHORIZED MANUFACTURER SHOWCASE
               </span>
             </div>
 
-            <h1 className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
+            {/* 2. Reduced mt-5 to mt-2 to pull the heading closer to the tagline */}
+            <h1 className="mt-2 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
               {brand.name}
             </h1>
 
