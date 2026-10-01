@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, Phone, Instagram, Facebook, Youtube, Linkedin, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import QuoteModal from './QuoteModal';
+import { useFeatureFlags } from '../context/FeatureFlagsContext';
 
 interface ProductNav {
   id: number;
@@ -38,10 +39,7 @@ export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [featureFlags, setFeatureFlags] = useState<{ show_services: boolean; show_videos: boolean }>({
-    show_services: false,
-    show_videos: false,
-  });
+  const { featureFlags } = useFeatureFlags();
 
   // Mobile Accordion State
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
@@ -123,25 +121,8 @@ export const Navbar: React.FC = () => {
       }
     }
 
-    // 3. Fetch Navigation Feature Flags
-    async function loadFeatureFlags() {
-      try {
-        const res = await fetch(`${API_BASE_URL}/settings/features`);
-        const json = await res.json();
-        if (json.success && json.data) {
-          setFeatureFlags({
-            show_services: Boolean(json.data.show_services),
-            show_videos: Boolean(json.data.show_videos),
-          });
-        }
-      } catch (err) {
-        console.warn('⚠️ [Navbar] Feature flags API offline:', err);
-      }
-    }
-
     loadBranding();
     loadNavigation();
-    loadFeatureFlags();
   }, []);
 
   // Fallback Product Categories Data (Pure fallback defaults if API offline, NO hardcoded BESS)
@@ -490,80 +471,82 @@ export const Navbar: React.FC = () => {
               </ul>
             </li>
 
-            {/* BESS Dropdown */}
-            <li className="relative group py-2">
-              <Link
-                className="hover:text-brand-green transition-colors flex items-center gap-1.5"
-                to={`/products/${bessSlug}`}
-              >
-                BESS <span className="text-xs">▼</span>
-              </Link>
+            {/* BESS Dropdown (Feature Flag Toggled) */}
+            {featureFlags.show_bess && (
+              <li className="relative group py-2">
+                <Link
+                  className="hover:text-brand-green transition-colors flex items-center gap-1.5"
+                  to={`/products/${bessSlug}`}
+                >
+                  BESS <span className="text-xs">▼</span>
+                </Link>
 
-              {/* Level 1: Main Dropdown */}
-              <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
-                <li>
-                  <Link
-                    className="block px-5 py-3.5 hover:bg-slate-50 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
-                    to={`/products/${bessSlug}`}
-                  >
-                    All BESS
-                  </Link>
-                </li>
+                {/* Level 1: Main Dropdown */}
+                <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
+                  <li>
+                    <Link
+                      className="block px-5 py-3.5 hover:bg-slate-50 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
+                      to={`/products/${bessSlug}`}
+                    >
+                      All BESS
+                    </Link>
+                  </li>
 
-                {/* Level 2: Dynamic BESS Brands */}
-                {bessBrands.map((brand, brandIdx) => {
-                  const bSlug = brand.slug || toSlug(brand.name);
-                  const rawSubItems = (brand.subcategories && brand.subcategories.length > 0)
-                    ? brand.subcategories
-                    : (brand.products || []);
+                  {/* Level 2: Dynamic BESS Brands */}
+                  {bessBrands.map((brand, brandIdx) => {
+                    const bSlug = brand.slug || toSlug(brand.name);
+                    const rawSubItems = (brand.subcategories && brand.subcategories.length > 0)
+                      ? brand.subcategories
+                      : (brand.products || []);
 
-                  // Strictly deduplicate by lowercase name / slug
-                  const uniqueItemsMap = new Map<string, any>();
-                  rawSubItems.forEach((item: any) => {
-                    const nameKey = (item.name || item.title || '').trim().toLowerCase();
-                    if (nameKey && !uniqueItemsMap.has(nameKey)) {
-                      uniqueItemsMap.set(nameKey, item);
-                    }
-                  });
-                  const itemsToMap = Array.from(uniqueItemsMap.values());
-                  const hasSubItems = itemsToMap.length > 0;
+                    // Strictly deduplicate by lowercase name / slug
+                    const uniqueItemsMap = new Map<string, any>();
+                    rawSubItems.forEach((item: any) => {
+                      const nameKey = (item.name || item.title || '').trim().toLowerCase();
+                      if (nameKey && !uniqueItemsMap.has(nameKey)) {
+                        uniqueItemsMap.set(nameKey, item);
+                      }
+                    });
+                    const itemsToMap = Array.from(uniqueItemsMap.values());
+                    const hasSubItems = itemsToMap.length > 0;
 
-                  return (
-                    <li key={brand.id || brandIdx} className="relative group/bessBrand">
-                      <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
-                        <Link to={`/products/${bessSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
-                          {brand.name}
-                        </Link>
+                    return (
+                      <li key={brand.id || brandIdx} className="relative group/bessBrand">
+                        <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                          <Link to={`/products/${bessSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
+                            {brand.name}
+                          </Link>
+                          {hasSubItems && (
+                            <span className="text-xl font-light leading-none transition-transform group-hover/bessBrand:translate-x-1 shrink-0 ml-2">
+                              <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Level 3: Sub-Categories / Series / Products under Brand */}
                         {hasSubItems && (
-                          <span className="text-xl font-light leading-none transition-transform group-hover/bessBrand:translate-x-1 shrink-0 ml-2">
-                            <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                          </span>
+                          <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/bessBrand:opacity-100 group-hover/bessBrand:visible transition-all duration-200">
+                            {itemsToMap.map((item: any, itemIdx: number) => {
+                              const subSlug = item.slug || toSlug(item.name);
+                              return (
+                                <li key={item.id || itemIdx}>
+                                  <Link
+                                    className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
+                                    to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
+                                  >
+                                    <span className="line-clamp-2">{item.name}</span>
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
                         )}
-                      </div>
-
-                      {/* Level 3: Sub-Categories / Series / Products under Brand */}
-                      {hasSubItems && (
-                        <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/bessBrand:opacity-100 group-hover/bessBrand:visible transition-all duration-200">
-                          {itemsToMap.map((item: any, itemIdx: number) => {
-                            const subSlug = item.slug || toSlug(item.name);
-                            return (
-                              <li key={item.id || itemIdx}>
-                                <Link
-                                  className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
-                                  to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
-                                >
-                                  <span className="line-clamp-2">{item.name}</span>
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            )}
 
             {/* Services Dropdown (Feature Flag Toggled) */}
             {featureFlags.show_services && (
@@ -814,80 +797,82 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            {/* 4. BESS (Dynamic Accordion) */}
-            <div className="border-b border-gray-100">
-              <button
-                type="button"
-                onClick={() => toggleMenu('bess')}
-                className="flex w-full items-center justify-between py-3 text-left font-medium text-slate-800 hover:text-brand-green transition-colors cursor-pointer"
-              >
-                <span>BESS</span>
-                <ChevronDown
-                  className={`w-5 h-5 transition-transform duration-200 ${
-                    expandedMenu === 'bess' ? 'rotate-180 text-brand-green' : 'text-slate-500'
-                  }`}
-                />
-              </button>
+            {/* 4. BESS (Dynamic Accordion, feature-flagged) */}
+            {featureFlags.show_bess && (
+              <div className="border-b border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => toggleMenu('bess')}
+                  className="flex w-full items-center justify-between py-3 text-left font-medium text-slate-800 hover:text-brand-green transition-colors cursor-pointer"
+                >
+                  <span>BESS</span>
+                  <ChevronDown
+                    className={`w-5 h-5 transition-transform duration-200 ${
+                      expandedMenu === 'bess' ? 'rotate-180 text-brand-green' : 'text-slate-500'
+                    }`}
+                  />
+                </button>
 
-              {expandedMenu === 'bess' && (
-                <div className="flex flex-col pb-3 pl-4 space-y-1 bg-gray-50/70 rounded-xl my-1 border border-slate-100">
-                  <Link
-                    to={`/products/${bessSlug}`}
-                    onClick={handleMobileNavClick}
-                    className="block py-2.5 px-3 text-sm font-semibold text-slate-900 hover:text-brand-green border-b border-slate-200/60"
-                  >
-                    All BESS
-                  </Link>
+                {expandedMenu === 'bess' && (
+                  <div className="flex flex-col pb-3 pl-4 space-y-1 bg-gray-50/70 rounded-xl my-1 border border-slate-100">
+                    <Link
+                      to={`/products/${bessSlug}`}
+                      onClick={handleMobileNavClick}
+                      className="block py-2.5 px-3 text-sm font-semibold text-slate-900 hover:text-brand-green border-b border-slate-200/60"
+                    >
+                      All BESS
+                    </Link>
 
-                  {bessBrands.map((brand, brandIdx) => {
-                    const bSlug = brand.slug || toSlug(brand.name);
-                    const rawSubItems =
-                      brand.subcategories && brand.subcategories.length > 0
-                        ? brand.subcategories
-                        : brand.products || [];
+                    {bessBrands.map((brand, brandIdx) => {
+                      const bSlug = brand.slug || toSlug(brand.name);
+                      const rawSubItems =
+                        brand.subcategories && brand.subcategories.length > 0
+                          ? brand.subcategories
+                          : brand.products || [];
 
-                    const uniqueItemsMap = new Map<string, any>();
-                    rawSubItems.forEach((item: any) => {
-                      const nameKey = (item.name || item.title || '').trim().toLowerCase();
-                      if (nameKey && !uniqueItemsMap.has(nameKey)) {
-                        uniqueItemsMap.set(nameKey, item);
-                      }
-                    });
-                    const itemsToMap = Array.from(uniqueItemsMap.values());
+                      const uniqueItemsMap = new Map<string, any>();
+                      rawSubItems.forEach((item: any) => {
+                        const nameKey = (item.name || item.title || '').trim().toLowerCase();
+                        if (nameKey && !uniqueItemsMap.has(nameKey)) {
+                          uniqueItemsMap.set(nameKey, item);
+                        }
+                      });
+                      const itemsToMap = Array.from(uniqueItemsMap.values());
 
-                    return (
-                      <div key={brand.id || brandIdx} className="py-1 px-3">
-                        <Link
-                          to={`/products/${bessSlug}/${bSlug}`}
-                          onClick={handleMobileNavClick}
-                          className="text-sm font-medium text-slate-800 hover:text-brand-green py-1 block"
-                        >
-                          {brand.name}
-                        </Link>
+                      return (
+                        <div key={brand.id || brandIdx} className="py-1 px-3">
+                          <Link
+                            to={`/products/${bessSlug}/${bSlug}`}
+                            onClick={handleMobileNavClick}
+                            className="text-sm font-medium text-slate-800 hover:text-brand-green py-1 block"
+                          >
+                            {brand.name}
+                          </Link>
 
-                        {itemsToMap.length > 0 && (
-                          <div className="flex flex-col pl-3 pt-0.5 space-y-1 border-l-2 border-slate-200 ml-1">
-                            {itemsToMap.map((item: any, iIdx: number) => {
-                              const subSlug = item.slug || toSlug(item.name);
-                              return (
-                                <Link
-                                  key={item.id || iIdx}
-                                  to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
-                                  onClick={handleMobileNavClick}
-                                  className="text-xs text-slate-500 hover:text-brand-green py-0.5"
-                                >
-                                  {item.name}
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+                          {itemsToMap.length > 0 && (
+                            <div className="flex flex-col pl-3 pt-0.5 space-y-1 border-l-2 border-slate-200 ml-1">
+                              {itemsToMap.map((item: any, iIdx: number) => {
+                                const subSlug = item.slug || toSlug(item.name);
+                                return (
+                                  <Link
+                                    key={item.id || iIdx}
+                                    to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
+                                    onClick={handleMobileNavClick}
+                                    className="text-xs text-slate-500 hover:text-brand-green py-0.5"
+                                  >
+                                    {item.name}
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* 5. Services (Dynamic Accordion, feature-flagged) */}
             {featureFlags.show_services && (

@@ -13,6 +13,7 @@ import {
   Layers,
   Video,
   Wrench,
+  BatteryCharging,
 } from 'lucide-react';
 
 interface FeatureToggleItemProps {
@@ -103,6 +104,7 @@ export const FeatureFlagsManager: React.FC = () => {
   const [features, setFeatures] = useState({
     show_services: false,
     show_videos: false,
+    show_bess: true,
   });
 
   const [loading, setLoading] = useState(true);
@@ -117,6 +119,7 @@ export const FeatureFlagsManager: React.FC = () => {
         setFeatures({
           show_services: Boolean(res.data.data.show_services),
           show_videos: Boolean(res.data.data.show_videos),
+          show_bess: res.data.data.show_bess !== undefined ? Boolean(res.data.data.show_bess) : true,
         });
       }
     } catch {
@@ -130,18 +133,24 @@ export const FeatureFlagsManager: React.FC = () => {
     fetchFeatures();
   }, [fetchFeatures]);
 
-  const updateFeatureFlag = async (key: 'show_services' | 'show_videos', value: boolean) => {
+  const updateFeatureFlag = async (key: 'show_services' | 'show_videos' | 'show_bess', value: boolean) => {
     const updated = { ...features, [key]: value };
     setFeatures(updated);
     setSaving(true);
     setMessage(null);
+
+    const titleMap: Record<string, string> = {
+      show_services: 'Services',
+      show_videos: 'Videos',
+      show_bess: 'BESS (Battery Energy Storage Systems)',
+    };
 
     try {
       const res = await api.put('/settings/features', updated);
       if (res.data.success) {
         setMessage({
           type: 'success',
-          text: `Navigation visibility updated: ${key === 'show_services' ? 'Services' : 'Videos'} is now ${
+          text: `Navigation visibility updated: ${titleMap[key] || key} is now ${
             value ? 'VISIBLE (Green)' : 'HIDDEN (Red)'
           }.`,
         });
@@ -247,6 +256,15 @@ export const FeatureFlagsManager: React.FC = () => {
                   initialCheck={features.show_videos}
                   onToggle={(checked) => updateFeatureFlag('show_videos', checked)}
                   icon={<Video className="w-5 h-5" />}
+                />
+
+                {/* 3. BESS Section Toggle */}
+                <FeatureToggleItem
+                  title="BESS (Battery Energy Storage Systems)"
+                  description="When enabled (Green), displays the 'BESS' category dropdown in the navigation header and nested mobile accordion. When disabled (Red), hides BESS from navigation and blocks access to BESS pages."
+                  initialCheck={features.show_bess}
+                  onToggle={(checked) => updateFeatureFlag('show_bess', checked)}
+                  icon={<BatteryCharging className="w-5 h-5" />}
                 />
               </div>
             </div>

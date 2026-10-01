@@ -1,7 +1,8 @@
 import { API_BASE_URL, getAssetUrl, parseDatasheets } from '../utils/assetUrl';
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFeatureFlags } from '../context/FeatureFlagsContext';
 import {
   Building2,
   FileText,
@@ -96,8 +97,12 @@ interface CatalogSettings {
 }
 
 export default function BrandDetail() {
-  const { categorySlug, brandSlug } = useParams<{ categorySlug: string; brandSlug: string }>();
+  const { categorySlug: paramCategorySlug, brandSlug } = useParams<{ categorySlug?: string; brandSlug: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
+  const { featureFlags, loading: flagsLoading, isBessCategory } = useFeatureFlags();
+
+  const categorySlug = paramCategorySlug || (location.pathname.startsWith('/bess') ? 'bess' : undefined);
 
   const [brand, setBrand] = useState<BrandData | null>(null);
   const [products, setProducts] = useState<ProductData[]>([]);
@@ -199,6 +204,15 @@ export default function BrandDetail() {
     loadBrandDetails();
   }, [brandSlug]);
 
+  const isBess = isBessCategory(categorySlug) || isBessCategory(brand?.category_slug) || isBessCategory(brand?.category_name);
+
+  // If BESS is disabled and this brand is in BESS, immediately redirect to /products
+  useEffect(() => {
+    if (isBess && !flagsLoading && !featureFlags.show_bess) {
+      navigate('/products', { replace: true });
+    }
+  }, [isBess, flagsLoading, featureFlags.show_bess, navigate]);
+
   // If brand is not found or inactive, automatically redirect to main products catalog
   useEffect(() => {
     if (!loading && !brand) {
@@ -213,12 +227,17 @@ export default function BrandDetail() {
     }
   };
 
-  if (loading) {
+  // Anti-flash: do not render BESS content if flags are loading or if disabled
+  if (loading || (isBess && flagsLoading)) {
     return (
       <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 flex items-center justify-center text-slate-500 font-medium">
         Loading enterprise brand showcase...
       </div>
     );
+  }
+
+  if (isBess && !featureFlags.show_bess) {
+    return null;
   }
 
   if (!brand) {

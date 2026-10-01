@@ -423,11 +423,14 @@ CREATE TABLE IF NOT EXISTS site_settings (
   id INT PRIMARY KEY DEFAULT 1,
   show_services BOOLEAN DEFAULT false,
   show_videos BOOLEAN DEFAULT false,
+  show_bess BOOLEAN DEFAULT true,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO site_settings (id, show_services, show_videos)
-VALUES (1, false, false)
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS show_bess BOOLEAN DEFAULT true;
+
+INSERT INTO site_settings (id, show_services, show_videos, show_bess)
+VALUES (1, false, false, true)
 ON CONFLICT (id) DO NOTHING;
 
 -- 21. BESS (Battery Energy Storage Systems) Table

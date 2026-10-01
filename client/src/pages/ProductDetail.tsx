@@ -1,7 +1,8 @@
 import { API_BASE_URL, getAssetUrl, parseDatasheets } from '../utils/assetUrl';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFeatureFlags } from '../context/FeatureFlagsContext';
 import {
   Package,
   FileText,
@@ -557,15 +558,19 @@ function extractInverterSortValue(product: any): number {
 }
 
 export default function ProductDetail() {
-  const { categorySlug, brandSlug, productSlug, slug } = useParams<{
+  const { categorySlug: paramCategorySlug, brandSlug, productSlug, slug } = useParams<{
     categorySlug?: string;
     brandSlug?: string;
     productSlug?: string;
     slug?: string;
   }>();
 
-  const targetSlug = productSlug || slug;
+  const location = useLocation();
   const navigate = useNavigate();
+  const { featureFlags, loading: flagsLoading, isBessCategory } = useFeatureFlags();
+
+  const categorySlug = paramCategorySlug || (location.pathname.startsWith('/bess') ? 'bess' : undefined);
+  const targetSlug = productSlug || slug;
 
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [product, setProduct] = useState<ProductData | null>(null);
@@ -687,7 +692,10 @@ export default function ProductDetail() {
     return () => clearInterval(interval);
   }, [activeGallery.length]);
 
-  const isBessRoute = categorySlug?.toLowerCase() === 'bess' || categorySlug?.toLowerCase().includes('bess');
+  const isBessRoute =
+    isBessCategory(categorySlug) ||
+    isBessCategory(product?.category_slug) ||
+    isBessCategory(product?.category_name);
   const isInverterRoute = categorySlug?.toLowerCase().includes('inverter') || categorySlug === 'solar-inverters';
   const isCardLayoutRoute = isInverterRoute || isBessRoute;
 
@@ -789,6 +797,13 @@ export default function ProductDetail() {
     loadData();
   }, [targetSlug, categorySlug, brandSlug, isInverterRoute]);
 
+  // If BESS is disabled and this product/route is in BESS, immediately redirect to /products
+  useEffect(() => {
+    if (isBessRoute && !flagsLoading && !featureFlags.show_bess) {
+      navigate('/products', { replace: true });
+    }
+  }, [isBessRoute, flagsLoading, featureFlags.show_bess, navigate]);
+
   // If product/brand is not found or inactive, automatically redirect to main products catalog
   useEffect(() => {
     if (!loading) {
@@ -810,12 +825,17 @@ export default function ProductDetail() {
     setIsQuoteOpen(true);
   };
 
-  if (loading) {
+  // Anti-flash: do not render BESS content if flags are loading or if disabled
+  if (loading || (isBessRoute && flagsLoading)) {
     return (
       <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-24 flex items-center justify-center text-slate-500 font-medium">
         Loading solar component details...
       </div>
     );
+  }
+
+  if (isBessRoute && !featureFlags.show_bess) {
+    return null;
   }
 
   // Guard for non-card layout if product was not found

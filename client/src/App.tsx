@@ -24,34 +24,41 @@ import Careers from './pages/Careers';
 import CareerDetail from './pages/CareerDetail';
 import Contact from './pages/Contact';
 import CertificatesPage from './pages/CertificatesPage';
+import { FeatureFlagsProvider } from './context/FeatureFlagsContext';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-[#fdfcf8] text-slate-900 flex flex-col justify-between selection:bg-[#78C257] selection:text-slate-900 overflow-x-clip">
-        {/* Scroll Restorer */}
-        <ScrollToTop />
+      <FeatureFlagsProvider>
+        <div className="min-h-screen bg-[#fdfcf8] text-slate-900 flex flex-col justify-between selection:bg-[#78C257] selection:text-slate-900 overflow-x-clip">
+          {/* Scroll Restorer */}
+          <ScrollToTop />
 
-        {/* Global Navigation Header */}
-        <Navbar />
+          {/* Global Navigation Header */}
+          <Navbar />
 
-        {/* Main Content Router */}
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:slug" element={<ServiceDetail />} />
-            
-            {/* Dynamic 4-Tier Product Catalog Routes (Ordered strictly from most-specific to least-specific) */}
-            <Route path="/products/:categorySlug/:brandSlug/:productSlug" element={<ProductDetail />} />
-            <Route path="/products/:categorySlug/:brandSlug" element={<BrandDetail />} />
-            <Route path="/products/:categorySlug" element={<CategoryPage />} />
-            <Route path="/products" element={<Products />} />
+          {/* Main Content Router */}
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/:slug" element={<ServiceDetail />} />
+              
+              {/* Dynamic 4-Tier Product Catalog Routes (Ordered strictly from most-specific to least-specific) */}
+              <Route path="/products/:categorySlug/:brandSlug/:productSlug" element={<ProductDetail />} />
+              <Route path="/products/:categorySlug/:brandSlug" element={<BrandDetail />} />
+              <Route path="/products/:categorySlug" element={<CategoryPage />} />
+              <Route path="/products" element={<Products />} />
 
-            {/* Direct Brand Showcase Routes */}
-            <Route path="/brands/:brandSlug" element={<BrandDetail />} />
-            <Route path="/brands" element={<Products />} />
+              {/* Direct BESS Routes */}
+              <Route path="/bess/:brandSlug/:productSlug" element={<ProductDetail />} />
+              <Route path="/bess/:brandSlug" element={<BrandDetail />} />
+              <Route path="/bess" element={<CategoryPage />} />
+
+              {/* Direct Brand Showcase Routes */}
+              <Route path="/brands/:brandSlug" element={<BrandDetail />} />
+              <Route path="/brands" element={<Products />} />
 
             {/* Blogs & Article Routes */}
             <Route path="/certificates" element={<CertificatesPage />} />
@@ -78,6 +85,7 @@ export default function App() {
         {/* Global Footer */}
         <Footer />
       </div>
+      </FeatureFlagsProvider>
     </BrowserRouter>
   );
 }

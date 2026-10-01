@@ -1,10 +1,11 @@
 import { getAssetUrl } from '../utils/assetUrl';
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { fetchLiveCatalog, Product, Brand, Category } from '../data/productsData';
 import { InquiryModal } from '../components/InquiryModal';
 import { CTASection } from '../components/CTASection';
+import { useFeatureFlags } from '../context/FeatureFlagsContext';
 
 function getSpecValue(specs: any, keyNames: string[], fallback: string): string {
   if (!specs || typeof specs !== 'object') return fallback;
@@ -18,8 +19,13 @@ function getSpecValue(specs: any, keyNames: string[], fallback: string): string 
 }
 
 export default function CategoryPage() {
-  const { categorySlug } = useParams<{ categorySlug: string }>();
+  const { categorySlug: paramCategorySlug } = useParams<{ categorySlug?: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
+  const { featureFlags, loading: flagsLoading, isBessCategory } = useFeatureFlags();
+
+  const categorySlug = paramCategorySlug || (location.pathname.startsWith('/bess') ? 'bess' : undefined);
+  const isBess = isBessCategory(categorySlug);
 
   const [category, setCategory] = useState<Category | null>(null);
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -30,26 +36,40 @@ export default function CategoryPage() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<Product | null>(null);
 
+  // Route Protection: If BESS is disabled, redirect to /products
+  useEffect(() => {
+    if (isBess && !flagsLoading && !featureFlags.show_bess) {
+      navigate('/products', { replace: true });
+    }
+  }, [isBess, flagsLoading, featureFlags.show_bess, navigate]);
+
   useEffect(() => {
     async function loadCategoryData() {
       setLoading(true);
       const data = await fetchLiveCatalog();
 
-      const matchedCategory = data.categories.find((c) => c.slug === categorySlug);
+      const matchedCategory = data.categories.find(
+        (c) => c.slug === categorySlug || (isBess && isBessCategory(c.slug || c.name))
+      );
       if (matchedCategory) {
         setCategory(matchedCategory);
-        setBrands(data.brands.filter((b) => b.category === categorySlug));
-        setProducts(data.products.filter((p) => p.category === categorySlug));
+        setBrands(data.brands.filter((b) => b.category === matchedCategory.slug || (isBess && isBessCategory(b.category))));
+        setProducts(data.products.filter((p) => p.category === matchedCategory.slug || (isBess && isBessCategory(p.category))));
       } else {
         setCategory(null);
       }
       setLoading(false);
     }
     loadCategoryData();
-  }, [categorySlug]);
+  }, [categorySlug, isBess, isBessCategory]);
 
-  if (loading) {
+  // Anti-flash: do not render BESS content if flags are loading or if disabled
+  if (loading || (isBess && flagsLoading)) {
     return <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-24 text-center text-slate-500 font-medium">Loading category...</div>;
+  }
+
+  if (isBess && !featureFlags.show_bess) {
+    return null;
   }
 
   // Dynamic Routing Resilience: Render 404 fallback if invalid category URL
