@@ -55,6 +55,8 @@ router.get('/dashboard-stats', verifyToken, async (req, res) => {
       message: 'Failed to retrieve dashboard analytics.',
     });
   }
+}); // <-- THIS WAS THE MISSING BRACKET
+
 // GET /api/admin/brands (Protected - Returns ALL brands including inactive ones)
 router.get('/brands', verifyToken, async (req, res) => {
   try {
@@ -102,4 +104,4 @@ router.patch('/brands/:id/toggle-status', verifyToken, async (req, res) => {
   }
 });
 
-export default router;
+export default router; 
