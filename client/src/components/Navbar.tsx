@@ -1,7 +1,7 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Phone, Instagram, Facebook, Youtube, Linkedin } from 'lucide-react';
+import { Menu, X, Phone, Instagram, Facebook, Youtube, Linkedin, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 import QuoteModal from './QuoteModal';
 
@@ -42,6 +42,30 @@ export const Navbar: React.FC = () => {
     show_services: false,
     show_videos: false,
   });
+
+  // Mobile Accordion State
+  const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const [expandedSubMenu, setExpandedSubMenu] = useState<string | null>(null);
+
+  const toggleMenu = (menu: string) => {
+    if (expandedMenu === menu) {
+      setExpandedMenu(null);
+      setExpandedSubMenu(null); // Close children if parent closes
+    } else {
+      setExpandedMenu(menu);
+      setExpandedSubMenu(null); // Reset sub-menu when switching top menu
+    }
+  };
+
+  const toggleSubMenu = (subMenu: string) => {
+    setExpandedSubMenu(expandedSubMenu === subMenu ? null : subMenu);
+  };
+
+  const handleMobileNavClick = () => {
+    setIsMobileMenuOpen(false);
+    setExpandedMenu(null);
+    setExpandedSubMenu(null);
+  };
 
   const { scrollY } = useScroll();
 
@@ -341,7 +365,14 @@ export const Navbar: React.FC = () => {
             {/* Mobile Hamburger Button */}
             <button 
               className="lg:hidden p-2 text-slate-700 hover:text-brand-green transition-colors cursor-pointer"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => {
+                const nextState = !isMobileMenuOpen;
+                setIsMobileMenuOpen(nextState);
+                if (!nextState) {
+                  setExpandedMenu(null);
+                  setExpandedSubMenu(null);
+                }
+              }}
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -639,95 +670,333 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="w-full bg-white shadow-2xl border-b border-slate-200 px-6 py-6 flex flex-col gap-4 lg:hidden z-50 overflow-hidden font-medium text-slate-800"
+            className="w-full bg-white shadow-2xl border-b border-slate-200 px-5 sm:px-6 py-4 flex flex-col lg:hidden z-50 overflow-y-auto max-h-[85vh] font-medium text-slate-800"
           >
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to="/"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Home
-            </Link>
+            {/* 1. Home */}
+            <div className="border-b border-gray-100">
+              <Link
+                className="flex w-full items-center py-3 text-base text-slate-800 hover:text-brand-green transition-colors"
+                to="/"
+                onClick={handleMobileNavClick}
+              >
+                Home
+              </Link>
+            </div>
 
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to="/about"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              About Us
-            </Link>
+            {/* 2. About Us */}
+            <div className="border-b border-gray-100">
+              <Link
+                className="flex w-full items-center py-3 text-base text-slate-800 hover:text-brand-green transition-colors"
+                to="/about"
+                onClick={handleMobileNavClick}
+              >
+                About Us
+              </Link>
+            </div>
 
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to="/products"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Products
-            </Link>
+            {/* 3. Products (Two-Level Nested Accordion) */}
+            <div className="border-b border-gray-100">
+              <button
+                type="button"
+                onClick={() => toggleMenu('products')}
+                className="flex w-full items-center justify-between py-3 text-left font-medium text-slate-800 hover:text-brand-green transition-colors cursor-pointer"
+              >
+                <span>Products</span>
+                <ChevronDown
+                  className={`w-5 h-5 transition-transform duration-200 ${
+                    expandedMenu === 'products' ? 'rotate-180 text-brand-green' : 'text-slate-500'
+                  }`}
+                />
+              </button>
 
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to={`/products/${bessSlug}`}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              BESS
-            </Link>
+              {/* LEVEL 1 DROPDOWN (Categories) */}
+              {expandedMenu === 'products' && (
+                <div className="flex flex-col pb-3 pl-4 space-y-1 bg-gray-50/70 rounded-xl my-1 border border-slate-100">
+                  <Link
+                    to="/products"
+                    onClick={handleMobileNavClick}
+                    className="block py-2.5 px-3 text-sm font-semibold text-slate-900 hover:text-brand-green border-b border-slate-200/60"
+                  >
+                    All Products
+                  </Link>
 
+                  {/* Categories */}
+                  {sortedCategories.map((cat, catIdx) => {
+                    const cSlug = cat.slug || toSlug(cat.name);
+                    const isSubOpen = expandedSubMenu === cSlug;
+
+                    return (
+                      <div key={cat.id || catIdx} className="border-b border-slate-200/40 last:border-b-0">
+                        <button
+                          type="button"
+                          onClick={() => toggleSubMenu(cSlug)}
+                          className="flex w-full items-center justify-between py-2.5 px-3 text-left text-sm font-medium text-slate-700 hover:text-brand-green transition-colors cursor-pointer"
+                        >
+                          <span>{cat.name}</span>
+                          <ChevronDown
+                            className={`w-4 h-4 transition-transform duration-200 ${
+                              isSubOpen ? 'rotate-180 text-brand-green' : 'text-slate-400'
+                            }`}
+                          />
+                        </button>
+
+                        {/* LEVEL 2 DROPDOWN (Dynamic Brands & Sub-Items) */}
+                        {isSubOpen && (
+                          <div className="flex flex-col pl-4 pr-3 py-2 space-y-2 bg-white/90 rounded-lg mb-2 border border-slate-100/80">
+                            <Link
+                              to={`/products/${cSlug}`}
+                              onClick={handleMobileNavClick}
+                              className="text-xs font-semibold uppercase tracking-wider text-brand-green hover:underline py-1"
+                            >
+                              All {cat.name} &rarr;
+                            </Link>
+
+                            {cat.brands && cat.brands.length > 0 ? (
+                              cat.brands.map((brand, brandIdx) => {
+                                const bSlug = brand.slug || toSlug(brand.name);
+                                const isSeriesCat =
+                                  cSlug.toLowerCase().includes('inverter') ||
+                                  cat.name.toLowerCase().includes('inverter');
+                                const rawSubItems = isSeriesCat
+                                  ? brand.subcategories && brand.subcategories.length > 0
+                                    ? brand.subcategories
+                                    : brand.products || []
+                                  : brand.products || [];
+
+                                const uniqueItemsMap = new Map<string, any>();
+                                rawSubItems.forEach((item: any) => {
+                                  const nameKey = (item.name || item.title || '').trim().toLowerCase();
+                                  if (nameKey && !uniqueItemsMap.has(nameKey)) {
+                                    uniqueItemsMap.set(nameKey, item);
+                                  }
+                                });
+                                const itemsToMap = Array.from(uniqueItemsMap.values());
+
+                                return (
+                                  <div key={brand.id || brandIdx} className="flex flex-col py-1">
+                                    <Link
+                                      to={`/products/${cSlug}/${bSlug}`}
+                                      onClick={handleMobileNavClick}
+                                      className="text-sm font-medium text-slate-800 hover:text-brand-green py-1 flex items-center justify-between"
+                                    >
+                                      <span>{brand.name}</span>
+                                    </Link>
+
+                                    {itemsToMap.length > 0 && (
+                                      <div className="flex flex-col pl-3 pt-0.5 space-y-1 border-l-2 border-slate-200 ml-1">
+                                        {itemsToMap.map((item: any, iIdx: number) => {
+                                          const subSlug = item.slug || toSlug(item.name);
+                                          return (
+                                            <Link
+                                              key={item.id || iIdx}
+                                              to={`/products/${cSlug}/${bSlug}/${subSlug}`}
+                                              onClick={handleMobileNavClick}
+                                              className="text-xs text-slate-500 hover:text-brand-green py-0.5"
+                                            >
+                                              {item.name}
+                                            </Link>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <span className="text-xs text-slate-400 italic py-1">No brands listed</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 4. BESS (Dynamic Accordion) */}
+            <div className="border-b border-gray-100">
+              <button
+                type="button"
+                onClick={() => toggleMenu('bess')}
+                className="flex w-full items-center justify-between py-3 text-left font-medium text-slate-800 hover:text-brand-green transition-colors cursor-pointer"
+              >
+                <span>BESS</span>
+                <ChevronDown
+                  className={`w-5 h-5 transition-transform duration-200 ${
+                    expandedMenu === 'bess' ? 'rotate-180 text-brand-green' : 'text-slate-500'
+                  }`}
+                />
+              </button>
+
+              {expandedMenu === 'bess' && (
+                <div className="flex flex-col pb-3 pl-4 space-y-1 bg-gray-50/70 rounded-xl my-1 border border-slate-100">
+                  <Link
+                    to={`/products/${bessSlug}`}
+                    onClick={handleMobileNavClick}
+                    className="block py-2.5 px-3 text-sm font-semibold text-slate-900 hover:text-brand-green border-b border-slate-200/60"
+                  >
+                    All BESS
+                  </Link>
+
+                  {bessBrands.map((brand, brandIdx) => {
+                    const bSlug = brand.slug || toSlug(brand.name);
+                    const rawSubItems =
+                      brand.subcategories && brand.subcategories.length > 0
+                        ? brand.subcategories
+                        : brand.products || [];
+
+                    const uniqueItemsMap = new Map<string, any>();
+                    rawSubItems.forEach((item: any) => {
+                      const nameKey = (item.name || item.title || '').trim().toLowerCase();
+                      if (nameKey && !uniqueItemsMap.has(nameKey)) {
+                        uniqueItemsMap.set(nameKey, item);
+                      }
+                    });
+                    const itemsToMap = Array.from(uniqueItemsMap.values());
+
+                    return (
+                      <div key={brand.id || brandIdx} className="py-1 px-3">
+                        <Link
+                          to={`/products/${bessSlug}/${bSlug}`}
+                          onClick={handleMobileNavClick}
+                          className="text-sm font-medium text-slate-800 hover:text-brand-green py-1 block"
+                        >
+                          {brand.name}
+                        </Link>
+
+                        {itemsToMap.length > 0 && (
+                          <div className="flex flex-col pl-3 pt-0.5 space-y-1 border-l-2 border-slate-200 ml-1">
+                            {itemsToMap.map((item: any, iIdx: number) => {
+                              const subSlug = item.slug || toSlug(item.name);
+                              return (
+                                <Link
+                                  key={item.id || iIdx}
+                                  to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
+                                  onClick={handleMobileNavClick}
+                                  className="text-xs text-slate-500 hover:text-brand-green py-0.5"
+                                >
+                                  {item.name}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 5. Services (Dynamic Accordion, feature-flagged) */}
             {featureFlags.show_services && (
-              <Link
-                className="hover:text-brand-green transition-colors py-1 text-base"
-                to="/services"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Services
-              </Link>
+              <div className="border-b border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => toggleMenu('services')}
+                  className="flex w-full items-center justify-between py-3 text-left font-medium text-slate-800 hover:text-brand-green transition-colors cursor-pointer"
+                >
+                  <span>Services</span>
+                  <ChevronDown
+                    className={`w-5 h-5 transition-transform duration-200 ${
+                      expandedMenu === 'services' ? 'rotate-180 text-brand-green' : 'text-slate-500'
+                    }`}
+                  />
+                </button>
+
+                {expandedMenu === 'services' && (
+                  <div className="flex flex-col pb-3 pl-4 space-y-1 bg-gray-50/70 rounded-xl my-1 border border-slate-100">
+                    <Link
+                      to="/services"
+                      onClick={handleMobileNavClick}
+                      className="block py-2.5 px-3 text-sm font-semibold text-slate-900 hover:text-brand-green border-b border-slate-200/60"
+                    >
+                      All Services
+                    </Link>
+                    {activeServices.map((service, sIdx) => (
+                      <Link
+                        key={sIdx}
+                        to={`/services/${service.slug}`}
+                        onClick={handleMobileNavClick}
+                        className="block py-2 px-3 text-sm font-medium text-slate-700 hover:text-brand-green transition-colors"
+                      >
+                        {service.title}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
 
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to="/careers"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Careers
-            </Link>
-
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to="/blogs"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Blogs & Insights
-            </Link>
-
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base"
-              to="/gallery"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Photo Gallery
-            </Link>
-
-            {featureFlags.show_videos && (
+            {/* 6. Careers */}
+            <div className="border-b border-gray-100">
               <Link
-                className="hover:text-brand-green transition-colors py-1 text-base"
-                to="/media"
-                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex w-full items-center py-3 text-base text-slate-800 hover:text-brand-green transition-colors"
+                to="/careers"
+                onClick={handleMobileNavClick}
               >
-                Videos
+                Careers
               </Link>
-            )}
+            </div>
 
-            {/* Contact Us Link on Mobile */}
-            <Link
-              className="hover:text-brand-green transition-colors py-1 text-base font-medium"
-              to="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Contact Us
-            </Link>
+            {/* 7. Media (Static Accordion) */}
+            <div className="border-b border-gray-100">
+              <button
+                type="button"
+                onClick={() => toggleMenu('media')}
+                className="flex w-full items-center justify-between py-3 text-left font-medium text-slate-800 hover:text-brand-green transition-colors cursor-pointer"
+              >
+                <span>Media</span>
+                <ChevronDown
+                  className={`w-5 h-5 transition-transform duration-200 ${
+                    expandedMenu === 'media' ? 'rotate-180 text-brand-green' : 'text-slate-500'
+                  }`}
+                />
+              </button>
+
+              {expandedMenu === 'media' && (
+                <div className="flex flex-col pl-6 gap-3 py-2 bg-gray-50/70 rounded-xl my-1 border border-slate-100">
+                  <Link
+                    to="/blogs"
+                    onClick={handleMobileNavClick}
+                    className="block py-1 text-sm font-medium text-slate-700 hover:text-brand-green transition-colors"
+                  >
+                    Blogs & Insights
+                  </Link>
+                  <Link
+                    to="/gallery"
+                    onClick={handleMobileNavClick}
+                    className="block py-1 text-sm font-medium text-slate-700 hover:text-brand-green transition-colors"
+                  >
+                    Photo Gallery
+                  </Link>
+                  {featureFlags.show_videos && (
+                    <Link
+                      to="/media"
+                      onClick={handleMobileNavClick}
+                      className="block py-1 text-sm font-medium text-slate-700 hover:text-brand-green transition-colors"
+                    >
+                      Videos
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* 8. Contact Us */}
+            <div className="border-b border-gray-100">
+              <Link
+                className="flex w-full items-center py-3 text-base font-medium text-slate-800 hover:text-brand-green transition-colors"
+                to="/contact"
+                onClick={handleMobileNavClick}
+              >
+                Contact Us
+              </Link>
+            </div>
 
             {/* Contact Quick Info on Mobile */}
-            <div className="pt-4 border-t border-slate-100 flex flex-col gap-2.5 text-xs text-slate-600 font-medium">
+            <div className="pt-4 flex flex-col gap-2.5 text-xs text-slate-600 font-medium">
               <a href="tel:18002037228" className="flex items-center gap-2 hover:text-brand-green">
                 <Phone className="w-3.5 h-3.5 text-brand-green" />
                 <span>Toll Free: 1800 203 7228</span>
@@ -739,11 +1008,13 @@ export const Navbar: React.FC = () => {
               <span className="text-slate-400">Solar solutions across PAN India</span>
             </div>
 
-            <div className="pt-2 border-t border-slate-100">
+            <div className="pt-3">
               <button
                 className="w-full bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-3 rounded-full font-semibold text-center text-sm shadow-sm block transition-colors cursor-pointer"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
+                  setExpandedMenu(null);
+                  setExpandedSubMenu(null);
                   setIsQuoteOpen(true);
                 }}
               >
