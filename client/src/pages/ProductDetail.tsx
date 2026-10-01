@@ -1398,7 +1398,7 @@ export default function ProductDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-20 w-full max-w-none"
         >
-          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
+          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
           <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">

@@ -282,7 +282,7 @@ export default function BrandDetail() {
             className="lg:col-span-6"
           >
             <div className="flex items-center gap-2 mb-3">
-              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
+              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
                 AUTHORIZED MANUFACTURER SHOWCASE
               </span>
             </div>
@@ -392,7 +392,7 @@ export default function BrandDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-10 w-full max-w-none"
         >
-          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
+          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
           <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
@@ -435,7 +435,7 @@ export default function BrandDetail() {
           className="bg-white text-slate-900 border border-slate-100 rounded-[2.5rem] p-8 sm:p-10 shadow-xs mb-20"
         >
           <div className="max-w-3xl mb-8">
-            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
+            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
               {brand.capabilities_tagline || (typeof brand.brand_highlights === 'object' && !Array.isArray(brand.brand_highlights) ? (brand.brand_highlights as any)?.tagline : null) || 'CORPORATE CAPABILITIES'}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mt-2">
@@ -491,7 +491,7 @@ export default function BrandDetail() {
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <div>
-                  <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
+                  <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
                     {settings.docs_tagline || 'TECHNICAL DOCUMENTATION'}
                   </span>
                   <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
@@ -541,7 +541,7 @@ export default function BrandDetail() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-7"
           >
-            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
+            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
               PRODUCT SPECIFICATIONS
             </span>
             <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
@@ -596,7 +596,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
             >
               PRODUCT RANGE
             </motion.span>
@@ -701,7 +701,7 @@ export default function BrandDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+                className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
               >
                 {settings.slider_tagline || 'COMPONENT CATALOG PORTFOLIO'}
               </motion.span>
