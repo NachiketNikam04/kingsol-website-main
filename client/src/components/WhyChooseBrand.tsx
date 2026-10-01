@@ -66,9 +66,14 @@ export const WhyChooseBrand: React.FC<WhyChooseBrandProps> = ({
           <button
             type="button"
             onClick={() => setIsQuoteOpen(true)}
-            className="px-8 py-3 bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] rounded text-base font-semibold transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
+            className="group relative px-8 py-3 rounded-full bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] text-base font-semibold transition-all duration-500 flex items-center gap-2 cursor-pointer overflow-hidden shadow-[inset_0px_2px_4px_rgba(255,255,255,0.4),0px_4px_12px_rgba(68,160,227,0.3)] hover:shadow-[0px_4px_20px_rgba(68,160,227,0.5)]"
           >
+            {/* Fluid / Mirror Sheen Sweep Effect */}
+            <div className="absolute top-0 left-[-100%] w-[120%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] group-hover:left-[100%] transition-all duration-700 ease-out" />
+    
+          <span className="relative z-10 flex items-center gap-2">
             Buy {brandName} &rarr;
+          </span>
           </button>
         </motion.div>
 
