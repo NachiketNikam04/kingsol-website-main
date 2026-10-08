@@ -363,12 +363,18 @@ export const Navbar: React.FC = () => {
           {/* Center: Main Navigation Menu */}
           <ul className="hidden lg:flex items-center gap-8 text-base font-medium transition-colors text-slate-800">
             <li>
-              <Link className="hover:text-brand-green transition-colors" to="/">
+              <Link
+                className="inline-block font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
+                to="/"
+              >
                 Home
               </Link>
             </li>
             <li>
-              <Link className="hover:text-brand-green transition-colors" to="/about">
+              <Link
+                className="inline-block font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
+                to="/about"
+              >
                 About Us
               </Link>
             </li>
@@ -376,7 +382,7 @@ export const Navbar: React.FC = () => {
             {/* Products Dropdown */}
             <li className="relative group py-2">
               <Link
-                className="hover:text-brand-green transition-colors flex items-center gap-1.5"
+                className="flex items-center gap-1.5 font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
                 to="/products"
               >
                 Products <span className="text-xs">▼</span>
@@ -386,7 +392,7 @@ export const Navbar: React.FC = () => {
               <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
                 <li>
                   <Link
-                    className="block px-5 py-3.5 hover:bg-slate-50 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
+                    className="block px-5 py-3.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
                     to="/products"
                   >
                     All Products
@@ -398,8 +404,8 @@ export const Navbar: React.FC = () => {
                   const cSlug = cat.slug || toSlug(cat.name);
 
                   return (
-                    <li key={cat.id || catIdx} className="relative group/category">
-                      <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                    <li key={cat.id || catIdx} className="relative group/category first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
+                      <div className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
                         <Link to={`/products/${cSlug}`} className="hover:text-slate-900 flex-1">
                           {cat.name}
                         </Link>
@@ -430,8 +436,8 @@ export const Navbar: React.FC = () => {
                             const hasSubItems = itemsToMap.length > 0;
 
                             return (
-                              <li key={brand.id || brandIdx} className="relative group/brand">
-                                <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                              <li key={brand.id || brandIdx} className="relative group/brand first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
+                                <div className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
                                   <Link to={`/products/${cSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
                                     {brand.name}
                                   </Link>
@@ -448,9 +454,9 @@ export const Navbar: React.FC = () => {
                                     {itemsToMap.map((item: any, itemIdx: number) => {
                                       const subSlug = item.slug || toSlug(item.name);
                                       return (
-                                        <li key={item.id || itemIdx}>
+                                        <li key={item.id || itemIdx} className="first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
                                           <Link
-                                            className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
+                                            className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
                                             to={`/products/${cSlug}/${bSlug}/${subSlug}`}
                                           >
                                             <span className="line-clamp-2">{item.name}</span>
@@ -475,7 +481,7 @@ export const Navbar: React.FC = () => {
             {featureFlags.show_bess && (
               <li className="relative group py-2">
                 <Link
-                  className="hover:text-brand-green transition-colors flex items-center gap-1.5"
+                  className="flex items-center gap-1.5 font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
                   to={`/products/${bessSlug}`}
                 >
                   BESS <span className="text-xs">▼</span>
@@ -485,7 +491,7 @@ export const Navbar: React.FC = () => {
                 <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
                   <li>
                     <Link
-                      className="block px-5 py-3.5 hover:bg-slate-50 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
+                      className="block px-5 py-3.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
                       to={`/products/${bessSlug}`}
                     >
                       All BESS
@@ -511,8 +517,8 @@ export const Navbar: React.FC = () => {
                     const hasSubItems = itemsToMap.length > 0;
 
                     return (
-                      <li key={brand.id || brandIdx} className="relative group/bessBrand">
-                        <div className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                      <li key={brand.id || brandIdx} className="relative group/bessBrand first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
+                        <div className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
                           <Link to={`/products/${bessSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
                             {brand.name}
                           </Link>
@@ -529,9 +535,9 @@ export const Navbar: React.FC = () => {
                             {itemsToMap.map((item: any, itemIdx: number) => {
                               const subSlug = item.slug || toSlug(item.name);
                               return (
-                                <li key={item.id || itemIdx}>
+                                <li key={item.id || itemIdx} className="first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
                                   <Link
-                                    className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
+                                    className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
                                     to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
                                   >
                                     <span className="line-clamp-2">{item.name}</span>
@@ -552,7 +558,7 @@ export const Navbar: React.FC = () => {
             {featureFlags.show_services && (
               <li className="relative group py-2">
                 <Link
-                  className="hover:text-brand-green transition-colors flex items-center gap-1.5"
+                  className="flex items-center gap-1.5 font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
                   to="/services"
                 >
                   Services <span className="text-xs">▼</span>
@@ -561,7 +567,7 @@ export const Navbar: React.FC = () => {
                 <ul className="absolute top-full left-0 w-80 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 py-2 mt-2">
                   <li>
                     <Link
-                      className="block px-5 py-3 hover:bg-slate-50 border-b border-slate-100 font-bold text-base text-slate-900"
+                      className="block px-5 py-3 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900"
                       to="/services"
                     >
                       All Services
@@ -570,7 +576,7 @@ export const Navbar: React.FC = () => {
                   {activeServices.map((service, sIdx) => (
                     <li key={sIdx}>
                       <Link
-                        className="block px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium"
+                        className="block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium"
                         to={`/services/${service.slug}`}
                       >
                         {service.title}
@@ -582,21 +588,24 @@ export const Navbar: React.FC = () => {
             )}
 
             <li>
-              <Link className="hover:text-brand-green transition-colors" to="/careers">
+              <Link
+                className="inline-block font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
+                to="/careers"
+              >
                 Careers
               </Link>
             </li>
 
             {/* Contents Dropdown */}
             <li className="relative group py-2">
-              <span className="hover:text-brand-green transition-colors flex items-center gap-1.5 cursor-pointer">
+              <span className="flex items-center gap-1.5 cursor-pointer font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent">
                 Media <span className="text-xs">▼</span>
               </span>
 
               <ul className="absolute top-full left-0 w-60 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 py-2 mt-2">
                 <li>
                   <Link
-                    className="block px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium border-b border-slate-100"
+                    className="block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium border-b border-slate-100"
                     to="/blogs"
                   >
                     Blogs & Insights
@@ -604,7 +613,7 @@ export const Navbar: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    className={`block px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium ${
+                    className={`block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium ${
                       featureFlags.show_videos ? 'border-b border-slate-100' : ''
                     }`}
                     to="/gallery"
@@ -615,7 +624,7 @@ export const Navbar: React.FC = () => {
                 {featureFlags.show_videos && (
                   <li>
                     <Link
-                      className="block px-5 py-3 hover:bg-slate-50 text-slate-700 hover:text-slate-900 text-sm font-medium"
+                      className="block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium"
                       to="/media"
                     >
                       Video & Media Center
@@ -627,17 +636,20 @@ export const Navbar: React.FC = () => {
 
             {/* Contact Us Navigation Link */}
             <li>
-              <Link className="hover:text-brand-green transition-colors font-medium" to="/contact">
+              <Link
+                className="inline-block font-poppins font-semibold transition-colors duration-200 border-b-2 pb-0.5 text-gray-700 hover:text-[#44a0e3] border-transparent"
+                to="/contact"
+              >
                 Contact Us
               </Link>
             </li>
           </ul>
 
-          {/* Right: Green Get Quote Button */}
+          {/* Right: Blue Get Quote Button */}
           <div className="hidden lg:block">
             <button
               onClick={() => setIsQuoteOpen(true)}
-              className="bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer shadow-xs"
+              className="bg-[#44a0e3] hover:bg-[#3b8bc5] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer shadow-xs"
             >
               Get Quote
             </button>
@@ -995,7 +1007,7 @@ export const Navbar: React.FC = () => {
 
             <div className="pt-3">
               <button
-                className="w-full bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-3 rounded-full font-semibold text-center text-sm shadow-sm block transition-colors cursor-pointer"
+                className="w-full bg-[#44a0e3] hover:bg-[#3b8bc5] text-white px-6 py-3 rounded-full font-semibold text-center text-sm shadow-sm block transition-colors cursor-pointer"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   setExpandedMenu(null);

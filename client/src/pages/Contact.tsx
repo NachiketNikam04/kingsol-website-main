@@ -403,7 +403,7 @@ export default function Contact() {
               Connect with Kingsol
             </h3>
             <p className="text-slate-600 text-xs sm:text-sm mt-1">
-              Have immediate project inquiries? Reach our central support desk directly via Gmail or WhatsApp.
+              Have a project inquiry or product requirement? Connect directly with our team via email or WhatsApp for quick assistance on solar, BESS, and energy solutions.
             </p>
           </div>
 
@@ -601,8 +601,8 @@ export default function Contact() {
                 key={card.id || idx}
                 className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] max-w-[400px] p-6 rounded-2xl bg-[#FDFCF8] border border-slate-200/80"
               >
-                <h4 className="text-xl md:text-2xl font-bold font-poppins text-[#44a0e3] mb-4 mt-2">{card.title}</h4>
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed">
+                <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 transition-colors duration-300 group-hover:text-[#44a0e3]">{card.title}</h4>
+                <p className="flex items-start gap-3 text-gray-600 font-poppins text-sm leading-relaxed">
                   <span className="text-brand-green mr-2">•</span>
                   {card.description}
                 </p>
@@ -628,7 +628,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
             >
               {currentFaqHeadline}
             </motion.h2>
@@ -648,9 +648,9 @@ export default function Contact() {
                 onMouseEnter={() => setOpenFaq(idx)}
                 onMouseLeave={() => setOpenFaq(null)}
               >
-                <div className="w-full px-8 py-6 text-left flex justify-between items-center font-medium text-slate-900 hover:bg-slate-50 transition-colors cursor-default">
+                <div className="w-full px-8 py-6 text-left flex justify-between items-center font-medium text-slate-900 hover:bg-slate-50 hover:text-[#44a0e3] transition-colors cursor-default">
                   <span className="text-lg">{faq.question}</span>
-                  <span className="text-xl md:text-2xl font-medium text-slate-900">{openFaq === idx ? '−' : '+'}</span>
+                  <span className="text-xl md:text-2xl font-medium text-slate-900"></span>
                 </div>
                 <AnimatePresence>
                   {openFaq === idx && (

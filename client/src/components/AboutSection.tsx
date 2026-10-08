@@ -93,46 +93,46 @@ const StatItem: React.FC<CountUpProps> = ({
   const { count, ref } = useCountUp(endValue, duration);
 
   return (
-  <div
-    ref={ref}
-    className="group flex-1 min-w-[250px] bg-white rounded-[2rem] border border-slate-200/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:-translate-y-2 transition-all duration-500 relative overflow-hidden"
-  >
-    {/* Continuous Fluid / Mirror Sheen Sweep Effect */}
-    <motion.div
-      animate={{ left: ["-100%", "200%"] }}
-      transition={{ 
-        duration: 2.5, 
-        ease: "easeInOut", 
-        repeat: Infinity, 
-        repeatDelay: 1.5 
-      }}
-      className="absolute top-0 w-[150%] h-full bg-gradient-to-r from-transparent via-[#44a0e3]/15 to-transparent skew-x-[-30deg] z-0 pointer-events-none"
-    />
+    <div
+      ref={ref}
+      className="group flex-1 min-w-[250px] bg-white rounded-[2rem] border border-slate-200/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:-translate-y-2 transition-all duration-500 relative overflow-hidden"
+    >
+      {/* Continuous Fluid / Mirror Sheen Sweep Effect */}
+      <motion.div
+        animate={{ left: ["-100%", "200%"] }}
+        transition={{ 
+          duration: 2.5, 
+          ease: "easeInOut", 
+          repeat: Infinity, 
+          repeatDelay: 1.5 
+        }}
+        className="absolute top-0 w-[150%] h-full bg-gradient-to-r from-transparent via-[#44a0e3]/15 to-transparent skew-x-[-30deg] z-0 pointer-events-none"
+      />
 
-    {/* Content Wrapper (z-10 ensures it sits above the sheen) */}
-    <div className="relative z-10 flex flex-col items-center">
-      
-      {/* Icon Container: Clean & permanent, NO background change on hover */}
-      {icon && (
-        <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-[#44a0e3] shadow-sm border border-slate-100 group-hover:scale-110 group-hover:border-[#44a0e3]/30 transition-all duration-500">
-          {icon}
+      {/* Content Wrapper (z-10 ensures it sits above the sheen) */}
+      <div className="relative z-10 flex flex-col items-center">
+        
+        {/* Icon Container: Clean & permanent, NO background change on hover */}
+        {icon && (
+          <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-[#44a0e3] shadow-sm border border-slate-100 group-hover:scale-110 group-hover:border-[#44a0e3]/30 transition-all duration-500">
+            {icon}
+          </div>
+        )}
+        
+        {/* Number Text: Stays black (slate-900) permanently */}
+        <div className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 flex items-center gap-1">
+          {prefix && <span>{prefix}</span>}
+          <span>{count.toLocaleString()}</span>
+          {suffix && <span className="text-[#44a0e3]">{suffix}</span>}
         </div>
-      )}
-      
-      {/* Number Text: Stays black (slate-900) permanently */}
-      <div className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 flex items-center gap-1">
-        {prefix && <span>{prefix}</span>}
-        <span>{count.toLocaleString()}</span>
-        {suffix && <span className="text-[#44a0e3]">{suffix}</span>}
+        
+        {/* Label: Changes to blue on card hover */}
+        <p className="text-slate-600 font-medium text-sm sm:text-base group-hover:text-[#44a0e3] transition-colors duration-500">
+          {label}
+        </p>
       </div>
-      
-      {/* Label: Changes to blue on card hover */}
-      <p className="text-slate-600 font-medium text-sm sm:text-base group-hover:text-[#44a0e3] transition-colors duration-500">
-        {label}
-      </p>
     </div>
-  </div>
-);
+  );
 };
 
 export const AboutSection: React.FC = () => {
@@ -257,8 +257,14 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Overlapping Card (Glassmorphism Effect) */}
-            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950">
-              {/* Heading with white text-shadow */}
+            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950 overflow-hidden">
+              
+              {/* Smoky White Glow behind text for enhanced readability */}
+              <div className="absolute inset-0 bg-white/50 blur-[40px] pointer-events-none -z-10 scale-110" />
+
+              {/* Content wrapper with z-10 so it sits above the smoke */}
+              <div className="relative z-10">
+                {/* Heading with white text-shadow */}
                 <div className="flex items-center space-x-2 mb-3 [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]">
                   <Sun className="w-5 h-5 text-slate-950 fill-current drop-shadow-md" />
                   <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">
@@ -266,10 +272,13 @@ export const AboutSection: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Paragraph with white text-shadow */}
-                <p className="mt-2 text-gray-900 font-montserrat text-sm leading-relaxed flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
-                  {currentCardBody}
-                </p>
+                {/* Description with its own white smoky background so the glass transparency doesn't affect readability */}
+                <div className="relative">
+                  <div className="absolute -inset-x-3 -inset-y-2 bg-white/80 blur-xl rounded-2xl pointer-events-none -z-10" />
+                  <p className="mt-2 text-gray-900 font-montserrat text-sm leading-relaxed flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
+                    {currentCardBody}
+                  </p>
+                </div>
 
                 {/* Button with white text-shadow */}
                 <a
@@ -279,6 +288,7 @@ export const AboutSection: React.FC = () => {
                   <span>Learn more</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform drop-shadow-sm" />
                 </a>
+              </div>
             </div>
           </motion.div>
         </div>

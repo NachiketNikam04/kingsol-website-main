@@ -94,31 +94,35 @@ export default function AboutUs() {
         initial="hidden"
         animate="visible"
       >
-        {/* Top Section: Eyebrow & Main Title */}
-        <div className="max-w-4xl">
-          <motion.div variants={itemVariants} className="mb-3">
-            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
-              <span>{currentTagline}</span>
-            </span>
-          </motion.div>
+{/* Top Section: Eyebrow & Main Title */}
+<div className="max-w-2xl"> {/* <-- Changed from max-w-4xl to max-w-2xl to force the wrap */}
+  <motion.span
+    variants={itemVariants}
+    className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-3"
+  >
+    <span>{currentTagline}</span>
+  </motion.span>
 
-          <div className="overflow-visible">
-            <motion.h1
-              variants={itemVariants}
-              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
-            >
-              {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-            </motion.h1>
-          </div>
-        </div>
+  <div className="overflow-visible">
+    <motion.h1
+      variants={itemVariants}
+      className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+    >
+      {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
+    </motion.h1>
+  </div>
+</div>
 
         {/* Bottom Section: Two Columns */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-8 sm:mt-12">
           {/* Left Text */}
           <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
-            <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line">
-              {currentDescription}
-            </p>
+{/* Left Text */}
+<motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
+  <p className="text-left mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line">
+    {currentDescription}
+  </p>
+</motion.div>
           </motion.div>
 
           {/* Right Image */}

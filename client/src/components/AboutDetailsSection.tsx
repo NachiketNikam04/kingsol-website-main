@@ -143,16 +143,17 @@ export default function AboutDetailsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-3"
           >
             <span>{currentTagline}</span>
           </motion.span>
+
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl mb-3"
+            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -183,26 +184,17 @@ export default function AboutDetailsSection() {
                     <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors leading-snug">
                       {item.title}
                     </h3>
-                    <button
-                      type="button"
-                      className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-base transition-all duration-200 ease-out shrink-0 shadow-xs group-hover:scale-105 active:scale-95 ${
-                        isOpen
-                          ? 'bg-[#44a0e3] text-white'
-                          : 'bg-slate-100 text-slate-600 group-hover:bg-[#44a0e3] group-hover:text-white'
-                      }`}
-                      aria-label="Toggle accordion item"
-                    >
-                      {isOpen ? '−' : '+'}
-                    </button>
                   </div>
                   <div
                     className={`overflow-hidden transition-all duration-300 ease-in-out ${
                       isOpen ? 'max-h-48 opacity-100 mt-3 pt-3 border-t border-slate-100' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
-                      {item.content}
-                    </p>
+                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-48 opacity-100 mt-3 pt-3 border-t border-slate-100' : 'max-h-0 opacity-0'}`}>
+  <p className="text-left mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
+    {item.content}
+  </p>
+</div>
                   </div>
                 </div>
               );

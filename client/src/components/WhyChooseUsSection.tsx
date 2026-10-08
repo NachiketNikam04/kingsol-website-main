@@ -157,7 +157,7 @@ export const WhyChooseUsSection: React.FC = () => {
                   {step.features?.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-gray-600 font-poppins text-sm leading-relaxed">
                       {/* The Bullet Dot */}
-                      <span className="w-2 h-2 mt-1.5 rounded-full bg-brand-green shrink-0 block" />
+                      <span className="w-2 h-2 mt-1.5 rounded-full bg-[#44a0e3] shrink-0 block" />
                       {/* The Text */}
                       <span className="flex-1">{feature}</span>
                     </li>

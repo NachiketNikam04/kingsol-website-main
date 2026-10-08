@@ -1,7 +1,7 @@
 import { API_BASE_URL } from '../utils/assetUrl';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Scale, Clock } from 'lucide-react';
+import { ShieldCheck, Scale, Clock, Rocket, Eye } from 'lucide-react';
 
 interface FoundationSettings {
   tagline: string;
@@ -73,7 +73,6 @@ export default function ValuesMissionSection() {
 
   const activeValues = values.length > 0 ? values : defaultValues;
 
-  // Case-Insensitive Headline Splitting Helper
   const renderDynamicHeadline = (headline: string, highlightWord: string) => {
     if (!highlightWord || !headline) return headline;
 
@@ -132,40 +131,52 @@ export default function ValuesMissionSection() {
           </motion.h2>
         </div>
 
-        {/* Phase 2: Vision & Mission (Top Row) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Vision Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="bg-white rounded-2xl p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
-          >
-            <span className="text-brand-green font-bold text-sm tracking-wider uppercase mb-4 block">
-              {currentVisionTitle}
-            </span>
-            <h3 className="text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
-              {currentVisionDesc}
-            </h3>
-          </motion.div>
-
-          {/* Mission Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-            className="bg-white rounded-2xl p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
-          >
-            <span className="text-brand-green font-bold text-sm tracking-wider uppercase mb-4 block">
-              {currentMissionTitle}
-            </span>
-            <h3 className="text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+        {/* Phase 2: Vision & Mission (Top Row Divided by a single line, directly on background) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#fdfcf8] mb-12"
+        >
+          {/* Mission Column */}
+          <div className="py-8 md:py-4 md:pr-10 flex flex-col items-start justify-start">
+            {/* Title Wrapper to center the glow */}
+            <div className="relative inline-flex items-center mb-4">
+              {/* Blue circle centered exactly behind the text */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
+              
+              <div className="relative z-10 flex items-center gap-3">
+                <Rocket className="w-7 h-7 text-[#44a0e3]" />
+                <span className="text-[#44a0e3] font-bold text-sm tracking-wider uppercase mt-1">
+                  {currentMissionTitle}
+                </span>
+              </div>
+            </div>
+            <h3 className="relative z-10 text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
               {currentMissionDesc}
             </h3>
-          </motion.div>
-        </div>
+          </div>
+
+          {/* Vision Column */}
+          <div className="py-8 md:py-4 md:pl-10 flex flex-col items-start justify-start">
+            {/* Title Wrapper to center the glow */}
+            <div className="relative inline-flex items-center mb-4">
+              {/* blue circle centered exactly behind the text */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
+              
+              <div className="relative z-10 flex items-center gap-3">
+                <Eye className="w-7 h-7 text-[#44a0e3]" />
+                <span className="text-[#44a0e3] font-bold text-sm tracking-wider uppercase mt-1">
+                  {currentVisionTitle}
+                </span>
+              </div>
+            </div>
+            <h3 className="relative z-10 text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+              {currentVisionDesc}
+            </h3>
+          </div>
+        </motion.div>
 
         {/* Phase 3: Core Values (Bottom Row) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -176,16 +187,16 @@ export default function ValuesMissionSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: 'easeOut' }}
-              className="bg-white rounded-2xl p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
+              className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
             >
-              <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0078C8] shrink-0">
-                {getValueIcon(index, value.title)}
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0078C8] shrink-0">
+                  {getValueIcon(index, value.title)}
+                </div>
+                <h4 className="text-lg font-bold text-slate-900">
+                  {value.title}
+                </h4>
               </div>
-
-              <h4 className="text-lg font-bold text-slate-900 mt-4 mb-2">
-                {value.title}
-              </h4>
-
               <p className="text-slate-600 text-sm md:text-base leading-relaxed">
                 {value.description}
               </p>
