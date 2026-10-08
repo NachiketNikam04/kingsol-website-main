@@ -117,7 +117,7 @@ export const PartnersSection: React.FC = () => {
             {currentTagline}
           </span>
 
-          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl whitespace-pre-wrap">
+          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl whitespace-pre-wrap text-balance">
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </h2>
         </motion.div>
