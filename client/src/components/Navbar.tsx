@@ -270,7 +270,7 @@ export const Navbar: React.FC = () => {
             <span className="text-slate-600 hidden md:inline">|</span>
 
             <span className="text-slate-400 hidden md:inline">
-              Solar solutions across PAN India
+              BESS solutions across PAN India
             </span>
           </div>
 

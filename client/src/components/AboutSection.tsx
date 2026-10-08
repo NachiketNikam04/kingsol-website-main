@@ -93,23 +93,34 @@ const StatItem: React.FC<CountUpProps> = ({
   const { count, ref } = useCountUp(endValue, duration);
 
   return (
-    <div
-      ref={ref}
-      className="flex-1 min-w-[250px] bg-white rounded-[2rem] border border-slate-200/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
-    >
+  <div
+    ref={ref}
+    className="group flex-1 min-w-[250px] bg-gradient-to-b from-white to-slate-50/50 rounded-[2rem] border border-white shadow-[0_10px_30px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)] p-8 flex flex-col items-center justify-center text-center hover:shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:-translate-y-2 hover:from-[#f0f8ff] hover:to-[#e1f0fa] hover:border-[#44a0e3]/30 transition-all duration-500 relative overflow-hidden"
+  >
+    {/* Fluid / Mirror Sheen Sweep Effect */}
+    <div className="absolute top-0 left-[-150%] w-[200%] h-full bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-30deg] group-hover:left-[150%] transition-all duration-1000 ease-in-out z-0" />
+
+    {/* Content Wrapper (z-10 ensures it sits above the sheen) */}
+    <div className="relative z-10 flex flex-col items-center">
       {icon && (
-        <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-brand-orange shadow-sm border border-slate-100">
+        <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-6 text-[#44a0e3] shadow-md border border-slate-100 group-hover:scale-110 group-hover:shadow-[#44a0e3]/20 transition-all duration-500">
           {icon}
         </div>
       )}
-      <div className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 flex items-center gap-1">
+      
+      <div className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-2 flex items-center gap-1 group-hover:text-[#2c77ae] transition-colors duration-500">
         {prefix && <span>{prefix}</span>}
         <span>{count.toLocaleString()}</span>
-        {suffix && <span className="text-brand-orange">{suffix}</span>}
+        {suffix && <span className="text-[#44a0e3] group-hover:text-[#44a0e3]">{suffix}</span>}
       </div>
-      <p className="text-slate-600 font-medium text-sm sm:text-base">{label}</p>
+      
+      {/* Label with group-hover for the blue text */}
+      <p className="text-slate-600 font-medium text-sm sm:text-base group-hover:text-[#44a0e3] transition-colors duration-500">
+        {label}
+      </p>
     </div>
-  );
+  </div>
+);
 };
 
 export const AboutSection: React.FC = () => {
