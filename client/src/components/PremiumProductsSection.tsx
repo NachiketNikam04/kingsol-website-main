@@ -199,37 +199,43 @@ export const PremiumProductsSection: React.FC = () => {
               onClick={(e) => {
                 if (hasDragged.current) e.preventDefault();
               }}
-              className="w-[80vw] sm:w-[320px] shrink-0 bg-white rounded-2xl p-4 flex flex-col transition-all duration-500 hover:shadow-lg border border-slate-200/60 group cursor-pointer snap-start select-none"
+              className="group relative w-[80vw] sm:w-[320px] h-[420px] shrink-0 rounded-2xl overflow-hidden cursor-pointer snap-start select-none shadow-md hover:shadow-2xl transition-shadow duration-500 border border-slate-200/20"
             >
-              {/* Top Image Container (Reduced to 136px) */}
-              <div className="w-full h-[136px] bg-slate-100 rounded-xl mb-4 overflow-hidden relative border border-slate-200">
-                <span className="absolute top-4 left-4 z-10 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-md bg-white text-brand-orange shadow-md leading-relaxed">
-                  {product.tag}
-                </span>
+              {/* 1. Background Image Container */}
+              <div className="absolute inset-0 w-full h-full bg-slate-900 z-0">
                 <img
                   src={getAssetUrl(product.image_url)}
                   alt={product.title}
                   draggable={false}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                  className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-125 group-hover:blur-[6px] pointer-events-none"
                 />
               </div>
 
-              {/* Title */}
-              <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 line-clamp-1 group-hover:text-[#44a0e3] transition-colors">
-                {product.title}
-              </h3>
+              {/* 2. Persistent Bottom Gradient (Protects Title in Default State) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity duration-700 group-hover:opacity-0 z-10" />
 
-              {/* Body */}
-              <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
-                {product.description}
-              </p>
+              {/* 3. Full Dark Overlay (Protects Description/Button in Hover State) */}
+              <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-700 group-hover:opacity-100 z-10" />
 
-              {/* Footer text */}
-              <div
-                className="mt-auto pt-6 border-t border-slate-300/60 flex items-center justify-between font-bold text-slate-600 leading-relaxed group-hover:text-brand-green transition-colors"
-              >
-                <span>Explore Technology</span>
-                <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              {/* 4. Sliding Content Wrapper */}
+              <div className="absolute top-0 left-0 w-full h-full p-6 flex flex-col justify-start transform translate-y-[300px] group-hover:translate-y-0 transition-transform duration-700 ease-out z-20">
+                
+                {/* Title */}
+                <h3 className="text-2xl font-poppins font-bold text-white drop-shadow-lg line-clamp-2 leading-tight">
+                  {product.title}
+                </h3>
+
+                {/* Hidden Content (Fades in on Hover) */}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 flex flex-col gap-6 mt-4">
+                  <p className="text-gray-200 font-montserrat text-sm leading-relaxed line-clamp-4 drop-shadow-md">
+                    {product.description}
+                  </p>
+
+                  <div className="inline-flex items-center justify-center w-fit px-6 py-2.5 bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] rounded-full text-sm font-semibold transition-colors duration-300 shadow-[0_4px_14px_rgba(68,160,227,0.4)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.4)]">
+                    Explore Technology &rarr;
+                  </div>
+                </div>
+
               </div>
             </Link>
           ))}
