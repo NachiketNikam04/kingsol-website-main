@@ -258,20 +258,27 @@ export const AboutSection: React.FC = () => {
 
             {/* Overlapping Card (Glassmorphism Effect) */}
             <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950">
-              <div className="flex items-center space-x-2 mb-3">
-                <Sun className="w-5 h-5 text-slate-950 fill-current" />
-                <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
-              </div>
+              {/* Heading with white text-shadow */}
+                <div className="flex items-center space-x-2 mb-3 [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]">
+                  <Sun className="w-5 h-5 text-slate-950 fill-current drop-shadow-md" />
+                  <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">
+                    {currentCardHeading}
+                  </span>
+                </div>
 
-              <p className="mt-2 text-gray-900 font-montserrat text-sm leading-relaxed flex-1">{currentCardBody}</p>
+                {/* Paragraph with white text-shadow */}
+                <p className="mt-2 text-gray-900 font-montserrat text-sm leading-relaxed flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
+                  {currentCardBody}
+                </p>
 
-              <a
-                href="/services"
-                className="inline-flex items-center space-x-1 mt-3 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 group"
-              >
-                <span>Learn more</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </a>
+                {/* Button with white text-shadow */}
+                <a
+                  href="/services"
+                  className="inline-flex items-center space-x-1 mt-3 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 group [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]"
+                >
+                  <span>Learn more</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform drop-shadow-sm" />
+                </a>
             </div>
           </motion.div>
         </div>
