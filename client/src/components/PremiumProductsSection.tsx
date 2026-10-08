@@ -221,7 +221,7 @@ export const PremiumProductsSection: React.FC = () => {
               <div className="absolute top-0 left-0 w-full h-full p-6 flex flex-col justify-start transform translate-y-[260px] group-hover:translate-y-0 transition-transform duration-700 ease-out z-20">
                 
                 {/* Title */}
-                <h3 className="text-2xl font-poppins font-bold text-white drop-shadow-lg line-clamp-2 leading-tight">
+                <h3 className="text-2xl font-poppins font-bold text-white group-hover:text-[#44a0e3] transition-colors duration-700 ease-out drop-shadow-lg line-clamp-2 leading-tight">
                   {product.title}
                 </h3>
 
@@ -231,7 +231,7 @@ export const PremiumProductsSection: React.FC = () => {
                     {product.description}
                   </p>
 
-                  <div className="inline-flex items-center justify-center w-fit px-6 py-2.5 bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] rounded-full text-sm font-semibold transition-colors duration-300 shadow-[0_4px_14px_rgba(68,160,227,0.4)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.4)]">
+                  <div className="text-[#44a0e3] font-poppins font-semibold text-sm hover:underline inline-flex items-center gap-1 shrink-0">
                     Explore Technology &rarr;
                   </div>
                 </div>
