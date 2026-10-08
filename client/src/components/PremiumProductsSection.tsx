@@ -199,7 +199,7 @@ export const PremiumProductsSection: React.FC = () => {
               onClick={(e) => {
                 if (hasDragged.current) e.preventDefault();
               }}
-              className="group relative w-[80vw] sm:w-[320px] h-[420px] shrink-0 rounded-2xl overflow-hidden cursor-pointer snap-start select-none shadow-md hover:shadow-2xl transition-shadow duration-500 border border-slate-200/20"
+              className="group relative w-[80vw] sm:w-[320px] h-[360px] shrink-0 rounded-2xl overflow-hidden cursor-pointer snap-start select-none shadow-md hover:shadow-2xl transition-shadow duration-500 border border-slate-200/20"
             >
               {/* 1. Background Image Container */}
               <div className="absolute inset-0 w-full h-full bg-slate-900 z-0">
@@ -218,7 +218,7 @@ export const PremiumProductsSection: React.FC = () => {
               <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity duration-700 group-hover:opacity-100 z-10" />
 
               {/* 4. Sliding Content Wrapper */}
-              <div className="absolute top-0 left-0 w-full h-full p-6 flex flex-col justify-start transform translate-y-[300px] group-hover:translate-y-0 transition-transform duration-700 ease-out z-20">
+              <div className="absolute top-0 left-0 w-full h-full p-6 flex flex-col justify-start transform translate-y-[260px] group-hover:translate-y-0 transition-transform duration-700 ease-out z-20">
                 
                 {/* Title */}
                 <h3 className="text-2xl font-poppins font-bold text-white drop-shadow-lg line-clamp-2 leading-tight">
