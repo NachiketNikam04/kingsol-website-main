@@ -104,17 +104,17 @@ const StatItem: React.FC<CountUpProps> = ({
         duration: 2.5, 
         ease: "easeInOut", 
         repeat: Infinity, 
-        repeatDelay: 1.5 // Pauses for 1.5s between each sweep
+        repeatDelay: 1.5 
       }}
-      className="absolute top-0 w-[100%] h-full bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-30deg] z-0 pointer-events-none"
+      className="absolute top-0 w-[150%] h-full bg-gradient-to-r from-transparent via-[#44a0e3]/15 to-transparent skew-x-[-30deg] z-0 pointer-events-none"
     />
 
     {/* Content Wrapper (z-10 ensures it sits above the sheen) */}
     <div className="relative z-10 flex flex-col items-center">
       
-      {/* Icon Container: Turns light blue on card hover */}
+      {/* Icon Container: Clean & permanent, NO background change on hover */}
       {icon && (
-        <div className="w-16 h-16 rounded-full bg-slate-50 group-hover:bg-[#e1f0fa] flex items-center justify-center mb-6 text-[#44a0e3] shadow-sm border border-slate-100 group-hover:scale-110 group-hover:border-[#44a0e3]/30 transition-all duration-500">
+        <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-[#44a0e3] shadow-sm border border-slate-100 group-hover:scale-110 group-hover:border-[#44a0e3]/30 transition-all duration-500">
           {icon}
         </div>
       )}
@@ -221,7 +221,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line"
+              className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
             >
               {currentSubtitle}
             </motion.p>
@@ -257,7 +257,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Overlapping Card */}
-            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-[#b7f07a] p-6 sm:p-8 rounded-2xl shadow-xl border border-[#9beb46]/50 text-slate-950">
+            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-[#e1f0fa] p-6 sm:p-8 rounded-2xl shadow-xl border border-[#44a0e3]/30 text-slate-950">
               <div className="flex items-center space-x-2 mb-3">
                 <Sun className="w-5 h-5 text-slate-950 fill-current" />
                 <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
