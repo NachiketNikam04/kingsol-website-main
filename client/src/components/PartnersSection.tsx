@@ -96,7 +96,7 @@ export const PartnersSection: React.FC = () => {
           {part}
         </span>
       ) : (
-        part
+        <React.Fragment key={index}>{part}</React.Fragment>
       )
     );
   };
@@ -117,7 +117,7 @@ export const PartnersSection: React.FC = () => {
             {currentTagline}
           </span>
 
-          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
+          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl whitespace-pre-wrap">
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </h2>
         </motion.div>
@@ -134,7 +134,7 @@ export const PartnersSection: React.FC = () => {
 
             const cardClasses = `bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
               destination
-                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-brand-green/50'
+                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-800'
                 : 'hover:shadow-md'
             }`;
 
