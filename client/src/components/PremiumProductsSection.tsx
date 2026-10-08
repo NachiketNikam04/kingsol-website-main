@@ -1,6 +1,6 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
