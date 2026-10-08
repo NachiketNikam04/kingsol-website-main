@@ -134,7 +134,7 @@ export const PartnersSection: React.FC = () => {
 
             const cardClasses = `bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
               destination
-                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-800'
+                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-400'
                 : 'hover:shadow-md'
             }`;
 
