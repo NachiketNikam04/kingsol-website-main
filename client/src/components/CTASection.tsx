@@ -1,6 +1,6 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import QuoteModal from '../components/QuoteModal';
 import { motion } from 'framer-motion';
 
 interface CtaData {
@@ -16,6 +16,7 @@ interface CTASectionProps {
 
 export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
   const [ctaData, setCtaData] = useState<CtaData | null>(null);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
 
   useEffect(() => {
     async function loadCtaData() {
@@ -55,6 +56,15 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
     );
   };
 
+  // Unified click handler to either use parent prop or open local modal
+  const handleOpenQuote = () => {
+    if (onQuoteClick) {
+      onQuoteClick();
+    } else {
+      setIsQuoteOpen(true);
+    }
+  };
+
   return (
     <section className="relative w-full py-[72px] flex items-center justify-center bg-slate-900 overflow-hidden">
       {/* Background Image with Overlay */}
@@ -74,7 +84,7 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+          className="mb-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-2"
         >
           {currentTagline}
         </motion.span>
@@ -88,41 +98,30 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>
 
-        {/* Single Button linking to contact page or opening quote modal */}
+        {/* Action Button */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         >
-          {onQuoteClick ? (
-            <button
-              type="button"
-              onClick={onQuoteClick}
-              className="mt-10 bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 ease-out hover:scale-[1.03] active:scale-[0.98] shadow-lg hover:shadow-2xl hover:shadow-[#44a0e3]/30 hover:bg-[#44a0e3] hover:text-white flex items-center gap-2.5 cursor-pointer border border-transparent"
-            >
-              <span>REQUEST A FREE QUOTE</span>
-              <span className="text-base leading-none">
-                <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </button>
-          ) : (
-            <Link
-              className="mt-10 bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 ease-out hover:scale-[1.03] active:scale-[0.98] shadow-lg hover:shadow-2xl hover:shadow-[#44a0e3]/30 hover:bg-[#44a0e3] hover:text-white flex items-center gap-2.5 cursor-pointer border border-transparent"
-              to="/contact"
-            >
-              <span>REQUEST A FREE QUOTE</span>
-              <span className="text-base leading-none">
-                <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </Link>
-          )}
+          <button
+            type="button"
+            onClick={handleOpenQuote}
+            className="mt-8 bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent"
+          >
+            <span>REQUEST A FREE QUOTE</span>
+            <span className="text-base leading-none">
+              <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </button>
         </motion.div>
       </div>
+
+      {/* Quote Modal Component */}
+      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
     </section>
   );
 };

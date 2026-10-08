@@ -145,11 +145,10 @@ export const WhyChooseUsSection: React.FC = () => {
             {activeSteps.map((step, index) => (
               <div
                 key={step.id || index}
-                className="bg-white rounded-2xl p-6 md:p-8 shadow-sm flex flex-col transition-all hover:shadow-[0_10px_30px_rgba(243,156,18,0.2)]"
+                className="group bg-white rounded-2xl p-6 md:p-8 shadow-sm flex flex-col transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]"
               >
-
                 {/* Card Title */}
-                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3">
+                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 transition-colors duration-300 group-hover:text-[#44a0e3]">
                   {step.title}
                 </h3>
 

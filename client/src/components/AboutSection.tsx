@@ -232,7 +232,7 @@ export const AboutSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-              className="mt-6 bg-slate-900 text-white hover:bg-brand-green hover:text-slate-900 px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md flex items-center gap-2 cursor-pointer"
+              className="mt-6 bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent"
             >
               <span>About Company</span>
               <ArrowRight className="w-4 h-4" />
