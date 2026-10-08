@@ -256,8 +256,8 @@ export const AboutSection: React.FC = () => {
               />
             </div>
 
-            {/* Overlapping Card */}
-            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-[#e1f0fa] p-6 sm:p-8 rounded-2xl shadow-xl border border-[#44a0e3]/30 text-slate-950">
+            {/* Overlapping Card (Glassmorphism Effect) */}
+            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950">
               <div className="flex items-center space-x-2 mb-3">
                 <Sun className="w-5 h-5 text-slate-950 fill-current" />
                 <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">{currentCardHeading}</span>
