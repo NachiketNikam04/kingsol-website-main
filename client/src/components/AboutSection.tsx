@@ -257,7 +257,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Overlapping Card (Glassmorphism Effect) */}
-            <div className="absolute -bottom-12 sm:-bottom-16 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950 overflow-hidden">
+            <div className="absolute -bottom-20 sm:-bottom-28 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950 overflow-hidden">
               
               {/* Smoky White Glow behind text for enhanced readability */}
               <div className="absolute inset-0 bg-white/50 blur-[40px] pointer-events-none -z-10 scale-110" />
