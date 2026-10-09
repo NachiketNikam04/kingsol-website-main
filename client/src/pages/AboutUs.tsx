@@ -116,12 +116,12 @@ export default function AboutUs() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-8 sm:mt-12">
           {/* Left Text */}
           <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
-{/* Left Text */}
-<motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
-  <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
-    {currentDescription}
-  </p>
-</motion.div>
+        {/* Left Text */}
+        <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
+          <p className="mt-1 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+            {currentDescription}
+          </p>
+        </motion.div>
           </motion.div>
 
           {/* Right Image */}
