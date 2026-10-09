@@ -85,7 +85,7 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           // Set to mb-0 to remove all bottom margin
-          className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-0"
+          className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-3"
         >
           {currentTagline}
         </motion.span>

@@ -206,22 +206,26 @@ export const AboutSection: React.FC = () => {
               {currentTagline}
             </motion.span>
 
+            {/* Ensure the parent div holding this text has a wider max-w, like max-w-4xl */}
+          <div className="max-w-4xl">
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+              // Added max-w-4xl here to ensure it has plenty of room to stretch to 2 lines
+              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl max-w-4xl"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h2>
+          </div>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+              className="mt-4 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify"
             >
               {currentSubtitle}
             </motion.p>
@@ -267,7 +271,7 @@ export const AboutSection: React.FC = () => {
               <div className="relative z-10">
                 {/* Heading with white text-shadow */}
                 <div className="flex items-center space-x-2 mb-1.5 [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]">
-                  <Sun className="w-5 h-5 text-slate-950 fill-current drop-shadow-md" />
+                  <Sun className="w-5 h-5 text-brand-orange fill-current drop-shadow-md" />
                   <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">
                     {currentCardHeading}
                   </span>
@@ -286,7 +290,7 @@ export const AboutSection: React.FC = () => {
                 {/* Added hover:underline, hover:underline-offset-4, and decoration-2 */}
                 <a
                   href="/services"
-                  className="inline-flex items-center space-x-1 mt-2 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 hover:underline hover:underline-offset-4 decoration-2 transition-all group [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]"
+                  className="inline-flex items-center space-x-1 mt-2 text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-900 hover:underline inline-flex items-center gap-1 shrink-0 transition-all group [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]"
                 >
                   <span>Learn more</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform drop-shadow-sm" />

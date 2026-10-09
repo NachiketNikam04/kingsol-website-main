@@ -1,6 +1,7 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
 
 interface TestimonialSettings {
   tagline: string;
@@ -133,15 +134,25 @@ export const TestimonialsSection: React.FC = () => {
           </div>
           <div>
             <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900">{item.name}</h4>
-            <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">{item.role}</p>
+            <p className="mt-1 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">{item.role}</p>
           </div>
         </div>
 
-        <div className="flex gap-1 text-slate-900 mb-4 text-sm font-bold">
-          {'★'.repeat(item.rating || 5)}
+        {/* Crisp vector stars */}
+        <div className="flex items-center gap-0 mb-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star
+              key={i}
+              className={`w-4 h-4 ${
+                i < (item.rating || 5)
+                  ? 'fill-amber-400 text-amber-400'
+                  : 'fill-slate-200 text-slate-200'
+              }`}
+            />
+          ))}
         </div>
 
-        <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">
+        <p className="mt-3 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">
           "{item.review}"
         </p>
       </div>
@@ -198,7 +209,7 @@ export const TestimonialsSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="mt-4 max-w-2xl mx-auto font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+          className="mt-3 max-w-2xl mx-auto font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center"
         >
           {currentSubtitle}
         </motion.p>

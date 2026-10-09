@@ -221,16 +221,17 @@ export const PremiumProductsSection: React.FC = () => {
               <div className="absolute top-0 left-0 w-full h-full p-6 flex flex-col justify-start transform translate-y-[260px] group-hover:translate-y-0 transition-transform duration-700 ease-out z-20">
                 
                 {/* Title */}
-                <h3 className="text-2xl font-poppins font-bold text-white group-hover:text-[#44a0e3] transition-colors duration-700 ease-out drop-shadow-lg line-clamp-2 leading-tight">
+                <h3 className="text-xl font-poppins font-bold tracking-tight shrink-0 text-white mb-3 whitespace-normal line-clamp-2 leading-snug group-hover:text-[#44a0e3] transition-colors duration-700 ease-out drop-shadow-lg">
                   {product.title}
                 </h3>
 
                 {/* Hidden Content (Fades in on Hover) */}
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 flex flex-col gap-6 mt-4">
-                  <p className="font-poppins text-base md:text-lg text-slate-200 leading-relaxed whitespace-pre-line text-justify line-clamp-4 drop-shadow-md">
+                {/* Added items-start and text-left to override any parent centering */}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 flex flex-col items-start text-left gap-3 mt-1 w-full">
+                  <p className="font-poppins text-base md:text-md text-slate-200 leading-relaxed whitespace-pre-line text-justify line-clamp-4 drop-shadow-md w-full">
                     {product.description}
                   </p>
-
+                
                   <div className="text-[#44a0e3] font-poppins font-semibold text-sm hover:underline inline-flex items-center gap-1 shrink-0">
                     Explore Technology &rarr;
                   </div>

@@ -217,7 +217,7 @@ export const MaintenanceSupportSection: React.FC = () => {
           </h2>
 
           {/* Subtitle / Description */}
-          <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+          <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center">
             {settings.description}
           </p>
         </motion.div>
@@ -239,18 +239,21 @@ export const MaintenanceSupportSection: React.FC = () => {
                 variants={cardVariants}
                 className="bg-white rounded-2xl p-8 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 group flex flex-col items-start"
               >
-                {/* 14x14 Soft-tinted square wrapper for icon */}
-                <div className="w-14 h-14 rounded-2xl bg-[#44a0e3]/10 flex items-center justify-center text-[#44a0e3] mb-6 group-hover:bg-[#44a0e3] group-hover:text-white transition-all duration-300 shadow-xs shrink-0">
-                  <IconComponent className="w-7 h-7 stroke-[2.2]" />
+                {/* Header Row: Icon + Title side-by-side */}
+                <div className="flex items-center gap-4 mb-4">
+                  {/* 14x14 Soft-tinted square wrapper for icon */}
+                  <div className="w-14 h-14 rounded-2xl bg-[#44a0e3]/10 flex items-center justify-center text-[#44a0e3] group-hover:bg-[#44a0e3] group-hover:text-white transition-all duration-300 shadow-xs shrink-0">
+                    <IconComponent className="w-7 h-7 stroke-[2.2]" />
+                  </div>
+
+                  {/* Card Title */}
+                  <h3 className="font-poppins text-xl font-bold transition-colors duration-300 text-slate-900 group-hover:text-[#44a0e3] leading-snug">
+                    {card.title}
+                  </h3>
                 </div>
 
-                {/* Card Title */}
-                <h3 className="font-poppins text-xl font-bold mb-3 transition-colors duration-300 text-slate-900 group-hover:text-[#44a0e3]">
-                  {card.title}
-                </h3>
-
                 {/* Card Description */}
-                <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+                <p className="font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                   {card.description}
                 </p>
               </motion.div>
