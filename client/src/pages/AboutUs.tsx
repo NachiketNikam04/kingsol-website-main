@@ -83,7 +83,7 @@ export default function AboutUs() {
   };
 
   return (
-  <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] relative overflow-x-clip">
+  <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] relative overflow-x-clip">
     <motion.div
       className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between mb-10"
       variants={containerVariants}
@@ -110,7 +110,7 @@ export default function AboutUs() {
       </div>
 
       {/* Bottom Section: Two Columns (reduced mt-8 sm:mt-12 to mt-3 sm:mt-5 to bring description up) */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-3 sm:mt-5">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-2">
         {/* Left Text (cleaned up duplicate wrapper and pulled up with -mt-1) */}
         <motion.div variants={itemVariants} className="md:col-span-6 -mt-1 sm:-mt-2">
           <p className="font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
