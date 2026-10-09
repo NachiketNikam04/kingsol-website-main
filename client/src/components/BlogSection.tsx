@@ -114,7 +114,7 @@ export const BlogSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="mt-4 max-w-2xl mx-auto font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+          className="mt-4 max-w-2xl mx-auto font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center"
         >
           {currentSubtitle}
         </motion.p>
@@ -151,10 +151,10 @@ export const BlogSection: React.FC = () => {
                     <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-slate-900 mb-8 shadow-sm">
                       <IconComponent className="w-6 h-6 text-brand-orange stroke-[2.5]" />
                     </div>
-                    <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-4 leading-tight">
+                    <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2 leading-tight">
                       {blog.title}
                     </h3>
-                    <p className="mt-2 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">{blog.excerpt}</p>
+                    <p className="mt-1 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">{blog.excerpt}</p>
                     <Link
                       to={`/blogs/${blog.slug}`}
                       className="group w-fit bg-white text-[#44a0e3] border border-slate-200 px-6 py-3 rounded-full font-medium text-sm transition-all hover:bg-slate-900 hover:text-white flex items-center gap-2 shadow-sm hover:shadow-md"
