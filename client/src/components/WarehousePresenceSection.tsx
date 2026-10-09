@@ -1,4 +1,4 @@
-import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
+import { API_BASE_URL } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
@@ -8,13 +8,13 @@ export interface WarehousePresenceData {
   warehouseHeadline?: string;
   warehouseHighlightWord?: string;
   warehouseDescription?: string;
-  warehouseMapImage?: string;
+  warehouseEmbedMapUrl?: string;
   warehouseLocations?: string[];
   tagline?: string;
   headline?: string;
   highlight_word?: string;
   description?: string;
-  map_image_url?: string;
+  embed_map_url?: string;
   locations?: string[];
 }
 
@@ -57,10 +57,13 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
     'Strategic warehousing across High-demand renewable corridors.';
   const currentHighlightWord =
     data?.warehouseHighlightWord || data?.highlight_word || 'High-demand';
-  const currentMapImage =
-    data?.warehouseMapImage ||
-    data?.map_image_url ||
-    '/assets/india-warehouse-map.jpg';
+  
+  // Use a default Google Maps embed URL centered on India if not provided via API.
+  // For multiple custom pins, generate a "Google My Maps" iframe URL and pass it via the admin panel.
+  const currentEmbedMapUrl =
+    data?.warehouseEmbedMapUrl ||
+    data?.embed_map_url ||
+    'https://www.google.com/maps/d/u/0/embed?mid=1BBAZUA8hbXkZsMpKBgzx9aVutHoJxxM&ehbc=2E312F" width="640" height="480';
 
   const defaultLocations = [
     'Bhiwandi, Maharashtra',
@@ -125,26 +128,39 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
             </motion.h2>
           </div>
 
-          {/* CENTER COLUMN: Admin-panel Map Image (lg:col-span-6) */}
+          {/* CENTER COLUMN: Embedded Iframe Map (lg:col-span-6) */}
           <div className="lg:col-span-6 flex justify-center items-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-full max-w-[650px] flex items-center justify-center"
+              // The outer container acts as a "window", keeping the rounded corners and hiding anything outside it
+              className="relative w-full h-[500px] sm:h-[650px] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-200/60 bg-[#e5e3df]"
             >
-              {/* mix-blend-multiply makes a white image background melt into the section background */}
-              <img
-                src={getAssetUrl(currentMapImage)}
-                alt="India Warehouse & Distribution Map"
-                className="w-full h-auto max-h-[700px] object-contain mix-blend-multiply select-none pointer-events-none"
-              />
+              {/* 
+                The inner wrapper crops the iframe. 
+                top-[-65px] pulls the top header up and out of view.
+                h-[calc(100%+120px)] makes the iframe tall enough to push the bottom footer down and out of view.
+              */}
+              <div className="absolute top-[-65px] left-0 w-full h-[calc(100%+120px)] pointer-events-auto">
+                <iframe
+                  src={currentEmbedMapUrl}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Interactive Distribution Map"
+                  className="w-full h-full"
+                ></iframe>
+              </div>
             </motion.div>
           </div>
 
           {/* RIGHT COLUMN: Locations List (lg:col-span-3) */}
-          <div className="lg:col-span-3 flex flex-col justify-center border-l border-slate-200/60 pl-8 h-[500px] sm:h-[600px] overflow-y-auto scrollbar-hide">
+          <div className="lg:col-span-3 flex flex-col border-l border-slate-200/60 pl-8 max-h-[500px] sm:max-h-[650px] overflow-y-auto pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-200 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-[#44a0e3]/50 transition-all">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
