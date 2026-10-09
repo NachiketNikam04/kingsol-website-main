@@ -271,7 +271,7 @@ export const AboutSection: React.FC = () => {
               <div className="relative z-10">
                 {/* Heading with white text-shadow */}
                 <div className="flex items-center space-x-2 mb-1.5 [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]">
-                  <Sun className="w-5 h-5 text-brand-orange fill-current drop-shadow-md" />
+                  <Sun className="w-5 h-5 text-[#44a0e3] fill-current drop-shadow-md" />
                   <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">
                     {currentCardHeading}
                   </span>
