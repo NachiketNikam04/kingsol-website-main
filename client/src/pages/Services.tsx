@@ -172,7 +172,7 @@ export default function Services() {
                     {service.title}
                   </h3>
                 </Link>
-                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8">{service.short_desc}</p>
+                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8 whitespace-pre-line text-justify">{service.short_desc}</p>
               </div>
 
               <div className="pt-6 border-t border-slate-100 mt-auto">

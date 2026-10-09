@@ -90,7 +90,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
                   ✓
                 </div>
                 <h3 className="text-2xl font-bold font-poppins text-slate-900 mb-2">Inquiry Submitted!</h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">
                   Thank you for your interest in <strong className="text-slate-900">{itemName || 'Kingsol Solar'}</strong>. Our enterprise solar team will contact you within 2-4 hours. An automated email notification has been dispatched to our sales desk.
                 </p>
                 <button

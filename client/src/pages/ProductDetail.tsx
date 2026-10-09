@@ -185,7 +185,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
               {product.title || product.name}
             </h2>
             {product.description && (
-              <p className="text-slate-600 text-base md:text-lg mt-1.5 line-clamp-2 leading-relaxed">
+              <p className="mt-1.5 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-2">
                 {product.description}
               </p>
             )}
@@ -1028,7 +1028,7 @@ export default function ProductDetail() {
               <h1 className="font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 capitalize">
                 {formattedBrand} — {formattedCategory}
               </h1>
-              <p className="text-slate-600 text-sm md:text-base mt-3 leading-relaxed">
+              <p className="mt-3 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {isBessRoute
                   ? 'Explore high-density scalable LiFePO4 battery energy storage systems (BESS) engineered for peak shaving, backup power, and C&I microgrids backed by manufacturer warranties.'
                   : 'Explore high-efficiency grid-tied, hybrid, and off-grid solar string inverters backed by manufacturer direct warranties and complete technical datasheets.'}
@@ -1344,7 +1344,7 @@ export default function ProductDetail() {
               {prodTitle}
             </h1>
 
-            <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal mb-5">
+            <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
               {product.short_description || product.description}
             </p>
 
@@ -1448,7 +1448,7 @@ export default function ProductDetail() {
           <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
-          <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
+          <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
             {product.long_description || product.description || product.expertise}
           </p>
 

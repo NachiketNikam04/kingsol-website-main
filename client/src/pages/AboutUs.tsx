@@ -95,10 +95,10 @@ export default function AboutUs() {
         animate="visible"
       >
 {/* Top Section: Eyebrow & Main Title */}
-<div className="max-w-2xl"> {/* <-- Changed from max-w-4xl to max-w-2xl to force the wrap */}
+<div className="max-w-2xl"> 
   <motion.span
     variants={itemVariants}
-    className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-3"
+    className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-2"
   >
     <span>{currentTagline}</span>
   </motion.span>
@@ -112,14 +112,13 @@ export default function AboutUs() {
     </motion.h1>
   </div>
 </div>
-
         {/* Bottom Section: Two Columns */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-8 sm:mt-12">
           {/* Left Text */}
           <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
 {/* Left Text */}
 <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
-  <p className="text-left mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line">
+  <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
     {currentDescription}
   </p>
 </motion.div>

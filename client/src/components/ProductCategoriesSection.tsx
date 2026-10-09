@@ -209,7 +209,7 @@ export const ProductCategoriesSection: React.FC = () => {
               </h3>
 
               {/* Description */}
-              <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 mb-6 leading-relaxed">
+              <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">
                 {item.description}
               </p>
 

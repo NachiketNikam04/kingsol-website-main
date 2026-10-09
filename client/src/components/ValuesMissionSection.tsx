@@ -197,7 +197,7 @@ export default function ValuesMissionSection() {
                   {value.title}
                 </h4>
               </div>
-              <p className="text-slate-600 text-sm md:text-base leading-relaxed">
+              <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {value.description}
               </p>
             </motion.div>

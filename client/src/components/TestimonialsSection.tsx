@@ -141,7 +141,7 @@ export const TestimonialsSection: React.FC = () => {
           {'★'.repeat(item.rating || 5)}
         </div>
 
-        <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1">
+        <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">
           "{item.review}"
         </p>
       </div>
@@ -198,7 +198,7 @@ export const TestimonialsSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="text-slate-700 text-base md:text-lg mt-4 leading-relaxed font-normal max-w-2xl mx-auto"
+          className="mt-4 max-w-2xl mx-auto font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
         >
           {currentSubtitle}
         </motion.p>

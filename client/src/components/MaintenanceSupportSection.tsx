@@ -217,7 +217,7 @@ export const MaintenanceSupportSection: React.FC = () => {
           </h2>
 
           {/* Subtitle / Description */}
-          <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
+          <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
             {settings.description}
           </p>
         </motion.div>
@@ -250,7 +250,7 @@ export const MaintenanceSupportSection: React.FC = () => {
                 </h3>
 
                 {/* Card Description */}
-                <p className="text-slate-600 font-montserrat text-sm md:text-base leading-relaxed">
+                <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                   {card.description}
                 </p>
               </motion.div>

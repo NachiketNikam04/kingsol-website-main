@@ -144,7 +144,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-4 font-poppins text-base md:text-lg text-slate-700 leading-relaxed max-w-2xl"
+            className="mt-4 max-w-2xl font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
           >
             {subtitle}
           </motion.p>

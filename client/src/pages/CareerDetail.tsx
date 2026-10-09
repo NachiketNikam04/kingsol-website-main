@@ -399,7 +399,7 @@ export default function CareerDetail() {
               >
                 Role Overview
               </motion.h2>
-              <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">{job.overview}</p>
+              <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">{job.overview}</p>
             </motion.section>
 
             {/* Responsibilities */}

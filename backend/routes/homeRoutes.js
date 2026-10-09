@@ -57,8 +57,8 @@ const formatHeroSettings = (row) => {
     }
   }
 
-  // Ensure each slide has expected keys
-  const sanitizedSlides = slides.slice(0, 3).map((s, idx) => ({
+  // Ensure each slide has expected keys (supports dynamic slide count)
+  const sanitizedSlides = slides.map((s, idx) => ({
     image: s.image || s.bg_image_url || defaultHeroSlides[idx]?.image || '',
     headline: s.headline || defaultHeroSlides[idx]?.headline || '',
     highlightWord: s.highlightWord || s.highlight_word || defaultHeroSlides[idx]?.highlightWord || '',
@@ -130,11 +130,17 @@ router.put('/hero', verifyToken, async (req, res) => {
     let finalSlides = defaultHeroSlides;
 
     if (Array.isArray(rawSlides) && rawSlides.length > 0) {
-      finalSlides = rawSlides.slice(0, 3).map((s, idx) => ({
-        image: s.image || s.bg_image_url || defaultHeroSlides[idx]?.image || '',
-        headline: s.headline || defaultHeroSlides[idx]?.headline || '',
-        highlightWord: s.highlightWord || s.highlight_word || defaultHeroSlides[idx]?.highlightWord || '',
-      }));
+      finalSlides = rawSlides
+        .map((s, idx) => ({
+          image: s.image || s.bg_image_url || defaultHeroSlides[idx]?.image || '',
+          headline: s.headline || defaultHeroSlides[idx]?.headline || '',
+          highlightWord: s.highlightWord || s.highlight_word || defaultHeroSlides[idx]?.highlightWord || '',
+        }))
+        .filter((s) => s.image || s.headline);
+
+      if (finalSlides.length === 0) {
+        finalSlides = defaultHeroSlides;
+      }
     } else if (bg_image_url || headline) {
       finalSlides = [
         {

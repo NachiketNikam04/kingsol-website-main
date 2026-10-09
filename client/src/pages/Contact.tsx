@@ -259,7 +259,7 @@ export default function Contact() {
           }
           
           // If it's just normal text, render a standard paragraph
-          return <p key={index}>{trimmedLine}</p>;
+          return <p key={index} className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">{trimmedLine}</p>;
         })}
       </div>
     );
@@ -339,7 +339,7 @@ export default function Contact() {
                 <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 group-hover:text-[#44a0e3] mb-3 transition-colors">
                   {dept.title}
                 </h3>
-                <p className="text-base md:text-lg text-slate-600 leading-relaxed mb-7">
+                <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-7">
                   {dept.description}
                 </p>
               </div>
@@ -402,7 +402,7 @@ export default function Contact() {
             <h3 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">
               Connect with Kingsol
             </h3>
-            <p className="text-slate-600 text-xs sm:text-sm mt-1">
+            <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
               Have a project inquiry or product requirement? Connect directly with our team via email or WhatsApp for quick assistance on solar, BESS, and energy solutions.
             </p>
           </div>
@@ -540,7 +540,7 @@ export default function Contact() {
               <h3 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">
                 {renderDynamicHeadline(currentHqHeadline, currentHqHighlight)}
               </h3>
-              <p className="text-slate-700 text-base md:text-lg mt-2 leading-relaxed font-normal">
+              <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {currentHqAddress}
               </p>
             </div>

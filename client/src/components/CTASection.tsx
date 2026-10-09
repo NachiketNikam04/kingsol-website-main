@@ -84,7 +84,8 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="mb-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-2"
+          // Set to mb-0 to remove all bottom margin
+          className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-0"
         >
           {currentTagline}
         </motion.span>
@@ -93,7 +94,8 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mt-1 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
+          // Added -mt-1 sm:-mt-2 to pull the headline up against the tagline
+          className="-mt-1 sm:-mt-2 text-2xl font-poppins font-bold tracking-tight text-white leading-tight sm:text-3xl md:text-4xl shrink-0"
         >
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>

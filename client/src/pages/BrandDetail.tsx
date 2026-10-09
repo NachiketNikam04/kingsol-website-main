@@ -336,7 +336,7 @@ export default function BrandDetail() {
               ))}
             </div>
 
-            <p className="mt-4 font-poppins text-base md:text-lg text-slate-700 leading-relaxed mb-5">
+            <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
               {brand.description}
             </p>
 
@@ -427,7 +427,7 @@ export default function BrandDetail() {
           <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
-          <p className="text-slate-600 leading-relaxed font-normal text-base md:text-lg mt-6 mb-8">
+          <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
             {brand.long_description || brand.description}
           </p>
 
@@ -576,7 +576,7 @@ export default function BrandDetail() {
             <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
               {brand.name} Certifications & Specs
             </h2>
-            <p className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal mb-8">
+            <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
               {brand.specs_description || 'Engineered with high quality component architecture and tested thoroughly to verify solar absorption and load resistance under extreme climatic conditions.'}
             </p>
 
@@ -643,7 +643,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-slate-700 text-base md:text-lg mt-3 leading-relaxed font-normal"
+              className="mt-3 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
             >
               {brand.product_range_subtitle || `Explore high-performance modules and systems distributed by Kingsol Energy India.`}
             </motion.p>
@@ -662,7 +662,7 @@ export default function BrandDetail() {
               <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">
                 {brand.name} Company Profile
               </h3>
-              <p className="mt-1 text-slate-700 text-base md:text-lg leading-relaxed font-normal mb-5">
+              <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
                 {brand.company_profile_text || `${brand.name} is one of India's leading and trusted solar photovoltaic (PV) module manufacturers, with extensive experience in the renewable energy sector.`}
               </p>
 
@@ -885,7 +885,7 @@ export default function BrandDetail() {
                           {product.title || product.name}
                         </h3>
 
-                        <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-4 line-clamp-2">
+                        <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-4 line-clamp-2">
                           {product.description}
                         </p>
 

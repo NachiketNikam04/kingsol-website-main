@@ -95,7 +95,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal"
+            className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
           >
             {currentSubtitle}
           </motion.p>
@@ -145,7 +145,7 @@ export default function Blogs() {
                     {blogs[0].title}
                   </h2>
 
-                  <p className="text-slate-700 text-base md:text-lg mt-1 leading-relaxed font-normal mb-5">{blogs[0].excerpt}</p>
+                  <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">{blogs[0].excerpt}</p>
 
                   <div className="flex items-center text-sm font-semibold text-slate-900 border-b border-slate-900 pb-1 group-hover:text-[#44a0e3] group-hover:border-[#44a0e3] transition-colors">
                     <span>Read Full Article</span>
@@ -202,7 +202,7 @@ export default function Blogs() {
                           {post.title}
                         </h4>
 
-                        <p className="mt-2 text-gray-600 font-poppins text-sm leading-relaxed line-clamp-3">
+                        <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-3">
                           {post.excerpt}
                         </p>
                       </Link>

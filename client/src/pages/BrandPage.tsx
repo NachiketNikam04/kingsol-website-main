@@ -139,7 +139,7 @@ export default function BrandPage() {
               AUTHORIZED MANUFACTURER
             </span>
             <h1 className="mt-2 text-4xl md:text-6xl font-extrabold font-poppins text-slate-900 mb-4">{brand.name}</h1>
-            <p className="text-slate-600 text-lg leading-relaxed mb-6">{brand.description}</p>
+            <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">{brand.description}</p>
 
             {/* Certifications Badges */}
             {brand.certifications && (
@@ -304,7 +304,7 @@ export default function BrandPage() {
                         {product.name}
                       </h3>
                     </Link>
-                    <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1 mb-6 line-clamp-2">{product.description}</p>
+                    <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 mb-6 line-clamp-2">{product.description}</p>
 
                     <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 mb-6 flex flex-col gap-2 text-xs text-slate-700 font-medium">
                       {product.specs?.wattage && (

@@ -326,7 +326,7 @@ export default function Careers() {
               >
                 {currentGenHeadline}
               </motion.h2>
-              <p className="mb-10 text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
+              <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-10">
                 {currentGenDesc}
               </p>
 
@@ -357,7 +357,7 @@ export default function Careers() {
                   <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
                     Resume Submitted!
                   </h3>
-                  <p className="text-slate-600 text-base md:text-lg mt-6 leading-relaxed font-normal">
+                  <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                     Thank you for submitting your details. Our HR team has been notified via Email & WhatsApp.
                   </p>
                 </div>

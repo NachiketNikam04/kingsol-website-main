@@ -127,7 +127,7 @@ export const WhyChooseUsSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal"
+            className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
           >
             {currentSubtitle}
           </motion.p>

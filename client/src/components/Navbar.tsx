@@ -328,7 +328,8 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* TIER 2: MAIN NAVBAR (Crisp White Background) */}
-      <div className="bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-12 py-3.5">
+      {/* Changed py-3.5 to py-2 to reduce outer whitespace and make room for a bigger logo */}
+      <div className="bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-12 py-2">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Left: Dynamic Company Logo & Mobile Toggle */}
           <div className="flex justify-between items-center w-full lg:w-auto">
@@ -336,7 +337,7 @@ export const Navbar: React.FC = () => {
               <img
                 src={logoUrl ? getAssetUrl(logoUrl) : '/logo.png'}
                 alt="Kingsol Solar Energy"
-                className="h-10 sm:h-12 md:h-14 w-auto max-w-[160px] sm:max-w-[200px] object-contain"
+                className="h-12 sm:h-16 md:h-[68px] w-auto max-w-[220px] sm:max-w-[280px] object-contain"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = '/logo.png';
                 }}
@@ -389,10 +390,10 @@ export const Navbar: React.FC = () => {
               </Link>
 
               {/* Level 1: Main Dropdown */}
-              <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
+              <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2 py-1">
                 <li>
                   <Link
-                    className="block px-5 py-3.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
+                    className="block px-5 py-2.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-xl"
                     to="/products"
                   >
                     All Products
@@ -405,7 +406,7 @@ export const Navbar: React.FC = () => {
 
                   return (
                     <li key={cat.id || catIdx} className="relative group/category first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
-                      <div className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                      <div className="flex items-center justify-between px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
                         <Link to={`/products/${cSlug}`} className="hover:text-slate-900 flex-1">
                           {cat.name}
                         </Link>
@@ -418,7 +419,7 @@ export const Navbar: React.FC = () => {
 
                       {/* Level 3: Dynamic Brands under Category */}
                       {cat.brands && cat.brands.length > 0 && (
-                        <ul className="absolute top-0 left-full -ml-2 w-64 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/category:opacity-100 group-hover/category:visible transition-all duration-200">
+                        <ul className="absolute top-0 left-full -ml-2 w-64 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/category:opacity-100 group-hover/category:visible transition-all duration-200 py-1">
                           {cat.brands.map((brand, brandIdx) => {
                             const bSlug = brand.slug || toSlug(brand.name);
                             const isSeriesCat = cSlug.toLowerCase().includes('inverter') || cat.name.toLowerCase().includes('inverter');
@@ -437,7 +438,7 @@ export const Navbar: React.FC = () => {
 
                             return (
                               <li key={brand.id || brandIdx} className="relative group/brand first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
-                                <div className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                                <div className="flex items-center justify-between px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
                                   <Link to={`/products/${cSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
                                     {brand.name}
                                   </Link>
@@ -450,13 +451,13 @@ export const Navbar: React.FC = () => {
 
                                 {/* Level 4: Sub-Items */}
                                 {hasSubItems && (
-                                  <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/brand:opacity-100 group-hover/brand:visible transition-all duration-200">
+                                  <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/brand:opacity-100 group-hover/brand:visible transition-all duration-200 py-1">
                                     {itemsToMap.map((item: any, itemIdx: number) => {
                                       const subSlug = item.slug || toSlug(item.name);
                                       return (
                                         <li key={item.id || itemIdx} className="first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
                                           <Link
-                                            className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
+                                            className="flex items-center justify-between px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
                                             to={`/products/${cSlug}/${bSlug}/${subSlug}`}
                                           >
                                             <span className="line-clamp-2">{item.name}</span>
@@ -488,10 +489,10 @@ export const Navbar: React.FC = () => {
                 </Link>
 
                 {/* Level 1: Main Dropdown */}
-                <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2">
+                <ul className="absolute top-full left-0 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 mt-2 py-1">
                   <li>
                     <Link
-                      className="block px-5 py-3.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-2xl"
+                      className="block px-5 py-2.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-xl"
                       to={`/products/${bessSlug}`}
                     >
                       All BESS
@@ -518,7 +519,7 @@ export const Navbar: React.FC = () => {
 
                     return (
                       <li key={brand.id || brandIdx} className="relative group/bessBrand first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
-                        <div className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
+                        <div className="flex items-center justify-between px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium">
                           <Link to={`/products/${bessSlug}/${bSlug}`} className="hover:text-slate-900 flex-1">
                             {brand.name}
                           </Link>
@@ -531,13 +532,13 @@ export const Navbar: React.FC = () => {
 
                         {/* Level 3: Sub-Categories / Series / Products under Brand */}
                         {hasSubItems && (
-                          <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/bessBrand:opacity-100 group-hover/bessBrand:visible transition-all duration-200">
+                          <ul className="absolute top-0 left-full -ml-2 w-72 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover/bessBrand:opacity-100 group-hover/bessBrand:visible transition-all duration-200 py-1">
                             {itemsToMap.map((item: any, itemIdx: number) => {
                               const subSlug = item.slug || toSlug(item.name);
                               return (
                                 <li key={item.id || itemIdx} className="first:[&>*:first-child]:rounded-t-2xl last:[&>*:first-child]:rounded-b-2xl">
                                   <Link
-                                    className="flex items-center justify-between px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
+                                    className="flex items-center justify-between px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium leading-tight"
                                     to={`/products/${bessSlug}/${bSlug}/${subSlug}`}
                                   >
                                     <span className="line-clamp-2">{item.name}</span>
@@ -564,10 +565,10 @@ export const Navbar: React.FC = () => {
                   Services <span className="text-xs">▼</span>
                 </Link>
 
-                <ul className="absolute top-full left-0 w-80 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 py-2 mt-2">
+                <ul className="absolute top-full left-0 w-80 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 py-1 mt-2">
                   <li>
                     <Link
-                      className="block px-5 py-3 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900"
+                      className="block px-5 py-2.5 hover:bg-[#44a0e3]/15 border-b border-slate-100 font-bold text-base text-slate-900 rounded-t-xl"
                       to="/services"
                     >
                       All Services
@@ -576,7 +577,7 @@ export const Navbar: React.FC = () => {
                   {activeServices.map((service, sIdx) => (
                     <li key={sIdx}>
                       <Link
-                        className="block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium"
+                        className="block px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium"
                         to={`/services/${service.slug}`}
                       >
                         {service.title}
@@ -602,10 +603,10 @@ export const Navbar: React.FC = () => {
                 Media <span className="text-xs">▼</span>
               </span>
 
-              <ul className="absolute top-full left-0 w-60 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 py-2 mt-2">
+              <ul className="absolute top-full left-0 w-60 bg-white border border-slate-200 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col z-[60] text-slate-800 py-1 mt-2">
                 <li>
                   <Link
-                    className="block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium border-b border-slate-100"
+                    className="block px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium border-b border-slate-100 rounded-t-xl"
                     to="/blogs"
                   >
                     Blogs & Insights
@@ -613,21 +614,21 @@ export const Navbar: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    className={`block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium ${
-                      featureFlags.show_videos ? 'border-b border-slate-100' : ''
+                    className={`block px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium ${
+                      featureFlags.show_videos ? 'border-b border-slate-100' : 'rounded-b-xl'
                     }`}
                     to="/gallery"
                   >
-                    Photo Gallery
+                    Gallery
                   </Link>
                 </li>
                 {featureFlags.show_videos && (
                   <li>
                     <Link
-                      className="block px-5 py-3 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium"
+                      className="block px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium rounded-b-xl"
                       to="/media"
                     >
-                      Video & Media Center
+                      Video 
                     </Link>
                   </li>
                 )}
@@ -959,7 +960,7 @@ export const Navbar: React.FC = () => {
                     onClick={handleMobileNavClick}
                     className="block py-1 text-sm font-medium text-slate-700 hover:text-brand-green transition-colors"
                   >
-                    Blogs & Insights
+                    Blogs
                   </Link>
                   <Link
                     to="/gallery"

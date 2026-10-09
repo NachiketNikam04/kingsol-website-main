@@ -127,7 +127,7 @@ export default function CategoryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal"
+            className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
           >
             {category.tagline || category.description || 'Explore authorized products and partner brands.'}
           </motion.p>
@@ -171,7 +171,7 @@ export default function CategoryPage() {
                     <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-2 tracking-tight">
                       {brand.name}
                     </h3>
-                    <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1 line-clamp-3 mb-4">
+                    <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-3 mb-4">
                       {brand.description || 'Authorized tier-1 solar component manufacturer providing high-performance equipment and factory support.'}
                     </p>
 
@@ -259,7 +259,7 @@ export default function CategoryPage() {
                       <h3 className="text-base md:text-lg font-bold font-poppins text-slate-900 leading-snug truncate mb-1">
                         {product.name}
                       </h3>
-                      <p className="mt-2 text-gray-600 font-montserrat text-sm leading-relaxed flex-1 line-clamp-2 mb-3">
+                      <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-2 mb-3">
                         {product.description || 'High-efficiency engineered solar component with factory direct warranty support.'}
                       </p>
 

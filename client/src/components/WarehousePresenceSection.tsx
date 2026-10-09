@@ -59,11 +59,10 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
     data?.warehouseHighlightWord || data?.highlight_word || 'High-demand';
   
   // Use a default Google Maps embed URL centered on India if not provided via API.
-  // For multiple custom pins, generate a "Google My Maps" iframe URL and pass it via the admin panel.
   const currentEmbedMapUrl =
     data?.warehouseEmbedMapUrl ||
     data?.embed_map_url ||
-    'https://www.google.com/maps/d/u/0/embed?mid=1BBAZUA8hbXkZsMpKBgzx9aVutHoJxxM&ehbc=2E312F" width="640" height="480';
+    'https://www.google.com/maps/d/u/0/embed?mid=1BBAZUA8hbXkZsMpKBgzx9aVutHoJxxM&ehbc=2E312F';
 
   const defaultLocations = [
     'Bhiwandi, Maharashtra',
@@ -102,11 +101,11 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
     <section className="w-full bg-[#fdfcf8] py-[72px] text-slate-900 overflow-hidden relative">
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
 
-        {/* 3-Column Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        {/* 3-Column Grid Layout - Changed items-center to items-start */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
 
           {/* LEFT COLUMN: Typography (lg:col-span-3) */}
-          <div className="lg:col-span-3 flex flex-col justify-center">
+          <div className="lg:col-span-3 flex flex-col pt-2 sm:pt-6">
             <motion.span
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -129,20 +128,15 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
           </div>
 
           {/* CENTER COLUMN: Embedded Iframe Map (lg:col-span-6) */}
-          <div className="lg:col-span-6 flex justify-center items-center">
+          <div className="lg:col-span-6 flex justify-center items-start">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              // The outer container acts as a "window", keeping the rounded corners and hiding anything outside it
               className="relative w-full h-[500px] sm:h-[650px] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-200/60 bg-[#e5e3df]"
             >
-              {/* 
-                The inner wrapper crops the iframe. 
-                top-[-65px] pulls the top header up and out of view.
-                h-[calc(100%+120px)] makes the iframe tall enough to push the bottom footer down and out of view.
-              */}
+              {/* Cropping wrapper to hide the top/bottom UI of Google My Maps */}
               <div className="absolute top-[-65px] left-0 w-full h-[calc(100%+120px)] pointer-events-auto">
                 <iframe
                   src={currentEmbedMapUrl}
@@ -166,7 +160,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex flex-col gap-4 py-4"
+              className="flex flex-col gap-4 py-2"
             >
               {currentLocations.map((loc, idx) => {
                 const { city, region } = splitLocation(loc);
@@ -175,12 +169,10 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
                     key={idx}
                     className="flex items-center gap-4 bg-white/40 backdrop-blur-md px-4 py-3 rounded-xl border border-white/60 shadow-[0_4px_15px_rgba(0,0,0,0.02)] transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(68,160,227,0.1)] group cursor-default"
                   >
-                    {/* Pin icon */}
                     <div className="w-9 h-9 rounded-full bg-white/70 backdrop-blur-sm border border-white flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#44a0e3]/30 transition-colors">
                       <MapPin className="w-4 h-4 text-[#44a0e3]" />
                     </div>
 
-                    {/* City (primary) + State/Region (secondary) */}
                     <div className="flex flex-col min-w-0 flex-1">
                       <p className="font-poppins text-sm font-semibold text-slate-800 leading-tight truncate group-hover:text-[#44a0e3] transition-colors">
                         {city}
@@ -192,7 +184,6 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
                       )}
                     </div>
 
-                    {/* Index number */}
                     <span className="font-poppins text-xs font-semibold text-slate-300 group-hover:text-[#44a0e3]/50 transition-colors shrink-0">
                       {String(idx + 1).padStart(2, '0')}
                     </span>

@@ -123,13 +123,13 @@ export default function BlogDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-6 mt-12"
         >
-          <div className="bg-white rounded-2xl p-6 border-l-4 border-[#44a0e3] border-slate-200 shadow-xs text-slate-800 text-lg leading-relaxed font-medium">
+          <div className="bg-white rounded-2xl p-6 border-l-4 border-[#44a0e3] border-slate-200 shadow-xs font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify font-medium">
             "{post.excerpt}"
           </div>
         </motion.div>
       )}
 
-      {/* Article Body Content with whitespace-pre-wrap styling */}
+      {/* Article Body Content with whitespace-pre-line and text-justify styling */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -137,7 +137,7 @@ export default function BlogDetail() {
         transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         className="max-w-3xl mx-auto px-6 mt-12"
       >
-        <div className="text-slate-800 text-lg leading-relaxed whitespace-pre-wrap font-normal space-y-6">
+        <div className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify space-y-6">
           {post.content}
         </div>
 

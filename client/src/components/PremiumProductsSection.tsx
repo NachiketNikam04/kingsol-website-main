@@ -227,7 +227,7 @@ export const PremiumProductsSection: React.FC = () => {
 
                 {/* Hidden Content (Fades in on Hover) */}
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 flex flex-col gap-6 mt-4">
-                  <p className="text-gray-200 font-montserrat text-sm leading-relaxed line-clamp-4 drop-shadow-md">
+                  <p className="font-poppins text-base md:text-lg text-slate-200 leading-relaxed whitespace-pre-line text-justify line-clamp-4 drop-shadow-md">
                     {product.description}
                   </p>
 

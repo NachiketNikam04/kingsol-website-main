@@ -295,7 +295,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
               <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
                 Request a Custom Quote
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
+              <p className="mt-1 font-poppins text-base md:text-lg text-slate-500 leading-relaxed whitespace-pre-line text-justify">
                 Connect with our technical solar team for Tier-1 pricing, project sizing & datasheets.
               </p>
             </div>
@@ -324,7 +324,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                   <h3 className="text-2xl font-bold text-slate-900 font-montserrat">
                     Quote Request Received!
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
+                  <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                     Thank you for contacting <strong className="text-slate-900">Kingsol Solar</strong>. Our engineering and sales team will review your specifications and get in touch within 24 business hours.
                   </p>
                 </div>

@@ -26,7 +26,7 @@ export default function JobApplication() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="text-slate-600"
+            className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
           >
             Fill out the details below. We'll be in touch shortly.
           </motion.p>

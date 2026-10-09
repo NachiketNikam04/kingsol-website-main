@@ -275,7 +275,7 @@ export const AboutSection: React.FC = () => {
                 {/* Description with its own white smoky background so the glass transparency doesn't affect readability */}
                 <div className="relative">
                   <div className="absolute -inset-x-3 -inset-y-2 bg-white/80 blur-xl rounded-2xl pointer-events-none -z-10" />
-                  <p className="mt-2 text-gray-900 font-montserrat text-sm leading-relaxed flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
+                  <p className="mt-2 mb-4 font-montserrat text-sm text-gray-900 leading-relaxed whitespace-pre-line text-justify flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
                     {currentCardBody}
                   </p>
                 </div>

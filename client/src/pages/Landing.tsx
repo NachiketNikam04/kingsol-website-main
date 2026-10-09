@@ -226,7 +226,7 @@ export const Landing: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="mt-2 font-poppins text-base md:text-lg text-slate-200 max-w-2xl leading-relaxed"
+            className="mt-2 font-poppins text-base md:text-lg text-slate-200 max-w-2xl leading-relaxed whitespace-pre-line text-justify"
           >
             {currentSubtitle}
           </motion.p>

@@ -131,7 +131,7 @@ export const CertificatesPage: React.FC = () => {
           <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </h2>
-          <p className="text-slate-600 text-sm md:text-base mt-4 max-w-2xl mx-auto font-normal">
+          <p className="mt-4 max-w-2xl mx-auto font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
             Explore our certified standards, international laboratory compliance qualifications, and Tier-1 factory accreditations.
           </p>
         </div>
@@ -183,7 +183,7 @@ export const CertificatesPage: React.FC = () => {
                     </h3>
                   </div>
                   {cert.description && (
-                    <p className="text-slate-600 font-montserrat text-sm leading-relaxed mt-1">
+                    <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                       {cert.description}
                     </p>
                   )}

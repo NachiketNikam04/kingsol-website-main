@@ -160,7 +160,7 @@ export default function ProductDetailPage() {
                 {product.name}
               </h1>
 
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">{product.description}</p>
+              <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">{product.description}</p>
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4 mb-10">
@@ -219,7 +219,7 @@ export default function ProductDetailPage() {
                 className="bg-white rounded-3xl p-8 border border-slate-200 shadow-xs mb-8"
               >
                 <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3">Engineering Expertise & Track Record</h3>
-                <p className="text-slate-600 text-sm leading-relaxed">{product.expertise}</p>
+                <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">{product.expertise}</p>
               </motion.div>
             )}
           </motion.div>
