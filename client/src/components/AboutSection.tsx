@@ -257,7 +257,8 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Overlapping Card (Glassmorphism Effect) */}
-            <div className="absolute -bottom-20 sm:-bottom-28 left-0 w-4/5 bg-white/5 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950 overflow-hidden">
+            {/* Swapped uniform padding for px-6 py-4 sm:px-8 sm:py-5 to squeeze it vertically */}
+            <div className="absolute -bottom-20 sm:-bottom-28 left-0 w-4/5 bg-white/5 backdrop-blur-sm px-6 py-4 sm:px-8 sm:py-5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/30 text-slate-950 overflow-hidden">
               
               {/* Smoky White Glow behind text for enhanced readability */}
               <div className="absolute inset-0 bg-white/50 blur-[40px] pointer-events-none -z-10 scale-110" />
@@ -265,7 +266,7 @@ export const AboutSection: React.FC = () => {
               {/* Content wrapper with z-10 so it sits above the smoke */}
               <div className="relative z-10">
                 {/* Heading with white text-shadow */}
-                <div className="flex items-center space-x-2 mb-3 [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]">
+                <div className="flex items-center space-x-2 mb-1.5 [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]">
                   <Sun className="w-5 h-5 text-slate-950 fill-current drop-shadow-md" />
                   <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm">
                     {currentCardHeading}
@@ -275,15 +276,17 @@ export const AboutSection: React.FC = () => {
                 {/* Description with its own white smoky background so the glass transparency doesn't affect readability */}
                 <div className="relative">
                   <div className="absolute -inset-x-3 -inset-y-2 bg-white/80 blur-xl rounded-2xl pointer-events-none -z-10" />
-                  <p className="mt-2 mb-4 font-montserrat text-sm text-gray-900 leading-relaxed whitespace-pre-line text-justify flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
+                  {/* Tightened margins from mt-2 mb-4 to mt-1 mb-2 */}
+                  <p className="mt-1 mb-2 font-montserrat text-sm text-gray-900 leading-relaxed whitespace-pre-line text-justify flex-1 [text-shadow:_0_1px_3px_rgb(255_255_255_/_0.9)]">
                     {currentCardBody}
                   </p>
                 </div>
 
                 {/* Button with white text-shadow */}
+                {/* Added hover:underline, hover:underline-offset-4, and decoration-2 */}
                 <a
                   href="/services"
-                  className="inline-flex items-center space-x-1 mt-3 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 group [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]"
+                  className="inline-flex items-center space-x-1 mt-2 text-xs font-bold uppercase tracking-wider text-slate-950 hover:text-slate-700 hover:underline hover:underline-offset-4 decoration-2 transition-all group [text-shadow:_0_2px_4px_rgb(255_255_255_/_0.9)]"
                 >
                   <span>Learn more</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform drop-shadow-sm" />
