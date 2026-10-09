@@ -179,7 +179,7 @@ export default function ValuesMissionSection() {
         </motion.div>
 
         {/* Phase 3: Core Values (Bottom Row) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {activeValues.map((value, index) => (
             <motion.div
               key={value.id || index}
@@ -189,7 +189,7 @@ export default function ValuesMissionSection() {
               transition={{ duration: 0.6, delay: (index % 3) * 0.1, ease: 'easeOut' }}
               className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 flex flex-col justify-start"
             >
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-5 mb-4">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 border border-blue-100/60 flex items-center justify-center text-[#0078C8] shrink-0">
                   {getValueIcon(index, value.title)}
                 </div>
@@ -197,7 +197,7 @@ export default function ValuesMissionSection() {
                   {value.title}
                 </h4>
               </div>
-              <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+              <p className="font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {value.description}
               </p>
             </motion.div>

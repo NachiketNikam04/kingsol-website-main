@@ -153,7 +153,7 @@ export default function AboutDetailsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            className="mb-5 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h2>
@@ -190,7 +190,7 @@ export default function AboutDetailsSection() {
                       isOpen ? 'max-h-48 opacity-100 mt-3 pt-3 border-t border-slate-100' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">
+                    <p className="mt-2 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">
                       {item.content}
                     </p>
                   </div>

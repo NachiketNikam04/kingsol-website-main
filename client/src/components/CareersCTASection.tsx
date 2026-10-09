@@ -74,30 +74,30 @@ export default function CareersCTASection() {
         {/* Smooth Fade Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/70 to-white/85 z-10" />
 
-        {/* Tagline (Added relative z-20) */}
+        {/* Tagline (Contrast backdrop + reduced mb-8 to mb-2) */}
         <motion.span
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="relative z-20 mb-8 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+          className="relative z-20 mb-1 font-poppins text-xs font-bold uppercase tracking-[0.2em] sm:text-sm text-brand-green bg-white px-3 py-1 rounded-full w-fit inline-block"
         >
           <span>{currentTagline}</span>
         </motion.span>
         
-        {/* Headline (Added relative z-20) */}
+        {/* Headline (Tighter spacing) */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-20 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+          className="relative z-20 mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
         >
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>
 
         <Link
-          className="mt-8 sm:mt-10 bg-slate-900 hover:bg-[#44a0e3] text-white px-9 py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 ease-out hover:scale-[1.03] active:scale-[0.98] shadow-lg hover:shadow-xl hover:shadow-[#44a0e3]/25 flex items-center gap-3 cursor-pointer border border-transparent relative z-20 group/btn"
+          className="mt-10 bg-white text-slate-900 px-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
           to="/careers"
         >
           <span>CAREERS AT KINGSOL</span>
