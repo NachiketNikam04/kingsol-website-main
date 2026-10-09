@@ -157,7 +157,7 @@ export const BlogSection: React.FC = () => {
                     <p className="mt-1 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">{blog.excerpt}</p>
                     <Link
                       to={`/blogs/${blog.slug}`}
-                      className="group w-fit bg-white text-[#44a0e3] border border-slate-200 px-6 py-3 rounded-full font-medium text-sm transition-all hover:bg-slate-900 hover:text-white flex items-center gap-2 shadow-sm hover:shadow-md"
+                      className="bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(243,156,18,0.15)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent"
                     >
                       <span>Read Full Article</span>
                       <span className="transition-transform duration-300 group-hover:translate-x-1"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
