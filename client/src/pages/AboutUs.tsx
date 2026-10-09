@@ -83,60 +83,54 @@ export default function AboutUs() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] relative overflow-x-clip">
-      {/* Subtle Background Glow Orbs for Depth */}
-      {/* <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-brand-green/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-96 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#44a0e3]/5 via-transparent to-transparent rounded-full blur-3xl pointer-events-none" /> */}
-
-      <motion.div
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between mb-10"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-{/* Top Section: Eyebrow & Main Title */}
-<div className="max-w-2xl"> 
-  <motion.span
-    variants={itemVariants}
-    className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-2"
-  >
-    <span>{currentTagline}</span>
-  </motion.span>
-
-  <div className="overflow-visible">
-    <motion.h1
-      variants={itemVariants}
-      className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+  <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] relative overflow-x-clip">
+    <motion.div
+      className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between mb-10"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
     >
-      {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-    </motion.h1>
-  </div>
-</div>
-        {/* Bottom Section: Two Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-8 sm:mt-12">
-          {/* Left Text */}
-          <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
-        {/* Left Text */}
-        <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
-          <p className="mt-1 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+      {/* Top Section: Eyebrow & Main Title (pt-4 pulls it down, max-w-xl forces "Behind" to wrap) */}
+      <div className="max-w-xl pt-3 sm:pt-5"> 
+        <motion.span
+          variants={itemVariants}
+          className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-2"
+        >
+          <span>{currentTagline}</span>
+        </motion.span>
+
+        <div className="overflow-visible">
+          <motion.h1
+            variants={itemVariants}
+            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+          >
+            {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
+          </motion.h1>
+        </div>
+      </div>
+
+      {/* Bottom Section: Two Columns (reduced mt-8 sm:mt-12 to mt-3 sm:mt-5 to bring description up) */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center mt-3 sm:mt-5">
+        {/* Left Text (cleaned up duplicate wrapper and pulled up with -mt-1) */}
+        <motion.div variants={itemVariants} className="md:col-span-6 -mt-1 sm:-mt-2">
+          <p className="font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
             {currentDescription}
           </p>
         </motion.div>
-          </motion.div>
 
-          {/* Right Image */}
-          <motion.div variants={itemVariants} className="md:col-span-6">
-            <div className="w-full h-[260px] sm:h-[340px] md:h-[440px] rounded-tl-[3.5rem] rounded-br-[3.5rem] overflow-hidden bg-slate-100 border border-slate-200/80 shadow-2xl shadow-slate-300/40 relative group">
-              <img
-                src={getAssetUrl(currentImage)}
-                alt="Professional working on solar engineering"
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
+        {/* Right Image */}
+        <motion.div variants={itemVariants} className="md:col-span-6">
+          <div className="w-full h-[260px] sm:h-[340px] md:h-[440px] rounded-tl-[3.5rem] rounded-br-[3.5rem] overflow-hidden bg-slate-100 border border-slate-200/80 shadow-2xl shadow-slate-300/40 relative group">
+            <img
+              src={getAssetUrl(currentImage)}
+              alt="Professional working on solar engineering"
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
 
       {/* Who We Are & Accordion Details Section */}
       <AboutDetailsSection />
