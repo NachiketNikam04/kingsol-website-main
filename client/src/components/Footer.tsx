@@ -190,8 +190,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 py-8">
           {/* Logo & Bio Column */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Removed conflicting inline-block, added -ml-2.5 to counteract the PNG's internal transparent margin */}
-            <Link className="inline-flex items-center gap-3 w-fit -ml-2.5" to="/">
+            <Link className="inline-flex items-center gap-3 w-fit -ml-5 md:-ml-6" to="/">
               <img
                 src={getAssetUrl(activeFooterLogo)}
                 alt="Kingsol Solar Energy"
