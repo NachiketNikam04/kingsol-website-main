@@ -973,25 +973,6 @@ export default function ProductDetail() {
                 />
               </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent w-full md:w-3/4 z-10 pointer-events-none" />
-
-              {/* Navigation Dots (Only shown when multiple banner images exist) */}
-              {activeCategoryBanners.length > 1 && (
-                <div className="absolute bottom-5 right-6 md:right-10 z-30 flex items-center gap-2 bg-slate-900/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-lg">
-                  {activeCategoryBanners.map((_, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setBannerIndex(idx)}
-                      aria-label={`Go to slide ${idx + 1}`}
-                      className={`transition-all duration-300 rounded-full cursor-pointer ${
-                        idx === safeBannerIndex
-                          ? 'w-6 h-2 bg-brand-green'
-                          : 'w-2 h-2 bg-white/60 hover:bg-white'
-                      }`}
-                    />
-                  ))}
-                </div>
-              )}
             </div>
 
             {/* The Content (Padding tightened top & bottom) */}

@@ -47,6 +47,13 @@ interface FAQItem {
   answer: string;
 }
 
+// Cloud outline paths for the quote section (stretched to fit the quote via preserveAspectRatio="none")
+const CLOUD_PATH_DESKTOP =
+  'M 180 400 A 125 125 0 0 1 52 276 A 68 68 0 0 1 52 170 A 112 112 0 0 1 176 72 A 125 125 0 0 1 364 64 A 125 125 0 0 1 550 64 A 118 118 0 0 1 724 72 A 112 112 0 0 1 848 170 A 68 68 0 0 1 848 276 A 125 125 0 0 1 720 400 A 110 110 0 0 1 560 410 A 105 105 0 0 1 410 416 Q 386 424 352 470 Q 338 448 336 418 A 100 100 0 0 1 180 400 Z';
+
+const CLOUD_PATH_MOBILE =
+  'M 116 378 A 84 84 0 0 1 34 296 A 54 54 0 0 1 34 212 A 52 52 0 0 1 34 130 A 84 84 0 0 1 118 46 A 54 54 0 0 1 200 30 A 54 54 0 0 1 282 46 A 84 84 0 0 1 366 130 A 52 52 0 0 1 366 212 A 54 54 0 0 1 366 296 A 84 84 0 0 1 284 378 A 50 50 0 0 1 206 384 Q 190 396 170 438 Q 156 416 160 386 A 30 30 0 0 1 116 378 Z';
+
 export default function Contact() {
   const [settings, setSettings] = useState<ContactSettings | null>(null);
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -395,10 +402,11 @@ export default function Contact() {
               </svg>
             </div>
             <div>
-              <p className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">Toll-free Support</p>
+              <h4 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 leading-tight">Toll-free support</h4>
+              <p className="text-sm text-slate-500 font-medium">24/7 assistance available</p>
             </div>
           </div>
-          <div className="text-2xl md:text-3xl font-black font-poppins text-slate-900">
+          <div className="text-2xl md:text-3xl font-black font-poppins text-[#44a0e3]">
             1800 203 7228
           </div>
         </motion.div>
@@ -453,26 +461,27 @@ export default function Contact() {
         </motion.div>
 
         {/* Split Section: Form & Head Office Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
-          {/* Form (7 Columns) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 items-stretch">
+          
+          {/* Form (7 Columns) - Equal Height Card */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200 shadow-sm"
+            className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 border border-slate-200 shadow-sm flex flex-col h-full"
           >
             <h2 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">{currentFormHeadline}</h2>
-            <p className="text-slate-500 text-sm mb-8">{currentFormSubtitle}</p>
+            <p className="text-slate-500 text-sm mb-6">{currentFormSubtitle}</p>
 
             {error && (
-              <div className="mb-6 p-4 rounded-xl bg-red-50 text-red-600 text-sm border border-red-200">
+              <div className="mb-4 p-4 rounded-xl bg-red-50 text-red-600 text-sm border border-red-200">
                 {error}
               </div>
             )}
 
             {formSubmitted ? (
-              <div className="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200">
+              <div className="bg-slate-50 rounded-2xl p-8 text-center border border-slate-200 flex-1 flex flex-col items-center justify-center">
                 <div className="w-12 h-12 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center font-bold text-xl mx-auto mb-3">
                   ✓
                 </div>
@@ -480,52 +489,51 @@ export default function Contact() {
                 <p className="text-slate-600 text-sm">{currentFormSuccess}</p>
               </div>
             ) : (
-              <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-semibold text-slate-900 uppercase">Full Name *</label>
+              <form className="flex flex-col gap-5 flex-1" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Full Name *</label>
                     <input
                       required
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-brand-green outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#44a0e3] outline-none"
                       placeholder="John Doe"
                     />
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-xs font-semibold text-slate-900 uppercase">Phone No. *</label>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Phone No. *</label>
                     <input
                       required
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-brand-green outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#44a0e3] outline-none"
                       placeholder="+91 9876543210"
                     />
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-slate-900 uppercase">Email Address *</label>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Email Address *</label>
                   <input
                     required
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-brand-green outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#44a0e3] outline-none"
                     placeholder="john@example.com"
                   />
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-semibold text-slate-900 uppercase">Message *</label>
+                <div className="flex flex-col gap-1.5 flex-1">
+                  <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wide">Message *</label>
                   <textarea
                     required
-                    rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-brand-green outline-none resize-none"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:ring-2 focus:ring-[#44a0e3] outline-none resize-none flex-1 min-h-[100px]"
                     placeholder="Tell us about your project or inquiry..."
                   ></textarea>
                 </div>
@@ -533,7 +541,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex justify-center items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
+                  className="w-full mt-2 bg-white text-slate-900 px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex justify-center items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
                 >
                   {loading ? 'Sending Message...' : 'Send Message'}
                 </button>
@@ -541,13 +549,13 @@ export default function Contact() {
             )}
           </motion.div>
 
-          {/* Map & Head Office Info (5 Columns) */}
+          {/* Map & Head Office Info (5 Columns) - Equal Height Card */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            className="lg:col-span-5 flex flex-col justify-between bg-white rounded-[2.5rem] p-8 md:p-10 text-slate-900 border border-slate-200 shadow-[0_20px_40px_rgba(68,160,227,0.15)]"
+            className="lg:col-span-5 flex flex-col bg-white rounded-[2.5rem] p-8 text-slate-900 border border-slate-200 shadow-[0_20px_40px_rgba(68,160,227,0.15)] h-full"
           >
             <div>
               <span className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
@@ -561,8 +569,8 @@ export default function Contact() {
               </p>
             </div>
 
-            {/* Embedded Interactive Map - Flex-1 ensures it grows dynamically */}
-            <div className="w-full flex-1 min-h-[300px] md:min-h-[400px] rounded-2xl overflow-hidden my-4 border border-slate-200 flex flex-col">
+            {/* Embedded Interactive Map - Flex-1 perfectly mirrors the form's height */}
+            <div className="w-full flex-1 min-h-0 rounded-2xl overflow-hidden my-4 border border-slate-200 flex flex-col">
               <iframe
                 title="Kingsol Head Office Map"
                 src={currentHqMapUrl}
@@ -574,7 +582,7 @@ export default function Contact() {
               ></iframe>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 text-xs text-slate-600 flex justify-between font-medium">
+            <div className="pt-2 border-t border-slate-100 text-xs text-slate-600 flex justify-between font-medium">
               <span>{currentHqHours}</span>
               <span className="text-brand-blue font-bold">{currentHqCert}</span>
             </div>
@@ -685,29 +693,113 @@ export default function Contact() {
           </motion.div>
         </section>
 
-        {/* Thought Bubble Quote Design */}
+        {/* Realistic Cloud Quote Design */}
+        {/* Keep CLOUD_PATH_DESKTOP and CLOUD_PATH_MOBILE (defined above the component) as they are */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="flex flex-col items-center mb-10 mt-16"
+          className="flex flex-col items-center mb-10 mt-16 px-4"
         >
-          {/* Main Bubble Container */}
-          <div className="relative bg-white border border-slate-200 rounded-[3rem] p-10 md:p-14 text-center text-slate-900 shadow-md max-w-4xl mx-auto z-20">
-            <h2 className="text-2xl md:text-3xl font-bold font-poppins leading-tight mb-4">
-              {currentQuoteText}
-            </h2>
-            <p className="text-[#44a0e3] font-bold tracking-widest text-xs uppercase">
-              {currentQuoteAuthor}
-            </p>
-          </div>
-          
-          {/* Bubble Tail / Ellipses */}
-          <div className="flex flex-col items-start w-full max-w-4xl pl-20 sm:pl-32 md:pl-48">
-             <div className="w-8 h-6 rounded-[50%] border border-slate-200 bg-white shadow-sm mt-1 ml-4 z-10"></div>
-             <div className="w-4 h-3 rounded-[50%] border border-slate-200 bg-white shadow-sm mt-1 ml-2 z-10"></div>
-             <div className="w-2 h-1.5 rounded-[50%] border border-slate-200 bg-white shadow-sm mt-1 ml-0 z-10"></div>
+          {/* Shared SVG filter definitions (puffy edges + soft 3D shading) */}
+          <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
+            <defs>
+              {/* Desktop / tablet cloud */}
+              <filter
+                id="cloud-real-d"
+                x="-8%"
+                y="-10%"
+                width="116%"
+                height="124%"
+                colorInterpolationFilters="sRGB"
+              >
+                {/* 1. Wobble the outline so the edges look organic and fluffy */}
+                <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="4" seed="8" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" result="shape" />
+                <feGaussianBlur in="shape" stdDeviation="1.6" result="softShape" />
+                {/* 2. Use the blurred shape as a height map and light it from the top */}
+                <feGaussianBlur in="softShape" stdDeviation="13" result="bump" />
+                <feDiffuseLighting in="bump" surfaceScale="26" diffuseConstant="1.3" lightingColor="#ffffff" result="light">
+                  <feDistantLight azimuth="250" elevation="58" />
+                </feDiffuseLighting>
+                {/* 3. Tint the shaded areas sky-blue so the underside looks like a real cloud */}
+                <feColorMatrix
+                  in="light"
+                  type="matrix"
+                  values="0.5 0 0 0 0.5  0 0.35 0 0 0.65  0 0 0.08 0 0.92  0 0 0 1 0"
+                  result="tinted"
+                />
+                <feComposite in="tinted" in2="softShape" operator="in" />
+              </filter>
+
+              {/* Mobile cloud (smaller coordinate space, so smaller values) */}
+              <filter
+                id="cloud-real-m"
+                x="-10%"
+                y="-8%"
+                width="120%"
+                height="120%"
+                colorInterpolationFilters="sRGB"
+              >
+                <feTurbulence type="fractalNoise" baseFrequency="0.03 0.035" numOctaves="4" seed="8" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G" result="shape" />
+                <feGaussianBlur in="shape" stdDeviation="1" result="softShape" />
+                <feGaussianBlur in="softShape" stdDeviation="7" result="bump" />
+                <feDiffuseLighting in="bump" surfaceScale="18" diffuseConstant="1.3" lightingColor="#ffffff" result="light">
+                  <feDistantLight azimuth="250" elevation="58" />
+                </feDiffuseLighting>
+                <feColorMatrix
+                  in="light"
+                  type="matrix"
+                  values="0.5 0 0 0 0.5  0 0.35 0 0 0.65  0 0 0.08 0 0.92  0 0 0 1 0"
+                  result="tinted"
+                />
+                <feComposite in="tinted" in2="softShape" operator="in" />
+              </filter>
+            </defs>
+          </svg>
+
+          <div className="relative w-full max-w-4xl mx-auto z-20">
+            {/* Soft ground shadow under the cloud (stays still while the cloud floats) */}
+            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/5 h-5 rounded-full bg-slate-900/10 blur-xl pointer-events-none"></div>
+
+            {/* Gently floating cloud */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              className="relative text-center text-slate-900"
+            >
+              {/* Cloud - Desktop / Tablet */}
+              <svg
+                className="hidden md:block absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_18px_22px_rgba(68,160,227,0.22)]"
+                viewBox="0 0 900 490"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <path d={CLOUD_PATH_DESKTOP} fill="#ffffff" filter="url(#cloud-real-d)" />
+              </svg>
+
+              {/* Cloud - Mobile */}
+              <svg
+                className="md:hidden absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_14px_18px_rgba(68,160,227,0.22)]"
+                viewBox="0 0 400 450"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <path d={CLOUD_PATH_MOBILE} fill="#ffffff" filter="url(#cloud-real-m)" />
+              </svg>
+
+              {/* Quote content - padding keeps the text inside the cloud body */}
+              <div className="relative z-10 px-[16%] pt-24 pb-28 md:px-[18%]">
+                <h2 className="text-2xl md:text-[28px] font-bold font-poppins leading-snug mb-6">
+                  {currentQuoteText}
+                </h2>
+                <p className="text-[#44a0e3] font-bold tracking-widest text-[11px] md:text-xs uppercase">
+                  {currentQuoteAuthor}
+                </p>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
