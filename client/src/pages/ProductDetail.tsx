@@ -13,7 +13,6 @@ import {
   Building2,
   Check,
   ChevronDown,
-  Share2,
   ArrowRight,
 } from 'lucide-react';
 import CTASection from '../components/CTASection';
@@ -32,7 +31,6 @@ interface InverterCardProps {
 const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [knowMore, setKnowMore] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
   const docsRef = useRef<HTMLDivElement>(null);
 
@@ -130,30 +128,6 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
       url: getAssetUrl(product.datasheet_url),
     });
   }
-
-  // Share button handler
-  const handleShare = async () => {
-    const shareUrl = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: product.title || product.name || 'Solar Inverter',
-          text: product.description || 'Check out this Solar Inverter on Kingsol',
-          url: shareUrl,
-        });
-        return;
-      } catch {
-        // Fallback to clipboard
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      console.warn('Copy link failed');
-    }
-  };
 
   return (
     <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xs hover:shadow-md transition-all p-6 md:p-8 flex flex-col justify-between mb-8">
