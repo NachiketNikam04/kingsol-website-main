@@ -258,7 +258,7 @@ export default function ServiceDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-3 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5"
+              className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5"
             >
               {currentService.paragraph1}
             </motion.p>
@@ -287,14 +287,14 @@ export default function ServiceDetail() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="w-full aspect-square rounded-[3rem] overflow-hidden bg-slate-100 shadow-[0_20px_40px_rgba(243,156,18,0.15)] border border-slate-200"
+            className="w-full aspect-square rounded-[3rem] overflow-hidden bg-slate-100 shadow-[0_20px_40px_rgba(68,160,227,0.15)] border border-slate-200"
           >
             <img src={getAssetUrl(currentService.hero_img_url)} alt={currentService.title} className="w-full h-full object-cover" />
           </motion.div>
         </div>
 
         {/* Main Split Two-Column Section (Tightened top/bottom spacing) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-t border-slate-200 pt-10 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-t border[#fdfcf8] pt-10 mb-16">
           {/* Left Sticky Sidebar */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -388,7 +388,7 @@ export default function ServiceDetail() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentService.checklist.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-3 text-slate-600 font-medium text-sm leading-relaxed">
-                      <div className="mt-2 w-5 h-5 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center font-bold shrink-0 mt-0.5">
+                      <div className="mt-2 w-5 h-5 rounded-full bg-[#44a0e3]/20 text-[#44a0e3] flex items-center justify-center font-bold shrink-0 mt-0.5">
                         ✓
                       </div>
                       <span>{item}</span>

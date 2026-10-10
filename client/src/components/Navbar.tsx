@@ -609,7 +609,7 @@ export const Navbar: React.FC = () => {
                     className="block px-5 py-2 hover:bg-[#44a0e3]/15 text-slate-700 hover:text-slate-900 text-sm font-medium border-b border-slate-100 rounded-t-xl"
                     to="/blogs"
                   >
-                    Blogs & Insights
+                    Blogs
                   </Link>
                 </li>
                 <li>
