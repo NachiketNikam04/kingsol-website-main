@@ -308,20 +308,19 @@ export default function BrandDetail() {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="lg:col-span-6"
           >
-            {/* 1. Kept mb-3 on the wrapper, but removed it from the span */}
-            <div className="flex items-center gap-2 mb-3">
+            {/* Tagline -> Heading gap is controlled only by this wrapper (mb-4) */}
+            <div className="flex items-center gap-2 mb-4">
               <span className="font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
                 AUTHORIZED MANUFACTURER SHOWCASE
               </span>
             </div>
 
-            {/* 2. Reduced mt-5 to mt-2 to pull the heading closer to the tagline */}
-            <h1 className="mt-2 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
+            <h1 className="font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl">
               {brand.name}
             </h1>
 
             {/* 1. Rendering Pill Badges */}
-            <div className="flex flex-wrap gap-2.5 my-5">
+            <div className="flex flex-wrap gap-2.5 mt-4">
               {(brand.badges && brand.badges.length > 0
                 ? brand.badges
                 : (brand.certifications && brand.certifications.length > 0 ? brand.certifications : ['Tier-1 Listed', 'ALMM Approved', 'TUV Certified', '25-Year Warranty'])
@@ -347,7 +346,7 @@ export default function BrandDetail() {
                   setSelectedProductForQuote(brand.name);
                   setIsQuoteOpen(true);
                 }}
-                className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+                className="bg-white text-slate-900 px-5 py-3.5 rounded-full font-poppins font-bold text-xs md:text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 <span>Get Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -421,13 +420,13 @@ export default function BrandDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-10 w-full max-w-none"
         >
-          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
+          <span className="block mb-4 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
-          <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
-          <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
+          <p className="mt-4 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
             {brand.long_description || brand.description}
           </p>
 
@@ -516,14 +515,14 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-20"
+              className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-10"
             >
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
                 <div>
-                  <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
+                  <span className="block mb-4 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
                     {settings.docs_tagline || 'TECHNICAL DOCUMENTATION'}
                   </span>
-                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
+                  <h2 className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
                     {settings.docs_title || 'Downloadable Specs & Certifications'}
                   </h2>
                 </div>
@@ -558,7 +557,7 @@ export default function BrandDetail() {
         })()}
 
         {/* 1. PRODUCT SPECIFICATIONS & CERTIFICATIONS */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-10 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-10">
           {/* Left: Text & Bullets */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -567,25 +566,25 @@ export default function BrandDetail() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-7"
           >
-            <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
+            <span className="block mb-4 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
               PRODUCT SPECIFICATIONS
             </span>
-            <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
               {brand.name} Certifications & Specs
             </h2>
-            <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
+            <p className="mt-4 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">
               {brand.specs_description || 'Engineered with high quality component architecture and tested thoroughly to verify solar absorption and load resistance under extreme climatic conditions.'}
             </p>
 
             <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-xs">
-              <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3">
+              <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-4">
                 Standards & Certifications
               </h3>
               <ul className="space-y-3">
                 {(brand.certifications_list?.length ? brand.certifications_list : [
                   'IEC CB Scheme', 'IEC 61215:2021', 'IEC 61730:2023', 'IS 14286 & IS/IEC 61730', 'ISO 14001'
                 ]).map((cert, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-600 text-sm font-medium leading-relaxed mb-3">
+                  <li key={idx} className="flex items-start gap-3 text-slate-600 text-sm font-medium leading-relaxed">
                     <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-2.5 shrink-0"></span>
                     {cert}
                   </li>
@@ -616,13 +615,13 @@ export default function BrandDetail() {
         {/* 2. AVAILABLE PRODUCT RANGES & COMPANY PROFILE */}
         <div className="mb-10">
           {/* Centered Header */}
-          <div className="text-center max-w-3xl mx-auto mb-8">
+          <div className="text-center max-w-3xl mx-auto mb-6">
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
+              className="block mb-4 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
             >
               PRODUCT RANGE
             </motion.span>
@@ -631,7 +630,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+              className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
             >
               Available Product Ranges
             </motion.h2>
@@ -640,7 +639,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+              className="mt-4 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify"
             >
               {brand.product_range_subtitle || `Explore high-performance modules and systems distributed by Kingsol Energy India.`}
             </motion.p>
@@ -656,14 +655,14 @@ export default function BrandDetail() {
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               className="lg:col-span-7"
             >
-              <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">
+              <h3 className="text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
                 {brand.name} Company Profile
               </h3>
-              <p className="mt-1 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
+              <p className="font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">
                 {brand.company_profile_text || `${brand.name} is one of India's leading and trusted solar photovoltaic (PV) module manufacturers, with extensive experience in the renewable energy sector.`}
               </p>
 
-              <h4 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">Features:</h4>
+              <h4 className="text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">Features:</h4>
 
               {/* Dynamic Categorized Features */}
               <div className="space-y-8">
@@ -688,7 +687,7 @@ export default function BrandDetail() {
                     <h5 className="text-lg font-bold text-slate-900 mb-4">{block.category}</h5>
                     <ul className="space-y-2">
                       {block.features.map((feat: string, fIdx: number) => (
-                        <li key={fIdx} className="flex items-start gap-3 text-slate-600 text-sm font-medium leading-relaxed mb-5">
+                        <li key={fIdx} className="flex items-start gap-3 text-slate-600 text-sm font-medium leading-relaxed">
                           <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-2.5 shrink-0"></span>
                           {feat}
                         </li>
@@ -719,7 +718,7 @@ export default function BrandDetail() {
         </div>
 
         {/* DYNAMIC HORIZONTAL PRODUCT SLIDER SECTION */}
-        <div id="products-slider" className="mb-12">
+        <div id="products-slider" className="mb-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-4">
             <div>
               <motion.span
@@ -727,7 +726,7 @@ export default function BrandDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
+                className="block mb-4 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green"
               >
                 {settings.slider_tagline || 'COMPONENT CATALOG PORTFOLIO'}
               </motion.span>
@@ -736,7 +735,7 @@ export default function BrandDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+                className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
                 {brand.name} Components Range
               </motion.h2>
@@ -778,7 +777,7 @@ export default function BrandDetail() {
 
           {/* Dynamic Component Portfolio Category Filter */}
           {availableCategories.length > 1 && (
-            <div className="flex flex-wrap items-center gap-3 mb-8">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               <motion.button
                 type="button"
                 layout
