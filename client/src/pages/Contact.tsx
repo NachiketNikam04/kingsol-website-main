@@ -700,8 +700,34 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="flex flex-col items-center mb-10 mt-16 px-4"
+          className="flex flex-col items-center mb-10 mt-16 px-4 will-change-transform"
         >
+          {/* Smooth float animation: pure CSS, runs on the GPU compositor (no per-frame JS / filter re-rendering) */}
+          <style>{`
+            @keyframes quote-cloud-float {
+              0%, 100% { transform: translate3d(0, 0, 0); }
+              50%      { transform: translate3d(0, -12px, 0); }
+            }
+            @keyframes quote-cloud-shadow {
+              0%, 100% { transform: scale3d(1, 1, 1); opacity: 1; }
+              50%      { transform: scale3d(0.88, 0.9, 1); opacity: 0.65; }
+            }
+            .quote-cloud-float {
+              animation: quote-cloud-float 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+              will-change: transform;
+              backface-visibility: hidden;
+              -webkit-backface-visibility: hidden;
+            }
+            .quote-cloud-shadow {
+              animation: quote-cloud-shadow 8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+              will-change: transform, opacity;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .quote-cloud-float,
+              .quote-cloud-shadow { animation: none; }
+            }
+          `}</style>
+
           {/* Shared SVG filter definitions (puffy edges + soft 3D shading) */}
           <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
             <defs>
@@ -761,15 +787,13 @@ export default function Contact() {
           </svg>
 
           <div className="relative w-full max-w-4xl mx-auto z-20">
-            {/* Soft ground shadow under the cloud (stays still while the cloud floats) */}
-            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-3/5 h-5 rounded-full bg-slate-900/10 blur-xl pointer-events-none"></div>
+            {/* Soft ground shadow under the cloud: breathes in and out opposite to the float */}
+            <div className="absolute -bottom-6 inset-x-0 flex justify-center pointer-events-none">
+              <div className="quote-cloud-shadow w-3/5 h-5 rounded-full bg-slate-900/10 blur-xl"></div>
+            </div>
 
             {/* Gently floating cloud */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="relative text-center text-slate-900"
-            >
+            <div className="quote-cloud-float relative text-center text-slate-900">
               {/* Cloud - Desktop / Tablet */}
               <svg
                 className="hidden md:block absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_18px_22px_rgba(68,160,227,0.22)]"
@@ -799,7 +823,7 @@ export default function Contact() {
                   {currentQuoteAuthor}
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
