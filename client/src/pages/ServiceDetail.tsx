@@ -226,8 +226,8 @@ export default function ServiceDetail() {
   return (
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-0 text-slate-900 flex flex-col justify-between">
       <div className="max-w-7xl mx-auto px-6 w-full">
-        {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-sm font-medium text-slate-500 mb-12">
+        {/* Breadcrumb Navigation (Tightened mb-12 to mb-6) */}
+        <div className="flex items-center gap-2 text-sm font-medium text-slate-500 mb-6">
           <Link className="hover:text-slate-900 transition-colors" to="/services">
             Services
           </Link>
@@ -235,14 +235,14 @@ export default function ServiceDetail() {
           <span className="text-slate-900 font-semibold">{currentService.title}</span>
         </div>
 
-        {/* Hero Banner Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 items-center">
+        {/* Hero Banner Grid (Tightened mb-20 to mb-10) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-10 items-center">
           <div>
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               KINGSOL SERVICE
             </motion.span>
@@ -258,7 +258,7 @@ export default function ServiceDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8"
+              className="mt-3 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5"
             >
               {currentService.paragraph1}
             </motion.p>
@@ -271,10 +271,14 @@ export default function ServiceDetail() {
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="inline-flex bg-brand-green text-slate-900 px-8 py-4 rounded-full font-bold text-sm hover:bg-slate-900 hover:text-white transition-all shadow-md items-center gap-2 cursor-pointer"
+                className="bg-white text-slate-900 px-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 <span>Get Quote</span>
-                <span><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                <span>
+                  <svg className="w-4 h-4 inline-block transform group-hover/btn:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
               </button>
             </motion.div>
           </div>
@@ -289,8 +293,8 @@ export default function ServiceDetail() {
           </motion.div>
         </div>
 
-        {/* Main Split Two-Column Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-t border-slate-200 pt-16 mb-20">
+        {/* Main Split Two-Column Section (Tightened top/bottom spacing) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-t border-slate-200 pt-10 mb-16">
           {/* Left Sticky Sidebar */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -299,8 +303,8 @@ export default function ServiceDetail() {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="lg:col-span-4"
           >
-            <div className="lg:sticky lg:top-32 bg-white rounded-[2.5rem] p-6 border border-slate-200 shadow-sm flex flex-col gap-3">
-              <h3 className="mt-5 mb-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight">
+            <div className="lg:sticky lg:top-32 bg-white rounded-[2.5rem] p-5 border border-slate-200 shadow-sm flex flex-col gap-2">
+              <h3 className="mt-1 mb-3.5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight px-1">
                 All Services
               </h3>
               {sidebarServicesList.map((s) => {
@@ -309,26 +313,30 @@ export default function ServiceDetail() {
                   <button
                     key={s.slug}
                     onClick={() => navigate(`/services/${s.slug}`)}
-                    className={`w-full text-left px-5 py-4 rounded-2xl font-medium text-sm flex items-center justify-between transition-all duration-300 cursor-pointer ${
+                    className={`w-full text-left px-5 py-3.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? 'bg-[#1A6bc4] text-white shadow-md'
-                        : 'bg-slate-50 text-slate-700 hover:bg-[#78C257] hover:text-slate-900'
+                        ? 'bg-[#44a0e3]/15 text-[#44a0e3] font-bold shadow-xs'
+                        : 'bg-slate-50 text-slate-700 hover:bg-[#44a0e3]/15 hover:text-[#44a0e3]'
                     }`}
                   >
-                    <span className="text-slate-900 leading-relaxed">{s.title}</span>
-                    <span className="text-lg font-light shrink-0"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                    <span className="leading-relaxed">{s.title}</span>
+                    <span className="text-lg font-light shrink-0">
+                      <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </span>
                   </button>
                 );
               })}
 
-              <div className="mt-6 bg-slate-800 text-white p-6 rounded-2xl">
+              <div className="mt-4 bg-slate-800 text-white p-5 rounded-2xl">
                 <span className="text-brand-orange text-xs font-bold uppercase tracking-widest block mb-2">
                   {emergencySettings.emergency_tagline || 'Emergency Support'}
                 </span>
-                <h4 className="text-xl md:text-2xl font-bold font-poppins text-white mb-4 mt-3">{emergencySettings.emergency_title || 'Technical Dispatch Unit'}</h4>
+                <h4 className="text-xl md:text-2xl font-bold font-poppins text-white mb-4 mt-3">
+                  {emergencySettings.emergency_title || 'Technical Dispatch Unit'}
+                </h4>
                 <a
                   href={`tel:${emergencySettings.emergency_phone || '+91 1234567890'}`}
-                  className="inline-block bg-white text-slate-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-brand-green transition-colors"
+                  className="inline-block bg-white text-slate-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-[#44a0e3] hover:text-white transition-colors"
                 >
                   {emergencySettings.emergency_phone || '+91 1234567890'}
                 </a>
@@ -336,13 +344,13 @@ export default function ServiceDetail() {
             </div>
           </motion.div>
 
-          {/* Right Content Area */}
+          {/* Right Content Area (Reduced gap to gap-8) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="lg:col-span-8 flex flex-col gap-12"
+            className="lg:col-span-8 flex flex-col gap-8"
           >
             <div>
               <motion.h2
@@ -350,11 +358,11 @@ export default function ServiceDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-5 text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight mb-5"
+                className="mt-1 text-4xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight mb-4"
               >
                 {currentService.detail_title || currentService.title}
               </motion.h2>
-              <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+              <p className="mt-4 font-poppins text-base text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {currentService.paragraph2}
               </p>
             </div>
@@ -366,14 +374,14 @@ export default function ServiceDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm"
+                className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm"
               >
                 <motion.h3
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
+                  className="mt-2 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-5"
                 >
                   Key Value <span className="text-[#44a0e3]">Propositions</span>
                 </motion.h3>
@@ -397,7 +405,7 @@ export default function ServiceDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                className="w-full h-80 rounded-[2rem] overflow-hidden shadow-lg border border-slate-200 mb-20"
+                className="w-full h-80 rounded-[2rem] overflow-hidden shadow-lg border border-slate-200 mb-10"
               >
                 <img
                   src={getAssetUrl(currentService.gallery_img_url)}

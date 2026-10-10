@@ -172,7 +172,7 @@ export default function Services() {
                     {service.title}
                   </h3>
                 </Link>
-                <p className="font-poppins text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-line text-justify">
+                <p className="font-poppins text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-line text-justify line-clamp-3">
                   {service.short_desc}
                 </p>
               </div>
