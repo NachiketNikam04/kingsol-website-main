@@ -951,12 +951,12 @@ export default function ProductDetail() {
             )}
           </div>
 
-          {/* Split-Layout Editorial Banner */}
+          {/* Split-Layout Editorial Banner (Squeezed Vertically) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="relative overflow-hidden bg-white rounded-[2rem] shadow-xl min-h-[350px] md:min-h-[450px] flex items-center mb-8 border border-slate-200/90"
+            className="relative overflow-hidden bg-white rounded-[2rem] shadow-xl min-h-[300px] md:min-h-[360px] flex items-center mb-6 border border-slate-200/90"
           >
             {/* The Image & Fade Effect Carousel */}
             <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
@@ -994,15 +994,15 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* The Content (Text & Badges) */}
-            <div className="relative z-20 p-8 md:p-12 lg:p-16 max-w-3xl">
-              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green inline-block">
+            {/* The Content (Padding tightened top & bottom) */}
+            <div className="relative z-20 px-8 py-6 md:px-12 md:py-8 lg:px-14 lg:py-8 max-w-3xl">
+              <span className="mb-2 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green inline-block">
                 {isBessRoute ? 'BESS Portfolio' : 'Solar Inverters Portfolio'}
               </span>
               <h1 className="font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 capitalize">
                 {formattedBrand} — {formattedCategory}
               </h1>
-              <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+              <p className="mt-2.5 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {isBessRoute
                   ? 'Explore high-density scalable LiFePO4 battery energy storage systems (BESS) engineered for peak shaving, backup power, and C&I microgrids backed by manufacturer warranties.'
                   : 'Explore high-efficiency grid-tied, hybrid, and off-grid solar string inverters backed by manufacturer direct warranties and complete technical datasheets.'}
@@ -1025,7 +1025,7 @@ export default function ProductDetail() {
                 if (certsList.length === 0) return null;
 
                 return (
-                  <div className="flex flex-wrap gap-2 mt-6">
+                  <div className="flex flex-wrap gap-2 mt-5">
                     {certsList.map((cert: string, i: number) => (
                       <span
                         key={i}
@@ -1038,12 +1038,12 @@ export default function ProductDetail() {
                 );
               })()}
 
-              {/* Free Quote CTA Button */}
-              <div className="mt-8 flex items-center gap-3">
+              {/* Free Quote CTA Button (Darker, visible border) */}
+              <div className="mt-6 flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setIsQuoteOpen(true)}
-                  className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center cursor-pointer border border-slate-200/60 hover:border-transparent"
+                  className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center cursor-pointer border border-slate-400 hover:border-transparent relative z-20 group/btn"
                 >
                   Get a Free Quote
                 </button>
@@ -1231,10 +1231,10 @@ export default function ProductDetail() {
   const prodTitle = product.title || product.name || '';
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-36 pb-0 text-slate-900 flex flex-col justify-between overflow-x-clip">
-      <div className="max-w-7xl mx-auto px-6 w-full mb-20">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 sm:pt-36 pb-0 text-slate-900 flex flex-col justify-between overflow-x-clip">
+      <div className="max-w-7xl mx-auto px-6 w-full mb-10">
         {/* Dynamic Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-8 overflow-x-auto whitespace-nowrap">
+        <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-4 overflow-x-auto whitespace-nowrap">
           <Link to="/products" className="hover:text-brand-green transition-colors">
             Catalog
           </Link>
@@ -1251,7 +1251,7 @@ export default function ProductDetail() {
         </div>
 
         {/* HERO SECTION: IMAGE ON LEFT (lg:col-span-6), TEXT ON RIGHT (lg:col-span-6) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-8">
           {/* Main Hero Cover Image & Auto-Rotating Carousel */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1259,7 +1259,7 @@ export default function ProductDetail() {
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="lg:col-span-6"
           >
-            <div className="w-full aspect-square md:h-[500px] rounded-[2.5rem] overflow-hidden bg-white border border-slate-200 relative flex items-center justify-center">
+            <div className="w-full aspect-square md:h-[480px] rounded-[2.5rem] overflow-hidden bg-white border border-slate-200 relative flex items-center justify-center">
               <img
                 src={getAssetUrl(activeGallery[currentImageIndex] || product.image_url || '/logo.png')}
                 alt={prodTitle || 'Product View'}
@@ -1300,7 +1300,7 @@ export default function ProductDetail() {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="lg:col-span-6"
           >
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-1.5">
               <span className="text-xs font-bold text-[#44a0e3] tracking-widest uppercase">
                 {catName}
               </span>
@@ -1318,13 +1318,13 @@ export default function ProductDetail() {
               {prodTitle}
             </h1>
 
-            <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
+            <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-4">
               {product.short_description || product.description}
             </p>
 
             {/* Technical Specs Key Highlights Table */}
             {product.specs && Object.keys(product.specs).length > 0 && (
-              <div className="grid grid-cols-2 gap-3 mb-8 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+              <div className="grid grid-cols-2 gap-2.5 mb-5 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs">
                 {Object.entries(product.specs).map(([key, val]) => (
                   <div key={key} className="p-2.5 bg-slate-50 rounded-xl border border-slate-100">
                     <span className="text-[10px] text-slate-400 font-bold uppercase block truncate">{key}</span>
@@ -1335,14 +1335,14 @@ export default function ProductDetail() {
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200/80">
+            <div className="flex flex-wrap items-center gap-4 pt-3.5 border-t border-slate-200/80">
               <button
                 type="button"
                 onClick={() => {
                   setSelectedProductForQuote(prodTitle);
                   setIsQuoteOpen(true);
                 }}
-                className="bg-white text-slate-900 px-5 py-2.5 rounded-full font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1.5 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+                className="bg-white text-slate-900 px-5 py-3.5 rounded-full font-poppins font-bold text-xs md:text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 <span>Get Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1414,24 +1414,24 @@ export default function ProductDetail() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 shadow-xs mb-20 w-full max-w-none"
+          className="bg-white border border-slate-200 rounded-[2.5rem] p-6 sm:p-8 md:p-10 shadow-xs mb-10 w-full max-w-none"
         >
-          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
+          <span className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
-          <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
+          <h2 className="mt-1 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
-          <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+          <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
             {product.long_description || product.description || product.expertise}
           </p>
 
           {/* Key Features & Standards Checklist (2-Column Grid) */}
-          <div className="pt-8 border-t border-slate-100 mt-6">
-            <h3 className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
+          <div className="pt-5 border-t border-slate-100 mt-5">
+            <h3 className="mb-3 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
               {settings.features_title || 'Key Features & Standards'}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               {(product.key_features && product.key_features.length > 0
                 ? product.key_features
                 : [
@@ -1479,7 +1479,7 @@ export default function ProductDetail() {
         setIsQuoteOpen(true);
       }} />
     </div>
-  );
+);
 }
 
 export { ProductDetail };
