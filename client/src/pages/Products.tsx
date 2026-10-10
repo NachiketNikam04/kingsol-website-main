@@ -498,14 +498,14 @@ export default function Products() {
                         <div className="flex items-center gap-2 mt-auto pt-1">
                           <Link
                             to={`/products/${product.category}/${product.brand}/${product.slug}`}
-                            className="flex-1 py-2 px-3 rounded-full bg-slate-900 text-white text-xs font-bold text-center hover:bg-slate-800 transition-colors shadow-xs"
+                            className="flex-1 py-2 px-3 rounded-full bg-brand-green text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#8ee036] flex items-center justify-center gap-1 cursor-pointer border border-transparent"
                           >
                             View Specs
                           </Link>
                           <button
                             type="button"
                             onClick={() => handleOpenInquiry(product)}
-                            className="flex-1 py-2 px-3 rounded-full bg-brand-green text-slate-900 text-xs font-bold text-center hover:bg-[#8ee036] transition-colors shadow-xs cursor-pointer"
+                            className="flex-1 py-2 px-3 rounded-full bg-white text-slate-900 text-xs font-bold text-center transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_8px_16px_rgba(68,160,227,0.2)] cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
                           >
                             Quick Quote
                           </button>
