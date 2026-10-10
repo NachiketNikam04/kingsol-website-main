@@ -76,7 +76,7 @@ export default function Services() {
       grid_img_url: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=800&auto=format&fit=crop',
     },
     {
-      id: 5,
+      id: 2,
       title: 'Wind turbine repair services',
       slug: 'wind-turbine-repair',
       short_desc: 'Expert wind turbine servicing to maximize efficiency and performance.',
@@ -116,23 +116,23 @@ export default function Services() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-0 text-slate-900 flex flex-col justify-between">
-      <div className="max-w-7xl mx-auto px-6 w-full">
-        {/* Header Section */}
-        <div className="mb-10">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 sm:pt-36 pb-0 text-slate-900 flex flex-col justify-between">
+      <div className="max-w-7xl mx-auto px-6 w-full mb-16 md:mb-20">
+        {/* Header Section (Removed double mb-8 gap and aligned tagline directly over title) */}
+        <div className="mb-8">
           <motion.span
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {settings.tagline || 'EXPERT SERVICES'}
           </motion.span>
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
           >
             {renderHeadline()}
           </motion.h1>
@@ -156,7 +156,7 @@ export default function Services() {
               className="bg-white rounded-[2rem] border border-slate-200 p-6 flex flex-col group hover:shadow-[0_20px_40px_rgba(243,156,18,0.15)] transition-shadow duration-300"
             >
               <Link
-                className="w-full h-60 rounded-2xl overflow-hidden bg-slate-100 mb-6 relative block"
+                className="w-full h-56 rounded-2xl overflow-hidden bg-slate-100 mb-4 relative block"
                 to={`/services/${service.slug}`}
               >
                 <img
@@ -168,20 +168,27 @@ export default function Services() {
 
               <div className="flex-grow">
                 <Link to={`/services/${service.slug}`}>
-                  <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-3">
+                  <h3 className="text-[20px] font-poppins font-bold tracking-tight shrink-0 text-slate-900 group-hover:text-[#44a0e3] transition-colors mb-2 leading-snug">
                     {service.title}
                   </h3>
                 </Link>
-                <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed mb-8 whitespace-pre-line text-justify">{service.short_desc}</p>
+                <p className="font-poppins text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-line text-justify">
+                  {service.short_desc}
+                </p>
               </div>
 
-              <div className="pt-6 border-t border-slate-100 mt-auto">
+              {/* Read Details (Tightened pt-3.5 and mt-auto, exact link preserved) */}
+              <div className="pt-3.5 border-t border-slate-100 mt-auto">
                 <Link
-                  className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-2 group-hover:text-[#78C257] transition-colors"
+                  className="text-[#44a0e3] font-poppins font-semibold text-sm hover:underline inline-flex items-center gap-1 shrink-0"
                   to={`/services/${service.slug}`}
                 >
                   <span>Read Details</span>
-                  <span className="transform group-hover:translate-x-1 transition-transform"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                  <span className="transform group-hover:translate-x-1 transition-transform">
+                    <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
                 </Link>
               </div>
             </motion.div>
