@@ -206,7 +206,7 @@ export default function Contact() {
     {
       id: 4,
       question: 'What warranties are provided on Kingsol solar systems?',
-      answer: 'We offer 25-year performance warranties on Tier-1 solar modules,\n- 10-year warranties on string inverters\n- Comprehensive 5-year EPC workmanship warranties.',
+      answer: 'We offer 25-year performance warranties on Tier-1 solar modules,\n10-year warranties on string inverters\nComprehensive 5-year EPC workmanship warranties.',
     },
   ];
 
@@ -240,26 +240,24 @@ export default function Contact() {
   const renderFaqAnswer = (answerText: string) => {
     if (!answerText) return null;
 
-    // Split the text block by every time you hit "Enter" in the admin panel
     const lines = answerText.split('\n').filter(line => line.trim() !== '');
 
     return (
-      <div className="flex flex-col gap-3 text-sm md:text-base text-slate-600 leading-relaxed font-normal">
+      <div className="flex flex-col gap-2 text-sm text-slate-600 leading-relaxed font-normal">
         {lines.map((line, index) => {
           const trimmedLine = line.trim();
           
-          // If the line starts with a dash (-) or a bullet (•), style it as a list item
           if (trimmedLine.startsWith('-') || trimmedLine.startsWith('•')) {
             return (
-              <div key={index} className="flex items-start gap-3 pl-2 md:pl-4">
-                <span className="text-brand-green font-bold text-sm shrink-0 mt-0.5">✓</span>
+              <div key={index} className="flex items-start gap-2 pl-2 md:pl-4">
+                <span className="text-[#44a0e3] font-bold text-sm shrink-0 mt-0.5">✓</span>
                 <span>{trimmedLine.replace(/^[-•]\s*/, '')}</span>
               </div>
             );
           }
           
-          // If it's just normal text, render a standard paragraph
-          return <p key={index} className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">{trimmedLine}</p>;
+          // Reduced text size to text-sm
+          return <p key={index} className="font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify">{trimmedLine}</p>;
         })}
       </div>
     );
@@ -294,12 +292,12 @@ export default function Contact() {
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Dynamic Hero Header */}
-        <div className="mb-10 sm:mb-12">
+        <div className="mb-8 mt-6">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             <span>{currentHeroTagline}</span>
           </motion.span>
@@ -307,30 +305,27 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            className="mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
           >
             {renderDynamicHeadline(currentHeroHeadline, currentHeroHighlight)}
           </motion.h1>
         </div>
 
-        {/* Left-Aligned Departmental Cards Container */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 sm:mb-14">
-          {activeDepts.map((dept, idx) => (
+        {/* Left-Aligned Departmental Cards Container (Limited to 3) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          {activeDepts.slice(0, 3).map((dept, idx) => (
             <motion.div
               key={`dept-card-${idx}`}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: idx * 0.1, ease: "easeOut" }}
-              className="w-full max-w-[320px] bg-white rounded-[2.5rem] p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-[0_25px_50px_rgba(68,160,227,0.2)] transition-all duration-500 group relative overflow-hidden"
+              className="w-full bg-white rounded-[2.5rem] p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-[0_25px_50px_rgba(68,160,227,0.2)] transition-all duration-500 group relative overflow-hidden min-h-[300px]"
             >
               <div className="absolute -right-12 -top-12 w-36 h-36 bg-[#44a0e3]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
 
-              <div>
-                <div className="flex justify-between items-center mb-6">
-                  <span className="w-10 h-10 rounded-2xl bg-slate-100 group-hover:text-slate-900 flex items-center justify-center text-slate-900 group-hover:bg-[#b7f07a] font-bold text-sm transition-colors">
-                    0{idx + 1}
-                  </span>
+              <div className="flex flex-col flex-1">
+                <div className="flex justify-end items-center mb-2">
                   <span className="text-slate-400 group-hover:text-[#44a0e3] text-sm transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">
                     ↗
                   </span>
@@ -339,12 +334,12 @@ export default function Contact() {
                 <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 group-hover:text-[#44a0e3] mb-3 transition-colors">
                   {dept.title}
                 </h3>
-                <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-7">
+                <p className="font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-7">
                   {dept.description}
                 </p>
               </div>
 
-              <div className="flex flex-col gap-3 pt-6 border-t border-slate-100 group-hover:border-slate-200 transition-colors">
+              <div className="flex flex-col gap-3 pt-6 border-t border-slate-100 group-hover:border-slate-200 transition-colors mt-auto">
                 {dept.phone && (
                   <a
                     href={`tel:${dept.phone}`}
@@ -372,7 +367,7 @@ export default function Contact() {
                     href={`https://wa.me/${dept.whatsapp.replace(/[^\d+]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-2 bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/80 text-xs py-2.5 px-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer group/wa"
+                    className="mt-2 bg-slate-50 hover:bg-white text-slate-700 hover:text-[#44a0e3] border border-slate-200/80 text-xs py-2.5 px-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer group/wa"
                   >
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
@@ -387,27 +382,50 @@ export default function Contact() {
           ))}
         </div>
 
-        {/* "Connect with Kingsol" Direct Channels Area below Contact Cards */}
+        {/* Toll-Free Support Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-[#d46b28] p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl border border-blue-100 flex items-center justify-center bg-blue-50/50 text-[#d46b28] shrink-0">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 leading-tight">Toll-free support</h4>
+              <p className="text-sm text-slate-500 font-medium">24/7 assistance available</p>
+            </div>
+          </div>
+          <div className="text-2xl md:text-3xl font-black font-poppins text-[#d46b28]">
+            1800 203 7228
+          </div>
+        </motion.div>
+
+        {/* "Connect with Kingsol" Direct Channels Area */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="mb-10 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6"
+          className="mb-10 bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"
         >
           <div>
-            <span className="text-xs font-bold text-brand-green uppercase tracking-wider block mb-1">
+            <span className="mb-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
               Direct Channels
             </span>
             <h3 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">
               Connect with Kingsol
             </h3>
-            <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+            <p className="mt-1 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify max-w-2xl">
               Have a project inquiry or product requirement? Connect directly with our team via email or WhatsApp for quick assistance on solar, BESS, and energy solutions.
             </p>
           </div>
 
-          <div className="flex items-center gap-3.5 flex-wrap">
+          <div className="flex items-center gap-3.5 flex-wrap shrink-0">
             <a
               href={`mailto:${primaryEmail}`}
               className="bg-slate-50 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200 shadow-xs hover:shadow-md px-5 py-3 rounded-full font-semibold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300"
@@ -437,14 +455,14 @@ export default function Contact() {
         </motion.div>
 
         {/* Split Section: Form & Head Office Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
           {/* Form (7 Columns) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-12 border border-slate-200 shadow-sm"
+            className="lg:col-span-7 bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200 shadow-sm"
           >
             <h2 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">{currentFormHeadline}</h2>
             <p className="text-slate-500 text-sm mb-8">{currentFormSubtitle}</p>
@@ -534,24 +552,23 @@ export default function Contact() {
             className="lg:col-span-5 flex flex-col justify-between bg-white rounded-[2.5rem] p-8 md:p-10 text-slate-900 border border-slate-200 shadow-[0_20px_40px_rgba(68,160,227,0.15)]"
           >
             <div>
-              <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8">
+              <span className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
                 <span>{currentHqTagline}</span>
               </span>
               <h3 className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">
                 {renderDynamicHeadline(currentHqHeadline, currentHqHighlight)}
               </h3>
-              <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+              <p className="mt-2 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {currentHqAddress}
               </p>
             </div>
 
-            {/* Embedded Interactive Map */}
-            <div className="w-full h-64 rounded-2xl overflow-hidden my-4 border border-slate-200">
+            {/* Embedded Interactive Map - Flex-1 ensures it grows dynamically */}
+            <div className="w-full flex-1 min-h-[300px] md:min-h-[400px] rounded-2xl overflow-hidden my-4 border border-slate-200 flex flex-col">
               <iframe
                 title="Kingsol Head Office Map"
                 src={currentHqMapUrl}
-                width="100%"
-                height="100%"
+                className="w-full h-full flex-1"
                 style={{ border: 0 }}
                 allowFullScreen={true}
                 loading="lazy"
@@ -567,14 +584,14 @@ export default function Contact() {
         </div>
 
         {/* Left-Aligned Infrastructure & Reach Cards Container */}
-        <section className="mb-10 bg-white rounded-[2.5rem] p-8 sm:p-12 md:p-14 border border-slate-200 shadow-xs">
-          <div className="max-w-3xl mb-10">
+        <section className="mb-10 bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200 shadow-xs">
+          <div className="max-w-3xl mb-8">
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentInfraTagline}</span>
             </motion.span>
@@ -594,16 +611,17 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="flex flex-wrap justify-start gap-6 sm:gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {activeInfra.map((card, idx) => (
               <div
                 key={card.id || idx}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] max-w-[400px] p-6 rounded-2xl bg-[#FDFCF8] border border-slate-200/80"
+                className="w-full p-6 rounded-2xl bg-[#FDFCF8] border border-slate-200/80 flex flex-col"
               >
-                <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 transition-colors duration-300 group-hover:text-[#44a0e3]">{card.title}</h4>
-                <p className="flex items-start gap-3 text-gray-600 font-poppins text-sm leading-relaxed">
-                  <span className="text-brand-green mr-2">•</span>
+                <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2 transition-colors duration-300 group-hover:text-[#44a0e3]">
+                  {card.title}
+                </h4>
+                <p className="flex items-start text-slate-600 font-poppins text-sm leading-relaxed">
                   {card.description}
                 </p>
               </div>
@@ -612,14 +630,14 @@ export default function Contact() {
         </section>
 
         {/* Frequently Asked Questions */}
-        <section className="mb-10">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+        <section className="mb-14">
+          <div className="text-center max-w-2xl mx-auto mb-8">
             <motion.span
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-[#44a0e3] block"
             >
               <span>{currentFaqTagline}</span>
             </motion.span>
@@ -649,8 +667,7 @@ export default function Contact() {
                 onMouseLeave={() => setOpenFaq(null)}
               >
                 <div className="w-full px-8 py-6 text-left flex justify-between items-center font-medium text-slate-900 hover:bg-slate-50 hover:text-[#44a0e3] transition-colors cursor-default">
-                  <span className="text-lg">{faq.question}</span>
-                  <span className="text-xl md:text-2xl font-medium text-slate-900"></span>
+                  <span className="text-base font-bold font-poppins">{faq.question}</span>
                 </div>
                 <AnimatePresence>
                   {openFaq === idx && (
@@ -658,9 +675,9 @@ export default function Contact() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="px-8 pb-6 pt-4 border-t border-slate-100"
+                      className="px-8 pb-6 pt-2 border-t border-slate-100"
                     >
-                      {/* Integrated Smart Parser */}
+                      {/* Integrated Smart Parser for text-sm size */}
                       {renderFaqAnswer(faq.answer)}
                     </motion.div>
                   )}
@@ -670,21 +687,29 @@ export default function Contact() {
           </motion.div>
         </section>
 
-        {/* High-Impact Brand Quote Banner */}
+        {/* Thought Bubble Quote Design */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="bg-slate-900 rounded-[2.5rem] p-12 md:p-20 text-center text-white relative overflow-hidden shadow-xl"
+          className="flex flex-col items-center mb-10 mt-16"
         >
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-bold font-poppins leading-tight mb-6">
+          {/* Main Bubble Container */}
+          <div className="relative bg-white border border-slate-200 rounded-[3rem] p-10 md:p-14 text-center text-slate-900 shadow-md max-w-4xl mx-auto z-20">
+            <h2 className="text-2xl md:text-3xl font-bold font-poppins leading-tight mb-4">
               {currentQuoteText}
             </h2>
-            <p className="text-[#44a0e3] font-semibold tracking-widest text-xs uppercase">
+            <p className="text-[#44a0e3] font-bold tracking-widest text-xs uppercase">
               {currentQuoteAuthor}
             </p>
+          </div>
+          
+          {/* Bubble Tail / Ellipses */}
+          <div className="flex flex-col items-start w-full max-w-4xl pl-20 sm:pl-32 md:pl-48">
+             <div className="w-8 h-6 rounded-[50%] border border-slate-200 bg-white shadow-sm mt-1 ml-4 z-10"></div>
+             <div className="w-4 h-3 rounded-[50%] border border-slate-200 bg-white shadow-sm mt-1 ml-2 z-10"></div>
+             <div className="w-2 h-1.5 rounded-[50%] border border-slate-200 bg-white shadow-sm mt-1 ml-0 z-10"></div>
           </div>
         </motion.div>
       </div>
