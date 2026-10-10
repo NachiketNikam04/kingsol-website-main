@@ -237,7 +237,8 @@ export const GalleryPage: React.FC = () => {
                 <span className="text-[#44a0e3] text-xs font-black uppercase tracking-widest block mb-1">
                   {activeItem.category}
                 </span>
-                <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 line-clamp-1 group-hover:text-[#44a0e3] transition-colors">{activeItem.title}</h3>
+                <h3 className="text-xl font-bold font-poppins text-slate-900 mb-3 transition-colors">
+                  {activeItem.title}</h3>
               </div>
             </div>
           </div>
