@@ -256,7 +256,6 @@ export default function Contact() {
             );
           }
           
-          // Reduced text size to text-sm
           return <p key={index} className="font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify">{trimmedLine}</p>;
         })}
       </div>
@@ -387,20 +386,19 @@ export default function Contact() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-[#d46b28] p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6"
+          className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl border border-blue-100 flex items-center justify-center bg-blue-50/50 text-[#d46b28] shrink-0">
+            <div className="w-12 h-12 rounded-xl border border-blue-100 flex items-center justify-center bg-blue-50/50 text-[#44a0e3] shrink-0">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div>
-              <h4 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 leading-tight">Toll-free support</h4>
-              <p className="text-sm text-slate-500 font-medium">24/7 assistance available</p>
+              <p className="text-xl sm:text-2xl font-bold font-poppins text-slate-900 tracking-tight">Toll-free Support</p>
             </div>
           </div>
-          <div className="text-2xl md:text-3xl font-black font-poppins text-[#d46b28]">
+          <div className="text-2xl md:text-3xl font-black font-poppins text-slate-900">
             1800 203 7228
           </div>
         </motion.div>
@@ -535,7 +533,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-slate-900 text-white px-8 py-4 rounded-full font-medium text-sm hover:bg-[#44a0e3] hover:text-white transition-colors shadow-lg flex justify-center items-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex justify-center items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
                 >
                   {loading ? 'Sending Message...' : 'Send Message'}
                 </button>
