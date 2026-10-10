@@ -123,7 +123,7 @@ export default function BlogDetail() {
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-6 mt-12"
         >
-          <div className="bg-white rounded-2xl p-6 border-l-4 border-[#44a0e3] border-slate-200 shadow-xs font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify font-medium">
+          <div className="bg-white rounded-2xl p-6 border-l-4 border-[#44a0e3] border-slate-200 shadow-xs font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify font-medium">
             "{post.excerpt}"
           </div>
         </motion.div>

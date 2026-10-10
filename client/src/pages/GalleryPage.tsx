@@ -123,12 +123,12 @@ export const GalleryPage: React.FC = () => {
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header Block */}
-        <div className="mb-10">
+        <div className="mb-10 mt-12">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-1 text-center"
           >
             {tagline}
           </motion.span>
@@ -136,7 +136,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl text-center"
           >
             {renderDynamicHeadline(headline, highlightWord)}
           </motion.h1>
@@ -144,7 +144,7 @@ export const GalleryPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-4 max-w-2xl font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+            className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center mb-5"
           >
             {subtitle}
           </motion.p>
@@ -195,17 +195,13 @@ export const GalleryPage: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition-colors" />
 
-                  <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-900 text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider shadow-sm">
-                    {item.category}
-                  </span>
-
                   <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md text-slate-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:scale-110">
                     <ZoomIn className="w-5 h-5" />
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
+                  <h3 className="text-xl font-bold font-poppins text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors">
                     {item.title}
                   </h3>
                 </div>
@@ -238,7 +234,7 @@ export const GalleryPage: React.FC = () => {
 
             <div className="p-6 md:p-8 bg-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
-                <span className="text-brand-green text-xs font-black uppercase tracking-widest block mb-1">
+                <span className="text-[#44a0e3] text-xs font-black uppercase tracking-widest block mb-1">
                   {activeItem.category}
                 </span>
                 <h3 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3 line-clamp-1 group-hover:text-[#44a0e3] transition-colors">{activeItem.title}</h3>

@@ -74,12 +74,12 @@ export default function Blogs() {
     <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         {/* Dynamic Header Hero Section */}
-        <div className="mb-8">
+        <div className="mb-8 mt-12">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+            className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block text-center"
           >
             <span>{currentTagline}</span>
           </motion.span>
@@ -87,7 +87,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            className="mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl text-center"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h1>
@@ -95,7 +95,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5"
+            className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center mb-5"
           >
             {currentSubtitle}
           </motion.p>

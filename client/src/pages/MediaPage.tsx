@@ -132,7 +132,7 @@ export const MediaPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-1 text-center"
           >
             {tagline}
           </motion.span>
@@ -140,7 +140,7 @@ export const MediaPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl text-center"
           >
             {renderDynamicHeadline(headline, highlightWord)}
           </motion.h1>
@@ -148,7 +148,7 @@ export const MediaPage: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-4 max-w-2xl font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+            className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center mb-3"
           >
             {subtitle}
           </motion.p>
@@ -205,7 +205,7 @@ export const MediaPage: React.FC = () => {
                         {videoTitle}
                       </h3>
                       {videoDescription && (
-                        <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">{videoDescription}</p>
+                        <p className="font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify">{videoDescription}</p>
                       )}
                     </div>
                   </div>
