@@ -57,7 +57,7 @@ export const WhyChooseBrand: React.FC<WhyChooseBrandProps> = ({
         </motion.h1>
 
         <motion.div variants={itemVariants} className="mt-6 text-center max-w-4xl mx-auto space-y-4">
-          <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+          <p className="font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
             Secure premium {brandName} equipment with Kingsol's dedicated technical support, transparent wholesale pricing, and guaranteed PAN-India logistics. Contact our specialists today to finalize the optimal configuration for your project's specific scale and deployment schedule.
           </p>
         </motion.div>

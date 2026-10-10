@@ -94,10 +94,10 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 sm:pt-36 pb-[72px] text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb Navigation */}
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-8 font-medium">
+        <div className="flex items-center gap-2 text-sm text-slate-500 mb-5 font-medium">
           <Link to="/products" className="hover:text-slate-900 transition-colors">
             Products
           </Link>
@@ -105,29 +105,29 @@ export default function CategoryPage() {
           <span className="text-slate-900 font-semibold">{category.name}</span>
         </div>
 
-        {/* Category Header Banner */}
-        <div className="mb-10">
+        {/* Category Header Banner (Tightened Spacing) */}
+        <div className="mb-7">
           <motion.span
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             PRODUCT CATEGORY
           </motion.span>
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-5 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="mt-1 font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 leading-tight max-w-3xl"
           >
             {category.name} <span className="text-[#44a0e3]">Catalog</span>
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="mt-3 font-poppins text-base text-slate-600 leading-relaxed whitespace-pre-line text-justify max-w-4xl"
           >
             {category.tagline || category.description || 'Explore authorized products and partner brands.'}
           </motion.p>
@@ -135,14 +135,14 @@ export default function CategoryPage() {
 
         {/* PARTNER BRANDS FOR THIS CATEGORY */}
         {brands.length > 0 && (
-          <section className="mb-12">
-            <div className="mb-10">
+          <section className="mb-10">
+            <div className="mb-5">
               <motion.h2
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mt-1 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="text-2xl sm:text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
                 Authorized Brands in {category.name}
               </motion.h2>
@@ -151,15 +151,15 @@ export default function CategoryPage() {
               {brands.map((brand, idx) => (
                 <motion.div
                   key={brand.slug}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.7, delay: (idx % 3) * 0.1, ease: "easeOut" }}
-                  className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-lg transition-all group"
+                  transition={{ duration: 0.6, delay: (idx % 3) * 0.08, ease: "easeOut" }}
+                  className="bg-white rounded-[2rem] p-5 pb-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-lg transition-all group"
                 >
                   <div>
-                    {/* 1. Large Enriched Image Container */}
-                    <div className="w-full h-48 rounded-2xl overflow-hidden mb-4 bg-slate-50 border border-slate-100 flex items-center justify-center relative">
+                    {/* 1. Brand Image Container */}
+                    <div className="w-full h-44 rounded-2xl overflow-hidden mb-3.5 bg-slate-50 border border-slate-100 flex items-center justify-center relative">
                       <img
                         src={getAssetUrl(brand.card_image || brand.cardImage || brand.image || (brand as any).image_url)}
                         alt={brand.name}
@@ -167,17 +167,17 @@ export default function CategoryPage() {
                       />
                     </div>
 
-                    {/* 2. Brand Name & Truncated Description */}
-                    <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-2 tracking-tight">
+                    {/* 2. Brand Name & 14px Description */}
+                    <h3 className="text-lg font-bold font-poppins text-slate-900 mb-1 tracking-tight">
                       {brand.name}
                     </h3>
-                    <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-3 mb-4">
+                    <p className="mt-1 font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-3 mb-3">
                       {brand.description || 'Authorized tier-1 solar component manufacturer providing high-performance equipment and factory support.'}
                     </p>
 
                     {/* 3. Certificates Trust Badges */}
-                    <div className="mb-6 pt-3 border-t border-slate-100">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                    <div className="mb-3 pt-2.5 border-t border-slate-100">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
                         Certifications:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
@@ -187,7 +187,7 @@ export default function CategoryPage() {
                         ).slice(0, 4).map((cert: string, i: number) => (
                           <span
                             key={i}
-                            className="bg-slate-100/80 text-slate-700 text-[10px] md:text-[11px] font-semibold px-2.5 py-1 rounded-lg border border-slate-200/60 flex items-center gap-1 shadow-2xs"
+                            className="bg-slate-100/80 text-slate-700 text-[10px] md:text-[11px] font-semibold px-2.5 py-0.5 rounded-lg border border-slate-200/60 flex items-center gap-1 shadow-2xs"
                           >
                             <span className="text-brand-green font-bold text-xs">✓</span> {cert}
                           </span>
@@ -196,11 +196,12 @@ export default function CategoryPage() {
                     </div>
                   </div>
 
+                  {/* Brand Card Pill Button */}
                   <Link
                     to={`/products/${category.slug}/${brand.slug}`}
-                    className="w-full bg-slate-900 hover:bg-brand-green hover:text-slate-900 text-white text-xs font-bold py-3 rounded-full block text-center transition-colors shadow-xs"
+                    className="w-full mx-auto bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
                   >
-                    View {brand.name} Products <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    View {brand.name} Products <svg className="w-4 h-4 inline-block ml-1 transition-transform group-hover/btn:translate-x-0.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </Link>
                 </motion.div>
               ))}
@@ -209,24 +210,24 @@ export default function CategoryPage() {
         )}
 
         {/* PRODUCTS LIST IN THIS CATEGORY */}
-        <section className="mb-12">
-          <div className="mb-10">
+        <section className="mb-10">
+          <div className="mb-5">
             <motion.h2
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="text-2xl sm:text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
             >
               All {category.name} Components
             </motion.h2>
           </div>
           {products.length === 0 ? (
-            <div className="bg-white rounded-[2rem] p-12 text-center text-slate-500 border border-slate-200">
+            <div className="bg-white rounded-[2rem] p-10 text-center text-slate-500 border border-slate-200">
               No products currently available in this category.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {products.map((product, idx) => {
                 const ratingVal = getSpecValue(product.specs, ['rating', 'efficiency', 'eff'], '21.5%');
                 const wattageVal = getSpecValue(product.specs, ['wattage', 'power', 'watt', 'power output'], '550W');
@@ -236,49 +237,49 @@ export default function CategoryPage() {
                 return (
                   <motion.div
                     key={product.id}
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.7, delay: (idx % 3) * 0.1, ease: "easeOut" }}
+                    transition={{ duration: 0.6, delay: (idx % 3) * 0.08, ease: "easeOut" }}
                     className="bg-white rounded-[2rem] p-4 border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all group"
                   >
                     <div>
                       {/* 1. Image Area with Floating Brand Pill */}
-                      <div className="h-44 rounded-2xl overflow-hidden mb-3 bg-slate-50 relative border border-slate-100">
+                      <div className="h-44 rounded-2xl overflow-hidden mb-3 bg-slate-50 relative border border-slate-100 flex items-center justify-center">
                         <img
                           src={getAssetUrl(product.card_image || product.cardImage || product.image)}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <span className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider text-slate-800 border border-slate-200/60 shadow-xs z-10">
+                        <span className="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-sm text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider text-slate-800 border border-slate-200/60 shadow-xs z-10">
                           {product.brandName || 'Solar Brand'}
                         </span>
                       </div>
 
-                      {/* 2. Text & Description Truncation */}
-                      <h3 className="text-base md:text-lg font-bold font-poppins text-slate-900 leading-snug truncate mb-1">
+                      {/* 2. Title & 14px Description */}
+                      <h3 className="text-base font-bold font-poppins text-slate-900 leading-snug truncate mb-1">
                         {product.name}
                       </h3>
-                      <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-2 mb-3">
+                      <p className="mt-1 font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-2 mb-2.5">
                         {product.description || 'High-efficiency engineered solar component with factory direct warranty support.'}
                       </p>
 
                       {/* 3. Technical Specs 2x2 Grid */}
-                      <div className="bg-slate-50 rounded-2xl p-3 mb-4 border border-slate-100/80">
-                        <div className="grid grid-cols-2 gap-2 text-left">
-                          <div className="bg-white rounded-xl p-2 border border-slate-100">
+                      <div className="bg-slate-50 rounded-2xl p-2.5 mb-3.5 border border-slate-100/80">
+                        <div className="grid grid-cols-2 gap-1.5 text-left">
+                          <div className="bg-white rounded-xl p-1.5 border border-slate-100">
                             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">RATING</span>
                             <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{ratingVal}</span>
                           </div>
-                          <div className="bg-white rounded-xl p-2 border border-slate-100">
+                          <div className="bg-white rounded-xl p-1.5 border border-slate-100">
                             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">WATTAGE</span>
                             <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{wattageVal}</span>
                           </div>
-                          <div className="bg-white rounded-xl p-2 border border-slate-100">
+                          <div className="bg-white rounded-xl p-1.5 border border-slate-100">
                             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">CELLTYPE</span>
                             <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{cellTypeVal}</span>
                           </div>
-                          <div className="bg-white rounded-xl p-2 border border-slate-100">
+                          <div className="bg-white rounded-xl p-1.5 border border-slate-100">
                             <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">WARRANTY</span>
                             <span className="text-xs font-bold text-slate-900 truncate block mt-0.5">{warrantyVal}</span>
                           </div>
@@ -286,12 +287,12 @@ export default function CategoryPage() {
                       </div>
                     </div>
 
-                    {/* 4. Action Buttons */}
+                    {/* 4. Action Buttons (Both Styled with Matching Pill Appearance) */}
                     <div className="flex items-center gap-2 mt-auto pt-1">
                       <Link
                         to={`/products/${product.category}/${product.brand}/${product.slug}`}
-                        className="w-1/2 py-2.5 px-3 rounded-full bg-slate-900 text-white text-xs font-bold text-center hover:bg-slate-800 transition-colors shadow-xs"
-                      >
+                        className="flex-1 py-2 px-3 rounded-full bg-brand-green text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#8ee036] flex items-center justify-center gap-1 cursor-pointer border border-transparent"
+                      > 
                         View Specs
                       </Link>
                       <button
@@ -300,7 +301,7 @@ export default function CategoryPage() {
                           setSelectedProductForInquiry(product);
                           setIsInquiryModalOpen(true);
                         }}
-                        className="w-1/2 py-2.5 px-3 rounded-full bg-brand-green text-slate-900 text-xs font-bold text-center hover:bg-[#8ee036] transition-colors shadow-xs cursor-pointer"
+                        className="flex-1 py-2 px-3 rounded-full bg-white text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
                       >
                         Quick Quote
                       </button>

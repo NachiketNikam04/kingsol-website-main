@@ -62,7 +62,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
   const currentEmbedMapUrl =
     data?.warehouseEmbedMapUrl ||
     data?.embed_map_url ||
-    'https://www.google.com/maps/d/u/0/embed?mid=1BBAZUA8hbXkZsMpKBgzx9aVutHoJxxM&ehbc=2E312F';
+    'https://www.google.com/maps/d/u/0/embed?mid=1BBAZUA8hbXkZsMpKBgzx9aVutHoJxxM&ehbc=2E312F" width="640" height="480';
 
   const defaultLocations = [
     'Bhiwandi, Maharashtra',
@@ -121,7 +121,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl"
+              className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h2>

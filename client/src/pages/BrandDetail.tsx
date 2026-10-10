@@ -8,7 +8,7 @@ import {
   FileText,
   Download,
   CheckCircle2,
-  ShieldCheck,
+  // ShieldCheck,
   Award,
   ChevronRight,
   ChevronLeft,
@@ -336,7 +336,7 @@ export default function BrandDetail() {
               ))}
             </div>
 
-            <p className="mt-4 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
+            <p className="mt-4 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
               {brand.description}
             </p>
 
@@ -347,7 +347,7 @@ export default function BrandDetail() {
                   setSelectedProductForQuote(brand.name);
                   setIsQuoteOpen(true);
                 }}
-                className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md flex items-center gap-2"
+                className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 <span>Get Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -427,7 +427,7 @@ export default function BrandDetail() {
           <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
-          <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
+          <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
             {brand.long_description || brand.description}
           </p>
 
@@ -455,7 +455,7 @@ export default function BrandDetail() {
           </div>
         </motion.div>
 
-        {/* CORPORATE CAPABILITIES HIGHLIGHTS CARDS */}
+        {/* CORPORATE CAPABILITIES HIGHLIGHTS CARDS
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -505,7 +505,7 @@ export default function BrandDetail() {
           <p className="text-xs text-slate-400 mt-8 pt-4 border-t border-slate-100">
             {brand.footer_note || settings.capabilities_footer || 'Authorized B2B Channel Procurement Partner with Factory Direct Warranty Support.'}
           </p>
-        </motion.div>
+        </motion.div> */}
 
         {/* DOWNLOADABLE TECH DOCUMENTS TABLE */}
         {(() => {
@@ -527,9 +527,6 @@ export default function BrandDetail() {
                     {settings.docs_title || 'Downloadable Specs & Certifications'}
                   </h2>
                 </div>
-                <span className="text-xs text-slate-500 font-semibold">
-                  {settings.docs_subtitle || 'Official Manufacturer Datasheets & Compliance PDFs'}
-                </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -576,7 +573,7 @@ export default function BrandDetail() {
             <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
               {brand.name} Certifications & Specs
             </h2>
-            <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
+            <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-8">
               {brand.specs_description || 'Engineered with high quality component architecture and tested thoroughly to verify solar absorption and load resistance under extreme climatic conditions.'}
             </p>
 
@@ -643,7 +640,7 @@ export default function BrandDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mt-3 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+              className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify"
             >
               {brand.product_range_subtitle || `Explore high-performance modules and systems distributed by Kingsol Energy India.`}
             </motion.p>
@@ -662,7 +659,7 @@ export default function BrandDetail() {
               <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2">
                 {brand.name} Company Profile
               </h3>
-              <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
+              <p className="mt-1 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
                 {brand.company_profile_text || `${brand.name} is one of India's leading and trusted solar photovoltaic (PV) module manufacturers, with extensive experience in the renewable energy sector.`}
               </p>
 
@@ -754,7 +751,7 @@ export default function BrandDetail() {
                     setSelectedProductForQuote(brand.name);
                     setIsQuoteOpen(true);
                   }}
-                  className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-5 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer shadow-xs flex items-center gap-1.5"
+                  className="bg-white text-slate-900 px-5 py-2.5 rounded-full font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1.5 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
                 >
                   <span>Get Quote</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -881,11 +878,11 @@ export default function BrandDetail() {
                           </span>
                         </div>
 
-                        <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3">
+                        <h3 className="text-base font-bold font-poppins text-slate-900 mb-3">
                           {product.title || product.name}
                         </h3>
 
-                        <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-4 line-clamp-2">
+                        <p className="font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-4 line-clamp-2">
                           {product.description}
                         </p>
 
@@ -902,7 +899,7 @@ export default function BrandDetail() {
                       </div>
 
                       <div className="flex gap-2 pt-3 border-t border-slate-100">
-                        <div className="w-1/2 bg-slate-900 text-white text-xs font-semibold py-2.5 rounded-full text-center hover:bg-[#44a0e3] hover:text-slate-900 transition-colors">
+                        <div className="flex-1 py-2 px-3 rounded-full bg-brand-green text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#8ee036] flex items-center justify-center gap-1 cursor-pointer border border-transparent">
                           View Specs
                         </div>
                         <button
@@ -913,7 +910,7 @@ export default function BrandDetail() {
                             setSelectedProductForQuote(product.title || product.name || brand.name);
                             setIsQuoteOpen(true);
                           }}
-                          className="w-1/2 bg-brand-green text-slate-900 text-xs font-bold py-2.5 rounded-full text-center hover:bg-slate-900 hover:text-white transition-colors cursor-pointer z-10 relative"
+                          className="flex-1 py-2 px-3 rounded-full bg-white text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
                         >
                           Get Quote
                         </button>

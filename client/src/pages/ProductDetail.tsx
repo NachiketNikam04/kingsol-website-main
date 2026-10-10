@@ -185,7 +185,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
               {product.title || product.name}
             </h2>
             {product.description && (
-              <p className="mt-1.5 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-2">
+              <p className="mt-1.5 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-2">
                 {product.description}
               </p>
             )}
@@ -322,7 +322,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
       {/* CARD FOOTER: Actions (Share, Download Datasheets, Send Inquiry) */}
       <div className="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          {/* Share Button */}
+          {/* Share Button
           <button
             onClick={handleShare}
             className="p-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors flex items-center justify-center cursor-pointer shrink-0"
@@ -334,7 +334,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
             <span className="text-xs font-bold text-brand-green animate-pulse">
               Link Copied!
             </span>
-          )}
+          )} */}
 
           {/* Multiple Datasheets Action Buttons / Dropdown */}
           {parsedDocs.length === 0 ? (
@@ -390,7 +390,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
         {/* Inquiry Action Button */}
         <button
           onClick={() => onInquiry(product)}
-          className="w-full sm:w-auto px-6 py-3 bg-brand-green hover:bg-emerald-600 text-slate-900 font-extrabold text-xs rounded-full shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider"
+          className="w-full sm:w-auto px-6 py-2.5 bg-white text-slate-900 font-poppins font-semibold text-sm rounded-full shadow-xs hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] hover:bg-[#44a0e3] hover:text-white transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
         >
           <span>Send Inquiry</span>
           <ArrowRight className="w-4 h-4" />
@@ -1028,7 +1028,7 @@ export default function ProductDetail() {
               <h1 className="font-poppins text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 capitalize">
                 {formattedBrand} — {formattedCategory}
               </h1>
-              <p className="mt-3 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+              <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
                 {isBessRoute
                   ? 'Explore high-density scalable LiFePO4 battery energy storage systems (BESS) engineered for peak shaving, backup power, and C&I microgrids backed by manufacturer warranties.'
                   : 'Explore high-efficiency grid-tied, hybrid, and off-grid solar string inverters backed by manufacturer direct warranties and complete technical datasheets.'}
@@ -1069,7 +1069,7 @@ export default function ProductDetail() {
                 <button
                   type="button"
                   onClick={() => setIsQuoteOpen(true)}
-                  className="bg-[#78C257] hover:bg-[#68ac49] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer shadow-xs"
+                  className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center cursor-pointer border border-slate-200/60 hover:border-transparent"
                 >
                   Get a Free Quote
                 </button>
@@ -1344,7 +1344,7 @@ export default function ProductDetail() {
               {prodTitle}
             </h1>
 
-            <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
+            <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
               {product.short_description || product.description}
             </p>
 
@@ -1368,7 +1368,7 @@ export default function ProductDetail() {
                   setSelectedProductForQuote(prodTitle);
                   setIsQuoteOpen(true);
                 }}
-                className="bg-brand-green text-slate-900 hover:bg-slate-900 hover:text-white px-8 py-3.5 rounded-full font-bold text-xs md:text-sm transition-all cursor-pointer shadow-md flex items-center gap-2"
+                className="bg-white text-slate-900 px-5 py-2.5 rounded-full font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1.5 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 <span>Get Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1445,19 +1445,19 @@ export default function ProductDetail() {
           <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green">
             {settings.brand_story_tagline || 'BRAND BACKGROUND & ARCHITECTURE'}
           </span>
-          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
             {settings.brand_story_title || 'Engineering & Technology Story'}
           </h2>
-          <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+          <p className="mt-6 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
             {product.long_description || product.description || product.expertise}
           </p>
 
           {/* Key Features & Standards Checklist (2-Column Grid) */}
-          <div className="pt-8 border-t mb-5 mt-6 border-slate-100">
+          <div className="pt-8 border-t border-slate-100 mt-6">
             <h3 className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight">
               {settings.features_title || 'Key Features & Standards'}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(product.key_features && product.key_features.length > 0
                 ? product.key_features
                 : [
@@ -1467,9 +1467,9 @@ export default function ProductDetail() {
                     '25-Year performance linear warranty',
                   ]
               ).map((feat, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div key={idx} className="flex items-start gap-2.5 p-3.5 bg-slate-50 rounded-xl border border-slate-100">
                   <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
-                  <span className="text-slate-800 leading-relaxed">{feat}</span>
+                  <span className="text-slate-800 text-sm leading-relaxed font-medium">{feat}</span>
                 </div>
               ))}
             </div>
@@ -1478,12 +1478,12 @@ export default function ProductDetail() {
 
       </div>
 
-      {/* Inquiry Modal */}
+      {/* Inquiry Modal
       <InquiryModal
         isOpen={isInquiryModalOpen}
         onClose={() => setIsInquiryModalOpen(false)}
         productName={selectedProductForInquiry?.title || selectedProductForInquiry?.name || prodTitle}
-      />
+      /> */}
 
       {/* Free Quote Modal */}
       <QuoteModal
