@@ -196,7 +196,7 @@ export default function CareerDetail() {
     <div className="min-h-screen bg-[#fdfcf8] pt-48 pb-[72px] text-slate-900">
       <div className="max-w-5xl mx-auto px-6">
         {/* Dynamic Breadcrumb Navigation Bar */}
-        <div className="flex items-center justify-between gap-4 mb-12 flex-wrap">
+        <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
           <div className="flex items-center gap-2 text-sm font-medium text-slate-500 flex-wrap">
             <Link className="hover:text-slate-900 transition-colors" to="/careers">
               Careers
@@ -211,32 +211,19 @@ export default function CareerDetail() {
             {isApplying && (
               <>
                 <span>/</span>
-                <span className="text-brand-green font-semibold">Apply</span>
+                <span className="text-slate-900 font-semibold">Apply</span>
               </>
             )}
           </div>
-
-          <button
-            onClick={() => {
-              if (isApplying) {
-                setIsApplying(false);
-              } else {
-                navigate('/careers');
-              }
-            }}
-            className="text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-1.5 cursor-pointer bg-white px-4 py-2 rounded-full border border-slate-200 shadow-xs"
-          >
-            {isApplying ? '← Back to Job Details' : '← Back to Openings'}
-          </button>
         </div>
 
-        {/* Header Title Banner */}
-        <div className="mb-12 border-b border-slate-200 pb-10">
+        {/* Header Title Banner (Adjusted uniform spacing) */}
+        <div className="mb-8 border-b border-slate-200 pb-8">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="mb-2 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             {job.department}
           </motion.span>
@@ -371,7 +358,7 @@ export default function CareerDetail() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-1/2 bg-brand-green text-slate-900 py-4 rounded-full font-semibold text-sm hover:bg-slate-900 hover:text-white transition-colors cursor-pointer text-center disabled:opacity-50"
+                      className="w-1/2 bg-white text-slate-900 py-4 rounded-full font-semibold text-sm text-center transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
                     >
                       {loading ? 'Submitting Application...' : 'Submit Application'}
                     </button>
@@ -381,25 +368,27 @@ export default function CareerDetail() {
             )}
           </motion.div>
         ) : (
-          <div className="space-y-12">
+          <div className="flex flex-col gap-6">
             {/* Overview */}
             <motion.section
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-xs"
+              className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 shadow-xs"
             >
               <motion.h2
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+                className="mb-3 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
                 Role Overview
               </motion.h2>
-              <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">{job.overview}</p>
+              <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+                {job.overview}
+              </p>
             </motion.section>
 
             {/* Responsibilities */}
@@ -409,21 +398,21 @@ export default function CareerDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-xs"
+                className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 shadow-xs"
               >
                 <motion.h2
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+                  className="mb-3 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                 >
                   Key Responsibilities
                 </motion.h2>
                 <ul className="space-y-4">
                   {responsibilitiesList.map((resp, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
-                      <span className="w-2 h-2 rounded-full bg-brand-green mt-2 shrink-0"></span>
+                    <li key={i} className="flex items-start gap-3 text-slate-700 text-base md:text-sm mt-3 leading-relaxed font-normal">
+                      <span className="w-2 h-2 rounded-full bg-[#44a0e3] mt-2 shrink-0"></span>
                       <span>{resp}</span>
                     </li>
                   ))}
@@ -438,20 +427,20 @@ export default function CareerDetail() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                className="bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200 shadow-xs"
+                className="bg-white rounded-[2rem] p-6 md:p-8 border border-slate-200 shadow-xs"
               >
                 <motion.h2
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mb-4 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+                  className="mb-3 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                 >
                   Requirements & Qualifications
                 </motion.h2>
                 <ul className="space-y-4">
                   {requirementsList.map((req, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-700 text-base md:text-lg mt-6 leading-relaxed font-normal">
+                    <li key={i} className="flex items-start gap-3 text-slate-700 text-base md:text-sm mt-3 leading-relaxed font-normal">
                       <span className="w-2 h-2 rounded-full bg-[#44a0e3] mt-2 shrink-0"></span>
                       <span>{req}</span>
                     </li>
@@ -466,7 +455,7 @@ export default function CareerDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="bg-white rounded-[2rem] p-8 md:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl"
+              className="bg-white rounded-[2rem] p-6 md:p-8 text-white flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl border border-slate-200"
             >
               <div>
                 <motion.h3
@@ -474,7 +463,7 @@ export default function CareerDetail() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-2"
+                  className="text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-1"
                 >
                   Ready to apply for this position?
                 </motion.h3>
@@ -482,7 +471,7 @@ export default function CareerDetail() {
               </div>
               <button
                 onClick={() => setIsApplying(true)}
-                className="bg-brand-green text-slate-900 px-8 py-4 rounded-full font-bold text-sm hover:bg-white hover:text-slate-900 transition-colors shrink-0 cursor-pointer"
+                className="bg-white text-slate-900 px-8 py-4 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] shrink-0 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 Apply for this Position <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </button>

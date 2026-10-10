@@ -198,7 +198,7 @@ export default function Careers() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentTagline}</span>
             </motion.span>
@@ -207,14 +207,14 @@ export default function Careers() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-black leading-tight sm:text-3xl md:text-4xl shrink-0"
+              className="mt-1 text-3xl sm:text-4xl md:text-5xl font-poppins font-bold tracking-tight text-slate-black leading-tight shrink-0"
             >
               {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
             </motion.h1>
 
             <button
               onClick={scrollToJobs}
-              className="bg-slate-900 text-white px-8 py-4 rounded-full font-semibold text-sm transition-all hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_15px_30px_rgba(68,160,227,0.3)] flex items-center gap-3 cursor-pointer w-fit mt-6"
+              className="bg-white text-slate-900 border border-slate-300 px-8 py-4 rounded-full font-semibold text-sm transition-all hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_15px_30px_rgba(68,160,227,0.3)] flex items-center gap-3 cursor-pointer w-fit mt-5"
             >
               <span>SEE OPEN POSITIONS</span>
               <span className="transform transition-transform group-hover:translate-y-1">↓</span>
@@ -231,13 +231,14 @@ export default function Careers() {
         transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Shrunk grid gaps */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {activeJobs.map((job) => (
               <Link
                 key={job.id || job.slug}
                 to={`/careers/${job.slug}`}
-                // Added h-full and removed justify-start so it naturally fills vertical space
-                className="group relative flex flex-col p-8 min-h-[280px] h-full bg-white rounded-[2.5rem] border border-slate-200 hover:border-[#44a0e3]/40 hover:shadow-[0_20px_40px_-15px_rgba(68,160,227,0.2)] hover:-translate-y-1.5 transition-all duration-400 overflow-hidden"
+                // Removed height locks (h-full & min-h) and shrunk padding to p-6 for dynamic sizing
+                className="group relative flex flex-col p-6 bg-white rounded-[2.5rem] border border-slate-200 hover:border-[#44a0e3]/40 hover:shadow-[0_20px_40px_-15px_rgba(68,160,227,0.2)] hover:-translate-y-1.5 transition-all duration-400 overflow-hidden"
               >
                 {/* Soft background gradient glow on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#44a0e3]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -245,9 +246,9 @@ export default function Careers() {
                 {/* Top Accent Line */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-green to-[#44a0e3] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
 
-                {/* Top Content Wrapper: flex-1 forces this top section to stretch and fill empty space */}
+                {/* Top Content Wrapper */}
                 <div className="relative z-10 flex flex-col flex-1">
-                  <div className="flex flex-wrap gap-2.5 mb-5">
+                  <div className="flex flex-wrap gap-2.5 mb-4">
                     <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-50 border border-slate-100/80 rounded-full text-[11px] font-bold text-slate-600 tracking-wide shadow-xs">
                       <svg className="w-3 h-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" />
@@ -263,13 +264,12 @@ export default function Careers() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-3 group-hover:text-[#44a0e3] transition-colors leading-tight line-clamp-2">
+                  <h3 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-2 group-hover:text-[#44a0e3] transition-colors leading-tight line-clamp-2">
                     {job.title}
                   </h3>
 
-                  {/* mt-auto pushes the date safely to the bottom of this text block */}
                   {job.posted_date && (
-                    <span className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 mt-auto mb-5">
+                    <span className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 mt-2 mb-4">
                       <svg className="w-3.5 h-3.5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
@@ -278,9 +278,9 @@ export default function Careers() {
                   )}
                 </div>
 
-                {/* Footer: mt-auto guarantees this always docks at the absolute bottom edge */}
-                <div className="relative z-10 flex justify-between items-center pt-4 mt-auto border-t border-slate-100 group-hover:border-slate-200 transition-colors">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 group-hover:text-[#44a0e3] transition-colors">
+                {/* Footer attached dynamically right under date */}
+                <div className="relative z-10 flex justify-between items-center pt-4 mt-2 border-t border-slate-100 group-hover:border-slate-200 transition-colors">
+                  <span className="text-[#44a0e3] font-poppins font-semibold text-sm hover:underline inline-flex items-center gap-1 shrink-0">
                     View Position
                   </span>
                   
@@ -293,162 +293,162 @@ export default function Careers() {
               </Link>
             ))}
           </div>
-        </motion.section>
+      </motion.section>
 
-        {/* Alignment Wrapper */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          
-          {/* General Application Section */}
-          <motion.section
+      {/* Alignment Wrapper */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        
+        {/* General Application Section (Tightened margin and gaps) */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          className="mt-20 mb-12 bg-white rounded-[3rem] p-8 md:p-12 flex flex-col lg:flex-row gap-10 lg:gap-12 items-center shadow-xs border border-slate-200"
+        >
+          {/* Left Side: Copy & Disclaimer */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
+            >
+              <span>{currentGenTagline}</span>
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="mt-1 font-poppins text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900 leading-tight"
+            >
+              {currentGenHeadline}
+            </motion.h2>
+            <p className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">
+              {currentGenDesc}
+            </p>
+
+            {/* Redesigned Anti-Fraud Disclaimer */}
+            <div className="bg-[#fdfcf8] p-5 rounded-3xl border border-slate-100 flex items-start gap-4">
+              <div className="w-10 h-10 rounded-3xl bg-[#e31414] flex items-center justify-center text-white shrink-0 font-bold my-auto shadow-sm">
+                !
+              </div>
+              <p className="md:text-sm text-slate-900 leading-relaxed">
+                <strong className="text-[#fc051a] font-bold">{currentDisclaimerTitle}</strong> {currentDisclaimerText}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Side: Premium Form */}
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="mt-32 mb-12 bg-white rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row gap-16 items-center shadow-xs border border-slate-200"
+            className="w-full lg:w-1/2 bg-slate-50 rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100"
           >
-            {/* Left Side: Copy & Disclaimer */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <motion.span
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
-              >
-                <span>{currentGenTagline}</span>
-              </motion.span>
-              <motion.h2
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
-              >
-                {currentGenHeadline}
-              </motion.h2>
-              <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-10">
-                {currentGenDesc}
-              </p>
-
-              {/* Redesigned Anti-Fraud Disclaimer */}
-              <div className="bg-[#fdfcf8] p-6 rounded-3xl border border-slate-100 flex items-start gap-5">
-                <div className="w-10 h-10 rounded-3xl bg-[#e31414] flex items-center justify-center text-white shrink-0 font-bold my-auto shadow-sm">
-                  !
+            {formSubmitted ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center font-bold text-3xl mx-auto mb-6">
+                  ✓
                 </div>
-                <p className="text-sm text-slate-900 leading-relaxed">
-                  <strong className="text-[#fc051a] font-bold">{currentDisclaimerTitle}</strong> {currentDisclaimerText}
+                <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
+                  Resume Submitted!
+                </h3>
+                <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+                  Thank you for submitting your details. Our HR team has been notified via Email & WhatsApp.
                 </p>
               </div>
-            </div>
-
-            {/* Right Side: Premium Form */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="w-full lg:w-1/2 bg-slate-50 rounded-[2.5rem] p-8 md:p-12 shadow-sm border border-slate-100"
-            >
-              {formSubmitted ? (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center font-bold text-3xl mx-auto mb-6">
-                    ✓
+            ) : (
+              <form className="flex flex-col gap-6" onSubmit={handleGeneralSubmit}>
+                {error && (
+                  <div className="p-4 rounded-xl bg-red-50 text-red-600 text-sm font-semibold border border-red-100">
+                    {error}
                   </div>
-                  <h3 className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight mb-4">
-                    Resume Submitted!
-                  </h3>
-                  <p className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
-                    Thank you for submitting your details. Our HR team has been notified via Email & WhatsApp.
-                  </p>
-                </div>
-              ) : (
-                <form className="flex flex-col gap-6" onSubmit={handleGeneralSubmit}>
-                  {error && (
-                    <div className="p-4 rounded-xl bg-red-50 text-red-600 text-sm font-semibold border border-red-100">
-                      {error}
-                    </div>
-                  )}
+                )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Name */}
-                    <div className="flex flex-col gap-2.5">
-                      <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-name">
-                        Full Name *
-                      </label>
-                      <input
-                        required
-                        type="text"
-                        id="gen-name"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-5 py-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10 transition-all text-sm font-medium text-slate-900 placeholder:text-slate-400"
-                        placeholder="John Doe"
-                      />
-                    </div>
-
-                    {/* Phone */}
-                    <div className="flex flex-col gap-2.5">
-                      <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-phone">
-                        Phone No. *
-                      </label>
-                      <input
-                        required
-                        type="tel"
-                        id="gen-phone"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full px-5 py-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10 transition-all text-sm font-medium text-slate-900 placeholder:text-slate-400"
-                        placeholder="+91 1234567890"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Name */}
                   <div className="flex flex-col gap-2.5">
-                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-email">
-                      Email Address *
+                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-name">
+                      Full Name *
                     </label>
                     <input
                       required
-                      type="email"
-                      id="gen-email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      type="text"
+                      id="gen-name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full px-5 py-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10 transition-all text-sm font-medium text-slate-900 placeholder:text-slate-400"
-                      placeholder="ks@example.com"
+                      placeholder="John Doe"
                     />
                   </div>
 
-                  {/* Resume */}
+                  {/* Phone */}
                   <div className="flex flex-col gap-2.5">
-                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-resume">
-                      Upload Resume *
+                    <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-phone">
+                      Phone No. *
                     </label>
                     <input
                       required
-                      type="file"
-                      id="gen-resume"
-                      accept=".pdf,.doc,.docx"
-                      onChange={(e) => setFile(e.target.files?.[0] || null)}
-                      className="w-full px-5 py-3.5 rounded-2xl border-2 border-transparent bg-white shadow-sm file:mr-4 file:py-2.5 file:px-6 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 transition-all cursor-pointer text-slate-500 text-sm font-medium focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10"
+                      type="tel"
+                      id="gen-phone"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-5 py-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10 transition-all text-sm font-medium text-slate-900 placeholder:text-slate-400"
+                      placeholder="+91 1234567890"
                     />
                   </div>
+                </div>
 
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full mt-2 bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold text-sm hover:bg-brand-green hover:text-slate-900 hover:shadow-lg transition-all flex justify-center items-center gap-2 cursor-pointer disabled:opacity-50"
-                  >
-                    {loading ? 'Submitting Resume...' : 'Send to Recruiter'}
-                  </button>
-                </form>
-              )}
-            </motion.div>
-          </motion.section>
-          
-        </div>
+                {/* Email */}
+                <div className="flex flex-col gap-2.5">
+                  <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-email">
+                    Email Address *
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    id="gen-email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-5 py-4 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10 transition-all text-sm font-medium text-slate-900 placeholder:text-slate-400"
+                    placeholder="ks@example.com"
+                  />
+                </div>
+
+                {/* Resume */}
+                <div className="flex flex-col gap-2.5">
+                  <label className="text-xs font-bold text-slate-700 uppercase tracking-wide" htmlFor="gen-resume">
+                    Upload Resume *
+                  </label>
+                  <input
+                    required
+                    type="file"
+                    id="gen-resume"
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    className="w-full px-5 py-3.5 rounded-2xl border-2 border-transparent bg-white shadow-sm file:mr-4 file:py-2.5 file:px-6 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 transition-all cursor-pointer text-slate-500 text-sm font-medium focus:outline-none focus:border-[#44a0e3]/40 focus:ring-4 focus:ring-[#44a0e3]/10"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full mt-2 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex justify-center items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
+                >
+                  {loading ? 'Submitting Resume...' : 'Send to Recruiter'}
+                </button>
+              </form>
+            )}
+          </motion.div>
+        </motion.section>
+        
       </div>
+    </div>
   );
 }
 

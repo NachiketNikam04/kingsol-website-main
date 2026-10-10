@@ -294,7 +294,7 @@ export default function ServiceDetail() {
         </div>
 
         {/* Main Split Two-Column Section (Tightened top/bottom spacing) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-t border[#fdfcf8] pt-10 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-10 mb-16">
           {/* Left Sticky Sidebar */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
