@@ -71,15 +71,15 @@ export default function Blogs() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-40 pb-[72px] text-slate-900">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900">
       <div className="max-w-7xl mx-auto px-6">
         {/* Dynamic Header Hero Section */}
-        <div className="mb-10">
+        <div className="mb-8">
           <motion.span
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block mb-8"
+            className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
           >
             <span>{currentTagline}</span>
           </motion.span>
@@ -87,7 +87,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+            className="mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
           >
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </motion.h1>
@@ -95,7 +95,7 @@ export default function Blogs() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="mt-6 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify"
+            className="mt-3 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5"
           >
             {currentSubtitle}
           </motion.p>
@@ -115,10 +115,10 @@ export default function Blogs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="mb-12 group"
+              className="mb-10 group"
             >
               <Link
-                className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center"
                 to={`/blogs/${blogs[0].slug}`}
               >
                 {/* Left: Featured Image */}
@@ -132,8 +132,8 @@ export default function Blogs() {
 
                 {/* Right: Featured Content */}
                 <div className="flex flex-col items-start">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="bg-[#b7f07a] text-slate-900 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="bg-[#44a0e3] text-slate-900 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase shadow-sm">
                       FEATURED ARTICLE
                     </span>
                     <span className="text-sm text-slate-700 font-medium">
@@ -141,15 +141,21 @@ export default function Blogs() {
                     </span>
                   </div>
 
-                  <h2 className="mt-5 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight group-hover:text-[#44a0e3] transition-colors leading-tight mb-5">
+                  <h2 className="mt-0 text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight group-hover:text-[#44a0e3] transition-colors mb-3">
                     {blogs[0].title}
                   </h2>
 
-                  <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">{blogs[0].excerpt}</p>
+                  <p className="mt-0 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-5">
+                    {blogs[0].excerpt}
+                  </p>
 
                   <div className="flex items-center text-sm font-semibold text-slate-900 border-b border-slate-900 pb-1 group-hover:text-[#44a0e3] group-hover:border-[#44a0e3] transition-colors">
                     <span>Read Full Article</span>
-                    <span className="ml-2 group-hover:translate-x-1 transition-transform"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+                    <span className="ml-2 group-hover:translate-x-1 transition-transform">
+                      <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -158,20 +164,20 @@ export default function Blogs() {
             {/* Divider */}
             {blogs.length > 1 && (
               <>
-                <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center justify-between mb-6">
                   <motion.h3
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="mt-5 text-2xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
+                    className="mt-0 text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
                   >
                     All Recent Articles
                   </motion.h3>
                 </div>
 
                 {/* Standard 3-Column Grid for Remaining Posts */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {blogs.slice(1).map((post, index) => (
                     <motion.div
                       key={post.id}
@@ -179,10 +185,10 @@ export default function Blogs() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-100px" }}
                       transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
-                      className="bg-white rounded-[2.5rem] p-6 border border-slate-200 shadow-sm flex flex-col justify-between group hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] transition-all"
+                      className="bg-white rounded-[2.5rem] p-5 border border-slate-200 shadow-sm flex flex-col justify-between group hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] transition-all"
                     >
                       <Link className="block flex-grow" to={`/blogs/${post.slug}`}>
-                        <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden mb-6 bg-slate-100 relative">
+                        <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden mb-4 bg-slate-100 relative">
                           <img
                             src={getAssetUrl(post.image_url) || 'https://images.unsplash.com/photo-1620283085439-3f721bc62f92?q=80&w=800&auto=format&fit=crop'}
                             alt={post.title}
@@ -190,7 +196,7 @@ export default function Blogs() {
                           />
                         </div>
 
-                        <div className="flex items-center gap-2 mb-3">
+                        <div className="flex items-center gap-2 mb-2">
                           <span className="text-xs font-bold text-brand-blue uppercase">{post.author}</span>
                           <span className="text-slate-400">•</span>
                           <span className="text-xs text-slate-500 font-medium">
@@ -198,18 +204,18 @@ export default function Blogs() {
                           </span>
                         </div>
 
-                        <h4 className="text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-4 group-hover:text-[#44a0e3] transition-colors leading-snug">
+                        <h4 className="mt-0 text-xl md:text-2xl font-bold font-poppins text-slate-900 mb-2 group-hover:text-[#44a0e3] transition-colors leading-snug">
                           {post.title}
                         </h4>
 
-                        <p className="mt-2 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-3">
+                        <p className="mt-0 mb-4 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-3">
                           {post.excerpt}
                         </p>
                       </Link>
 
                       <Link
                         to={`/blogs/${post.slug}`}
-                        className="w-full bg-slate-50 group-hover:bg-[#44a0e3] group-hover:text-white text-slate-800 text-xs font-semibold py-3 rounded-xl block text-center transition-colors"
+                        className="w-full bg-slate-50 group-hover:bg-[#44a0e3] group-hover:text-white text-slate-800 text-xs font-semibold py-3 rounded-xl block text-center transition-colors mt-auto"
                       >
                         Read Article <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       </Link>

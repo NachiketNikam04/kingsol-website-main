@@ -79,7 +79,7 @@ export default function BlogDetail() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="inline-block px-4 py-2 bg-[#9beb46] text-slate-900 rounded-full text-xs font-bold tracking-widest uppercase mb-6 shadow-md"
+              className="inline-block px-4 py-2 bg-[#44a0e3] text-slate-900 rounded-full text-xs font-bold tracking-widest uppercase mb-6 shadow-md"
             >
               KINGSOL INSIGHTS
             </motion.span>
@@ -137,7 +137,7 @@ export default function BlogDetail() {
         transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         className="max-w-3xl mx-auto px-6 mt-12"
       >
-        <div className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify space-y-6">
+        <div className="font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify space-y-6">
           {post.content}
         </div>
 
