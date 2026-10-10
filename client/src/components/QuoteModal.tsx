@@ -292,10 +292,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           {/* Modal Header */}
           <div className="px-6 sm:px-8 pt-6 pb-4 flex items-start justify-between border-b border-slate-100 bg-slate-50/50">
             <div>
-              <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
+              <h2 className="font-poppins text-4xl font-bold tracking-tight text-gray-900">
                 Request a Custom Quote
               </h2>
-              <p className="mt-1 font-poppins text-base md:text-lg text-slate-500 leading-relaxed whitespace-pre-line text-justify">
+              <p className="mt-1 font-poppins text-base md:text-md text-slate-500 leading-relaxed whitespace-pre-line text-justify">
                 Connect with our technical solar team for Tier-1 pricing, project sizing & datasheets.
               </p>
             </div>
@@ -538,7 +538,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-7 py-3 rounded-full bg-brand-green hover:bg-[#68ac49] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 order-1 sm:order-2"
+                    className="bg-white text-slate-900 px-7 py-3 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 order-1 sm:order-2 relative z-20 group/btn"
                   >
                     {isSubmitting ? (
                       <>
