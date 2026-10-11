@@ -650,7 +650,7 @@ export const Navbar: React.FC = () => {
           <div className="hidden lg:block">
             <button
               onClick={() => setIsQuoteOpen(true)}
-              className="bg-[#44a0e3] hover:bg-[#3b8bc5] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 inline-block cursor-pointer shadow-xs"
+              className="group relative px-6 py-2.5 rounded-full bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] text-sm font-semibold transition-all duration-500 inline-flex items-center justify-center gap-2 cursor-pointer overflow-hidden shadow-[inset_0px_2px_4px_rgba(255,255,255,0.4),0px_4px_12px_rgba(68,160,227,0.3)] hover:shadow-[0px_4px_20px_rgba(68,160,227,0.5)] hover:-translate-y-0.5"
             >
               Get Quote
             </button>

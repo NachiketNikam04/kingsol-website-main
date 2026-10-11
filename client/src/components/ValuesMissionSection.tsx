@@ -131,48 +131,47 @@ export default function ValuesMissionSection() {
           </motion.h2>
         </div>
 
-        {/* Phase 2: Vision & Mission (Top Row Divided by a single line, directly on background) */}
+        {/* Phase 2: Vision & Mission (Two boxed cards with shadow) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#fdfcf8] mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12"
         >
-          {/* Mission Column */}
-          <div className="py-8 md:py-4 md:pr-10 flex flex-col items-start justify-start">
-            {/* Title Wrapper to center the glow */}
-            <div className="relative inline-flex items-center mb-4">
-              {/* Blue circle centered exactly behind the text */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
-              
-              <div className="relative z-10 flex items-center gap-3">
+          {/* Mission Card */}
+          {/* overflow-hidden keeps the blue glow circle inside the card border */}
+          <div className="relative overflow-hidden h-full bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200/80 shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:shadow-[0_25px_50px_rgba(68,160,227,0.25)] transition-shadow duration-500 flex flex-col items-start justify-start">
+            {/* Blue glow circle in the top-right corner of the card */}
+            <div className="absolute -top-20 -right-20 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
+
+            <div className="relative z-10 inline-flex items-center mb-4">
+              <div className="flex items-center gap-3">
                 <Rocket className="w-7 h-7 text-[#44a0e3]" />
                 <span className="text-[#44a0e3] font-bold text-sm tracking-wider uppercase mt-1">
                   {currentMissionTitle}
                 </span>
               </div>
             </div>
-            <h3 className="relative z-10 text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+            <h3 className="relative z-10 w-full text-align-left text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
               {currentMissionDesc}
             </h3>
           </div>
 
-          {/* Vision Column */}
-          <div className="py-8 md:py-4 md:pl-10 flex flex-col items-start justify-start">
-            {/* Title Wrapper to center the glow */}
-            <div className="relative inline-flex items-center mb-4">
-              {/* blue circle centered exactly behind the text */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
-              
-              <div className="relative z-10 flex items-center gap-3">
+          {/* Vision Card */}
+          <div className="relative overflow-hidden h-full bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200/80 shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:shadow-[0_25px_50px_rgba(68,160,227,0.25)] transition-shadow duration-500 flex flex-col items-start justify-start">
+            {/* Blue glow circle in the top-right corner of the card */}
+            <div className="absolute -top-20 -right-20 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
+
+            <div className="relative z-10 inline-flex items-center mb-4">
+              <div className="flex items-center gap-3">
                 <Eye className="w-7 h-7 text-[#44a0e3]" />
                 <span className="text-[#44a0e3] font-bold text-sm tracking-wider uppercase mt-1">
                   {currentVisionTitle}
                 </span>
               </div>
             </div>
-            <h3 className="relative z-10 text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+            <h3 className="relative z-10 w-full text-justify text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
               {currentVisionDesc}
             </h3>
           </div>
