@@ -153,7 +153,7 @@ export default function ValuesMissionSection() {
                 </span>
               </div>
             </div>
-            <h3 className="relative z-10 w-full text-align-left text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
+            <h3 className="relative z-10 w-full text-justify text-xl md:text-2xl font-semibold text-slate-900 leading-snug">
               {currentMissionDesc}
             </h3>
           </div>
