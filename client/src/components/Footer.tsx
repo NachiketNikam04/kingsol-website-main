@@ -187,14 +187,13 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 py-6">
           
-          {/* Logo & Bio Column - Converted to flex-col to manage spacing perfectly */}
+          {/* Logo & Bio Column */}
           <div className="lg:col-span-2 flex flex-col h-full">
             <Link className="inline-flex items-center gap-3 w-fit mb-4" to="/">
               <img
                 src={getAssetUrl(activeFooterLogo)}
                 alt="Kingsol Solar Energy"
-                // Added shrink-0 and ensured full original height
-                className="h-[64.68px] md:h-[73.92px] w-auto max-w-[300px] object-contain object-left"
+                className="h-[64.68px] md:h-[73.92px] w-auto max-w-[300px] object-contain object-left shrink-0"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = '/logo.png';
                 }}
@@ -208,14 +207,13 @@ export const Footer: React.FC = () => {
             <div>
               <button
                 onClick={() => setIsQuoteOpen(true)}
-                // Re-added hover:underline here as requested
                 className="bg-white text-[#44a0e3] text-xs font-montserrat font-semibold px-4 py-1.5 rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:underline transition-all inline-block cursor-pointer"
               >
                 <span>Request a Free Quote</span>
               </button>
             </div>
 
-            {/* Social Media SVGs - Using mt-auto to push them down to the bottom of the container */}
+            {/* Social Media SVGs */}
             <div className="mt-auto pt-4 flex items-center gap-3.5">
               {/* Instagram */}
               <a href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform duration-300 hover:-translate-y-1 hover:scale-110 inline-block">
