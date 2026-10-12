@@ -121,7 +121,7 @@ export const PartnersSection: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* Centered Flexbox Container using stable negative margins instead of gap */}
+        {/* Centered Flexbox Container: justify-center keeps an incomplete last row (e.g. 2 logos) in the middle */}
         <div className="flex flex-wrap justify-center items-stretch -mx-2 sm:-mx-3">
           {activeLogos.map((logo, idx) => {
             const destination = logo.linked_brand
@@ -146,9 +146,14 @@ export const PartnersSection: React.FC = () => {
             );
 
             return (
-              <motion.div 
-                key={logo.id || idx} 
-                variants={itemVariants}
+              // Each card animates on its own (instead of waiting for the parent section's variant signal).
+              // Cards that mount after the live API data arrives therefore can never get stuck at opacity 0.
+              <motion.div
+                key={logo.id || idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1], delay: (idx % 4) * 0.1 }}
                 // Bulletproof standard fractions for guaranteed rendering
                 className="w-1/2 md:w-1/3 lg:w-1/4 p-2 sm:p-3 flex"
               >
