@@ -56,7 +56,15 @@ function resolveCoordinates(locationStr: string): [number, number] | null {
   return null;
 }
 
-// Factory function for custom location pin with floor mirror/reflection effect
+// Custom Leaflet icon for Pune Headquarters (loads custom image from public/hq-marker.png)
+const hqIcon = L.icon({
+  iconUrl: '/favicon.png',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -40],
+});
+
+// Factory function for standard custom location pin with floor mirror/reflection effect
 const createReflectivePinIcon = (isHq: boolean) => {
   return L.divIcon({
     className: 'custom-leaflet-div-icon',
@@ -79,10 +87,33 @@ const createReflectivePinIcon = (isHq: boolean) => {
   });
 };
 
+export interface LocationItem {
+  label?: string;
+  name?: string;
+  isHQ?: boolean;
+  coords?: [number, number];
+}
+
 interface OfficeMapProps {
-  locations?: string[];
+  locations?: (string | LocationItem)[];
   className?: string;
 }
+
+const DEFAULT_LOCATIONS: LocationItem[] = [
+  { label: 'Pune, Maharashtra (Headquarters)', isHQ: true },
+  { label: 'Bhiwandi, Maharashtra' },
+  { label: 'Ahmedabad, Gujarat' },
+  { label: 'Bengaluru, Karnataka' },
+  { label: 'Chennai, Tamil Nadu' },
+  { label: 'Jaipur, Rajasthan' },
+  { label: 'Kolkata, West Bengal' },
+  { label: 'Hyderabad, Telangana' },
+  { label: 'Noida, Delhi NCR' },
+  { label: 'Goa' },
+  { label: 'Muktainagar, Maharashtra' },
+  { label: 'Bhubaneshwar, Odisha' },
+  { label: 'Ludhiana, Punjab' },
+];
 
 export const OfficeMap: React.FC<OfficeMapProps> = ({
   locations = [],
@@ -182,45 +213,65 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
     });
   };
 
-  // Compile markers from warehouse locations & ensure Pune HQ is present
+  // Compile markers from warehouse locations & ensure Pune entry has isHQ: true
   const markers = useMemo(() => {
-    const rawLocations = Array.isArray(locations) && locations.length > 0
-      ? locations
-      : [
-          'Pune, Maharashtra (Headquarters)',
-          'Bhiwandi, Maharashtra',
-          'Ahmedabad, Gujarat',
-          'Bengaluru, Karnataka',
-          'Chennai, Tamil Nadu',
-          'Jaipur, Rajasthan',
-          'Kolkata, West Bengal',
-          'Hyderabad, Telangana',
-          'Noida, Delhi NCR',
-          'Goa',
-          'Muktainagar, Maharashtra',
-          'Bhubaneshwar, Odisha',
-          'Ludhiana, Punjab',
-        ];
+    const rawLocations: LocationItem[] =
+      Array.isArray(locations) && locations.length > 0
+        ? locations.map((item) => {
+            if (typeof item === 'string') {
+              const isPune =
+                item.toLowerCase().includes('pune') ||
+                item.toLowerCase().includes('vardhaman') ||
+                item.toLowerCase().includes('headquarters');
+              return {
+                label: item,
+                isHQ: isPune,
+              };
+            }
+            const isPune =
+              item.isHQ ??
+              Boolean(
+                (item.label || item.name || '')
+                  .toLowerCase()
+                  .includes('pune')
+              );
+            return {
+              ...item,
+              label: item.label || item.name || '',
+              isHQ: isPune,
+            };
+          })
+        : DEFAULT_LOCATIONS;
 
     const hasPune = rawLocations.some(
-      (loc) => loc.toLowerCase().includes('pune') || loc.toLowerCase().includes('vardhaman')
+      (loc) =>
+        loc.isHQ ||
+        (loc.label &&
+          (loc.label.toLowerCase().includes('pune') ||
+            loc.label.toLowerCase().includes('vardhaman')))
     );
+
     const activeLocations = hasPune
       ? rawLocations
-      : ['Pune, Maharashtra (Headquarters)', ...rawLocations];
+      : [{ label: 'Pune, Maharashtra (Headquarters)', isHQ: true }, ...rawLocations];
 
     return activeLocations
       .map((loc) => {
-        const coords = resolveCoordinates(loc);
+        const text = loc.label || loc.name || '';
+        const coords = loc.coords || resolveCoordinates(text);
         if (!coords) return null;
-        const isHq = loc.toLowerCase().includes('pune') || loc.toLowerCase().includes('headquarters');
+        const isHQ = Boolean(
+          loc.isHQ ||
+            text.toLowerCase().includes('pune') ||
+            text.toLowerCase().includes('headquarters')
+        );
         return {
-          label: loc,
+          label: text,
           coords,
-          isHq,
+          isHQ,
         };
       })
-      .filter((m): m is { label: string; coords: [number, number]; isHq: boolean } => m !== null);
+      .filter((m): m is { label: string; coords: [number, number]; isHQ: boolean } => m !== null);
   }, [locations]);
 
   return (
@@ -230,8 +281,20 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
         'w-full h-full rounded-2xl overflow-hidden relative z-0 bg-[#fdfcf8]'
       }
     >
-      {/* Self-contained CSS injection for custom reflective marker, tooltip, and badge styling */}
+      {/* Self-contained CSS injection for focus outline reset, custom reflective marker, tooltip, and badge styling */}
       <style>{`
+        /* Remove harsh black focus box on click or keyboard tab on states */
+        .leaflet-interactive:focus,
+        path.leaflet-interactive:focus,
+        svg.leaflet-interactive:focus,
+        .leaflet-container:focus,
+        .leaflet-container *:focus {
+          outline: none !important;
+        }
+        path.leaflet-interactive {
+          outline: none !important;
+        }
+
         .custom-leaflet-div-icon {
           background: transparent !important;
           border: none !important;
@@ -303,19 +366,19 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
           />
         )}
 
-        {/* Custom Reflective Pin Markers for each Fulfillment Hub & HQ */}
-        {markers.map((marker, idx) => (
+        {/* Custom Pin Markers: Custom image icon for HQ, reflective SVG for other hubs */}
+        {markers.map((loc, idx) => (
           <Marker
             key={idx}
-            position={marker.coords}
-            icon={createReflectivePinIcon(marker.isHq)}
+            position={loc.coords}
+            icon={loc.isHQ ? hqIcon : createReflectivePinIcon(false)}
           >
             <Popup>
               <div className="font-poppins text-xs font-medium text-slate-800 p-0.5">
                 <strong className="text-[#44a0e3] block mb-0.5 font-bold text-xs">
-                  {marker.isHq ? 'Kingsol Energy HQ' : 'Kingsol Fulfillment Hub'}
+                  {loc.isHQ ? 'Kingsol Energy HQ' : 'Kingsol Fulfillment Hub'}
                 </strong>
-                <span className="text-slate-600 block">{marker.label}</span>
+                <span className="text-slate-600 block">{loc.label}</span>
               </div>
             </Popup>
           </Marker>

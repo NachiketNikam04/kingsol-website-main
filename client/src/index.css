@@ -43,3 +43,16 @@
 .animate-marquee-reverse {
   animation: marquee-reverse 30s linear infinite;
 }
+
+/* Leaflet interactive SVG focus outline reset */
+.leaflet-interactive:focus,
+path.leaflet-interactive:focus,
+svg.leaflet-interactive:focus,
+.leaflet-container:focus,
+.leaflet-container *:focus {
+  outline: none !important;
+}
+path.leaflet-interactive {
+  outline: none !important;
+}
+
