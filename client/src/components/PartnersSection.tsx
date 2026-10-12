@@ -121,8 +121,8 @@ export const PartnersSection: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* Strict 4-Column Grid Container */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        {/* Centered Flexbox Container (Replaces Strict Grid) */}
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
           {activeLogos.map((logo, idx) => {
             const destination = logo.linked_brand
               ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
@@ -131,7 +131,8 @@ export const PartnersSection: React.FC = () => {
             const isExternal =
               destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
 
-            const cardClasses = `bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
+            // Added w-full h-full so the card fills the flex child wrapper evenly
+            const cardClasses = `w-full h-full bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
               destination
                 ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-400'
                 : 'hover:shadow-md'
@@ -146,7 +147,12 @@ export const PartnersSection: React.FC = () => {
             );
 
             return (
-              <motion.div key={logo.id || idx} variants={itemVariants}>
+              <motion.div 
+                key={logo.id || idx} 
+                variants={itemVariants}
+                // Flex basis width calculations for 2, 3, and 4 column breaks
+                className="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
+              >
                 {destination ? (
                   isExternal ? (
                     <a
