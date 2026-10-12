@@ -121,8 +121,8 @@ export const PartnersSection: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* Centered Flexbox Container (Replaces Strict Grid) */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+        {/* Centered Flexbox Container using stable negative margins instead of gap */}
+        <div className="flex flex-wrap justify-center items-stretch -mx-2 sm:-mx-3">
           {activeLogos.map((logo, idx) => {
             const destination = logo.linked_brand
               ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
@@ -131,7 +131,6 @@ export const PartnersSection: React.FC = () => {
             const isExternal =
               destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
 
-            // Added w-full h-full so the card fills the flex child wrapper evenly
             const cardClasses = `w-full h-full bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
               destination
                 ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-400'
@@ -150,8 +149,8 @@ export const PartnersSection: React.FC = () => {
               <motion.div 
                 key={logo.id || idx} 
                 variants={itemVariants}
-                // Flex basis width calculations for 2, 3, and 4 column breaks
-                className="flex w-[calc(50%-0.5rem)] sm:w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
+                // Bulletproof standard fractions for guaranteed rendering
+                className="w-1/2 md:w-1/3 lg:w-1/4 p-2 sm:p-3 flex"
               >
                 {destination ? (
                   isExternal ? (
