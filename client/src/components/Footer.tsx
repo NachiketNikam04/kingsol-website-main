@@ -189,8 +189,8 @@ export const Footer: React.FC = () => {
           
           {/* Logo & Bio Column */}
           <div className="lg:col-span-2 flex flex-col h-full">
-            {/* Added -ml-4 to pull the image left to offset its internal transparent padding */}
-            <Link className="-ml-4 inline-flex items-center gap-3 w-fit mb-4" to="/">
+            {/* Increased negative margin to -ml-6 or -ml-8 */}
+            <Link className="-ml-8 inline-flex items-center gap-3 w-fit mb-4" to="/">
               <img
                 src={getAssetUrl(activeFooterLogo)}
                 alt="Kingsol Solar Energy"
