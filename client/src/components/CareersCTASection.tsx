@@ -61,7 +61,8 @@ export default function CareersCTASection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-        className="max-w-7xl mx-auto rounded-[2.5rem] pt-12 sm:pt-16 px-6 sm:px-12 md:px-16 pb-12 sm:pb-16 text-center flex flex-col items-center overflow-hidden relative shadow-2xl shadow-slate-200/60 border border-slate-200/80 group"
+        // Adjusted padding: increased top padding, decreased bottom padding to push content down while maintaining exact container height
+        className="max-w-7xl mx-auto rounded-[2.5rem] pt-20 sm:pt-24 px-6 sm:px-12 md:px-16 pb-4 sm:pb-8 text-center flex flex-col items-center overflow-hidden relative shadow-2xl shadow-slate-200/60 border border-slate-200/80 group"
       >
         {/* Dynamic Background Image */}
         <div
@@ -71,7 +72,7 @@ export default function CareersCTASection() {
           }}
         />
         
-        {/* Lighter Frosted Glass Overlay - Reduced opacity and blur to reveal the image */}
+        {/* Lighter Frosted Glass Overlay */}
         <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-10 pointer-events-none" />
 
         {/* Tagline */}
