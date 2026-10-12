@@ -140,8 +140,12 @@ export default function ValuesMissionSection() {
           className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12"
         >
           {/* Mission Card */}
-          {/* overflow-hidden keeps the blue glow circle inside the card border */}
+          {/* overflow-hidden keeps the blue glow circle AND the new bottom line inside the card border curves */}
           <div className="relative overflow-hidden h-full bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200/80 shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:shadow-[0_25px_50px_rgba(68,160,227,0.25)] transition-shadow duration-500 flex flex-col items-start justify-start">
+            
+            {/* NEW: Gradient line on the bottom fading into a deep complementary blue */}
+            <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#44a0e3] to-[#0c4a6e] z-10" />
+
             {/* Blue glow circle in the top-right corner of the card */}
             <div className="absolute -top-20 -right-20 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
 
@@ -160,6 +164,10 @@ export default function ValuesMissionSection() {
 
           {/* Vision Card */}
           <div className="relative overflow-hidden h-full bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200/80 shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:shadow-[0_25px_50px_rgba(68,160,227,0.25)] transition-shadow duration-500 flex flex-col items-start justify-start">
+            
+            {/* NEW: Gradient line on the bottom fading into a deep complementary blue */}
+            <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#44a0e3] to-[#0c4a6e] z-10" />
+
             {/* Blue glow circle in the top-right corner of the card */}
             <div className="absolute -top-20 -right-20 w-[240px] h-[240px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
 

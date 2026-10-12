@@ -167,13 +167,18 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
                 return (
                   <div
                     key={idx}
-                    className="flex items-center gap-4 bg-white/40 backdrop-blur-md px-4 py-3 rounded-xl border border-white/60 shadow-[0_4px_15px_rgba(0,0,0,0.02)] transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(68,160,227,0.1)] group cursor-default"
+                    className="relative overflow-hidden flex items-center gap-4 bg-white/40 backdrop-blur-md px-4 py-3 rounded-xl border border-white/60 shadow-[0_4px_15px_rgba(0,0,0,0.02)] transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(68,160,227,0.1)] group cursor-default"
                   >
-                    <div className="w-9 h-9 rounded-full bg-white/70 backdrop-blur-sm border border-white flex items-center justify-center shrink-0 shadow-sm group-hover:border-[#44a0e3]/30 transition-colors">
+                    {/* Glow circle in the top-right corner */}
+                    <div className="absolute -top-10 -right-10 w-[120px] h-[120px] rounded-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#44a0e3]/30 via-[#44a0e3]/5 to-transparent pointer-events-none z-0" />
+
+                    {/* Added relative z-10 to keep content above the background glow */}
+                    <div className="relative z-10 w-9 h-9 rounded-full bg-white/70 backdrop-blur-sm border border-white flex items-center justify-center shrink-0 shadow-sm border-[#44a0e3]/30 group-hover:bg-[#44a0e3]/30 transition-colors">
                       <MapPin className="w-4 h-4 text-[#44a0e3]" />
                     </div>
 
-                    <div className="flex flex-col min-w-0 flex-1">
+                    {/* Added relative z-10 to keep text above the background glow */}
+                    <div className="relative z-10 flex flex-col min-w-0 flex-1">
                       <p className="font-poppins text-sm font-semibold text-slate-800 leading-tight truncate group-hover:text-[#44a0e3] transition-colors">
                         {city}
                       </p>
@@ -182,12 +187,8 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
                           {region}
                         </p>
                       )}
-                    </div>
-
-                    <span className="font-poppins text-xs font-semibold text-slate-300 group-hover:text-[#44a0e3]/50 transition-colors shrink-0">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                  </div>
+                   </div>
+                 </div>
                 );
               })}
             </motion.div>
