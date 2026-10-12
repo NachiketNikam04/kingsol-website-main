@@ -68,6 +68,10 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
     'Kolkata, West Bengal',
     'Hyderabad, Telangana',
     'Noida, Delhi NCR',
+    'Goa',
+    'Muktainagar, Maharashtra',
+    'Bhubaneshwar, Odisha',
+    'Ludhiana, Punjab',
   ];
 
   const currentLocations =

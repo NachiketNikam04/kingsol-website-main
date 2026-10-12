@@ -2,6 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, GeoJSON, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
+// =========================================================================
+// CUSTOM LOCATION PIN SVG TEMPLATE
+// Easily swappable icon definition for custom pins or brand SVGs
+// =========================================================================
+export const LOCATION_PIN_SVG = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="24" fill="#44a0e3" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-sm">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+    <circle cx="12" cy="9" r="2.5" fill="#ffffff"/>
+  </svg>
+`;
+
 // Known coordinates for Indian warehouse hubs & major commercial centres
 const CITY_COORDINATES: Record<string, [number, number]> = {
   pune: [18.5912, 73.7389],
@@ -15,6 +26,11 @@ const CITY_COORDINATES: Record<string, [number, number]> = {
   hyderabad: [17.3850, 78.4867],
   noida: [28.5355, 77.3910],
   delhi: [28.6139, 77.2090],
+  goa: [15.2993, 74.1240],
+  muktainagar: [21.0431, 76.0494],
+  bhubaneshwar: [20.2961, 85.8245],
+  bhubaneswar: [20.2961, 85.8245],
+  ludhiana: [30.9010, 75.8573],
   mumbai: [19.0760, 72.8777],
   surat: [21.1702, 72.8311],
   nagpur: [21.1458, 79.0882],
@@ -40,20 +56,26 @@ function resolveCoordinates(locationStr: string): [number, number] | null {
   return null;
 }
 
-// Factory function for custom pulsing markers (#44a0e3)
-const createPulsingIcon = (isHq: boolean) => {
+// Factory function for custom location pin with floor mirror/reflection effect
+const createReflectivePinIcon = (isHq: boolean) => {
   return L.divIcon({
     className: 'custom-leaflet-div-icon',
     html: `
-      <div class="leaflet-pulsing-marker-wrapper">
-        <div class="pulse-ring"></div>
-        <div class="pulse-dot"></div>
-        ${isHq ? '<div class="hq-badge">HQ</div>' : ''}
+      <div class="flex flex-col items-center cursor-pointer group">
+        <!-- Main Location Pin -->
+        <div class="relative z-10 flex flex-col items-center transition-transform duration-200 group-hover:scale-110">
+          ${LOCATION_PIN_SVG}
+          ${isHq ? '<div class="hq-badge">HQ</div>' : ''}
+        </div>
+        <!-- Floor Mirror / Reflection Effect -->
+        <div class="transform scale-y-[-1] opacity-30 -mt-1 blur-[1px] pointer-events-none select-none">
+          ${LOCATION_PIN_SVG}
+        </div>
       </div>
     `,
-    iconSize: [26, 26],
-    iconAnchor: [13, 13],
-    popupAnchor: [0, -15],
+    iconSize: [26, 44],
+    iconAnchor: [13, 24],
+    popupAnchor: [0, -26],
   });
 };
 
@@ -69,7 +91,10 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
   const [geoData, setGeoData] = useState<any>(null);
   const [loadingGeo, setLoadingGeo] = useState<boolean>(true);
 
-  // Fetch GeoJSON of Indian States (local optimized asset with remote fallback)
+  // Modern Post-2014 India States GeoJSON (includes distinct Telangana and Andhra Pradesh)
+  const REMOTE_GEOJSON_URL =
+    'https://raw.githubusercontent.com/geohacker/india/master/state/india_telengana.geojson';
+
   useEffect(() => {
     let isMounted = true;
 
@@ -78,20 +103,16 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
       try {
         let res = await fetch('/india-states.json');
         if (!res.ok) {
-          res = await fetch(
-            'https://raw.githubusercontent.com/Subhash9325/GeoJson-Data-of-Indian-States/master/Indian_States'
-          );
+          res = await fetch(REMOTE_GEOJSON_URL);
         }
         const json = await res.json();
         if (isMounted) {
           setGeoData(json);
         }
       } catch (err) {
-        console.warn('⚠️ [OfficeMap] Local GeoJSON fetch notice, retrying remote:', err);
+        console.warn('⚠️ [OfficeMap] Local GeoJSON fetch notice, retrying remote URL:', err);
         try {
-          const fallbackRes = await fetch(
-            'https://raw.githubusercontent.com/Subhash9325/GeoJson-Data-of-Indian-States/master/Indian_States'
-          );
+          const fallbackRes = await fetch(REMOTE_GEOJSON_URL);
           const fallbackJson = await fallbackRes.json();
           if (isMounted) {
             setGeoData(fallbackJson);
@@ -113,34 +134,36 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
     };
   }, []);
 
-  // India States Path Styling: light green/gray fill (#e6efe9) with dark gray/black borders (#333)
+  // Brand Blue GeoJSON path styling: fillColor #44a0e3, fillOpacity 0.1, border #44a0e3, weight 1
   const geoJsonStyle = useMemo(() => {
     return () => ({
-      fillColor: '#e6efe9',
-      fillOpacity: 1,
-      color: '#333333',
+      fillColor: '#44a0e3',
+      fillOpacity: 0.1,
+      color: '#44a0e3',
       weight: 1,
       opacity: 0.85,
     });
   }, []);
 
-  // Slight hover reaction on states
+  // Interactive subtle hover reaction on states
   const onEachFeature = (_feature: any, layer: any) => {
     layer.on({
       mouseover: (e: any) => {
         const target = e.target;
         target.setStyle({
-          fillColor: '#dbe8df',
+          fillColor: '#44a0e3',
+          fillOpacity: 0.22,
           weight: 1.5,
-          color: '#1e293b',
+          color: '#0284c7',
         });
       },
       mouseout: (e: any) => {
         const target = e.target;
         target.setStyle({
-          fillColor: '#e6efe9',
+          fillColor: '#44a0e3',
+          fillOpacity: 0.1,
           weight: 1,
-          color: '#333333',
+          color: '#44a0e3',
         });
       },
     });
@@ -148,7 +171,24 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
 
   // Compile markers from warehouse locations & ensure Pune HQ is present
   const markers = useMemo(() => {
-    const rawLocations = Array.isArray(locations) && locations.length > 0 ? locations : [];
+    const rawLocations = Array.isArray(locations) && locations.length > 0
+      ? locations
+      : [
+          'Pune, Maharashtra (Headquarters)',
+          'Bhiwandi, Maharashtra',
+          'Ahmedabad, Gujarat',
+          'Bengaluru, Karnataka',
+          'Chennai, Tamil Nadu',
+          'Jaipur, Rajasthan',
+          'Kolkata, West Bengal',
+          'Hyderabad, Telangana',
+          'Noida, Delhi NCR',
+          'Goa',
+          'Muktainagar, Maharashtra',
+          'Bhubaneshwar, Odisha',
+          'Ludhiana, Punjab',
+        ];
+
     const hasPune = rawLocations.some(
       (loc) => loc.toLowerCase().includes('pune') || loc.toLowerCase().includes('vardhaman')
     );
@@ -177,69 +217,29 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
         'w-full h-full rounded-2xl overflow-hidden relative z-0 bg-[#fdfcf8]'
       }
     >
-      {/* Self-contained CSS injection for custom pulsing animations and badge styling */}
+      {/* Self-contained CSS injection for custom reflective marker and badge styling */}
       <style>{`
         .custom-leaflet-div-icon {
           background: transparent !important;
           border: none !important;
         }
-        .leaflet-pulsing-marker-wrapper {
-          position: relative;
-          width: 26px;
-          height: 26px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .leaflet-pulsing-marker-wrapper .pulse-ring {
+        .hq-badge {
           position: absolute;
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          border: 1px solid #44a0e3;
-          background-color: rgba(68, 160, 227, 0.2);
-          animation: kingsolMapPulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-          pointer-events: none;
-        }
-        .leaflet-pulsing-marker-wrapper .pulse-dot {
-          position: relative;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background-color: #44a0e3;
-          border: 1.5px solid #ffffff;
-          box-shadow: 0 0 6px rgba(68, 160, 227, 0.85);
-          z-index: 2;
-        }
-        .leaflet-pulsing-marker-wrapper .hq-badge {
-          position: absolute;
-          top: 22px;
-          left: 50%;
-          transform: translateX(-50%);
+          top: -6px;
+          right: -8px;
           background-color: #0f172a;
           color: #ffffff;
-          font-size: 9px;
+          font-size: 8px;
           font-weight: 700;
           font-family: 'Poppins', sans-serif;
-          padding: 1px 5px;
+          padding: 1px 4px;
           border-radius: 4px;
-          border: 1px solid rgba(68, 160, 227, 0.4);
+          border: 1px solid rgba(68, 160, 227, 0.6);
           letter-spacing: 0.5px;
           line-height: 1.2;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
           white-space: nowrap;
           pointer-events: none;
-          z-index: 3;
-        }
-        @keyframes kingsolMapPulse {
-          0% {
-            transform: scale(0.5);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(2.3);
-            opacity: 0;
-          }
         }
       `}</style>
 
@@ -266,22 +266,22 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
         className="w-full h-full"
         style={{ backgroundColor: '#fdfcf8' }}
       >
-        {/* Render India State Boundaries with clean styling (No raster tiles) */}
+        {/* Render India State Boundaries with Brand Blue Paths (No raster tiles) */}
         {geoData && (
           <GeoJSON
-            key="india-states-geojson"
+            key="india-states-geojson-telangana"
             data={geoData}
             style={geoJsonStyle}
             onEachFeature={onEachFeature}
           />
         )}
 
-        {/* Custom Pulsing Markers for each Fulfillment Hub & HQ */}
+        {/* Custom Reflective Pin Markers for each Fulfillment Hub & HQ */}
         {markers.map((marker, idx) => (
           <Marker
             key={idx}
             position={marker.coords}
-            icon={createPulsingIcon(marker.isHq)}
+            icon={createReflectivePinIcon(marker.isHq)}
           >
             <Popup>
               <div className="font-poppins text-xs font-medium text-slate-800 p-0.5">
