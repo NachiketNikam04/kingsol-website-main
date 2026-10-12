@@ -172,7 +172,7 @@ export default function AboutDetailsSection() {
               return (
                 <div
                   key={item.id || index}
-                  className={`bg-white border rounded-2xl p-4 sm:p-5 transition-all duration-200 ease-out hover:scale-[1.01] active:scale-[0.99] cursor-pointer group ${
+                  className={`border rounded-2xl p-4 sm:p-5 transition-all duration-200 ease-out hover:scale-[1.01] active:scale-[0.99] cursor-pointer group bg-[linear-gradient(to_left,#44a0e3_0%,#44a0e399_30%,#44a0e333_50%,#ffffff_75%,#ffffff_100%)] ${
                     isOpen
                       ? 'border-slate-300 shadow-xl shadow-slate-200/50'
                       : 'border-slate-200/80 shadow-xs hover:shadow-md hover:shadow-slate-200/40 hover:border-slate-300/80'
@@ -190,7 +190,7 @@ export default function AboutDetailsSection() {
                       isOpen ? 'max-h-48 opacity-100 mt-3 pt-3 border-t border-slate-100' : 'max-h-0 opacity-0'
                     }`}
                   >
-                    <p className="mt-2 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1">
+                    <p className="mt-2 font-poppins text-base md:text-sm text-slate-800 leading-relaxed whitespace-pre-line text-justify flex-1">
                       {item.content}
                     </p>
                   </div>
@@ -227,7 +227,7 @@ export default function AboutDetailsSection() {
             {[...activeLogos, ...activeLogos, ...activeLogos, ...activeLogos].map((logo, index) => (
               <div
                 key={`logo-${logo.id || index}-${index}`}
-                className="flex items-center gap-3 px-5 py-2.5 bg-white border border-slate-200/70 rounded-2xl shadow-xs hover:shadow-lg hover:shadow-slate-200/40 transition-all duration-200 ease-out hover:scale-[1.04] active:scale-[0.98] shrink-0"
+                className="flex items-center gap-3 px-5 py-2.5 bg-white border-4 border-[#44a0e3] rounded-2xl shadow-xs hover:shadow-lg hover:shadow-slate-200/40 transition-all duration-200 ease-out hover:scale-[1.04] active:scale-[0.98] shrink-0"
               >
                 {logo.image_url ? (
                   <img
