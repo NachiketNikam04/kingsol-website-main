@@ -71,37 +71,41 @@ export default function CareersCTASection() {
           }}
         />
         
-        {/* Smooth Fade Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/70 to-white/85 z-10" />
+        {/* Lighter Frosted Glass Overlay - Reduced opacity and blur to reveal the image */}
+        <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-10 pointer-events-none" />
 
-        {/* Tagline (Contrast backdrop + reduced mb-8 to mb-2) */}
+        {/* Tagline */}
         <motion.span
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="relative z-20 mb-1 font-poppins text-xs font-bold uppercase tracking-[0.2em] sm:text-sm text-brand-green bg-white px-3 py-1 rounded-full w-fit inline-block"
+          className="relative z-20 mb-2 font-poppins text-xs font-bold uppercase tracking-[0.2em] sm:text-sm text-brand-green bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full w-fit inline-block shadow-sm"
         >
           <span>{currentTagline}</span>
         </motion.span>
         
-        {/* Headline (Tighter spacing) */}
+        {/* Headline */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-20 mt-1 font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl"
+          className="relative z-20 mt-2 max-w-4xl font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl drop-shadow-md"
         >
           {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
         </motion.h2>
 
         <Link
-          className="mt-10 bg-white text-slate-900 px-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+          className="mt-10 bg-white text-slate-900 px-8 py-3.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.3)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
           to="/careers"
         >
           <span>CAREERS AT KINGSOL</span>
-          <span className="transform transition-transform duration-200 group-hover/btn:translate-x-1"><svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
+          <span className="transform transition-transform duration-200 group-hover/btn:translate-x-1">
+            <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </span>
         </Link>
       </motion.div>
     </section>
