@@ -271,7 +271,7 @@ export const MaintenanceSupportSection: React.FC = () => {
         >
           <Link
             to="/contact"
-            className="bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(243,156,18,0.15)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent"
+            className="bg-[#44a0e3] text-white px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.15)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent"
           >
             <span>Call Support Now</span>
             <ArrowRight className="w-4 h-4" />
