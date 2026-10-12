@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { MapContainer, GeoJSON, Marker, Popup } from 'react-leaflet';
+import { MapContainer, GeoJSON, Marker, Popup, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 
 // =========================================================================
@@ -56,14 +56,6 @@ function resolveCoordinates(locationStr: string): [number, number] | null {
   return null;
 }
 
-// Custom Leaflet icon for Pune Headquarters (loads custom image from public/hq-marker.png)
-const hqIcon = L.icon({
-  iconUrl: '/favicon.png',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-  popupAnchor: [0, -40],
-});
-
 // Factory function for standard custom location pin with floor mirror/reflection effect
 const createReflectivePinIcon = (isHq: boolean) => {
   return L.divIcon({
@@ -87,11 +79,32 @@ const createReflectivePinIcon = (isHq: boolean) => {
   });
 };
 
+// Helper to resolve icon: uses custom image if iconUrl is provided, otherwise falls back to SVG pin
+const getMarkerIcon = (loc: { iconUrl?: string; isHQ?: boolean }) => {
+  if (loc.iconUrl) {
+    return L.icon({
+      iconUrl: loc.iconUrl,
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -40],
+    });
+  }
+  return createReflectivePinIcon(Boolean(loc.isHQ));
+};
+
 export interface LocationItem {
   label?: string;
   name?: string;
   isHQ?: boolean;
+  iconUrl?: string;
   coords?: [number, number];
+}
+
+export interface ActiveMarker {
+  label: string;
+  coords: [number, number];
+  isHQ: boolean;
+  iconUrl?: string;
 }
 
 interface OfficeMapProps {
@@ -100,7 +113,7 @@ interface OfficeMapProps {
 }
 
 const DEFAULT_LOCATIONS: LocationItem[] = [
-  { label: 'Pune, Maharashtra (Headquarters)', isHQ: true },
+  { label: 'Pune, Maharashtra (Headquarters)', isHQ: true, iconUrl: '/hq-marker.png' },
   { label: 'Bhiwandi, Maharashtra' },
   { label: 'Ahmedabad, Gujarat' },
   { label: 'Bengaluru, Karnataka' },
@@ -213,7 +226,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
     });
   };
 
-  // Compile markers from warehouse locations & ensure Pune entry has isHQ: true
+  // Compile markers from warehouse locations & ensure Pune entry has isHQ: true and iconUrl: '/hq-marker.png'
   const markers = useMemo(() => {
     const rawLocations: LocationItem[] =
       Array.isArray(locations) && locations.length > 0
@@ -226,6 +239,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
               return {
                 label: item,
                 isHQ: isPune,
+                iconUrl: isPune ? '/hq-marker.png' : undefined,
               };
             }
             const isPune =
@@ -239,6 +253,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
               ...item,
               label: item.label || item.name || '',
               isHQ: isPune,
+              iconUrl: item.iconUrl || (isPune ? '/hq-marker.png' : undefined),
             };
           })
         : DEFAULT_LOCATIONS;
@@ -253,25 +268,35 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
 
     const activeLocations = hasPune
       ? rawLocations
-      : [{ label: 'Pune, Maharashtra (Headquarters)', isHQ: true }, ...rawLocations];
+      : [
+          {
+            label: 'Pune, Maharashtra (Headquarters)',
+            isHQ: true,
+            iconUrl: '/hq-marker.png',
+          },
+          ...rawLocations,
+        ];
 
-    return activeLocations
-      .map((loc) => {
-        const text = loc.label || loc.name || '';
-        const coords = loc.coords || resolveCoordinates(text);
-        if (!coords) return null;
-        const isHQ = Boolean(
-          loc.isHQ ||
-            text.toLowerCase().includes('pune') ||
-            text.toLowerCase().includes('headquarters')
-        );
-        return {
-          label: text,
-          coords,
-          isHQ,
-        };
-      })
-      .filter((m): m is { label: string; coords: [number, number]; isHQ: boolean } => m !== null);
+    const result: ActiveMarker[] = [];
+    for (const loc of activeLocations) {
+      const text = loc.label || loc.name || '';
+      const coords = loc.coords || resolveCoordinates(text);
+      if (!coords) continue;
+      const isHQ = Boolean(
+        loc.isHQ ||
+          text.toLowerCase().includes('pune') ||
+          text.toLowerCase().includes('headquarters')
+      );
+      const iconUrl = loc.iconUrl || (isHQ ? '/hq-marker.png' : undefined);
+      result.push({
+        label: text,
+        coords,
+        isHQ,
+        iconUrl,
+      });
+    }
+
+    return result;
   }, [locations]);
 
   return (
@@ -331,6 +356,21 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
         .soi-state-tooltip::before {
           border-top-color: #0f172a !important;
         }
+        .hq-permanent-tooltip {
+          background-color: #0f172a !important;
+          color: #ffffff !important;
+          border: none !important;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+          border-radius: 4px !important;
+          padding: 2px 6px !important;
+          font-family: 'Poppins', sans-serif !important;
+          font-weight: 700 !important;
+          font-size: 10px !important;
+          letter-spacing: 0.5px !important;
+        }
+        .hq-permanent-tooltip::before {
+          border-bottom-color: #0f172a !important;
+        }
       `}</style>
 
       {/* Loading Skeleton */}
@@ -366,13 +406,25 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
           />
         )}
 
-        {/* Custom Pin Markers: Custom image icon for HQ, reflective SVG for other hubs */}
+        {/* Custom Pin Markers: Custom image icon for locations with iconUrl, reflective SVG for other hubs */}
         {markers.map((loc, idx) => (
           <Marker
             key={idx}
             position={loc.coords}
-            icon={loc.isHQ ? hqIcon : createReflectivePinIcon(false)}
+            icon={getMarkerIcon(loc)}
           >
+            {/* Permanent HQ label for Pune */}
+            {loc.isHQ && (
+              <Tooltip
+                permanent
+                direction="bottom"
+                offset={[0, 10]}
+                className="hq-permanent-tooltip font-poppins font-bold text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded border-none shadow-md"
+              >
+                HQ
+              </Tooltip>
+            )}
+
             <Popup>
               <div className="font-poppins text-xs font-medium text-slate-800 p-0.5">
                 <strong className="text-[#44a0e3] block mb-0.5 font-bold text-xs">
