@@ -91,9 +91,9 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
   const [geoData, setGeoData] = useState<any>(null);
   const [loadingGeo, setLoadingGeo] = useState<boolean>(true);
 
-  // Modern Post-2014 India States GeoJSON (includes distinct Telangana and Andhra Pradesh)
+  // Official Survey of India (SOI) Compliant Post-2019 Boundaries (full J&K, Ladakh, Telangana)
   const REMOTE_GEOJSON_URL =
-    'https://raw.githubusercontent.com/geohacker/india/master/state/india_telengana.geojson';
+    'https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson';
 
   useEffect(() => {
     let isMounted = true;
@@ -110,7 +110,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
           setGeoData(json);
         }
       } catch (err) {
-        console.warn('⚠️ [OfficeMap] Local GeoJSON fetch notice, retrying remote URL:', err);
+        console.warn('⚠️ [OfficeMap] Local GeoJSON fetch notice, retrying remote SOI URL:', err);
         try {
           const fallbackRes = await fetch(REMOTE_GEOJSON_URL);
           const fallbackJson = await fallbackRes.json();
@@ -118,7 +118,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
             setGeoData(fallbackJson);
           }
         } catch (fallbackErr) {
-          console.error('❌ [OfficeMap] Failed to load Indian States GeoJSON:', fallbackErr);
+          console.error('❌ [OfficeMap] Failed to load Survey of India GeoJSON:', fallbackErr);
         }
       } finally {
         if (isMounted) {
@@ -145,8 +145,21 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
     });
   }, []);
 
-  // Interactive subtle hover reaction on states
-  const onEachFeature = (_feature: any, layer: any) => {
+  // Interactive subtle hover reaction on states with tooltips
+  const onEachFeature = (feature: any, layer: any) => {
+    const stateName =
+      feature?.properties?.ST_NM ||
+      feature?.properties?.st_nm ||
+      feature?.properties?.name;
+
+    if (stateName) {
+      layer.bindTooltip(stateName, {
+        sticky: true,
+        className: 'soi-state-tooltip',
+        direction: 'top',
+      });
+    }
+
     layer.on({
       mouseover: (e: any) => {
         const target = e.target;
@@ -217,7 +230,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
         'w-full h-full rounded-2xl overflow-hidden relative z-0 bg-[#fdfcf8]'
       }
     >
-      {/* Self-contained CSS injection for custom reflective marker and badge styling */}
+      {/* Self-contained CSS injection for custom reflective marker, tooltip, and badge styling */}
       <style>{`
         .custom-leaflet-div-icon {
           background: transparent !important;
@@ -241,6 +254,20 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
           white-space: nowrap;
           pointer-events: none;
         }
+        .soi-state-tooltip {
+          background-color: #0f172a !important;
+          color: #ffffff !important;
+          border: 1px solid rgba(68, 160, 227, 0.4) !important;
+          border-radius: 6px !important;
+          font-family: 'Poppins', sans-serif !important;
+          font-size: 11px !important;
+          font-weight: 600 !important;
+          padding: 3px 8px !important;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25) !important;
+        }
+        .soi-state-tooltip::before {
+          border-top-color: #0f172a !important;
+        }
       `}</style>
 
       {/* Loading Skeleton */}
@@ -254,22 +281,22 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
       )}
 
       <MapContainer
-        center={[22.9074, 79.3810]}
+        center={[23.2, 79.5]}
         zoom={5}
         minZoom={4}
         maxBounds={[
           [6.5, 68.0],
-          [37.5, 97.5],
+          [38.5, 97.5],
         ]}
         maxBoundsViscosity={1.0}
         scrollWheelZoom={false}
         className="w-full h-full"
         style={{ backgroundColor: '#fdfcf8' }}
       >
-        {/* Render India State Boundaries with Brand Blue Paths (No raster tiles) */}
-        {geoData && (
+        {/* Render Official Survey of India (SOI) State Boundaries */}
+        {geoData && geoData.features && (
           <GeoJSON
-            key="india-states-geojson-telangana"
+            key="india-states-geojson-soi"
             data={geoData}
             style={geoJsonStyle}
             onEachFeature={onEachFeature}
