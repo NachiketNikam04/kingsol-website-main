@@ -129,7 +129,7 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-full h-[500px] sm:h-[650px] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-200/60 bg-[#e5e3df] z-0"
+              className="relative w-full h-[500px] sm:h-[650px] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-200/60 bg-[#fdfcf8] z-0"
             >
               <OfficeMap locations={currentLocations} className="w-full h-full" />
             </motion.div>
