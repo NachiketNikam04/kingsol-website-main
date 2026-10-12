@@ -97,6 +97,19 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const autoCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   // Sync initialProduct if passed
   useEffect(() => {
     if (initialProduct) {
@@ -293,10 +306,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           <div className="px-6 sm:px-8 pt-6 pb-4 flex items-start justify-between border-b border-slate-100 bg-slate-50/50">
             <div>
               <h2 className="font-poppins text-4xl font-bold tracking-tight text-gray-900">
-                Request a Custom Quote
+                Request a Quote
               </h2>
               <p className="mt-1 font-poppins text-base md:text-md text-slate-500 leading-relaxed whitespace-pre-line text-justify">
-                Connect with our technical solar team for Tier-1 pricing, project sizing & datasheets.
+                Solar Products, EPC Work and BESS Work Consultancy
               </p>
             </div>
 
@@ -428,7 +441,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                 {/* Company Name */}
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Company / EPC Firm Name
+                    Company Name
                   </label>
                   <div className="relative">
                     <Building2 className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -510,20 +523,6 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                       )}
                     </div>
                   )}
-                </div>
-
-                {/* Project Requirements / Message */}
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                    Project Requirements / Capacity / Remarks
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Enter project capacity (e.g. 50kW On-Grid / 100kWh Storage), site location, or delivery timeline..."
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 outline-none focus:bg-white focus:ring-2 focus:ring-brand-green focus:border-brand-green transition-all"
-                  />
                 </div>
 
                 {/* Form Action Buttons */}

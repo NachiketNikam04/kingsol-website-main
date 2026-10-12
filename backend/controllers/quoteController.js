@@ -15,6 +15,7 @@ pool.query(`
     status VARCHAR(50) DEFAULT 'New',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
   );
+  ALTER TABLE quotes ALTER COLUMN message DROP NOT NULL;
   CREATE INDEX IF NOT EXISTS idx_quotes_created_at ON quotes(created_at DESC);
   CREATE INDEX IF NOT EXISTS idx_quotes_status ON quotes(status);
 `).catch((err) => console.warn('⚠️ [QuoteController] Schema auto-migration notice:', err.message));
@@ -44,7 +45,7 @@ export const createQuote = async (req, res) => {
   const customerCompany = (company_name || company || '').trim();
   const customerState = (state || '').trim();
   const customerProduct = (product_interest || productName || product || '').trim();
-  const customerMessage = (message || '').trim();
+  const customerMessage = message && typeof message === 'string' ? message.trim() : null;
 
   if (!customerName || !customerPhone || !customerEmail) {
     return res.status(400).json({
@@ -85,7 +86,7 @@ export const createQuote = async (req, res) => {
       company_name: customerCompany,
       state: customerState,
       product_interest: customerProduct,
-      message: customerMessage,
+      ...(customerMessage ? { message: customerMessage } : {}),
     };
 
     try {

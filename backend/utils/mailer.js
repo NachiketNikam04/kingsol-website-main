@@ -120,10 +120,16 @@ export async function sendInquiryEmailAlert(payload = {}) {
           </tr>
         </table>
         
+        ${
+          message && typeof message === 'string' && message.trim()
+            ? `
         <div style="margin-top: 16px; padding: 16px; background-color: #f8fafc; border-radius: 10px; border-left: 4px solid #78C257;">
           <h4 style="margin: 0 0 6px 0; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Message / Project Specifications:</h4>
-          <p style="margin: 0; font-size: 14px; color: #334155; white-space: pre-line;">${message || 'No additional message provided.'}</p>
+          <p style="margin: 0; font-size: 14px; color: #334155; white-space: pre-line;">${message.trim()}</p>
         </div>
+        `
+            : ''
+        }
         
         <p style="font-size: 11px; color: #94a3b8; margin-top: 24px; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 16px;">
           Kingsol Solar Automated Lead System • Admin Panel Logged
