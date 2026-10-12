@@ -2,6 +2,7 @@ import { API_BASE_URL } from '../utils/assetUrl';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
+import OfficeMap from './OfficeMap';
 
 export interface WarehousePresenceData {
   warehouseTagline?: string;
@@ -58,12 +59,6 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
   const currentHighlightWord =
     data?.warehouseHighlightWord || data?.highlight_word || 'High-demand';
   
-  // Use a default Google Maps embed URL centered on India if not provided via API.
-  const currentEmbedMapUrl =
-    data?.warehouseEmbedMapUrl ||
-    data?.embed_map_url ||
-    'https://www.google.com/maps/d/u/0/embed?mid=1BBAZUA8hbXkZsMpKBgzx9aVutHoJxxM&ehbc=2E312F" width="640" height="480';
-
   const defaultLocations = [
     'Bhiwandi, Maharashtra',
     'Ahmedabad, Gujarat',
@@ -127,29 +122,16 @@ export const WarehousePresenceSection: React.FC<{ initialData?: WarehousePresenc
             </motion.h2>
           </div>
 
-          {/* CENTER COLUMN: Embedded Iframe Map (lg:col-span-6) */}
+          {/* CENTER COLUMN: Interactive Leaflet Map (lg:col-span-6) */}
           <div className="lg:col-span-6 flex justify-center items-start">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="relative w-full h-[500px] sm:h-[650px] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-200/60 bg-[#e5e3df]"
+              className="relative w-full h-[500px] sm:h-[650px] rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.08)] border border-slate-200/60 bg-[#e5e3df] z-0"
             >
-              {/* Cropping wrapper to hide the top/bottom UI of Google My Maps */}
-              <div className="absolute top-[-65px] left-0 w-full h-[calc(100%+120px)] pointer-events-auto">
-                <iframe
-                  src={currentEmbedMapUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen={true}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Interactive Distribution Map"
-                  className="w-full h-full"
-                ></iframe>
-              </div>
+              <OfficeMap locations={currentLocations} className="w-full h-full" />
             </motion.div>
           </div>
 
