@@ -95,7 +95,7 @@ const StatItem: React.FC<CountUpProps> = ({
   return (
     <div
       ref={ref}
-      className="group flex-1 min-w-[250px] bg-white rounded-[2rem] border border-slate-200/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:shadow-[0_20px_40px_rgba(68,160,227,0.15)] hover:-translate-y-2 transition-all duration-500 relative overflow-hidden"
+      className="group flex-1 min-w-[250px] bg-white rounded-[2rem] border border-[#44a0e3]/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:-translate-y-2 hover:border-[#44a0e3] transition-all duration-500 relative overflow-hidden"
     >
       {/* Continuous Fluid / Mirror Sheen Sweep Effect */}
       <motion.div
@@ -114,7 +114,7 @@ const StatItem: React.FC<CountUpProps> = ({
         
         {/* Icon Container: Clean & permanent, NO background change on hover */}
         {icon && (
-          <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-[#44a0e3] shadow-sm border border-slate-100 group-hover:scale-110 group-hover:border-[#44a0e3]/30 transition-all duration-500">
+          <div className="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mb-6 text-[#44a0e3] shadow-sm border border-slate-100 group-hover:scale-110 group-hover:border-[#44a0e3]/30 group-hover:bg-[#44a0e3]/30 transition-all duration-500">
             {icon}
           </div>
         )}

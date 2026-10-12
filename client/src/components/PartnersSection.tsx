@@ -68,7 +68,6 @@ export const PartnersSection: React.FC = () => {
   }, []);
 
   const defaultLogos: PartnerLogo[] = [
-    { name: 'SunPower', image_url: 'https://images.unsplash.com/photo-1509391366360-1e5088f170af?q=80&w=400&auto=format&fit=crop' },
     { name: 'Tesla Energy', image_url: 'https://images.unsplash.com/photo-1620283085439-3f721bc62f92?q=80&w=400&auto=format&fit=crop' },
     { name: 'Enphase Energy', image_url: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=400&auto=format&fit=crop' },
     { name: 'Canadian Solar', image_url: 'https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?q=80&w=400&auto=format&fit=crop' },
@@ -102,82 +101,88 @@ export const PartnersSection: React.FC = () => {
   };
 
   return (
-    <motion.section
-      key={activeLogos.length}
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      className="relative w-full py-[72px] bg-[#fdfcf8]"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Section Heading */}
-        <motion.div variants={itemVariants} className="mb-10">
-          <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
-            {currentTagline}
-          </span>
+  <motion.section
+    key={activeLogos.length}
+    variants={containerVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+    className="relative w-full py-[72px] bg-[#fdfcf8]"
+  >
+    <div className="max-w-7xl mx-auto px-6">
+      {/* Section Heading */}
+      <motion.div variants={itemVariants} className="mb-10">
+        <span className="mb-3 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
+          {currentTagline}
+        </span>
 
-          <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl whitespace-pre-wrap text-balance">
-            {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
-          </h2>
-        </motion.div>
+        <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl whitespace-pre-wrap text-balance">
+          {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
+        </h2>
+      </motion.div>
 
-        {/* Strict 4-Column Grid Container */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {activeLogos.map((logo, idx) => {
-            const destination = logo.linked_brand
-              ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
-              : (logo.route_url?.trim() || null);
+      {/* Centered Flexbox Container instead of strict Grid */}
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+        {activeLogos.map((logo, idx) => {
+          const destination = logo.linked_brand
+            ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
+            : (logo.route_url?.trim() || null);
 
-            const isExternal =
-              destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
+          const isExternal =
+            destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
 
-            const cardClasses = `bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
-              destination
-                ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-400'
-                : 'hover:shadow-md'
-            }`;
+          // Added w-full and h-full so the card fills the flex container
+          const cardClasses = `w-full h-full bg-white rounded-2xl p-6 sm:p-8 flex items-center justify-center shadow-xs transition-all duration-300 group border border-slate-200/70 ${
+            destination
+              ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1 hover:border-slate-400'
+              : 'hover:shadow-md'
+          }`;
 
-            const logoImg = (
-              <img
-                src={getAssetUrl(logo.image_url)}
-                alt={logo.name}
-                className="h-14 sm:h-20 w-full object-contain transition-transform duration-300 group-hover:scale-105"
-              />
-            );
+          const logoImg = (
+            <img
+              src={getAssetUrl(logo.image_url)}
+              alt={logo.name}
+              className="h-14 sm:h-20 w-full object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          );
 
-            return (
-              <motion.div key={logo.id || idx} variants={itemVariants}>
-                {destination ? (
-                  isExternal ? (
-                    <a
-                      href={destination}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cardClasses}
-                    >
-                      {logoImg}
-                    </a>
-                  ) : (
-                    <Link
-                      to={destination}
-                      className={cardClasses}
-                    >
-                      {logoImg}
-                    </Link>
-                  )
-                ) : (
-                  <div className={cardClasses}>
+          return (
+            <motion.div
+              key={logo.id || idx}
+              variants={itemVariants}
+              // Responsive widths replicating the grid behavior while allowing center-justification
+              className="w-[calc(50%-0.5rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)] flex"
+            >
+              {destination ? (
+                isExternal ? (
+                  <a
+                    href={destination}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cardClasses}
+                  >
                     {logoImg}
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
-        </div>
+                  </a>
+                ) : (
+                  <Link
+                    to={destination}
+                    className={cardClasses}
+                  >
+                    {logoImg}
+                  </Link>
+                )
+              ) : (
+                <div className={cardClasses}>
+                  {logoImg}
+                </div>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
-    </motion.section>
-  );
+    </div>
+  </motion.section>
+);
 };
 
 export default PartnersSection;
