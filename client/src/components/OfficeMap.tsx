@@ -354,11 +354,11 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25) !important;
         }
         .soi-state-tooltip::before {
-          border-top-color: #0f172a !important;
+          border-top-color: #44a0e3 !important;
         }
         .hq-permanent-tooltip {
-          background-color: #0f172a !important;
-          color: #ffffff !important;
+          background-color: #eeeff3 !important;
+          color: #44a0e3 !important;
           border: none !important;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
           border-radius: 4px !important;
@@ -418,7 +418,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
               <Tooltip
                 permanent
                 direction="bottom"
-                offset={[0, 10]}
+                offset={[0, -10]}
                 className="hq-permanent-tooltip font-poppins font-bold text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded border-none shadow-md"
               >
                 HQ
