@@ -171,8 +171,8 @@ export default function Products() {
             }}
             className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer whitespace-nowrap border ${
               activeCategory === 'all'
-                ? 'bg-slate-900 text-white border-slate-900 shadow-md'
-                : 'bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:text-slate-900'
+                ? 'bg-[#44a0e3] text-white border-[#44a0e3] shadow-md'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-[#44a0e3] hover:border-[#44a0e3] hover:text-white'
             }`}
           >
             <AnimatePresence initial={false} mode="popLayout">
@@ -203,8 +203,8 @@ export default function Products() {
                 }}
                 className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer whitespace-nowrap border ${
                   isActive
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-md'
-                    : 'bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:text-slate-900'
+                    ? 'bg-[#44a0e3] text-white border-[#44a0e3] shadow-md'
+                    : 'bg-white text-slate-700 border-slate-200 hover:bg-[#44a0e3] hover:border-[#44a0e3] hover:text-white'
                 }`}
               >
                 <AnimatePresence initial={false} mode="popLayout">
@@ -249,7 +249,7 @@ export default function Products() {
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="mt-1 text-4xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight"
                   >
-                    {settings.brands_title || 'Partner Brands'}
+                    {settings.brands_title || 'Brand Partners'}
                   </motion.h2>
                 </div>
                 {activeCategory !== 'all' && (
@@ -360,7 +360,7 @@ export default function Products() {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   className="mt-1 text-4xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight"
                 >
-                  {settings.products_title || 'Featured Components'}
+                  {settings.products_title || 'Featured Products'}
                 </motion.h2>
               </div>
 
@@ -379,8 +379,8 @@ export default function Products() {
                       onClick={() => setActiveBrandFilter('all')}
                       className={`text-sm px-5 py-2 rounded-full font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
                         activeBrandFilter === 'all'
-                          ? 'bg-slate-900 text-white border-slate-900 shadow-md'
-                          : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:text-slate-900'
+                          ? 'bg-[#44a0e3] text-white border-[#44a0e3] shadow-md'
+                          : 'bg-white text-slate-700 border-slate-200 hover:bg-[#44a0e3] hover:border-[#44a0e3] hover:text-white'
                       }`}
                     >
                       <AnimatePresence initial={false} mode="popLayout">
@@ -408,8 +408,8 @@ export default function Products() {
                           onClick={() => setActiveBrandFilter(b.slug)}
                           className={`text-sm px-5 py-2 rounded-full font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 border flex items-center gap-2 ${
                             isActive
-                              ? 'bg-slate-900 text-white border-slate-900 shadow-md'
-                              : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:text-slate-900'
+                              ? 'bg-[#44a0e3] text-white border-[#44a0e3] shadow-md'
+                              : 'bg-white text-slate-700 border-slate-200 hover:bg-[#44a0e3] hover:border-[#44a0e3] hover:text-white'
                           }`}
                         >
                           <AnimatePresence initial={false} mode="popLayout">
