@@ -1094,7 +1094,7 @@ export default function ProductDetail() {
                     onClick={() => setSelectedPhaseFilter(phase)}
                     className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer whitespace-nowrap border ${
                       isSelected
-                        ? 'bg-slate-900 text-white border-slate-900 shadow-md'
+                        ? 'bg-[#44a0e3] text-slate-900 border-slate-900 shadow-md'
                         : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:text-slate-900'
                     }`}
                   >

@@ -301,7 +301,7 @@ export default function CategoryPage() {
                           setSelectedProductForInquiry(product);
                           setIsInquiryModalOpen(true);
                         }}
-                        className="flex-1 py-2 px-3 rounded-full bg-[#44a0e3] text-white font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
+                        className="flex-1 py-2 px-3 rounded-full bg-[#44a0e3] text-white font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-[#44a0e3 ] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
                       >
                         Quick Quote
                       </button>
