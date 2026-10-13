@@ -358,7 +358,7 @@ export default function BrandDetail() {
                   <button
                     type="button"
                     onClick={() => setIsDatasheetOpen((prev) => !prev)}
-                    className="bg-white border border-slate-200 hover:border-brand-orange hover:bg-slate-50 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs shadow-orange-500/30 hover:shadow hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer"
+                    className="bg-white border border-slate-200 hover:border-brand-orange hover:bg-brand-orange/15 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs shadow-orange-500/30 hover:shadow hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <FileText className="w-4 h-4 text-[#0078C8]" />
                     <span>Datasheets & Specs ({brandDatasheets.length})</span>
