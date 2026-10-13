@@ -346,7 +346,7 @@ export default function BrandDetail() {
                   setSelectedProductForQuote(brand.name);
                   setIsQuoteOpen(true);
                 }}
-                className="bg-white text-slate-900 px-5 py-3.5 rounded-full font-poppins font-bold text-xs md:text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+                className="group relative px-6 py-2.5 rounded-full bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] text-sm font-semibold transition-all duration-500 inline-flex items-center justify-center gap-2 cursor-pointer overflow-hidden shadow-[inset_0px_2px_4px_rgba(255,255,255,0.4),0px_4px_12px_rgba(68,160,227,0.3)] hover:shadow-[0px_4px_20px_rgba(68,160,227,0.5)] hover:-translate-y-0.5"
               >
                 <span>Get Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -358,7 +358,7 @@ export default function BrandDetail() {
                   <button
                     type="button"
                     onClick={() => setIsDatasheetOpen((prev) => !prev)}
-                    className="bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs hover:shadow transition-all flex items-center gap-2 cursor-pointer"
+                    className="bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs shadow-orange-500/30 hover:shadow hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <FileText className="w-4 h-4 text-[#0078C8]" />
                     <span>Datasheets & Specs ({brandDatasheets.length})</span>
@@ -446,7 +446,7 @@ export default function BrandDetail() {
                   ]
               ).map((feat, idx) => (
                 <div key={idx} className="flex items-start gap-2.5 p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                  <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <span className="text-slate-800 text-sm leading-relaxed font-medium">{feat}</span>
                 </div>
               ))}
@@ -737,7 +737,7 @@ export default function BrandDetail() {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="text-3xl md:text-4xl font-bold font-poppins text-slate-900 leading-tight tracking-tight"
               >
-                {brand.name} Components Range
+                {brand.name} Products Range
               </motion.h2>
             </div>
 
@@ -750,7 +750,7 @@ export default function BrandDetail() {
                     setSelectedProductForQuote(brand.name);
                     setIsQuoteOpen(true);
                   }}
-                  className="bg-white text-slate-900 px-5 py-2.5 rounded-full font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1.5 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+                  className="bg-[#44a0e3] text-white px-5 py-2.5 rounded-full font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-skate-900 hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1.5 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
                 >
                   <span>Get Quote</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -758,14 +758,14 @@ export default function BrandDetail() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => scrollSlider('left')}
-                    className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
+                    className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 hover:bg-brand-orange/30 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
                     aria-label="Scroll Left"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => scrollSlider('right')}
-                    className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
+                    className="w-10 h-10 rounded-full bg-white border border-slate-200 hover:border-slate-400 hover:bg-brand-orange/30 flex items-center justify-center text-slate-700 hover:bg-slate-50 transition-all cursor-pointer shadow-xs"
                     aria-label="Scroll Right"
                   >
                     <ChevronRight className="w-5 h-5" />
@@ -881,7 +881,7 @@ export default function BrandDetail() {
                           {product.title || product.name}
                         </h3>
 
-                        <p className="font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-4 line-clamp-2">
+                        <p className="font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-left-alined mb-4 line-clamp-2">
                           {product.description}
                         </p>
 
@@ -898,7 +898,7 @@ export default function BrandDetail() {
                       </div>
 
                       <div className="flex gap-2 pt-3 border-t border-slate-100">
-                        <div className="flex-1 py-2 px-3 rounded-full bg-brand-green text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#8ee036] flex items-center justify-center gap-1 cursor-pointer border border-transparent">
+                        <div className="flex-1 py-2 px-3 rounded-full bg-brand-orange text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-slate-900 flex items-center justify-center gap-1 hover:shadow-[0_8px_16px_rgba(68,160,227,0.2)] cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn">
                           View Specs
                         </div>
                         <button
@@ -909,7 +909,7 @@ export default function BrandDetail() {
                             setSelectedProductForQuote(product.title || product.name || brand.name);
                             setIsQuoteOpen(true);
                           }}
-                          className="flex-1 py-2 px-3 rounded-full bg-white text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
+                          className="flex-1 py-2 px-3 rounded-full bg-[#44a0e3] text-white font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-slate-900 hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
                         >
                           Get Quote
                         </button>

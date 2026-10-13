@@ -260,7 +260,7 @@ export default function CategoryPage() {
                       <h3 className="text-base font-bold font-poppins text-slate-900 leading-snug truncate mb-1">
                         {product.name}
                       </h3>
-                      <p className="mt-1 font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-2 mb-2.5">
+                      <p className="mt-1 font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-left-aligned flex-1 line-clamp-2 mb-2.5">
                         {product.description || 'High-efficiency engineered solar component with factory direct warranty support.'}
                       </p>
 
@@ -291,7 +291,7 @@ export default function CategoryPage() {
                     <div className="flex items-center gap-2 mt-auto pt-1">
                       <Link
                         to={`/products/${product.category}/${product.brand}/${product.slug}`}
-                        className="flex-1 py-2 px-3 rounded-full bg-brand-green text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#8ee036] flex items-center justify-center gap-1 cursor-pointer border border-transparent"
+                        className="flex-1 py-2 px-3 rounded-full bg-brand-orange text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-slate-900 flex items-center justify-center gap-1 hover:shadow-[0_8px_16px_rgba(68,160,227,0.2)] cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
                       > 
                         View Specs
                       </Link>
@@ -301,7 +301,7 @@ export default function CategoryPage() {
                           setSelectedProductForInquiry(product);
                           setIsInquiryModalOpen(true);
                         }}
-                        className="flex-1 py-2 px-3 rounded-full bg-white text-slate-900 font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
+                        className="flex-1 py-2 px-3 rounded-full bg-[#44a0e3] text-white font-poppins font-semibold text-xs transition-all duration-300 hover:-translate-y-0.5 shadow-xs hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent"
                       >
                         Quick Quote
                       </button>

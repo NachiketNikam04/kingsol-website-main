@@ -159,7 +159,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
               {product.title || product.name}
             </h2>
             {product.description && (
-              <p className="mt-1.5 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-justify line-clamp-2">
+              <p className="mt-1.5 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-left-alined line-clamp-2">
                 {product.description}
               </p>
             )}
@@ -171,7 +171,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
             <ul className="space-y-2">
               {visibleFeatures.map((feature, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-xs md:text-sm text-slate-700 font-medium leading-normal">
-                  <div className="w-5 h-5 rounded-full bg-brand-green/15 text-brand-green flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded-full bg-brand-orange/15 text-brand-orange flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-3 h-3 stroke-[3]" />
                   </div>
                   <span>{feature}</span>
@@ -320,7 +320,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
               href={parsedDocs[0].url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-full transition-colors cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-brand-orange/15 text-slate-800 text-xs font-bold rounded-full transition-colors cursor-pointer"
             >
               <Download className="w-4 h-4 text-brand-blue" />
               <span>{parsedDocs[0].title || 'Download Datasheet'}</span>
@@ -364,7 +364,7 @@ const InverterCard: React.FC<InverterCardProps> = ({ product, onInquiry }) => {
         {/* Inquiry Action Button */}
         <button
           onClick={() => onInquiry(product)}
-          className="w-full sm:w-auto px-6 py-2.5 bg-white text-slate-900 font-poppins font-semibold text-sm rounded-full shadow-xs hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] hover:bg-[#44a0e3] hover:text-white transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+          className="w-full sm:w-auto px-6 py-2.5 bg-[#44a0e3] text-white font-poppins font-semibold text-sm rounded-full shadow-xs hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] hover:bg-white hover:text-[#44a0e3] transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
         >
           <span>Send Inquiry</span>
           <ArrowRight className="w-4 h-4" />
@@ -1024,7 +1024,7 @@ export default function ProductDetail() {
                 <button
                   type="button"
                   onClick={() => setIsQuoteOpen(true)}
-                  className="bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center cursor-pointer border border-slate-400 hover:border-transparent relative z-20 group/btn"
+                  className="bg-[#44a0e3] text-white px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center cursor-pointer border border-slate-400 hover:border-transparent relative z-20 group/btn"
                 >
                   Get a Free Quote
                 </button>
@@ -1051,7 +1051,7 @@ export default function ProductDetail() {
                 onClick={() => setSelectedPhaseFilter('All')}
                 className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer whitespace-nowrap border ${
                   selectedPhaseFilter === 'All'
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-md'
+                    ? 'bg-[#44a0e3] text-white border-slate-300 shadow-md'
                     : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:text-slate-900'
                 }`}
               >
@@ -1323,7 +1323,7 @@ export default function ProductDetail() {
                   setSelectedProductForQuote(prodTitle);
                   setIsQuoteOpen(true);
                 }}
-                className="bg-white text-slate-900 px-5 py-3.5 rounded-full font-poppins font-bold text-xs md:text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+                className="group relative px-6 py-2.5 rounded-full bg-[#44a0e3] hover:bg-white text-white hover:text-[#44a0e3] border border-[#44a0e3] text-sm font-semibold transition-all duration-500 inline-flex items-center justify-center gap-2 cursor-pointer overflow-hidden shadow-[inset_0px_2px_4px_rgba(255,255,255,0.4),0px_4px_12px_rgba(68,160,227,0.3)] hover:shadow-[0px_4px_20px_rgba(68,160,227,0.5)] hover:-translate-y-0.5"
               >
                 <span>Get Quote</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1335,7 +1335,7 @@ export default function ProductDetail() {
                   <button
                     type="button"
                     onClick={() => setIsDatasheetOpen((prev) => !prev)}
-                    className="bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs hover:shadow transition-all flex items-center gap-2 cursor-pointer"
+                    className="bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs shadow-orange-500/30 hover:shadow hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <FileText className="w-4 h-4 text-[#0078C8]" />
                     <span>Datasheets & Specs ({productDatasheets.length})</span>
@@ -1423,7 +1423,7 @@ export default function ProductDetail() {
                   ]
               ).map((feat, idx) => (
                 <div key={idx} className="flex items-start gap-2.5 p-3.5 bg-slate-50 rounded-xl border border-slate-100">
-                  <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <span className="text-slate-800 text-sm leading-relaxed font-medium">{feat}</span>
                 </div>
               ))}
