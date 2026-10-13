@@ -26,9 +26,9 @@ export default function Products() {
     highlight_word: 'Catalog.',
     subtitle: 'Explore authorized photovoltaic modules, string & hybrid inverters, and DC cabling systems engineered for commercial and industrial energy projects.',
     brands_tagline: 'AUTHORIZED MANUFACTURERS',
-    brands_title: 'Partner Brands',
-    products_tagline: 'COMPONENT SPECIFICATIONS',
-    products_title: 'Featured Components',
+    brands_title: 'Brand Partners',
+    products_tagline: 'PRODUCTS SPECIFICATIONS',
+    products_title: 'Featured Products',
   });
   const [loading, setLoading] = useState(true);
 
