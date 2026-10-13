@@ -249,7 +249,7 @@ export default function Products() {
                     transition={{ duration: 0.5, ease: "easeOut" }}
                     className="mt-1 text-4xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight"
                   >
-                    {settings.brands_title || 'Brand Partners'}
+                    Brand Partners
                   </motion.h2>
                 </div>
                 {activeCategory !== 'all' && (
