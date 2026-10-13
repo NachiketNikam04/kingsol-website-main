@@ -351,7 +351,7 @@ export default function Products() {
                   transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
                   className="mb-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
                 >
-                  {settings.products_tagline || 'COMPONENT SPECIFICATIONS'}
+                  PRODUCTS SPECIFICATIONS
                 </motion.span>
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
@@ -360,7 +360,7 @@ export default function Products() {
                   transition={{ duration: 0.5, ease: "easeOut" }}
                   className="mt-1 text-4xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 leading-tight"
                 >
-                  {settings.products_title || 'Featured Products'}
+                  Featured Products
                 </motion.h2>
               </div>
 
