@@ -1094,7 +1094,7 @@ export default function ProductDetail() {
                     onClick={() => setSelectedPhaseFilter(phase)}
                     className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer whitespace-nowrap border ${
                       isSelected
-                        ? 'bg-[#44a0e3] text-slate-900 border-slate-900 shadow-md'
+                        ? 'bg-[#44a0e3] text-white border-[#44a0e3] shadow-md'
                         : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:text-[#44a0e3]'
                     }`}
                   >
@@ -1335,7 +1335,7 @@ export default function ProductDetail() {
                   <button
                     type="button"
                     onClick={() => setIsDatasheetOpen((prev) => !prev)}
-                    className="bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs shadow-orange-500/30 hover:shadow hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer"
+                    className="bg-white border border-slate-200 hover:border-brand-orange hover:bg-brand-orange/15 text-slate-800 px-5 py-3.5 rounded-full font-bold text-xs md:text-sm shadow-xs shadow-orange-500/30 hover:shadow hover:shadow-orange-500/50 transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <FileText className="w-4 h-4 text-[#0078C8]" />
                     <span>Datasheets & Specs ({productDatasheets.length})</span>
