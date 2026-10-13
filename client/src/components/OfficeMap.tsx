@@ -57,25 +57,26 @@ function resolveCoordinates(locationStr: string): [number, number] | null {
 }
 
 // Factory function for standard custom location pin with floor mirror/reflection effect
+// Factory function for standard custom location pin with floor mirror/reflection effect
 const createReflectivePinIcon = (isHq: boolean) => {
   return L.divIcon({
     className: 'custom-leaflet-div-icon',
     html: `
       <div class="flex flex-col items-center cursor-pointer group">
-        <!-- Main Location Pin -->
+        <!-- Main 3D Location Pin -->
         <div class="relative z-10 flex flex-col items-center transition-transform duration-200 group-hover:scale-110">
-          ${LOCATION_PIN_SVG}
+          <img src="/location.png" style="width: 28px; height: auto;" class="drop-shadow-md" alt="marker" />
           ${isHq ? '<div class="hq-badge">HQ</div>' : ''}
         </div>
         <!-- Floor Mirror / Reflection Effect -->
-        <div class="transform scale-y-[-1] opacity-30 -mt-1 blur-[1px] pointer-events-none select-none">
-          ${LOCATION_PIN_SVG}
+        <div class="transform scale-y-[-1] opacity-40 -mt-2 blur-[1.5px] pointer-events-none select-none">
+          <img src="/location.png" style="width: 28px; height: auto;" alt="reflection" />
         </div>
       </div>
     `,
-    iconSize: [26, 44],
-    iconAnchor: [13, 24],
-    popupAnchor: [0, -26],
+    iconSize: [28, 48],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28],
   });
 };
 
@@ -114,9 +115,9 @@ interface OfficeMapProps {
 
 const DEFAULT_LOCATIONS: LocationItem[] = [
   { label: 'Pune, Maharashtra (Headquarters)', isHQ: true, iconUrl: '/hq-marker.png' },
-  { label: 'Bhiwandi, Maharashtra' },
-  { label: 'Ahmedabad, Gujarat' },
-  { label: 'Bengaluru, Karnataka' },
+  { label: 'Bhiwandi, Maharashtra', iconUrl: '/location.png' },
+  { label: 'Ahmedabad, Gujarat', iconUrl: '/location.png' },
+  { label: 'Bengaluru, Karnataka', iconUrl: '/location-marker.png' },
   { label: 'Chennai, Tamil Nadu' },
   { label: 'Jaipur, Rajasthan' },
   { label: 'Kolkata, West Bengal' },
@@ -368,8 +369,9 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
           font-size: 10px !important;
           letter-spacing: 0.5px !important;
         }
-        .hq-permanent-tooltip::before {
-          border-bottom-color: #0f172a !important;
+        .hq-permanent-tooltip::before,
+        .hq-permanent-tooltip::after {
+          display: none !important;
         }
       `}</style>
 
@@ -418,7 +420,7 @@ export const OfficeMap: React.FC<OfficeMapProps> = ({
               <Tooltip
                 permanent
                 direction="bottom"
-                offset={[0, -10]}
+                offset={[0, -5]}
                 className="hq-permanent-tooltip font-poppins font-bold text-[10px] bg-slate-900 text-white px-2 py-0.5 rounded border-none shadow-md"
               >
                 HQ
