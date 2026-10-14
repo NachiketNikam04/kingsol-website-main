@@ -224,7 +224,7 @@ export default function ServiceDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-0 text-slate-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 sm:pt-36 pb-[72px] text-slate-900 flex flex-col justify-between">
       <div className="max-w-7xl mx-auto px-6 w-full">
         {/* Breadcrumb Navigation (Tightened mb-12 to mb-6) */}
         <div className="flex items-center gap-2 text-sm font-medium text-slate-500 mb-6">
@@ -271,7 +271,7 @@ export default function ServiceDetail() {
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-white text-slate-900 px-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
+                className="bg-[#44a0e3] text-white px-6 py-3 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
               >
                 <span>Get Quote</span>
                 <span>
@@ -315,8 +315,8 @@ export default function ServiceDetail() {
                     onClick={() => navigate(`/services/${s.slug}`)}
                     className={`w-full text-left px-5 py-3.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? 'bg-[#44a0e3]/15 text-[#44a0e3] font-bold shadow-xs'
-                        : 'bg-slate-50 text-slate-700 hover:bg-[#44a0e3]/15 hover:text-[#44a0e3]'
+                        ? 'bg-none bg-[#44a0e3]/15 text-[#44a0e3] font-bold shadow-xs'
+                        : 'bg-gradient-to-bl from-[#44a0e3]/10 via-white to-white text-slate-700 hover:from-[#44a0e3]/20 hover:text-[#44a0e3]'
                     }`}
                   >
                     <span className="leading-relaxed">{s.title}</span>
@@ -335,10 +335,10 @@ export default function ServiceDetail() {
                   {emergencySettings.emergency_title || 'Technical Dispatch Unit'}
                 </h4>
                 <a
-                  href={`tel:${emergencySettings.emergency_phone || '+91 1234567890'}`}
+                  href={`tel:${emergencySettings.emergency_phone || '+91 8483835826'}`}
                   className="inline-block bg-white text-slate-900 px-5 py-2.5 rounded-full text-xs font-bold hover:bg-[#44a0e3] hover:text-white transition-colors"
                 >
-                  {emergencySettings.emergency_phone || '+91 1234567890'}
+                  {emergencySettings.emergency_phone || '+91 8483835826'}
                 </a>
               </div>
             </div>
@@ -388,7 +388,7 @@ export default function ServiceDetail() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {currentService.checklist.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-3 text-slate-600 font-medium text-sm leading-relaxed">
-                      <div className="mt-2 w-5 h-5 rounded-full bg-[#44a0e3]/20 text-[#44a0e3] flex items-center justify-center font-bold shrink-0 mt-0.5">
+                      <div className="mt-2 w-5 h-5 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center font-bold shrink-0 mt-0.5">
                         ✓
                       </div>
                       <span>{item}</span>

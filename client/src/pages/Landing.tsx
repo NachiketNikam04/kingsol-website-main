@@ -164,7 +164,7 @@ export const Landing: React.FC = () => {
   };
 
   return (
-    <div className="w-full relative bg-[#fdfcf8] text-slate-900 font-poppins">
+    <div className="w-full relative sm:pt-36 pb-[72px] bg-[#fdfcf8] text-slate-900 font-poppins">
       {/* 1. HERO SECTION */}
       <section className="relative min-h-screen w-full flex flex-col justify-center bg-slate-950 overflow-hidden pt-36 sm:pt-44 md:pt-48 lg:pt-52 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 lg:px-8">
         {/* Background Crossfade Carousel Layer */}

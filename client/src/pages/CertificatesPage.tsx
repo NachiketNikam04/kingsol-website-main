@@ -131,7 +131,7 @@ export const CertificatesPage: React.FC = () => {
           <h2 className="font-poppins text-3xl font-bold tracking-tight text-gray-900 leading-tight sm:text-4xl md:text-5xl">
             {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+          <p className="mt-4 font-poppins text-base md:text-md text-slate-600 leading-relaxed whitespace-pre-line text-center">
             Explore our certified standards, international laboratory compliance qualifications, and Tier-1 factory accreditations.
           </p>
         </div>
@@ -183,7 +183,7 @@ export const CertificatesPage: React.FC = () => {
                     </h3>
                   </div>
                   {cert.description && (
-                    <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
+                    <p className="mt-1 font-poppins text-base md:text-sm text-slate-600 leading-relaxed whitespace-pre-line text-left-alined">
                       {cert.description}
                     </p>
                   )}
@@ -209,7 +209,7 @@ export const CertificatesPage: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="w-full flex items-center justify-between pb-3 border-b border-slate-100 mb-3 px-2">
-                <h3 className="font-bold text-slate-900 font-poppins text-base truncate pr-4">
+                <h3 className="font-poppins text-lg font-bold text-slate-900 group-hover:text-brand-green transition-colors leading-snug">
                   {selectedImage.title}
                 </h3>
                 <button

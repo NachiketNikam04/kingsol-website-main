@@ -116,7 +116,7 @@ export default function Services() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 sm:pt-36 pb-0 text-slate-900 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#fdfcf8] pt-32 sm:pt-36 pb-[72px] text-slate-900 flex flex-col justify-between">
       <div className="max-w-7xl mx-auto px-6 w-full mb-16 md:mb-20">
         {/* Header Section (Removed double mb-8 gap and aligned tagline directly over title) */}
         <div className="mb-8">
