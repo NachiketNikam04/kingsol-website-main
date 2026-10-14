@@ -259,7 +259,7 @@ export default function Contact() {
           if (trimmedLine.startsWith('-') || trimmedLine.startsWith('•')) {
             return (
               <div key={index} className="flex items-start gap-2 pl-2 md:pl-4">
-                <span className="text-[#44a0e3] font-bold text-sm shrink-0 mt-0.5">✓</span>
+                <span className="text-brand-orange font-bold text-sm shrink-0 mt-0.5">✓</span>
                 <span>{trimmedLine.replace(/^[-•]\s*/, '')}</span>
               </div>
             );

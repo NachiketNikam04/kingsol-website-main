@@ -97,16 +97,10 @@ const StatItem: React.FC<CountUpProps> = ({
       ref={ref}
       className="group flex-1 min-w-[250px] bg-white rounded-[2rem] border border-[#44a0e3]/80 shadow-xl p-8 flex flex-col items-center justify-center text-center hover:-translate-y-2 hover:border-[#44a0e3] transition-all duration-500 relative overflow-hidden"
     >
-      {/* Continuous Fluid / Mirror Sheen Sweep Effect */}
-      <motion.div
-        animate={{ left: ["-100%", "200%"] }}
-        transition={{ 
-          duration: 2.5, 
-          ease: "easeInOut", 
-          repeat: Infinity, 
-          repeatDelay: 1.5 
-        }}
-        className="absolute top-0 w-[150%] h-full bg-gradient-to-r from-transparent via-[#44a0e3]/15 to-transparent skew-x-[-30deg] z-0 pointer-events-none"
+      {/* Continuous panning sheen effect */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-gradient-to-l from-transparent via-[#44a0e3]/20 to-transparent bg-[length:200%_100%] animate-[pan_3s_linear_infinite]"
+        aria-hidden="true"
       />
 
       {/* Content Wrapper (z-10 ensures it sits above the sheen) */}
