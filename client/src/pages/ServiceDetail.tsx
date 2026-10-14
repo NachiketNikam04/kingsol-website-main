@@ -316,7 +316,7 @@ export default function ServiceDetail() {
                     className={`w-full text-left px-5 py-3.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-all duration-300 cursor-pointer ${
                       isActive
                         ? 'bg-none bg-[#44a0e3]/15 text-[#44a0e3] font-bold shadow-xs'
-                        : 'bg-gradient-to-bl from-[#44a0e3]/10 via-white to-white text-slate-700 hover:from-[#44a0e3]/20 hover:text-[#44a0e3]'
+                        : 'bg-gradient-to-bl from-[#44a0e3]/30 via-white to-white text-slate-700 hover:from-[#44a0e3]/50 hover:text-[#44a0e3]'
                     }`}
                   >
                     <span className="leading-relaxed">{s.title}</span>
