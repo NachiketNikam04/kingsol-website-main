@@ -161,7 +161,7 @@ export const GalleryPage: React.FC = () => {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2.5 rounded-full font-bold text-sm transition-all cursor-pointer ${
+              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
                 selectedCategory === cat
                   ? 'bg-[#44a0e3] text-white border-[#44a0e3] shadow-md'
                   : 'bg-white text-slate-700 border-slate-200 hover:bg-[#44a0e3] hover:border-[#44a0e3] hover:text-white'
