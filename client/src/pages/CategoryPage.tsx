@@ -7,6 +7,7 @@ import { InquiryModal } from '../components/InquiryModal';
 import { CTASection } from '../components/CTASection';
 import { useFeatureFlags } from '../context/FeatureFlagsContext';
 
+// Moved helper function outside the component to prevent unnecessary re-renders
 function getSpecValue(specs: any, keyNames: string[], fallback: string): string {
   if (!specs || typeof specs !== 'object') return fallback;
   for (const k of keyNames) {
@@ -32,7 +33,8 @@ export default function CategoryPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Inquiry Modal State
+  // Modal States
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<Product | null>(null);
 
@@ -105,7 +107,7 @@ export default function CategoryPage() {
           <span className="text-slate-900 font-semibold">{category.name}</span>
         </div>
 
-        {/* Category Header Banner (Tightened Spacing) */}
+        {/* Category Header Banner */}
         <div className="mb-7">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -158,7 +160,6 @@ export default function CategoryPage() {
                   className="bg-white rounded-[2rem] p-5 pb-4 border border-slate-200 shadow-xs flex flex-col justify-between hover:shadow-lg transition-all group"
                 >
                   <div>
-                    {/* 1. Brand Image Container */}
                     <div className="w-full h-44 rounded-2xl overflow-hidden mb-3.5 bg-slate-50 border border-slate-100 flex items-center justify-center relative">
                       <img
                         src={getAssetUrl(brand.card_image || brand.cardImage || brand.image || (brand as any).image_url)}
@@ -166,16 +167,12 @@ export default function CategoryPage() {
                         className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
-
-                    {/* 2. Brand Name & 14px Description */}
                     <h3 className="text-lg font-bold font-poppins text-slate-900 mb-1 tracking-tight">
                       {brand.name}
                     </h3>
                     <p className="mt-1 font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-justify flex-1 line-clamp-3 mb-3">
                       {brand.description || 'Authorized tier-1 solar component manufacturer providing high-performance equipment and factory support.'}
                     </p>
-
-                    {/* 3. Certificates Trust Badges */}
                     <div className="mb-3 pt-2.5 border-t border-slate-100">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
                         Certifications:
@@ -195,8 +192,6 @@ export default function CategoryPage() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Brand Card Pill Button */}
                   <Link
                     to={`/products/${category.slug}/${brand.slug}`}
                     className="w-full mx-auto bg-white text-slate-900 px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex items-center justify-center gap-1 cursor-pointer border border-slate-200/60 hover:border-transparent relative z-20 group/btn"
@@ -223,9 +218,31 @@ export default function CategoryPage() {
             </motion.h2>
           </div>
           {products.length === 0 ? (
-            <div className="bg-white rounded-[2rem] p-10 text-center text-slate-500 border border-slate-200">
-              No products currently available in this category.
-            </div>
+            isBess ? (
+              /* --- BESS SPECIFIC EMPTY STATE --- */
+              <div className="flex flex-col items-center justify-center text-center py-16 px-4">
+                <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider uppercase text-[#44a0e3] bg-[#44a0e3]/10 rounded-full">
+                  Coming Soon
+                </span>
+                <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">
+                  Battery Energy Storage Systems (BESS)
+                </h3>
+                <p className="text-slate-500 text-sm max-w-md mx-auto mb-6">
+                  We are curating our next generation of high-capacity storage solutions. Full specs and product availability will be live shortly.
+                </p>
+                <button
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="text-xs font-semibold text-[#44a0e3] hover:underline cursor-pointer"
+                >
+                  Need early specifications? Contact our team &rarr;
+                </button>
+              </div>
+            ) : (
+              /* --- GENERIC EMPTY STATE --- */
+              <div className="bg-white rounded-[2rem] p-10 text-center text-slate-500 border border-slate-200 w-full">
+                No products currently available in this category.
+              </div>
+            )
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {products.map((product, idx) => {
@@ -244,7 +261,6 @@ export default function CategoryPage() {
                     className="bg-white rounded-[2rem] p-4 border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all group"
                   >
                     <div>
-                      {/* 1. Image Area with Floating Brand Pill */}
                       <div className="h-44 rounded-2xl overflow-hidden mb-3 bg-slate-50 relative border border-slate-100 flex items-center justify-center">
                         <img
                           src={getAssetUrl(product.card_image || product.cardImage || product.image)}
@@ -255,16 +271,12 @@ export default function CategoryPage() {
                           {product.brandName || 'Solar Brand'}
                         </span>
                       </div>
-
-                      {/* 2. Title & 14px Description */}
                       <h3 className="text-base font-bold font-poppins text-slate-900 leading-snug truncate mb-1">
                         {product.name}
                       </h3>
                       <p className="mt-1 font-poppins text-sm text-slate-600 leading-relaxed whitespace-pre-line text-left-aligned flex-1 line-clamp-2 mb-2.5">
                         {product.description || 'High-efficiency engineered solar component with factory direct warranty support.'}
                       </p>
-
-                      {/* 3. Technical Specs 2x2 Grid */}
                       <div className="bg-slate-50 rounded-2xl p-2.5 mb-3.5 border border-slate-100/80">
                         <div className="grid grid-cols-2 gap-1.5 text-left">
                           <div className="bg-white rounded-xl p-1.5 border border-slate-100">
@@ -286,8 +298,6 @@ export default function CategoryPage() {
                         </div>
                       </div>
                     </div>
-
-                    {/* 4. Action Buttons (Both Styled with Matching Pill Appearance) */}
                     <div className="flex items-center gap-2 mt-auto pt-1">
                       <Link
                         to={`/products/${product.category}/${product.brand}/${product.slug}`}
