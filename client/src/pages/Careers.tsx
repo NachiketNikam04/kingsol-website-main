@@ -214,7 +214,7 @@ export default function Careers() {
 
             <button
               onClick={scrollToJobs}
-              className="bg-white text-slate-900 border border-slate-300 px-8 py-4 rounded-full font-semibold text-sm transition-all hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_15px_30px_rgba(68,160,227,0.3)] flex items-center gap-3 cursor-pointer w-fit mt-5"
+              className="bg-[#44a0e3] text-white border border-slate-300 px-8 py-4 rounded-full font-semibold text-sm transition-all hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_15px_30px_rgba(68,160,227,0.3)] flex items-center gap-3 cursor-pointer w-fit mt-5"
             >
               <span>SEE OPEN POSITIONS</span>
               <span className="transform transition-transform group-hover:translate-y-1">↓</span>

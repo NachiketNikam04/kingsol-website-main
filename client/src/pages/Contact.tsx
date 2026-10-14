@@ -2,6 +2,7 @@ import { API_BASE_URL } from '../utils/assetUrl';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone } from 'lucide-react';
+import { CTASection } from '../components/CTASection';
 
 interface ContactSettings {
   hero_tagline: string;
@@ -48,10 +49,10 @@ interface FAQItem {
 }
 
 // Cloud outline paths for the quote section (stretched to fit the quote via preserveAspectRatio="none")
-const CLOUD_PATH_DESKTOP =
+export const CLOUD_PATH_DESKTOP =
   'M 180 400 A 125 125 0 0 1 52 276 A 68 68 0 0 1 52 170 A 112 112 0 0 1 176 72 A 125 125 0 0 1 364 64 A 125 125 0 0 1 550 64 A 118 118 0 0 1 724 72 A 112 112 0 0 1 848 170 A 68 68 0 0 1 848 276 A 125 125 0 0 1 720 400 A 110 110 0 0 1 560 410 A 105 105 0 0 1 410 416 Q 386 424 352 470 Q 338 448 336 418 A 100 100 0 0 1 180 400 Z';
 
-const CLOUD_PATH_MOBILE =
+export const CLOUD_PATH_MOBILE =
   'M 116 378 A 84 84 0 0 1 34 296 A 54 54 0 0 1 34 212 A 52 52 0 0 1 34 130 A 84 84 0 0 1 118 46 A 54 54 0 0 1 200 30 A 54 54 0 0 1 282 46 A 84 84 0 0 1 366 130 A 52 52 0 0 1 366 212 A 54 54 0 0 1 366 296 A 84 84 0 0 1 284 378 A 50 50 0 0 1 206 384 Q 190 396 170 438 Q 156 416 160 386 A 30 30 0 0 1 116 378 Z';
 
 export default function Contact() {
@@ -224,6 +225,7 @@ export default function Contact() {
   const primaryEmail = activeDepts.find((d) => d.email)?.email || 'sales@kingsolenergy.com';
   const primaryWhatsapp = activeDepts.find((d) => d.whatsapp)?.whatsapp || '+919876543210';
   const cleanWhatsappNumber = primaryWhatsapp.replace(/[^\d+]/g, '');
+  void [currentInfraTagline, currentInfraHeadline, currentInfraHighlight, currentQuoteText, currentQuoteAuthor, activeInfra];
 
   // Case-Insensitive Headline Splitting Helper
   const renderDynamicHeadline = (headline: string, highlightWord: string) => {
@@ -295,7 +297,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdfcf8] pt-32 pb-[72px] text-slate-900 overflow-x-clip">
+    <div className="min-h-screen bg-[#fdfcf8] sm:pt-36 pb-[72px] text-slate-900 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Dynamic Hero Header */}
         <div className="mb-8 mt-6">
@@ -326,7 +328,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.7, delay: idx * 0.1, ease: "easeOut" }}
-              className="w-full bg-white rounded-[2.5rem] p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-[0_25px_50px_rgba(68,160,227,0.2)] transition-all duration-500 group relative overflow-hidden min-h-[300px]"
+              className="w-full bg-white rounded-[2.5rem] p-8 border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-[0_25px_50px_rgba(68,160,227,0.2)] transition-all duration-500 group relative overflow-hidden min-h-[300px] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[6px] after:bg-gradient-to-r after:from-[#44a0e3] after:via-[#60afe6] after:via-[75%] after:to-[#44a0e3]"
             >
               <div className="absolute -right-12 -top-12 w-36 h-36 bg-[#44a0e3]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none"></div>
 
@@ -393,10 +395,10 @@ export default function Contact() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6"
+          className="relative bg-gradient-to-bl from-[#44a0e3]/15 via-white to-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[6px] after:bg-gradient-to-r after:from-[#44a0e3] after:via-[#60afe6] after:via-[75%] after:to-[#44a0e3]"
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl border border-blue-100 flex items-center justify-center bg-blue-50/50 text-[#44a0e3] shrink-0">
+            <div className="w-12 h-12 rounded-xl border border-blue-100 hover:bg-[#44a0e3] hover:text-white flex items-center justify-center bg-blue-50/50 text-[#44a0e3] shrink-0">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -417,7 +419,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="mb-10 bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-200/80 shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6"
+          className="relative mb-10 bg-gradient-to-bl from-[#44a0e3]/15 via-white to-white rounded-[2rem] p-6 sm:p-8 border border-slate-200/80 overflow-hidden shadow-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[6px] after:bg-gradient-to-r after:from-[#44a0e3] after:via-[#60afe6] after:via-[75%] after:to-[#44a0e3]"
         >
           <div>
             <span className="mb-1 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block">
@@ -541,7 +543,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-2 bg-white text-slate-900 px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex justify-center items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
+                  className="w-full mt-2 bg-[#44a0e3] text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] flex justify-center items-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent disabled:opacity-50 relative z-20 group/btn"
                 >
                   {loading ? 'Sending Message...' : 'Send Message'}
                 </button>
@@ -589,52 +591,6 @@ export default function Contact() {
           </motion.div>
         </div>
 
-        {/* Left-Aligned Infrastructure & Reach Cards Container */}
-        <section className="mb-10 bg-white rounded-[2.5rem] p-8 md:p-10 border border-slate-200 shadow-xs">
-          <div className="max-w-3xl mb-8">
-            <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
-            >
-              <span>{currentInfraTagline}</span>
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="mt-1 text-2xl font-poppins font-bold tracking-tight text-slate-900 leading-tight sm:text-3xl md:text-4xl shrink-0"
-            >
-              {renderDynamicHeadline(currentInfraHeadline, currentInfraHighlight)}
-            </motion.h2>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {activeInfra.map((card, idx) => (
-              <div
-                key={card.id || idx}
-                className="w-full p-6 rounded-2xl bg-[#FDFCF8] border border-slate-200/80 flex flex-col"
-              >
-                <h4 className="text-lg font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-2 transition-colors duration-300 group-hover:text-[#44a0e3]">
-                  {card.title}
-                </h4>
-                <p className="flex items-start text-slate-600 font-poppins text-sm leading-relaxed">
-                  {card.description}
-                </p>
-              </div>
-            ))}
-          </motion.div>
-        </section>
-
         {/* Frequently Asked Questions */}
         <section className="mb-14">
           <div className="text-center max-w-2xl mx-auto mb-8">
@@ -643,7 +599,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-[#44a0e3] block"
+              className="mb-1.5 font-poppins text-xs font-semibold uppercase tracking-[0.2em] sm:text-sm text-brand-green block"
             >
               <span>{currentFaqTagline}</span>
             </motion.span>
@@ -668,11 +624,17 @@ export default function Contact() {
             {activeFaqs.map((faq, idx) => (
               <div
                 key={faq.id || idx}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs transition-all duration-300"
+                className="relative bg-white/40 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg overflow-hidden transition-all duration-300"
                 onMouseEnter={() => setOpenFaq(idx)}
                 onMouseLeave={() => setOpenFaq(null)}
               >
-                <div className="w-full px-8 py-6 text-left flex justify-between items-center font-medium text-slate-900 hover:bg-slate-50 hover:text-[#44a0e3] transition-colors cursor-default">
+                {/* Continuous flowing right-to-left blue gradient animation */}
+                <div
+                  className="absolute inset-0 pointer-events-none bg-gradient-to-l from-transparent via-[#44a0e3]/20 to-transparent bg-[length:200%_100%] animate-[pan_3s_linear_infinite]"
+                  aria-hidden="true"
+                />
+
+                <div className="relative z-10 w-full px-8 py-6 text-left flex justify-between items-center font-medium text-slate-900 hover:text-[#44a0e3] transition-colors cursor-default">
                   <span className="text-base font-bold font-poppins">{faq.question}</span>
                 </div>
                 <AnimatePresence>
@@ -681,7 +643,7 @@ export default function Contact() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="px-8 pb-6 pt-2 border-t border-slate-100"
+                      className="relative z-10 px-8 pb-6 pt-2 border-t border-white/30"
                     >
                       {/* Integrated Smart Parser for text-sm size */}
                       {renderFaqAnswer(faq.answer)}
@@ -695,15 +657,15 @@ export default function Contact() {
 
         {/* Realistic Cloud Quote Design */}
         {/* Keep CLOUD_PATH_DESKTOP and CLOUD_PATH_MOBILE (defined above the component) as they are */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           className="flex flex-col items-center mb-10 mt-16 px-4 will-change-transform"
-        >
+        > */}
           {/* Smooth float animation: pure CSS, runs on the GPU compositor (no per-frame JS / filter re-rendering) */}
-          <style>{`
+          {/* <style>{`
             @keyframes quote-cloud-float {
               0%, 100% { transform: translate3d(0, 0, 0); }
               50%      { transform: translate3d(0, -12px, 0); }
@@ -726,41 +688,41 @@ export default function Contact() {
               .quote-cloud-float,
               .quote-cloud-shadow { animation: none; }
             }
-          `}</style>
+          `}</style> */}
 
           {/* Shared SVG filter definitions (puffy edges + soft 3D shading) */}
-          <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
-            <defs>
+          {/* <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
+            <defs> */}
               {/* Desktop / tablet cloud */}
-              <filter
+              {/* <filter
                 id="cloud-real-d"
                 x="-8%"
                 y="-10%"
                 width="116%"
                 height="124%"
                 colorInterpolationFilters="sRGB"
-              >
+              > */}
                 {/* 1. Wobble the outline so the edges look organic and fluffy */}
-                <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="4" seed="8" result="noise" />
+                {/* <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="4" seed="8" result="noise" />
                 <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" result="shape" />
-                <feGaussianBlur in="shape" stdDeviation="1.6" result="softShape" />
+                <feGaussianBlur in="shape" stdDeviation="1.6" result="softShape" /> */}
                 {/* 2. Use the blurred shape as a height map and light it from the top */}
-                <feGaussianBlur in="softShape" stdDeviation="13" result="bump" />
+                {/* <feGaussianBlur in="softShape" stdDeviation="13" result="bump" />
                 <feDiffuseLighting in="bump" surfaceScale="26" diffuseConstant="1.3" lightingColor="#ffffff" result="light">
                   <feDistantLight azimuth="250" elevation="58" />
-                </feDiffuseLighting>
+                </feDiffuseLighting> */}
                 {/* 3. Tint the shaded areas sky-blue so the underside looks like a real cloud */}
-                <feColorMatrix
+                {/* <feColorMatrix
                   in="light"
                   type="matrix"
                   values="0.5 0 0 0 0.5  0 0.35 0 0 0.65  0 0 0.08 0 0.92  0 0 0 1 0"
                   result="tinted"
                 />
                 <feComposite in="tinted" in2="softShape" operator="in" />
-              </filter>
+              </filter> */}
 
               {/* Mobile cloud (smaller coordinate space, so smaller values) */}
-              <filter
+              {/* <filter
                 id="cloud-real-m"
                 x="-10%"
                 y="-8%"
@@ -786,36 +748,36 @@ export default function Contact() {
             </defs>
           </svg>
 
-          <div className="relative w-full max-w-4xl mx-auto z-20">
+          <div className="relative w-full max-w-4xl mx-auto z-20"> */}
             {/* Soft ground shadow under the cloud: breathes in and out opposite to the float */}
-            <div className="absolute -bottom-6 inset-x-0 flex justify-center pointer-events-none">
+            {/* <div className="absolute -bottom-6 inset-x-0 flex justify-center pointer-events-none">
               <div className="quote-cloud-shadow w-3/5 h-5 rounded-full bg-slate-900/10 blur-xl"></div>
-            </div>
+            </div> */}
 
             {/* Gently floating cloud */}
-            <div className="quote-cloud-float relative text-center text-slate-900">
+            {/* <div className="quote-cloud-float relative text-center text-slate-900"> */}
               {/* Cloud - Desktop / Tablet */}
-              <svg
+              {/* <svg
                 className="hidden md:block absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_18px_22px_rgba(68,160,227,0.22)]"
                 viewBox="0 0 900 490"
                 preserveAspectRatio="none"
                 aria-hidden="true"
               >
                 <path d={CLOUD_PATH_DESKTOP} fill="#ffffff" filter="url(#cloud-real-d)" />
-              </svg>
+              </svg> */}
 
               {/* Cloud - Mobile */}
-              <svg
+              {/* <svg
                 className="md:hidden absolute inset-0 w-full h-full overflow-visible pointer-events-none drop-shadow-[0_14px_18px_rgba(68,160,227,0.22)]"
                 viewBox="0 0 400 450"
                 preserveAspectRatio="none"
                 aria-hidden="true"
               >
                 <path d={CLOUD_PATH_MOBILE} fill="#ffffff" filter="url(#cloud-real-m)" />
-              </svg>
+              </svg> */}
 
               {/* Quote content - padding keeps the text inside the cloud body */}
-              <div className="relative z-10 px-[16%] pt-24 pb-28 md:px-[18%]">
+              {/* <div className="relative z-10 px-[16%] pt-24 pb-28 md:px-[18%]">
                 <h2 className="text-2xl md:text-[28px] font-bold font-poppins leading-snug mb-6">
                   {currentQuoteText}
                 </h2>
@@ -825,8 +787,11 @@ export default function Contact() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
+
+      {/* Free Quote CTA Banner */}
+      <CTASection />
     </div>
   );
 }

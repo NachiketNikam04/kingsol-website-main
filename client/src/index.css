@@ -44,6 +44,15 @@
   animation: marquee-reverse 30s linear infinite;
 }
 
+@keyframes pan {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 /* Leaflet interactive SVG focus outline reset */
 .leaflet-interactive:focus,
 path.leaflet-interactive:focus,

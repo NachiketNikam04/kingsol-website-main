@@ -49,10 +49,15 @@ export default {
           '0%': { transform: 'translateX(-50%)' },
           '100%': { transform: 'translateX(0%)' },
         },
+        pan: {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' },
+        },
       },
       animation: {
         marquee: 'marquee 30s linear infinite',
         'marquee-reverse': 'marquee-reverse 30s linear infinite',
+        pan: 'pan 3s linear infinite',
       },
     },
   },
