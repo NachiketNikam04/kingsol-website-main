@@ -6,6 +6,7 @@ import { fetchLiveCatalog, Product, Brand, Category } from '../data/productsData
 import { InquiryModal } from '../components/InquiryModal';
 import { CTASection } from '../components/CTASection';
 import { useFeatureFlags } from '../context/FeatureFlagsContext';
+import QuoteModal from '../components/QuoteModal';
 
 // Moved helper function outside the component to prevent unnecessary re-renders
 function getSpecValue(specs: any, keyNames: string[], fallback: string): string {
@@ -34,7 +35,7 @@ export default function CategoryPage() {
   const [loading, setLoading] = useState(true);
 
   // Modal States
-  const [, setIsQuoteOpen] = useState(false);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<Product | null>(null);
 
@@ -221,7 +222,7 @@ export default function CategoryPage() {
             isBess ? (
               /* --- BESS SPECIFIC EMPTY STATE --- */
               <div className="flex flex-col items-center justify-center text-center py-16 px-4">
-                <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider uppercase text-[#44a0e3] bg-[#44a0e3]/10 rounded-full">
+                <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold tracking-wider uppercase text-[#44a0e3]">
                   Coming Soon
                 </span>
                 <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-2">
@@ -328,6 +329,12 @@ export default function CategoryPage() {
         isOpen={isInquiryModalOpen}
         onClose={() => setIsInquiryModalOpen(false)}
         productName={selectedProductForInquiry?.name}
+      />
+
+      {/* ADD THIS NEW QUOTE MODAL HERE */}
+      <QuoteModal 
+        isOpen={isQuoteOpen} 
+        onClose={() => setIsQuoteOpen(false)} 
       />
 
       {/* CTA Section Banner */}
