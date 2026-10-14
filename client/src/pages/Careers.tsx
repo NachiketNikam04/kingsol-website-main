@@ -335,7 +335,7 @@ export default function Careers() {
               <div className="w-10 h-10 rounded-3xl bg-[#e31414] flex items-center justify-center text-white shrink-0 font-bold my-auto shadow-sm">
                 !
               </div>
-              <p className="md:text-sm text-slate-900 leading-relaxed">
+              <p className="text-xs text-slate-900 leading-relaxed">
                 <strong className="text-[#fc051a] font-bold">{currentDisclaimerTitle}</strong> {currentDisclaimerText}
               </p>
             </div>
