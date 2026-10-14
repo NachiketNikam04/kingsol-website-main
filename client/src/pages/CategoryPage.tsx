@@ -34,7 +34,7 @@ export default function CategoryPage() {
   const [loading, setLoading] = useState(true);
 
   // Modal States
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [, setIsQuoteOpen] = useState(false);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [selectedProductForInquiry, setSelectedProductForInquiry] = useState<Product | null>(null);
 
