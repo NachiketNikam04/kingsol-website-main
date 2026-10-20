@@ -21,7 +21,7 @@ interface ServiceItem {
 export default function Services() {
   const [settings, setSettings] = useState<ServicePageSettings>({
     tagline: 'EXPERT SERVICES',
-    headline: '10+ years of Excellence in the solar industry.',
+    headline: '5+ years of Excellence in the solar industry.',
     highlight_word: 'Excellence',
   });
   const [servicesList, setServicesList] = useState<ServiceItem[]>([]);

@@ -49,7 +49,7 @@ export const ServicesManager: React.FC = () => {
   // Settings State
   const [settings, setSettings] = useState<ServicePageSettings>({
     tagline: 'EXPERT SERVICES',
-    headline: '10+ years of Excellence in the solar industry.',
+    headline: '5+ years of Excellence in the solar industry.',
     highlight_word: 'Excellence',
     emergency_tagline: 'Emergency Support',
     emergency_title: 'Technical Dispatch Unit',
@@ -354,7 +354,7 @@ export const ServicesManager: React.FC = () => {
                     value={settings.headline}
                     onChange={(e) => setSettings({ ...settings, headline: e.target.value })}
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
-                    placeholder="10+ years of Excellence in the solar industry."
+                    placeholder="5+ years of Excellence in the solar industry."
                   />
                 </div>
               </div>

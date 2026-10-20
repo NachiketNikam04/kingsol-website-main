@@ -16,7 +16,7 @@ router.get('/page', async (req, res) => {
 
     const defaultSettings = {
       tagline: 'EXPERT SERVICES',
-      headline: '10+ years of Excellence in the solar industry.',
+      headline: '5+ years of Excellence in the solar industry.',
       highlight_word: 'Excellence',
       emergency_tagline: 'Emergency Support',
       emergency_title: 'Technical Dispatch Unit',
@@ -99,7 +99,7 @@ router.put('/settings', verifyToken, async (req, res) => {
        RETURNING *`,
       [
         tagline || 'EXPERT SERVICES',
-        headline || '10+ years of Excellence in the solar industry.',
+        headline || '5+ years of Excellence in the solar industry.',
         highlight_word || 'Excellence',
         emergency_tagline || 'Emergency Support',
         emergency_title || 'Technical Dispatch Unit',
