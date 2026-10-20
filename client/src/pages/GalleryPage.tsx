@@ -84,13 +84,13 @@ export const GalleryPage: React.FC = () => {
           className="bg-white rounded-[2.5rem] border border-slate-200/80 p-12 md:p-16 text-center max-w-4xl mx-auto shadow-sm relative overflow-hidden bg-gradient-to-bl from-[#44a0e3]/10 via-white to-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-[6px] after:bg-gradient-to-r after:from-[#44a0e3] after:via-[#60afe6] after:via-[75%] after:to-[#44a0e3]"
         >
           {/* Badge */}
-          <span className="inline-block px-3.5 py-1 mb-4 text-xs font-semibold tracking-widest uppercase text-[#44a0e3] bg-[#44a0e3]/10 rounded-full font-poppins">
+          <span className="inline-block px-3.5 py-1 mb-4 text-xs font-semibold tracking-widest uppercase text-[#44a0e3] font-poppins">
             Project Showcase Under Curation
           </span>
 
           {/* Heading */}
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold font-poppins text-slate-900 mb-3 tracking-tight">
-            On-Site Installations & Project Portfolio
+            Project Portfolio
           </h3>
 
           {/* Description */}
