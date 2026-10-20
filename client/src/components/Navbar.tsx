@@ -250,11 +250,11 @@ export const Navbar: React.FC = () => {
           {/* Left: Contact Info */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-medium">
             <a
-              href="tel:18002037228"
+              href="#"
               className="flex items-center gap-1.5 hover:text-brand-green transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-brand-green shrink-0" />
-              <span>Toll Free: 1800 203 7228</span>
+              <span>Toll Free: Coming soon</span>
             </a>
 
             <span className="text-slate-600 hidden sm:inline">|</span>
@@ -995,9 +995,9 @@ export const Navbar: React.FC = () => {
 
             {/* Contact Quick Info on Mobile */}
             <div className="pt-4 flex flex-col gap-2.5 text-xs text-slate-600 font-medium">
-              <a href="tel:18002037228" className="flex items-center gap-2 hover:text-brand-green">
+              <a href="#" className="flex items-center gap-2 hover:text-brand-green">
                 <Phone className="w-3.5 h-3.5 text-brand-green" />
-                <span>Toll Free: 1800 203 7228</span>
+                <span>Toll Free: Coming soon</span>
               </a>
               <a href="tel:8530853317" className="flex items-center gap-2 hover:text-brand-green">
                 <Phone className="w-3.5 h-3.5 text-brand-green" />
