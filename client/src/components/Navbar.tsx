@@ -264,7 +264,7 @@ export const Navbar: React.FC = () => {
               className="flex items-center gap-1.5 hover:text-brand-green transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-brand-green shrink-0" />
-              <span>Sales: 8530853317</span>
+              <span>Sales: 8483835826</span>
             </a>
 
             <span className="text-slate-600 hidden md:inline">|</span>
