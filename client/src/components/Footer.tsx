@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
       'High-efficiency solar components, utility-scale storage, and turnkey B2B procurement engineered for a sustainable planet.',
     hq_label: 'Main Office',
     address: 'Third floor Shop. no. 326, Vardhaman Moonstone, Pune.',
-    phone: '+1 (800) 555-SOLAR',
+    phone: 'comming soon',
     email: 'sales@kingsol.in',
     sales_phone: '+91 84838 35826',
     sales_email: 'sales@kingsol.in',
