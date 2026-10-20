@@ -1001,7 +1001,7 @@ export const Navbar: React.FC = () => {
               </a>
               <a href="tel:8530853317" className="flex items-center gap-2 hover:text-brand-green">
                 <Phone className="w-3.5 h-3.5 text-brand-green" />
-                <span>Sales: 8530853317</span>
+                <span>Sales: 8483835826</span>
               </a>
               <span className="text-slate-400">Solar solutions across PAN India</span>
             </div>
