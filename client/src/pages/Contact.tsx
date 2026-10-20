@@ -409,7 +409,7 @@ export default function Contact() {
             </div>
           </div>
           <div className="text-2xl md:text-3xl font-black font-poppins text-[#44a0e3]">
-            1800 203 7228
+            Coming soon
           </div>
         </motion.div>
 
