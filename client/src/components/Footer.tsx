@@ -317,7 +317,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-xs">
               <li className="flex items-start space-x-2.5 text-slate-400">
                 <MapPin className="w-3.5 h-3.5 text-brand-green mt-0.5 shrink-0" />
-                <span className="leading-relaxed text-xs break-words">{settings.address}</span>
+                <span className="block min-w-[195px] leading-relaxed text-xs break-words">{settings.address}</span>
               </li>
             </ul>
           </div>
