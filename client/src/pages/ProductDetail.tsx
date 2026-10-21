@@ -1026,7 +1026,7 @@ export default function ProductDetail() {
                   onClick={() => setIsQuoteOpen(true)}
                   className="bg-[#44a0e3] text-white px-6 py-2.5 rounded-full font-poppins font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 shadow-sm hover:bg-white hover:text-[#44a0e3] hover:shadow-[0_12px_24px_rgba(68,160,227,0.2)] inline-flex items-center justify-center cursor-pointer border border-slate-400 hover:border-transparent relative z-20 group/btn"
                 >
-                  Get a Free Quote
+                  Get a Quote
                 </button>
               </div>
             </div>
