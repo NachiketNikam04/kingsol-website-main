@@ -1,7 +1,8 @@
 import { getAssetUrl } from '../../utils/assetUrl';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Sidebar from '../../components/Sidebar';
 import api from '../../api/api';
+import Cropper from 'react-easy-crop';
 import {
   Wrench,
   CheckCircle2,
@@ -14,7 +15,95 @@ import {
   ListCheck,
   PlusCircle,
   Phone,
+  Upload,
+  Image as ImageIcon,
 } from 'lucide-react';
+
+// Canvas Helper Function to Crop Base64 / File Image to Compressed JPEG (0.85)
+const getCroppedImg = (imageSrc: string, pixelCrop: any): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.src = imageSrc;
+    image.crossOrigin = 'anonymous';
+    image.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!ctx) {
+        return reject(new Error('No 2d context'));
+      }
+
+      // Constrain max dimension to 2048px to prevent huge canvas buffers
+      const maxDim = 2048;
+      let targetWidth = pixelCrop.width;
+      let targetHeight = pixelCrop.height;
+
+      if (targetWidth > maxDim) {
+        targetHeight = Math.round((targetHeight * maxDim) / targetWidth);
+        targetWidth = maxDim;
+      }
+
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      ctx.clearRect(0, 0, targetWidth, targetHeight);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      // Solid white background to prevent black alpha rendering in JPEG
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, targetWidth, targetHeight);
+
+      ctx.drawImage(
+        image,
+        pixelCrop.x,
+        pixelCrop.y,
+        pixelCrop.width,
+        pixelCrop.height,
+        0,
+        0,
+        targetWidth,
+        targetHeight
+      );
+
+      // Output compressed JPEG at 0.85 quality to avoid HTTP 413 payload limits
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    image.onerror = (error) => reject(error);
+  });
+};
+
+const compressDirectImage = (imageSrc: string): Promise<string> => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = imageSrc;
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return resolve(imageSrc);
+
+      const maxDim = 2048;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxDim) {
+        height = Math.round((height * maxDim) / width);
+        width = maxDim;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => resolve(imageSrc);
+  });
+};
 
 interface ServicePageSettings {
   tagline: string;
@@ -87,6 +176,92 @@ export const ServicesManager: React.FC = () => {
     gallery_img_url: '',
     sort_order: 0,
   });
+
+  // Cropper State (16:9 Aspect Ratio)
+  type ImageField = 'grid_img_url' | 'hero_img_url' | 'gallery_img_url';
+  const [imageToCrop, setImageToCrop] = useState<string | null>(null);
+  const [cropTarget, setCropTarget] = useState<ImageField | null>(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const cropFileInputRef = useRef<HTMLInputElement>(null);
+
+  const triggerCropUpload = (target: ImageField) => {
+    setCropTarget(target);
+    if (cropFileInputRef.current) {
+      cropFileInputRef.current.value = '';
+      cropFileInputRef.current.click();
+    }
+  };
+
+  const handleCropFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setImageToCrop(reader.result as string);
+        setCrop({ x: 0, y: 0 });
+        setZoom(1);
+      });
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onCropComplete = (_croppedArea: any, croppedAreaPixels: any) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  };
+
+  const handleCropSave = async () => {
+    if (imageToCrop && croppedAreaPixels && cropTarget) {
+      try {
+        const croppedImageBase64 = await getCroppedImg(imageToCrop, croppedAreaPixels);
+        setFormData((prev) => ({
+          ...prev,
+          [cropTarget]: croppedImageBase64,
+        }));
+        setImageToCrop(null);
+        setCropTarget(null);
+      } catch (e) {
+        console.error(e);
+        setAlert({ type: 'error', text: 'Failed to crop image.' });
+      }
+    }
+  };
+
+  const handleCropCancel = () => {
+    setImageToCrop(null);
+    setCropTarget(null);
+  };
+
+  const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>, target: ImageField) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const compressed = await compressDirectImage(reader.result as string);
+        setFormData((prev) => ({
+          ...prev,
+          [target]: compressed,
+        }));
+      } catch {
+        setFormData((prev) => ({
+          ...prev,
+          [target]: reader.result as string,
+        }));
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
+  const getCropModalTitle = () => {
+    if (cropTarget === 'grid_img_url') return 'Crop Grid Card Image (16:9)';
+    if (cropTarget === 'hero_img_url') return 'Crop Detail Page Hero Image (16:9)';
+    if (cropTarget === 'gallery_img_url') return 'Crop Bottom Gallery Banner Image (16:9)';
+    return 'Crop Image (16:9)';
+  };
 
   // Fetch Services Page Data
   const fetchServicesData = useCallback(async () => {
@@ -608,43 +783,180 @@ export const ServicesManager: React.FC = () => {
                   </div>
                 </div>
 
-                {/* IMAGE URL INPUTS */}
-                <div className="pt-4 border-t border-slate-100 space-y-4">
+                {/* IMAGE MANAGEMENT BLOCKS */}
+                <div className="pt-6 border-t border-slate-100 space-y-6">
+                  {/* 1. Grid Card Image */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Grid Card Image URL</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.grid_img_url}
-                      onChange={(e) => setFormData({ ...formData, grid_img_url: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
-                    />
+                    <label className="text-xs font-bold text-slate-700 uppercase block mb-2">
+                      Grid Card Image * (16:9 Aspect Ratio)
+                    </label>
+                    <div className="space-y-3">
+                      <div className="relative w-full h-44 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        {formData.grid_img_url ? (
+                          <img
+                            src={getAssetUrl(formData.grid_img_url)}
+                            alt="Grid Card Preview"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
+                            <ImageIcon className="w-8 h-8 mb-1" />
+                            <span className="text-xs">No image uploaded</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <input
+                          type="text"
+                          required
+                          value={formData.grid_img_url}
+                          onChange={(e) => setFormData({ ...formData, grid_img_url: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or data:image/..."
+                          className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-brand-blue font-medium"
+                        />
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <label
+                            className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0"
+                            title="Direct Upload (Skip Crop)"
+                          >
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload (Skip Crop)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUpload(e, 'grid_img_url')}
+                              className="hidden"
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => triggerCropUpload('grid_img_url')}
+                            className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-2.5 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                          >
+                            <Upload className="w-4 h-4 text-brand-blue" />
+                            <span>Upload & Crop</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
+                  {/* 2. Detail Page Hero Image */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2">
-                      Detail Page Hero Image URL
+                    <label className="text-xs font-bold text-slate-700 uppercase block mb-2">
+                      Detail Page Hero Image * (16:9 Aspect Ratio)
                     </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.hero_img_url}
-                      onChange={(e) => setFormData({ ...formData, hero_img_url: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
-                    />
+                    <div className="space-y-3">
+                      <div className="relative w-full h-44 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        {formData.hero_img_url ? (
+                          <img
+                            src={getAssetUrl(formData.hero_img_url)}
+                            alt="Detail Hero Preview"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
+                            <ImageIcon className="w-8 h-8 mb-1" />
+                            <span className="text-xs">No image uploaded</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <input
+                          type="text"
+                          required
+                          value={formData.hero_img_url}
+                          onChange={(e) => setFormData({ ...formData, hero_img_url: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or data:image/..."
+                          className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-brand-blue font-medium"
+                        />
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <label
+                            className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0"
+                            title="Direct Upload (Skip Crop)"
+                          >
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload (Skip Crop)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUpload(e, 'hero_img_url')}
+                              className="hidden"
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => triggerCropUpload('hero_img_url')}
+                            className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-2.5 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                          >
+                            <Upload className="w-4 h-4 text-brand-blue" />
+                            <span>Upload & Crop</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
+                  {/* 3. Bottom Gallery Banner Image */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 uppercase mb-2">
-                      Bottom Gallery Banner Image URL
+                    <label className="text-xs font-bold text-slate-700 uppercase block mb-2">
+                      Bottom Gallery Banner Image * (16:9 Aspect Ratio)
                     </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.gallery_img_url}
-                      onChange={(e) => setFormData({ ...formData, gallery_img_url: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-brand-green"
-                    />
+                    <div className="space-y-3">
+                      <div className="relative w-full h-44 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+                        {formData.gallery_img_url ? (
+                          <img
+                            src={getAssetUrl(formData.gallery_img_url)}
+                            alt="Bottom Gallery Banner Preview"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center text-slate-400">
+                            <ImageIcon className="w-8 h-8 mb-1" />
+                            <span className="text-xs">No image uploaded</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <input
+                          type="text"
+                          required
+                          value={formData.gallery_img_url}
+                          onChange={(e) => setFormData({ ...formData, gallery_img_url: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or data:image/..."
+                          className="flex-1 bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-2.5 text-xs outline-none focus:ring-2 focus:ring-brand-blue font-medium"
+                        />
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <label
+                            className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors shadow-xs text-xs gap-2 shrink-0"
+                            title="Direct Upload (Skip Crop)"
+                          >
+                            <Upload className="w-4 h-4" />
+                            <span>Direct Upload (Skip Crop)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleDirectUpload(e, 'gallery_img_url')}
+                              className="hidden"
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => triggerCropUpload('gallery_img_url')}
+                            className="bg-white text-slate-900 border border-slate-200 rounded-xl font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-4 py-2.5 text-xs flex items-center gap-2 shrink-0 shadow-xs"
+                          >
+                            <Upload className="w-4 h-4 text-brand-blue" />
+                            <span>Upload & Crop</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -665,6 +977,80 @@ export const ServicesManager: React.FC = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* HIDDEN CROP FILE INPUT */}
+        <input
+          ref={cropFileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleCropFileChange}
+          className="hidden"
+        />
+
+        {/* MODAL: IMAGE CROPPER FOR SERVICE IMAGES */}
+        {imageToCrop && (
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 sm:p-6"
+            onClick={handleCropCancel}
+          >
+            <div
+              className="w-full max-w-3xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] p-6 text-slate-900"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                <ImageIcon className="w-5 h-5 text-brand-blue" />
+                <span>{getCropModalTitle()}</span>
+              </h3>
+              <div className="relative w-full h-[50vh] min-h-[300px] max-h-[500px] bg-slate-900 shrink-0 rounded-xl overflow-hidden mb-6">
+                <Cropper
+                  image={imageToCrop}
+                  crop={crop}
+                  zoom={zoom}
+                  aspect={16 / 9}
+                  onCropChange={setCrop}
+                  onZoomChange={setZoom}
+                  onCropComplete={onCropComplete}
+                  style={{
+                    containerStyle: { width: '100%', height: '100%' },
+                  }}
+                  classes={{
+                    cropAreaClassName: '!border-2 !border-sky-500 !shadow-[0_0_0_9999px_rgba(0,0,0,0.7)]',
+                  }}
+                />
+              </div>
+
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-xs font-bold text-slate-600 uppercase">Zoom</span>
+                <input
+                  type="range"
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  value={zoom}
+                  onChange={(e) => setZoom(Number(e.target.value))}
+                  className="w-full accent-brand-blue"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={handleCropCancel}
+                  className="px-6 py-2.5 rounded-full border border-slate-200 text-slate-700 font-semibold text-xs hover:bg-slate-50 cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCropSave}
+                  className="px-6 py-2.5 rounded-full bg-brand-blue text-white font-semibold text-xs hover:bg-slate-900 transition-colors cursor-pointer"
+                >
+                  Apply Crop
+                </button>
+              </div>
             </div>
           </div>
         )}
