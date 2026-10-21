@@ -4,6 +4,10 @@ import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+// Ensure payload limits accommodate large image uploads
+router.use(express.json({ limit: '50mb' }));
+router.use(express.urlencoded({ limit: '50mb', extended: true }));
+
 /* ==========================================================================
    CAREERS PAGE CONFIGURATION & JOBS LISTING ROUTES
    ========================================================================== */
@@ -28,10 +32,17 @@ router.get('/page', async (req, res) => {
       disclaimer_text: 'Kingsol will never ask for any recruitment fees, security deposits, or financial payments from candidates at any stage of the hiring process.',
     };
 
+    const currentSettings = settingsResult.rows[0] || defaultSettings;
+    const enrichedSettings = {
+      ...currentSettings,
+      hero_image: currentSettings.hero_bg_image_url,
+      hero_background_image: currentSettings.hero_bg_image_url,
+    };
+
     res.status(200).json({
       success: true,
       data: {
-        settings: settingsResult.rows[0] || defaultSettings,
+        settings: enrichedSettings,
         jobs: jobsResult.rows || [],
       },
     });
@@ -41,13 +52,12 @@ router.get('/page', async (req, res) => {
   }
 });
 
-// PUT /api/careers/page (Protected - Update Singleton Careers Page Settings)
-router.put('/page', verifyToken, async (req, res) => {
+// Update Handler for Singleton Careers Page Settings (Accepts both PUT and POST)
+const handleUpdateCareersPage = async (req, res) => {
   const {
     tagline,
     headline,
     highlight_word,
-    hero_bg_image_url,
     positions_title,
     positions_subtitle,
     gen_tagline,
@@ -56,6 +66,13 @@ router.put('/page', verifyToken, async (req, res) => {
     disclaimer_title,
     disclaimer_text,
   } = req.body;
+
+  // Accept hero_bg_image_url, hero_image, or hero_background_image interchangeably
+  const heroImageValue =
+    req.body.hero_bg_image_url ||
+    req.body.hero_image ||
+    req.body.hero_background_image ||
+    req.body.hero_bg_image;
 
   try {
     const result = await pool.query(
@@ -79,7 +96,7 @@ router.put('/page', verifyToken, async (req, res) => {
         tagline || 'CAREERS',
         headline || 'Help build a cleaner, brighter energy future.',
         highlight_word || 'brighter',
-        hero_bg_image_url || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop',
+        heroImageValue || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop',
         positions_title || 'Open Positions',
         positions_subtitle || 'Join us in engineering the future of solar.',
         gen_tagline || 'General Application',
@@ -90,16 +107,29 @@ router.put('/page', verifyToken, async (req, res) => {
       ]
     );
 
+    const savedRecord = result.rows[0];
+    const responseData = {
+      ...savedRecord,
+      hero_image: savedRecord.hero_bg_image_url,
+      hero_background_image: savedRecord.hero_bg_image_url,
+    };
+
     res.status(200).json({
       success: true,
       message: 'Careers page settings updated successfully.',
-      data: result.rows[0],
+      data: responseData,
     });
   } catch (error) {
     console.error('Error updating Careers page settings:', error);
     res.status(500).json({ success: false, message: 'Failed to update Careers page settings.' });
   }
-});
+};
+
+// PUT /api/careers/page (Protected - Update Singleton Careers Page Settings)
+router.put('/page', verifyToken, handleUpdateCareersPage);
+
+// POST /api/careers/page (Protected - Update Singleton Careers Page Settings)
+router.post('/page', verifyToken, handleUpdateCareersPage);
 
 /* ==========================================================================
    INDIVIDUAL JOB OPENINGS ROUTES

@@ -20,6 +20,8 @@ interface CareersPageSettings {
   headline: string;
   highlight_word: string;
   hero_bg_image_url: string;
+  hero_image?: string;
+  hero_background_image?: string;
   positions_title: string;
   positions_subtitle: string;
   gen_tagline: string;
@@ -29,7 +31,7 @@ interface CareersPageSettings {
   disclaimer_text: string;
 }
 
-// Canvas Helper Function to Crop Base64 / File Image
+// Canvas Helper Function to Crop Base64 / File Image to Compressed JPEG (0.85)
 const getCroppedImg = (imageSrc: string, pixelCrop: any): Promise<string> => {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -43,12 +45,26 @@ const getCroppedImg = (imageSrc: string, pixelCrop: any): Promise<string> => {
         return reject(new Error('No 2d context'));
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Constrain max dimension to 2048px to prevent huge canvas buffers
+      const maxDim = 2048;
+      let targetWidth = pixelCrop.width;
+      let targetHeight = pixelCrop.height;
+
+      if (targetWidth > maxDim) {
+        targetHeight = Math.round((targetHeight * maxDim) / targetWidth);
+        targetWidth = maxDim;
+      }
+
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+
+      ctx.clearRect(0, 0, targetWidth, targetHeight);
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
 
-      canvas.width = pixelCrop.width;
-      canvas.height = pixelCrop.height;
+      // Solid white background to prevent black alpha rendering in JPEG
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, targetWidth, targetHeight);
 
       ctx.drawImage(
         image,
@@ -58,11 +74,12 @@ const getCroppedImg = (imageSrc: string, pixelCrop: any): Promise<string> => {
         pixelCrop.height,
         0,
         0,
-        pixelCrop.width,
-        pixelCrop.height
+        targetWidth,
+        targetHeight
       );
 
-      resolve(canvas.toDataURL('image/png'));
+      // Output compressed JPEG at 0.85 quality to avoid HTTP 413 payload limits
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
     };
     image.onerror = (error) => reject(error);
   });
@@ -105,7 +122,12 @@ export const CareersSettingsManager: React.FC = () => {
     try {
       const res = await api.get('/careers/page');
       if (res.data.success && res.data.data && res.data.data.settings) {
-        setFormData(res.data.data.settings);
+        const s = res.data.data.settings;
+        setFormData((prev) => ({
+          ...prev,
+          ...s,
+          hero_bg_image_url: s.hero_bg_image_url || s.hero_image || s.hero_background_image || prev.hero_bg_image_url,
+        }));
       }
     } catch {
       setMessage({ type: 'error', text: 'Failed to load Careers page settings.' });
@@ -125,14 +147,56 @@ export const CareersSettingsManager: React.FC = () => {
     }
   };
 
+  const compressDirectImage = (imageSrc: string): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = imageSrc;
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return resolve(imageSrc);
+
+        const maxDim = 2048;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDim) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => resolve(imageSrc);
+    });
+  };
+
   const handleDirectUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = () => {
-      setFormData((prev) => ({ ...prev, hero_bg_image_url: reader.result as string }));
-      setMessage({ type: 'success', text: 'Hero background loaded directly! Click Save Settings to apply.' });
+    reader.onload = async () => {
+      try {
+        const compressed = await compressDirectImage(reader.result as string);
+        setFormData((prev) => ({
+          ...prev,
+          hero_bg_image_url: compressed,
+          hero_image: compressed,
+          hero_background_image: compressed,
+        }));
+        setMessage({ type: 'success', text: 'Hero background loaded directly! Click Save Settings to apply.' });
+      } catch {
+        setFormData((prev) => ({ ...prev, hero_bg_image_url: reader.result as string }));
+      }
     };
     reader.readAsDataURL(file);
     e.target.value = '';
@@ -146,7 +210,12 @@ export const CareersSettingsManager: React.FC = () => {
     if (imageToCrop && croppedAreaPixels) {
       try {
         const croppedImageBase64 = await getCroppedImg(imageToCrop, croppedAreaPixels);
-        setFormData((prev) => ({ ...prev, hero_bg_image_url: croppedImageBase64 }));
+        setFormData((prev) => ({
+          ...prev,
+          hero_bg_image_url: croppedImageBase64,
+          hero_image: croppedImageBase64,
+          hero_background_image: croppedImageBase64,
+        }));
         setImageToCrop(null);
       } catch (e) {
         console.error(e);
@@ -160,11 +229,26 @@ export const CareersSettingsManager: React.FC = () => {
     setSaving(true);
     setMessage(null);
 
+    const payload = {
+      ...formData,
+      hero_image: formData.hero_bg_image_url,
+      hero_background_image: formData.hero_bg_image_url,
+    };
+
     try {
-      const res = await api.put('/careers/page', formData);
+      const res = await api.put('/careers/page', payload);
       if (res.data.success) {
         setMessage({ type: 'success', text: 'Careers page content saved successfully!' });
-        setFormData(res.data.data);
+        const returnedData = res.data.data;
+        setFormData((prev) => ({
+          ...prev,
+          ...returnedData,
+          hero_bg_image_url:
+            returnedData.hero_bg_image_url ||
+            returnedData.hero_image ||
+            returnedData.hero_background_image ||
+            prev.hero_bg_image_url,
+        }));
       }
     } catch {
       setMessage({ type: 'error', text: 'Failed to update Careers page settings.' });
