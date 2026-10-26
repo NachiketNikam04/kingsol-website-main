@@ -85,17 +85,65 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
             </button>
 
             {submitted ? (
-              <div className="text-center py-6">
-                <div className="w-16 h-16 rounded-full bg-[#78C257]/20 text-[#78C257] flex items-center justify-center font-bold text-2xl mx-auto mb-4">
-                  ✓
+              <div className="text-center py-8 px-2">
+                <div className="relative mx-auto mb-6 flex h-24 w-24 items-center justify-center">
+                  <span className="absolute inset-0 rounded-full bg-[#78C257]/20 animate-ping" />
+                  <span className="absolute inset-2 rounded-full bg-[#78C257]/15" />
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#8fd16c] to-[#5fa83f] text-white shadow-lg shadow-[#78C257]/40 ring-4 ring-white">
+                    <svg
+                      className="h-8 w-8"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold font-poppins text-slate-900 mb-2">Inquiry Submitted!</h3>
-                <p className="mt-1 font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify mb-6">
-                  Thank you for your interest in <strong className="text-slate-900">{itemName || 'Kingsol Solar'}</strong>. Our enterprise solar team will contact you within 2-4 hours. An automated email notification has been dispatched to our sales desk.
+
+                <span className="mb-3 inline-block rounded-full bg-[#78C257]/10 px-3 py-1 font-poppins text-[11px] font-semibold uppercase tracking-widest text-[#4c8f2f] ring-1 ring-[#78C257]/30">
+                  Submitted successfully
+                </span>
+
+                <h3 className="mb-3 text-2xl md:text-3xl font-bold tracking-tight font-poppins text-slate-900">
+                  Inquiry Submitted!
+                </h3>
+
+                <p className="mx-auto mb-6 max-w-md font-poppins text-sm md:text-base text-slate-600 leading-relaxed">
+                  Thank you for your interest in{" "}
+                  <strong className="text-slate-900">{itemName || 'Kingsol Energy India Pvt Ltd'}</strong>.
+                  Our enterprise solar team will contact you within{" "}
+                  <span className="font-semibold text-[#4c8f2f]">2-4 hours</span>.
                 </p>
+
+                <div className="mx-auto mb-8 flex max-w-md items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 p-4 text-left">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-[#44a0e3] shadow-sm ring-1 ring-slate-200">
+                    <svg
+                      className="h-4 w-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect x="3" y="5" width="18" height="14" rx="2" />
+                      <path d="M3 7l9 6 9-6" />
+                    </svg>
+                  </div>
+                  <p className="font-poppins text-xs md:text-sm leading-relaxed text-slate-600">
+                    An automated email notification has been dispatched to our sales desk.
+                  </p>
+                </div>
+
                 <button
                   onClick={handleResetAndClose}
-                  className="bg-slate-900 text-white px-8 py-3.5 rounded-full font-medium text-xs uppercase tracking-wider hover:bg-[#44a0e3] transition-colors cursor-pointer"
+                  className="cursor-pointer rounded-full bg-slate-900 px-8 py-3.5 text-xs font-medium uppercase tracking-wider text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#44a0e3] hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#44a0e3] focus-visible:ring-offset-2 active:translate-y-0"
                 >
                   Close Window
                 </button>
