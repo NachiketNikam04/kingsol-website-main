@@ -277,7 +277,7 @@ export const Navbar: React.FC = () => {
           {/* Right: Social Media Icons */}
           <div className="hidden sm:flex items-center gap-3">
             <a
-              href="https://facebook.com/kingsolenergy"
+              href="https://www.facebook.com/share/19V3KPYW8C/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -286,7 +286,7 @@ export const Navbar: React.FC = () => {
               <Facebook className="w-3.5 h-3.5" />
             </a>
             <a
-              href="https://linkedin.com/company/kingsol-energy"
+              href="https://www.linkedin.com/company/kingsol-energy-india-private-limited/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -295,7 +295,7 @@ export const Navbar: React.FC = () => {
               <Linkedin className="w-3.5 h-3.5" />
             </a>
             <a
-              href="https://instagram.com/kingsolenergy"
+              href="https://www.instagram.com/kingsol_india?exln=MjUzbnZnMXJlaTFq"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
