@@ -330,26 +330,57 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                 animate={{ opacity: 1, scale: 1 }}
                 className="py-10 text-center space-y-4"
               >
-                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
-                  <CheckCircle2 className="w-10 h-10" />
+                <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
+                  <span className="absolute inset-0 rounded-full bg-emerald-400/20 animate-ping" />
+                  <span className="absolute inset-1 rounded-full bg-emerald-100" />
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-lg shadow-emerald-500/30 ring-4 ring-white">
+                    <CheckCircle2 className="h-9 w-9" strokeWidth={2.25} />
+                  </div>
                 </div>
-                <div className="space-y-2 max-w-md mx-auto">
-                  <h3 className="text-2xl font-bold text-slate-900 font-montserrat">
+
+                <div className="space-y-3 max-w-md mx-auto">
+                  <span className="inline-block rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-700 ring-1 ring-emerald-200">
+                    Submitted successfully
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 font-montserrat">
                     Quote Request Received!
                   </h3>
-                  <p className="font-poppins text-base md:text-lg text-slate-600 leading-relaxed whitespace-pre-line text-justify">
-                    Thank you for contacting <strong className="text-slate-900">Kingsol Solar</strong>. Our engineering and sales team will review your specifications and get in touch within 24 business hours.
+                  <p className="font-poppins text-sm md:text-base text-slate-600 leading-relaxed text-center">
+                    Thank you for contacting{" "}
+                    <strong className="text-slate-900">Kingsol Energy India Pvt Ltd</strong>. Our
+                    engineering and sales team will review your specifications and get in touch
+                    within <span className="font-semibold text-emerald-700">24 business hours</span>.
                   </p>
                 </div>
-                <div className="pt-4 flex justify-center">
+
+                <div className="mx-auto grid max-w-md grid-cols-3 gap-3 rounded-2xl border border-slate-200 bg-slate-50/70 p-3">
+                  {["Request received", "Specs reviewed", "We contact you"].map((label, i) => (
+                    <div key={label} className="flex flex-col items-center gap-1.5 text-center">
+                      <span
+                        className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
+                          i === 0
+                            ? "bg-emerald-500 text-white shadow-sm"
+                            : "bg-white text-slate-500 ring-1 ring-slate-200"
+                        }`}
+                      >
+                        {i + 1}
+                      </span>
+                      <span className="font-poppins text-[11px] leading-tight text-slate-600">
+                        {label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2 flex justify-center">
                   <button
                     onClick={handleClose}
-                    className="px-6 py-2.5 rounded-full bg-slate-900 hover:bg-brand-green hover:text-slate-900 text-white text-xs font-bold transition-all cursor-pointer shadow-sm"
+                    className="cursor-pointer rounded-full bg-slate-900 px-8 py-3 text-xs font-bold text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-green hover:text-slate-900 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 active:translate-y-0"
                   >
                     Done (Auto-closing...)
                   </button>
                 </div>
-              </motion.div>
+                </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 {errorMessage && (
