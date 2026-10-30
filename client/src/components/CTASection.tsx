@@ -112,7 +112,7 @@ export const CTASection: React.FC<CTASectionProps> = ({ onQuoteClick }) => {
             onClick={handleOpenQuote}
             className="mt-8 bg-white text-slate-900 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:-translate-y-1 shadow-md hover:bg-[#44a0e3] hover:text-white hover:shadow-[0_20px_40px_rgba(68,160,227,0.2)] inline-flex w-fit items-center justify-center gap-2 cursor-pointer border border-slate-200/60 hover:border-transparent"
           >
-            <span>REQUEST A FREE QUOTE</span>
+            <span>REQUEST A QUOTE</span>
             <span className="text-base leading-none">
               <svg className="w-4 h-4 inline-block ml-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

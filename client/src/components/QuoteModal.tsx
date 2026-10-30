@@ -306,7 +306,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
           <div className="px-6 sm:px-8 pt-6 pb-4 flex items-start justify-between border-b border-slate-100 bg-slate-50/50">
             <div>
               <h2 className="font-poppins text-4xl font-bold tracking-tight text-gray-900">
-                Request a Quote
+                REQUEST A QUOTE
               </h2>
               <p className="mt-1 font-poppins text-base md:text-md text-slate-500 leading-relaxed whitespace-pre-line text-justify">
                 Solar Products, EPC Work and BESS Work Consultancy

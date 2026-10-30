@@ -210,7 +210,7 @@ export const Footer: React.FC = () => {
                 onClick={() => setIsQuoteOpen(true)}
                 className="bg-white text-[#44a0e3] text-xs font-montserrat font-semibold px-4 py-1.5 rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:underline transition-all inline-block cursor-pointer"
               >
-                <span>Request a Free Quote</span>
+                <span>Request a Quote</span>
               </button>
             </div>
 

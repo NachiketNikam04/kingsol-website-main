@@ -19,7 +19,7 @@ export const CallToActionBanner: React.FC<CallToActionBannerProps> = ({
   headline = "Ready to go Solar? request for a quote today. It's free!",
   highlightWord = 'Solar',
   bgImageUrl = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2070&auto=format&fit=crop',
-  buttonText = 'REQUEST A FREE QUOTE',
+  buttonText = 'REQUEST A QUOTE',
   buttonLink = '/contact',
   onButtonClick,
   className = '',
