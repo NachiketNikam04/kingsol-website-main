@@ -62,7 +62,8 @@ export default function BlogDetail() {
   }
 
   return (
-    <article className="min-h-screen bg-[#fdfcf8] pb-[72px] text-slate-900">
+    /* Shifted down with pt-28 md:pt-32 to clear the dual header bar */
+    <article className="min-h-screen bg-[#fdfcf8] pt-28 md:pt-32 pb-[72px] text-slate-900">
       {/* Hero Image */}
       <div className="w-full h-[60vh] md:h-[75vh] relative bg-slate-900 overflow-hidden">
         <img
@@ -129,7 +130,7 @@ export default function BlogDetail() {
         </motion.div>
       )}
 
-      {/* Article Body Content with whitespace-pre-line and text-justify styling */}
+      {/* Article Body Content */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
