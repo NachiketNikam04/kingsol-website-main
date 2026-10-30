@@ -36,21 +36,28 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
       PORT: 3001
       DATABASE_URL: postgresql://${POSTGRES_USER:-kingsol_user}:${POSTGRES_PASSWORD:-kingsol_secure_password_2026}@db:5432/${POSTGRES_DB:-kingsol_solar_db}?sslmode=disable
       JWT_SECRET: ${JWT_SECRET:-kingsol_super_secret_jwt_key_2026_solar_admin}
-      # Email notification configuration
-      EMAIL_USER: ${EMAIL_USER:-nikamnachiket2004@gmail.com}
-      EMAIL_APP_PASSWORD: ${EMAIL_APP_PASSWORD:-}
-      ADMIN_EMAIL: ${ADMIN_EMAIL:-nikamnachiket2004@gmail.com}
-      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
-      SMTP_PORT: ${SMTP_PORT:-587}
-      SMTP_USER: ${SMTP_USER:-nikamnachiket2004@gmail.com}
+      # Hostinger SMTP & Departmental Routing
+      SMTP_HOST: ${SMTP_HOST:-smtp.hostinger.com}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_SECURE: ${SMTP_SECURE:-true}
+      SMTP_USER: ${SMTP_USER:-sales@kingsol.in}
       SMTP_PASS: ${SMTP_PASS:-}
-      EMAIL_RECEIVER: ${EMAIL_RECEIVER:-nikamnachiket2004@gmail.com}
-      ADMIN_ALERT_EMAIL: ${ADMIN_ALERT_EMAIL:-nikamnachiket2004@gmail.com}
+      SMTP_FROM: ${SMTP_FROM:-"Kingsol Energy <sales@kingsol.in>"}
+      SALES_EMAIL: ${SALES_EMAIL:-sales@kingsol.in}
+      HR_EMAIL: ${HR_EMAIL:-account@kingsol.in}
+      # Legacy fallbacks
+      EMAIL_USER: ${EMAIL_USER:-sales@kingsol.in}
+      EMAIL_APP_PASSWORD: ${EMAIL_APP_PASSWORD:-}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-sales@kingsol.in}
+      EMAIL_RECEIVER: ${EMAIL_RECEIVER:-sales@kingsol.in}
+      ADMIN_ALERT_EMAIL: ${ADMIN_ALERT_EMAIL:-sales@kingsol.in}
     volumes:
       - ./backend/uploads:/app/backend/uploads
       - backend_logs:/app/backend/logs
