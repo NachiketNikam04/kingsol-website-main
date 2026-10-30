@@ -63,7 +63,7 @@ export default function BlogDetail() {
 
   return (
     /* Shifted down with pt-28 md:pt-32 to clear the dual header bar */
-    <article className="min-h-screen bg-[#fdfcf8] pt-28 md:pt-32 pb-[72px] text-slate-900">
+    <article className="min-h-screen bg-[#fdfcf8] pt-[70px] md:pt-[112px] pb-[72px] text-slate-900">
       {/* Hero Image */}
       <div className="w-full h-[60vh] md:h-[75vh] relative bg-slate-900 overflow-hidden">
         <img
