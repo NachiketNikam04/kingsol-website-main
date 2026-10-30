@@ -89,25 +89,33 @@ router.post('/', upload.single('resume'), async (req, res) => {
     // 4. WhatsApp Text Alert
     const whatsAppMessage = `💼 New Job Application!\nRole: ${job_role}\nApplicant: ${full_name}\nPhone: ${phone}\nEmail: ${email}`;
 
-    // 5. Send Direct Email Notification with Attached Resume to ADMIN_EMAIL
-    const adminEmail = process.env.ADMIN_ALERT_EMAIL || process.env.EMAIL_RECEIVER || process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+    // 5. Send Direct Email Notification with Attached Resume to HR_EMAIL (sales@kingsol.in or hr@kingsol.in)
+    const hrEmail = process.env.HR_EMAIL || 'hr@kingsol.in';
+    const applicantEmail = email && typeof email === 'string' ? email.trim() : undefined;
+
     try {
       await Promise.allSettled([
         sendEmailNotification({
-          to: adminEmail,
+          to: hrEmail,
           subject: `💼 New Job Application: ${job_role} - ${full_name}`,
           htmlContent,
           attachments,
+          replyTo: applicantEmail,
         }),
         sendWhatsAppNotification(whatsAppMessage),
       ]);
     } catch (emailError) {
-      console.error('⚠️ [Mailer] Failed to send job application alert:', emailError);
+      console.error('⚠️ [Mailer] Failed to send job application alert:', {
+        message: emailError.message,
+        code: emailError.code,
+        command: emailError.command,
+        response: emailError.response,
+      });
     }
 
     return res.status(200).json({
       success: true,
-      message: 'Application submitted successfully! Email alert sent to admin with resume attached.',
+      message: 'Application submitted successfully! Email alert sent to HR with resume attached.',
       resumeUrl: resume_url,
     });
   } catch (error) {

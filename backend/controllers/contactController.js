@@ -62,12 +62,19 @@ export const submitContactInquiry = async (req, res) => {
       productName: resolvedProduct || 'N/A',
       brandName: brandName || '',
       message: message || fullMessage || '',
+      replyTo: customerEmail,
+      to: process.env.SALES_EMAIL || 'sales@kingsol.in',
     };
 
     try {
       await sendInquiryEmailAlert(emailPayload);
     } catch (emailError) {
-      console.error(`⚠️ [Mailer] Failed to send alert for ${emailPayload.type}:`, emailError);
+      console.error(`⚠️ [Mailer] Failed to send alert for ${emailPayload.type}:`, {
+        message: emailError.message,
+        code: emailError.code,
+        command: emailError.command,
+        response: emailError.response,
+      });
     }
 
     return res.status(201).json({
@@ -86,7 +93,7 @@ export const submitContactInquiry = async (req, res) => {
  * POST /api/contact/send-email
  */
 export const sendDirectEmail = async (req, res) => {
-  const { to, subject, message, htmlContent } = req.body;
+  const { to, subject, message, htmlContent, replyTo } = req.body;
 
   if (!subject || (!message && !htmlContent)) {
     return res.status(400).json({
@@ -97,9 +104,10 @@ export const sendDirectEmail = async (req, res) => {
 
   try {
     const result = await sendEmailNotification({
-      to,
+      to: to || process.env.SALES_EMAIL || 'sales@kingsol.in',
       subject,
       htmlContent: htmlContent || `<p>${message}</p>`,
+      replyTo,
     });
 
     if (result.success) {

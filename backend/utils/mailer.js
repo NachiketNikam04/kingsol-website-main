@@ -1,4 +1,38 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+/**
+ * Standardized Hostinger SMTP Transporter Singleton
+ * Supports configurable Hostinger custom domain email (sales@kingsol.in, hr@kingsol.in)
+ */
+export const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+  port: parseInt(process.env.SMTP_PORT || '465', 10),
+  secure: process.env.SMTP_SECURE ? process.env.SMTP_SECURE === 'true' : true, // 465 is SSL (true), 587 is TLS (false)
+  auth: {
+    user: (process.env.SMTP_USER || process.env.EMAIL_USER || 'sales@kingsol.in').trim(),
+    pass: (process.env.SMTP_PASS || process.env.EMAIL_APP_PASSWORD || '').trim(), // Hostinger email or app password
+  },
+  // Pool settings to prevent socket timeouts on high traffic
+  pool: true,
+  maxConnections: 3,
+  maxMessages: 50,
+});
+
+/**
+ * Get Default Sender matching Hostinger Authenticated Mailbox
+ * Hostinger strictly enforces that the SMTP from address matches the authenticated mailbox.
+ */
+export function getDefaultSender() {
+  const smtpUser = (process.env.SMTP_USER || process.env.EMAIL_USER || 'sales@kingsol.in').trim();
+  return process.env.SMTP_FROM || `"Kingsol Energy" <${smtpUser}>`;
+}
+
+export function getTransporter() {
+  return transporter;
+}
 
 export async function sendInquiryEmailAlert(payload = {}) {
   const {
@@ -17,28 +51,20 @@ export async function sendInquiryEmailAlert(payload = {}) {
     brandName,
     subject: customSubject,
     attachments = [],
+    replyTo: customReplyTo,
+    to: customTo,
   } = payload;
 
-  const user = process.env.EMAIL_USER || process.env.SMTP_USER;
-  const pass = process.env.EMAIL_APP_PASSWORD || process.env.SMTP_PASS;
-  const toEmail = process.env.ADMIN_ALERT_EMAIL || process.env.EMAIL_RECEIVER || process.env.ADMIN_EMAIL || user;
+  const pass = (process.env.SMTP_PASS || process.env.EMAIL_APP_PASSWORD || '').trim();
+  // Route Quotes, Estimates, and Contact submissions to SALES_EMAIL by default
+  const toEmail = customTo || process.env.SALES_EMAIL || process.env.ADMIN_ALERT_EMAIL || process.env.EMAIL_RECEIVER || 'sales@kingsol.in';
 
-  if (!user || !pass) {
-    console.log('ℹ️ [Mailer] SMTP credentials not set in process.env (EMAIL_USER / EMAIL_APP_PASSWORD). Skipping email alert dispatch.');
+  if (!pass || pass === 'YOUR_HOSTINGER_APP_PASSWORD' || pass === 'your_gmail_app_password') {
+    console.warn('ℹ️ [Mailer] SMTP credentials not set or placeholder in process.env (SMTP_PASS / EMAIL_APP_PASSWORD). Skipping email alert dispatch.');
     return false;
   }
 
-  console.log(`🔍 [Mailer Debug] Attempting login for user: ${user.trim()}`);
-
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: user.trim(),
-        pass: pass.trim(),
-      },
-    });
-
     const resolvedCompany = company_name || company || '';
     const resolvedState = state || '';
     const targetProduct = product_interest || productName || product || '';
@@ -137,18 +163,39 @@ export async function sendInquiryEmailAlert(payload = {}) {
       </div>
     `;
 
-    const info = await transporter.sendMail({
-      from: `"Kingsol Solar Alert" <${user.trim()}>`,
+    const customerEmail = email && typeof email === 'string' ? email.trim() : '';
+    const resolvedReplyTo = customReplyTo || (customerEmail ? customerEmail : undefined);
+
+    const mailOptions = {
+      from: getDefaultSender(),
       to: toEmail.trim(),
       subject,
       html: htmlContent,
       attachments,
-    });
+    };
 
+    if (resolvedReplyTo) {
+      mailOptions.replyTo = resolvedReplyTo;
+    }
+
+    const info = await transporter.sendMail(mailOptions);
     console.log(`✅ [Mailer] Email alert sent successfully to ${toEmail.trim()}. MessageID: ${info.messageId}`);
     return true;
   } catch (error) {
-    console.error('❌ [Mailer] Email dispatch error:', error);
+    console.error('❌ [Mailer] Email dispatch error:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response,
+      responseCode: error.responseCode,
+    });
     return false;
   }
 }
+
+export default {
+  transporter,
+  getDefaultSender,
+  getTransporter,
+  sendInquiryEmailAlert,
+};

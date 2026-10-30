@@ -77,7 +77,7 @@ export const createQuote = async (req, res) => {
       console.warn('⚠️ [QuoteController] PostgreSQL insert notice:', dbErr.message);
     }
 
-    // 2. Dispatch SMTP Email Alert to Admin
+    // 2. Dispatch SMTP Email Alert to Admin (sales@kingsol.in)
     const emailPayload = {
       type: 'Get Quote Request',
       name: customerName,
@@ -86,13 +86,20 @@ export const createQuote = async (req, res) => {
       company_name: customerCompany,
       state: customerState,
       product_interest: customerProduct,
+      replyTo: customerEmail,
+      to: process.env.SALES_EMAIL || 'sales@kingsol.in',
       ...(customerMessage ? { message: customerMessage } : {}),
     };
 
     try {
       await sendInquiryEmailAlert(emailPayload);
     } catch (emailErr) {
-      console.error('⚠️ [QuoteController] Email alert failed:', emailErr.message);
+      console.error('⚠️ [QuoteController] Email alert failed:', {
+        message: emailErr.message,
+        code: emailErr.code,
+        command: emailErr.command,
+        response: emailErr.response,
+      });
     }
 
     return res.status(201).json({

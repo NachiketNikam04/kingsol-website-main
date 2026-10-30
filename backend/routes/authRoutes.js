@@ -6,26 +6,9 @@ import pool from '../config/db.js';
 import { verifyToken } from '../middleware/authMiddleware.js';
 import { verifySelfOrSuperAdmin } from '../middleware/authorizeOwnership.js';
 import { authLogger } from '../config/logger.js';
-import nodemailer from 'nodemailer';
+import { transporter, getDefaultSender } from '../utils/mailer.js';
 
 const router = express.Router();
-
-// Transporter for Password Reset Emails
-const createTransporter = () => {
-  const user = process.env.EMAIL_USER || process.env.SMTP_USER;
-  const pass = process.env.EMAIL_APP_PASSWORD || process.env.SMTP_PASS;
-
-  if (user && pass) {
-    return nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: user.trim(),
-        pass: pass.trim(),
-      },
-    });
-  }
-  return null;
-};
 
 /* ==========================================================================
    AUTHENTICATION ENDPOINTS
@@ -272,21 +255,36 @@ router.post('/forgot-password', async (req, res) => {
 
     const resetLink = `http://localhost:5173/reset-password?token=${resetToken}`;
 
-    const transporter = createTransporter();
-    if (transporter) {
-      await transporter.sendMail({
-        from: `"Kingsol Energy Security" <${process.env.SMTP_USER}>`,
-        to: adminUser.email,
-        subject: 'Kingsol Admin Portal - Cryptographic Password Reset Request',
-        html: `
-          <div style="font-family: sans-serif; padding: 20px; color: #1e293b;">
-            <h2>Password Reset Request</h2>
-            <p>A password reset request was initiated for your Kingsol Administrator account.</p>
-            <p>Click the secure link below to reset your password within the next 15 minutes:</p>
-            <p><a href="${resetLink}" style="background-color: #0078C8; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 9999px; font-weight: bold; display: inline-block;">Reset Password</a></p>
-          </div>
-        `,
-      });
+    const pass = (process.env.SMTP_PASS || process.env.EMAIL_APP_PASSWORD || '').trim();
+    if (pass && pass !== 'YOUR_HOSTINGER_APP_PASSWORD' && pass !== 'your_gmail_app_password') {
+      try {
+        await transporter.sendMail({
+          from: getDefaultSender(),
+          to: adminUser.email,
+          subject: 'Kingsol Admin Portal - Cryptographic Password Reset Request',
+          html: `
+            <div style="font-family: sans-serif; padding: 20px; color: #1e293b;">
+              <h2>Password Reset Request</h2>
+              <p>A password reset request was initiated for your Kingsol Administrator account.</p>
+              <p>Click the secure link below to reset your password within the next 15 minutes:</p>
+              <p><a href="${resetLink}" style="background-color: #0078C8; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 9999px; font-weight: bold; display: inline-block;">Reset Password</a></p>
+            </div>
+          `,
+        });
+        authLogger.info({
+          event: 'PASSWORD_RESET_EMAIL_SENT',
+          email: adminUser.email,
+          ip: clientIp,
+        });
+      } catch (mailErr) {
+        console.error('❌ [AuthRoutes] Password reset email dispatch failed:', {
+          message: mailErr.message,
+          code: mailErr.code,
+          command: mailErr.command,
+          response: mailErr.response,
+        });
+        console.log(`🔐 [SECURITY FALLBACK] Password reset link for ${adminUser.email}: ${resetLink}`);
+      }
     } else {
       console.log(`🔐 [SECURITY] Password reset link for ${adminUser.email}: ${resetLink}`);
     }
