@@ -336,7 +336,7 @@ export const Navbar: React.FC = () => {
             <Link className="flex items-center gap-3" to="/" onClick={() => setIsMobileMenuOpen(false)}>
               <img
                 src={logoUrl ? getAssetUrl(logoUrl) : '/logo.png'}
-                alt="Kingsol Solar Energy"
+                alt="Kingsol Energy India"
                 className="h-12 sm:h-16 md:h-[68px] w-auto max-w-[220px] sm:max-w-[280px] object-contain"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = '/logo.png';
@@ -744,7 +744,7 @@ export const Navbar: React.FC = () => {
                               onClick={handleMobileNavClick}
                               className="text-xs font-semibold uppercase tracking-wider text-brand-green hover:underline py-1"
                             >
-                              All {cat.name} &rarr;
+                              All {cat.name} →
                             </Link>
 
                             {cat.brands && cat.brands.length > 0 ? (

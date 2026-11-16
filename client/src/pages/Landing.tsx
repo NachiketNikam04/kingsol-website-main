@@ -192,7 +192,7 @@ export const Landing: React.FC = () => {
             >
               <img
                 src={getAssetUrl(currentSlideData.image)}
-                alt=""
+                alt="Kingsol Energy India"
                 className="w-full h-full object-cover object-[center_60%]"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-black/80" />
@@ -216,6 +216,7 @@ export const Landing: React.FC = () => {
                 transition={{ duration: 0.6, delay: 0.05, ease: [0.76, 0, 0.24, 1] }}
                 className="text-5xl md:text-7xl font-poppins font-semibold mb-2 leading-tight [text-shadow:0_2px_24px_rgba(0,0,0,0.85),0_4px_40px_rgba(0,0,0,0.5)] text-white max-w-4xl"
               >
+                <span className="sr-only">Kingsol Energy India — </span>
                 {renderDynamicHeadline(currentHeadline, currentHighlightWord)}
               </motion.h1>
             </AnimatePresence>
