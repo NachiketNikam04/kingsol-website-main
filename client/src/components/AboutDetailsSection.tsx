@@ -1,6 +1,7 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { BrandMarquee } from './BrandMarquee';
 
 interface WhoWeAreSettings {
   tagline: string;
@@ -18,9 +19,19 @@ interface AccordionItem {
 }
 
 interface PartnerLogo {
-  id: number;
+  id?: number;
   name: string;
   image_url: string;
+  route_url?: string;
+  linked_brand_id?: number | null;
+  is_active?: boolean;
+  isActive?: boolean;
+  linked_brand?: {
+    id: number;
+    name: string;
+    slug: string;
+    category_slug?: string;
+  } | null;
 }
 
 export default function AboutDetailsSection() {
@@ -105,17 +116,6 @@ export default function AboutDetailsSection() {
 
   return (
     <section className="w-full bg-[#fdfcf8] py-[72px] text-slate-900">
-      {/* CSS for Marquee */}
-      <style>{`
-        @keyframes marquee-horizontal {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee-horizontal {
-          animation: marquee-horizontal 28s linear infinite;
-        }
-      `}</style>
-
       {/* Main Two-Column Layout */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12 sm:mb-14">
         {/* Left Column: Image */}
@@ -128,7 +128,7 @@ export default function AboutDetailsSection() {
         >
           <div className="w-full aspect-[4/3] rounded-[2.5rem] overflow-hidden bg-slate-100 border border-slate-200/80 shadow-2xl shadow-slate-200/50 relative group">
             <img
-              src={currentImage}
+              src={getAssetUrl(currentImage)}
               alt="Solar Panel Inspection"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
@@ -202,47 +202,35 @@ export default function AboutDetailsSection() {
       </div>
 
       {/* Marquee Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 flex flex-col md:flex-row items-center gap-6 sm:gap-8 overflow-hidden">
-        <div className="shrink-0 whitespace-nowrap">
-          <motion.h4
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3"
-          >
-            {renderDynamicHeadline(currentMarqueeHeadline, currentMarqueeHighlightWord)}
-          </motion.h4>
-        </div>
-
-        {/* Scrolling Track */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="w-full overflow-hidden relative [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
-        >
-          <div className="flex gap-8 w-max animate-marquee-horizontal py-2">
-            {[...activeLogos, ...activeLogos, ...activeLogos, ...activeLogos].map((logo, index) => (
-              <div
-                key={`logo-${logo.id || index}-${index}`}
-                className="flex items-center gap-3 px-5 py-2.5 bg-white border-4 border-[#44a0e3] rounded-2xl shadow-xs hover:shadow-lg hover:shadow-slate-200/40 transition-all duration-200 ease-out hover:scale-[1.04] active:scale-[0.98] shrink-0"
-              >
-                {logo.image_url ? (
-                  <img
-                    src={getAssetUrl(logo.image_url)}
-                    alt={logo.name}
-                    className="h-8 w-auto max-w-[130px] object-contain transition-transform duration-300"
-                  />
-                ) : (
-                  <span className="font-bold text-sm text-slate-900">{logo.name}</span>
-                )}
-              </div>
-            ))}
+      {activeLogos.filter((b) => b.is_active !== false && b.isActive !== false).length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 flex flex-col md:flex-row items-center gap-6 sm:gap-8 overflow-hidden">
+          <div className="shrink-0 whitespace-nowrap">
+            <motion.h4
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="text-2xl font-poppins font-bold tracking-tight shrink-0 text-slate-900 mb-3"
+            >
+              {renderDynamicHeadline(currentMarqueeHeadline, currentMarqueeHighlightWord)}
+            </motion.h4>
           </div>
-        </motion.div>
-      </div>
+
+          {/* Scrolling Track */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            className="w-full overflow-hidden"
+          >
+            <BrandMarquee
+              brands={activeLogos}
+              variant="about"
+            />
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 }

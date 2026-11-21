@@ -1,10 +1,10 @@
 import { API_BASE_URL, getAssetUrl } from '../utils/assetUrl';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ShieldCheck, Sun, Zap, BatteryCharging, Factory } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AboutSection } from '../components/AboutSection';
 import { PartnersSection } from '../components/PartnersSection';
+import { BrandMarquee } from '../components/BrandMarquee';
 import { PremiumProductsSection } from '../components/PremiumProductsSection';
 import { FeaturedProductsSection } from '../components/FeaturedProductsSection';
 import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
@@ -46,6 +46,8 @@ interface PartnerLogo {
   image_url: string;
   route_url?: string;
   linked_brand_id?: number | null;
+  is_active?: boolean;
+  isActive?: boolean;
   linked_brand?: {
     id: number;
     name: string;
@@ -233,130 +235,27 @@ export const Landing: React.FC = () => {
           </motion.p>
 
           {/* Brand Marquee Row (Full-width breakout directly below hero description) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-            className="w-full mt-4 sm:mt-6 flex flex-col gap-3"
-          >
-            {/* Overline Label */}
-            <span className="text-xs uppercase tracking-widest text-slate-300 whitespace-nowrap font-bold font-poppins">
-              TRUSTED BY LEADING BRANDS
-            </span>
+          {activeMarqueeLogos.filter((b) => b.is_active !== false && b.isActive !== false).length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+              className="w-full mt-4 sm:mt-6 flex flex-col gap-3"
+            >
+              {/* Overline Label */}
+              <span className="text-xs uppercase tracking-widest text-slate-300 whitespace-nowrap font-bold font-poppins">
+                TRUSTED BY LEADING BRANDS
+              </span>
 
-            {/* Full-Width Viewport-Spanning Marquee Container */}
-            <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,white_5%,white_95%,transparent)]">
-              <div className="flex w-max animate-marquee gap-8 md:gap-12 items-center pr-8 md:pr-12">
-                {/* Set 1 */}
-                {activeMarqueeLogos.map((logo, index) => {
-                  const destination = logo.linked_brand
-                    ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
-                    : (logo.route_url?.trim() || null);
-
-                  const isExternal =
-                    destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
-
-                  const itemClasses = `flex-shrink-0 flex items-center justify-center space-x-3 text-slate-900 font-bold tracking-tight text-sm md:text-base transition-all duration-300 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-xl px-6 py-2 shadow-sm ${
-                    destination ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''
-                  }`;
-
-                  const logoContent = logo.image_url ? (
-                    <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="h-8 md:h-12 object-contain max-w-[180px]" />
-                  ) : (
-                    <span>{logo.name}</span>
-                  );
-
-                  if (destination) {
-                    if (isExternal) {
-                      return (
-                        <a
-                          key={`set1-${logo.name}-${index}`}
-                          href={destination}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={itemClasses}
-                        >
-                          {logoContent}
-                        </a>
-                      );
-                    }
-                    return (
-                      <Link
-                        key={`set1-${logo.name}-${index}`}
-                        to={destination}
-                        className={itemClasses}
-                      >
-                        {logoContent}
-                      </Link>
-                    );
-                  }
-
-                  return (
-                    <div
-                      key={`set1-${logo.name}-${index}`}
-                      className={itemClasses}
-                    >
-                      {logoContent}
-                    </div>
-                  );
-                })}
-
-                {/* Set 2 (Identical Duplicate for Infinite Loop) */}
-                {activeMarqueeLogos.map((logo, index) => {
-                  const destination = logo.linked_brand
-                    ? `/brands/${logo.linked_brand.slug || logo.linked_brand.id}`
-                    : (logo.route_url?.trim() || null);
-
-                  const isExternal =
-                    destination ? (destination.startsWith('http://') || destination.startsWith('https://')) : false;
-
-                  const itemClasses = `flex-shrink-0 flex items-center justify-center space-x-3 text-slate-900 font-bold tracking-tight text-sm md:text-base transition-all duration-300 hover:scale-105 bg-white/90 backdrop-blur-sm rounded-xl px-6 py-2 shadow-sm ${
-                    destination ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''
-                  }`;
-
-                  const logoContent = logo.image_url ? (
-                    <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="h-8 md:h-12 object-contain max-w-[180px]" />
-                  ) : (
-                    <span>{logo.name}</span>
-                  );
-
-                  if (destination) {
-                    if (isExternal) {
-                      return (
-                        <a
-                          key={`set2-${logo.name}-${index}`}
-                          href={destination}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={itemClasses}
-                        >
-                          {logoContent}
-                        </a>
-                      );
-                    }
-                    return (
-                      <Link
-                        key={`set2-${logo.name}-${index}`}
-                        to={destination}
-                        className={itemClasses}
-                      >
-                        {logoContent}
-                      </Link>
-                    );
-                  }
-
-                  return (
-                    <div
-                      key={`set2-${logo.name}-${index}`}
-                      className={itemClasses}
-                    >
-                      {logoContent}
-                    </div>
-                  );
-                })}
+              {/* Full-Width Viewport-Spanning Marquee Container */}
+              <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden py-2">
+                <BrandMarquee
+                  brands={activeMarqueeLogos}
+                  variant="landing"
+                />
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
 
         {/* Cloud Shape Divider Transition (Asymmetrical Low-to-High) */}
