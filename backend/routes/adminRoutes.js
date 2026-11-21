@@ -73,16 +73,17 @@ router.get('/brands', verifyToken, async (req, res) => {
   }
 });
 
-// PATCH /api/admin/brands/:id/toggle-status (Protected - Flips or sets is_active status)
-router.patch('/brands/:id/toggle-status', verifyToken, async (req, res) => {
+// PATCH /api/admin/brands/:id/toggle-status & /api/admin/brands/:id/toggle (Protected - Flips or sets is_active status)
+const handleAdminBrandToggle = async (req, res) => {
   const { id } = req.params;
-  const { is_active } = req.body;
+  const explicitActive = req.body.is_active !== undefined ? req.body.is_active : req.body.isActive;
   try {
     let query;
     let params;
-    if (typeof is_active === 'boolean') {
+    if (typeof explicitActive === 'boolean' || explicitActive === 'true' || explicitActive === 'false') {
+      const boolVal = explicitActive === true || explicitActive === 'true';
       query = `UPDATE brands SET is_active = $1 WHERE id = $2 RETURNING *`;
-      params = [is_active, id];
+      params = [boolVal, id];
     } else {
       query = `UPDATE brands SET is_active = NOT COALESCE(is_active, true) WHERE id = $1 RETURNING *`;
       params = [id];
@@ -93,15 +94,25 @@ router.patch('/brands/:id/toggle-status', verifyToken, async (req, res) => {
       return res.status(404).json({ success: false, message: 'Brand not found' });
     }
 
+    const newStatus = Boolean(result.rows[0].is_active);
     res.status(200).json({
       success: true,
-      message: `Brand visibility updated to ${result.rows[0].is_active ? 'Active' : 'Inactive'}.`,
-      data: result.rows[0],
+      message: `Brand visibility updated to ${newStatus ? 'Active' : 'Inactive'}.`,
+      data: {
+        ...result.rows[0],
+        is_active: newStatus,
+        isActive: newStatus,
+      },
+      is_active: newStatus,
+      isActive: newStatus,
     });
   } catch (error) {
     console.error('Error toggling brand status:', error);
     res.status(500).json({ success: false, message: error.message });
   }
-});
+};
+
+router.patch('/brands/:id/toggle-status', verifyToken, handleAdminBrandToggle);
+router.patch('/brands/:id/toggle', verifyToken, handleAdminBrandToggle);
 
 export default router; 

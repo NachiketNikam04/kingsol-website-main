@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from '../../components/Sidebar';
 import api from '../../api/api';
 import Cropper from 'react-easy-crop';
+import { Switch } from '../../components/ui/switch';
 import {
   Building2,
   CheckCircle2,
@@ -13,6 +14,8 @@ import {
   X,
   Scissors,
   Upload,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 
 interface PartnersSettings {
@@ -36,6 +39,8 @@ interface PartnerLogo {
   sort_order: number;
   route_url?: string;
   linked_brand_id?: number | null;
+  is_active?: boolean;
+  isActive?: boolean;
   linked_brand?: {
     id: number;
     name: string;
@@ -111,7 +116,9 @@ export const PartnersManager: React.FC = () => {
     sort_order: 1,
     route_url: '',
     linked_brand_id: '' as string | number,
+    is_active: true,
   });
+  const [togglingId, setTogglingId] = useState<number | null>(null);
 
   // Image Cropper Modal States
   const [cropperModalOpen, setCropperModalOpen] = useState(false);
@@ -125,7 +132,7 @@ export const PartnersManager: React.FC = () => {
     setLoading(true);
     try {
       const [res, brandRes] = await Promise.all([
-        api.get('/home/partners'),
+        api.get('/home/partners/all').catch(() => api.get('/home/partners?all=true')),
         api.get('/brands').catch(() => ({ data: { success: false, data: [] } })),
       ]);
 
@@ -248,6 +255,48 @@ export const PartnersManager: React.FC = () => {
       fetchPartnersData();
     } catch {
       setMessage({ type: 'error', text: 'Failed to save partner logo.' });
+    }
+  };
+
+  const handleToggleLogoVisibility = async (logo: PartnerLogo) => {
+    const currentActive = logo.is_active !== false && logo.isActive !== false;
+    const nextActive = !currentActive;
+
+    setTogglingId(logo.id);
+    // Optimistic UI update
+    setLogos((prev) =>
+      prev.map((item) =>
+        item.id === logo.id
+          ? { ...item, is_active: nextActive, isActive: nextActive }
+          : item
+      )
+    );
+
+    try {
+      const res = await api.patch(`/home/partners/logos/${logo.id}/toggle`, {
+        is_active: nextActive,
+      });
+      setMessage({
+        type: 'success',
+        text:
+          res.data?.message ||
+          `Partner logo '${logo.name}' is now ${nextActive ? 'visible on landing page' : 'hidden'}.`,
+      });
+    } catch (err: any) {
+      // Revert optimistic update on failure
+      setLogos((prev) =>
+        prev.map((item) =>
+          item.id === logo.id
+            ? { ...item, is_active: currentActive, isActive: currentActive }
+            : item
+        )
+      );
+      setMessage({
+        type: 'error',
+        text: err?.response?.data?.message || `Failed to update visibility for '${logo.name}'.`,
+      });
+    } finally {
+      setTogglingId(null);
     }
   };
 
@@ -377,7 +426,7 @@ export const PartnersManager: React.FC = () => {
                 <button
                   onClick={() => {
                     setEditingLogo(null);
-                    setLogoForm({ name: '', image_url: '', sort_order: logos.length + 1, route_url: '', linked_brand_id: '' });
+                    setLogoForm({ name: '', image_url: '', sort_order: logos.length + 1, route_url: '', linked_brand_id: '', is_active: true });
                     setIsLogoModalOpen(true);
                   }}
                   className="bg-white text-slate-900 border border-slate-200 rounded-full font-semibold hover:border-brand-blue hover:text-brand-blue transition-all cursor-pointer px-5 py-2.5 flex items-center gap-2 text-sm shadow-xs self-start"
@@ -396,68 +445,121 @@ export const PartnersManager: React.FC = () => {
                       <th className="px-6 py-4">Partner Name</th>
                       <th className="px-6 py-4">Logo Preview</th>
                       <th className="px-6 py-4">Linked Brand / Destination</th>
+                      <th className="px-6 py-4">Status</th>
                       <th className="px-6 py-4 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {logos.map((logo) => (
-                      <tr key={logo.id} className="hover:bg-slate-50/80 transition-colors">
-                        <td className="px-6 py-4 text-xs font-bold text-slate-500">{logo.sort_order}</td>
-                        <td className="px-6 py-4 font-bold text-slate-900">{logo.name}</td>
-                        <td className="px-6 py-4">
-                          <div className="h-10 w-24 bg-slate-50 rounded-lg p-1.5 border border-slate-200 flex items-center justify-center">
-                            <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="max-h-full max-w-full object-contain" />
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          {logo.linked_brand ? (
-                            <div className="flex flex-col gap-0.5">
-                              <span className="font-bold text-xs text-brand-green bg-emerald-50 border border-emerald-200/70 px-2.5 py-1 rounded-md inline-flex items-center gap-1.5 w-fit">
-                                <Building2 className="w-3 h-3 text-emerald-600" />
-                                {logo.linked_brand.name}
+                    {logos.map((logo) => {
+                      const isActive = logo.is_active !== false && logo.isActive !== false;
+                      const isToggling = togglingId === logo.id;
+
+                      return (
+                        <tr
+                          key={logo.id}
+                          className={`transition-colors ${
+                            isActive
+                              ? 'hover:bg-slate-50/80'
+                              : 'bg-slate-50/60 opacity-60 hover:opacity-90'
+                          }`}
+                        >
+                          <td className="px-6 py-4 text-xs font-bold text-slate-500">{logo.sort_order}</td>
+                          <td className="px-6 py-4">
+                            <span className="font-bold text-slate-900 block">{logo.name}</span>
+                            {!isActive && (
+                              <span className="text-[10px] text-slate-400 font-semibold tracking-wide uppercase">
+                                (Hidden)
                               </span>
-                              <span className="text-[10px] text-slate-400 font-mono">
-                                /brands/{logo.linked_brand.slug || logo.linked_brand.id}
-                              </span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="h-10 w-24 bg-slate-50 rounded-lg p-1.5 border border-slate-200 flex items-center justify-center">
+                              <img src={getAssetUrl(logo.image_url)} alt={logo.name} className="max-h-full max-w-full object-contain" />
                             </div>
-                          ) : logo.route_url ? (
-                            <span className="font-mono text-xs text-brand-blue bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100/60 inline-block max-w-[200px] truncate" title={logo.route_url}>
-                              {logo.route_url}
+                          </td>
+                          <td className="px-6 py-4">
+                            {logo.linked_brand ? (
+                              <div className="flex flex-col gap-0.5">
+                                <span className="font-bold text-xs text-brand-green bg-emerald-50 border border-emerald-200/70 px-2.5 py-1 rounded-md inline-flex items-center gap-1.5 w-fit">
+                                  <Building2 className="w-3 h-3 text-emerald-600" />
+                                  {logo.linked_brand.name}
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-mono">
+                                  /brands/{logo.linked_brand.slug || logo.linked_brand.id}
+                                </span>
+                              </div>
+                            ) : logo.route_url ? (
+                              <span className="font-mono text-xs text-brand-blue bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100/60 inline-block max-w-[200px] truncate" title={logo.route_url}>
+                                {logo.route_url}
+                              </span>
+                            ) : (
+                              <span className="text-slate-400 text-xs italic">None (Unlinked)</span>
+                            )}
+                          </td>
+                          <td className="px-6 py-4">
+                            <span
+                              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                                isActive
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/80'
+                                  : 'bg-slate-100 text-slate-600 border border-slate-200'
+                              }`}
+                            >
+                              {isActive ? (
+                                <>
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                  <Eye className="w-3 h-3 text-emerald-600" />
+                                  Active
+                                </>
+                              ) : (
+                                <>
+                                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                                  <EyeOff className="w-3 h-3 text-slate-500" />
+                                  Hidden
+                                </>
+                              )}
                             </span>
-                          ) : (
-                            <span className="text-slate-400 text-xs italic">None (Unlinked)</span>
-                          )}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <button
-                              onClick={() => {
-                                setEditingLogo(logo);
-                                setLogoForm({
-                                  name: logo.name,
-                                  image_url: logo.image_url,
-                                  sort_order: logo.sort_order,
-                                  route_url: logo.route_url || '',
-                                  linked_brand_id: logo.linked_brand_id ? logo.linked_brand_id.toString() : '',
-                                });
-                                setIsLogoModalOpen(true);
-                              }}
-                              className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors cursor-pointer"
-                              title="Edit Logo"
-                            >
-                              <Edit className="w-4 h-4 text-brand-blue" />
-                            </button>
-                            <button
-                              onClick={() => handleLogoDelete(logo.id, logo.name)}
-                              className="p-2 rounded-lg bg-slate-50 hover:bg-red-50 border border-slate-200 text-slate-400 hover:text-red-600 transition-colors cursor-pointer"
-                              title="Delete Logo"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <div className="flex items-center justify-end gap-2.5">
+                              <div className="flex items-center" title={isActive ? 'Click to hide from landing page' : 'Click to show on landing page'}>
+                                <Switch
+                                  id={`toggle-logo-${logo.id}`}
+                                  checked={isActive}
+                                  disabled={isToggling}
+                                  onCheckedChange={() => handleToggleLogoVisibility(logo)}
+                                  className="data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-slate-300 shrink-0"
+                                />
+                              </div>
+                              <button
+                                onClick={() => {
+                                  setEditingLogo(logo);
+                                  setLogoForm({
+                                    name: logo.name,
+                                    image_url: logo.image_url,
+                                    sort_order: logo.sort_order,
+                                    route_url: logo.route_url || '',
+                                    linked_brand_id: logo.linked_brand_id ? logo.linked_brand_id.toString() : '',
+                                    is_active: isActive,
+                                  });
+                                  setIsLogoModalOpen(true);
+                                }}
+                                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 transition-colors cursor-pointer"
+                                title="Edit Logo"
+                              >
+                                <Edit className="w-4 h-4 text-brand-blue" />
+                              </button>
+                              <button
+                                onClick={() => handleLogoDelete(logo.id, logo.name)}
+                                className="p-2 rounded-lg bg-slate-50 hover:bg-red-50 border border-slate-200 text-slate-400 hover:text-red-600 transition-colors cursor-pointer"
+                                title="Delete Logo"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -585,6 +687,23 @@ export const PartnersManager: React.FC = () => {
                     value={logoForm.sort_order}
                     onChange={(e) => setLogoForm({ ...logoForm, sort_order: parseInt(e.target.value) || 0 })}
                     className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm outline-none"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex flex-col pr-4">
+                    <span className="text-xs font-bold text-slate-800">Landing Page Visibility</span>
+                    <span className="text-[11px] text-slate-500">
+                      {logoForm.is_active
+                        ? 'Active — visible to visitors in the "Who We Trust" section.'
+                        : 'Hidden — preserved in admin panel, hidden on landing page.'}
+                    </span>
+                  </div>
+                  <Switch
+                    id="modal-logo-active-switch"
+                    checked={logoForm.is_active}
+                    onCheckedChange={(checked) => setLogoForm((prev) => ({ ...prev, is_active: checked }))}
+                    className="data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-slate-300 shrink-0"
                   />
                 </div>
 

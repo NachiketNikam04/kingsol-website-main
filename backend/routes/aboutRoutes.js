@@ -143,6 +143,7 @@ router.get('/who-we-are', async (req, res) => {
         FROM home_partners_logos l
         LEFT JOIN brands b ON l.linked_brand_id = b.id
         LEFT JOIN categories c ON b.category_id = c.id
+        WHERE COALESCE(l.is_active, true) = true
         ORDER BY l.sort_order ASC, l.id ASC
       `);
       logosRows = logosResult.rows || [];

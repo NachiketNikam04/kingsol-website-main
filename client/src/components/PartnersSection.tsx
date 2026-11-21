@@ -16,6 +16,8 @@ interface PartnerLogo {
   sort_order?: number;
   route_url?: string;
   linked_brand_id?: number | null;
+  is_active?: boolean;
+  isActive?: boolean;
   linked_brand?: {
     id: number;
     name: string;
@@ -80,7 +82,11 @@ export const PartnersSection: React.FC = () => {
   const currentHeadline = partnersData?.settings?.headline || 'Integrated seamlessly with Trusted industry partners';
   const currentHighlightWord = partnersData?.settings?.highlight_word || 'Trusted';
 
-  const activeLogos = partnersData?.logos && partnersData.logos.length > 0 ? partnersData.logos : defaultLogos;
+  const activeLogos = partnersData
+    ? (partnersData.logos || []).filter(
+        (logo) => logo.is_active !== false && logo.isActive !== false
+      )
+    : defaultLogos;
 
   // Case-Insensitive Headline Splitting Helper
   const renderDynamicHeadline = (headline: string, highlightWord: string) => {
@@ -99,6 +105,10 @@ export const PartnersSection: React.FC = () => {
       )
     );
   };
+
+  if (partnersData && activeLogos.length === 0) {
+    return null;
+  }
 
   return (
     <motion.section

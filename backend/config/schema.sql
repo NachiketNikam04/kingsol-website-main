@@ -415,8 +415,11 @@ CREATE TABLE IF NOT EXISTS home_partners_logos (
   sort_order INT DEFAULT 0,
   route_url TEXT DEFAULT '',
   linked_brand_id INTEGER REFERENCES brands(id) ON DELETE SET NULL,
+  is_active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE home_partners_logos ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;
 
 -- 20. Site Settings / Feature Flags Table
 CREATE TABLE IF NOT EXISTS site_settings (

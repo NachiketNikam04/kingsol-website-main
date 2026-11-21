@@ -431,12 +431,13 @@ router.delete('/about/stats/:id', verifyToken, async (req, res) => {
    PARTNERS SECTION ROUTES
    ========================================================================== */
 
-// Helper to ensure route_url and linked_brand_id columns exist in home_partners_logos
+// Helper to ensure route_url, linked_brand_id, and is_active columns exist in home_partners_logos
 const ensurePartnerLogosColumns = async () => {
   try {
     await pool.query(`
       ALTER TABLE home_partners_logos ADD COLUMN IF NOT EXISTS route_url TEXT DEFAULT '';
       ALTER TABLE home_partners_logos ADD COLUMN IF NOT EXISTS linked_brand_id INTEGER REFERENCES brands(id) ON DELETE SET NULL;
+      ALTER TABLE home_partners_logos ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;
     `);
   } catch (err) {
     console.error('Error ensuring columns in home_partners_logos:', err);
@@ -444,8 +445,64 @@ const ensurePartnerLogosColumns = async () => {
 };
 ensurePartnerLogosColumns();
 
-// GET /api/home/partners (Public - Returns home_partners_settings and home_partners_logos with joined brand info)
+// GET /api/home/partners (Public - Returns active home_partners_logos with joined brand info for landing page)
 router.get('/partners', async (req, res) => {
+  try {
+    await ensurePartnerLogosColumns();
+    const settingsResult = await pool.query(`SELECT * FROM home_partners_settings WHERE id = 1`);
+    
+    // Public landing page defaults to active items only; admin can pass ?all=true
+    const showAll = req.query.all === 'true' || req.query.include_inactive === 'true';
+    const whereClause = showAll ? '' : 'WHERE COALESCE(l.is_active, true) = true';
+
+    const logosResult = await pool.query(`
+      SELECT 
+        l.id,
+        l.name,
+        l.image_url,
+        l.sort_order,
+        l.route_url,
+        l.linked_brand_id,
+        COALESCE(l.is_active, true) AS is_active,
+        COALESCE(l.is_active, true) AS "isActive",
+        CASE 
+          WHEN b.id IS NOT NULL THEN json_build_object(
+            'id', b.id,
+            'name', b.name,
+            'slug', b.slug,
+            'category_id', b.category_id,
+            'category_slug', c.slug
+          )
+          ELSE NULL 
+        END AS linked_brand
+      FROM home_partners_logos l
+      LEFT JOIN brands b ON l.linked_brand_id = b.id
+      LEFT JOIN categories c ON b.category_id = c.id
+      ${whereClause}
+      ORDER BY l.sort_order ASC, l.id ASC
+    `);
+
+    const defaultPartnersSettings = {
+      tagline: 'WHO WE TRUST',
+      headline: 'Integrated seamlessly with Trusted industry partners',
+      highlight_word: 'Trusted',
+    };
+
+    res.status(200).json({
+      success: true,
+      data: {
+        settings: settingsResult.rows[0] || defaultPartnersSettings,
+        logos: logosResult.rows || [],
+      },
+    });
+  } catch (error) {
+    console.error('Error fetching partners section data:', error);
+    res.status(500).json({ success: false, message: 'Failed to load partners section configuration.' });
+  }
+});
+
+// GET /api/home/partners/all (Protected - Fetch all partner logos including hidden ones for admin panel)
+router.get('/partners/all', verifyToken, async (req, res) => {
   try {
     await ensurePartnerLogosColumns();
     const settingsResult = await pool.query(`SELECT * FROM home_partners_settings WHERE id = 1`);
@@ -457,6 +514,8 @@ router.get('/partners', async (req, res) => {
         l.sort_order,
         l.route_url,
         l.linked_brand_id,
+        COALESCE(l.is_active, true) AS is_active,
+        COALESCE(l.is_active, true) AS "isActive",
         CASE 
           WHEN b.id IS NOT NULL THEN json_build_object(
             'id', b.id,
@@ -487,7 +546,7 @@ router.get('/partners', async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Error fetching partners section data:', error);
+    console.error('Error fetching admin partners data:', error);
     res.status(500).json({ success: false, message: 'Failed to load partners section configuration.' });
   }
 });
@@ -526,21 +585,23 @@ router.put('/partners', verifyToken, async (req, res) => {
 
 // POST /api/home/partners/logos (Protected - Add New Partner Logo)
 router.post('/partners/logos', verifyToken, async (req, res) => {
-  const { name, image_url, sort_order, route_url, linked_brand_id } = req.body;
+  const { name, image_url, sort_order, route_url, linked_brand_id, is_active, isActive } = req.body;
 
   if (!name || !image_url) {
     return res.status(400).json({ success: false, message: 'Partner name and logo image URL are required.' });
   }
 
   const brandId = linked_brand_id ? parseInt(linked_brand_id, 10) : null;
+  const explicitActive = is_active !== undefined ? is_active : isActive;
+  const activeVal = explicitActive !== undefined ? (explicitActive === true || explicitActive === 'true') : true;
 
   try {
     await ensurePartnerLogosColumns();
     const insertResult = await pool.query(
-      `INSERT INTO home_partners_logos (name, image_url, sort_order, route_url, linked_brand_id)
-       VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO home_partners_logos (name, image_url, sort_order, route_url, linked_brand_id, is_active)
+       VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING id`,
-      [name, image_url, sort_order || 0, route_url || '', brandId]
+      [name, image_url, sort_order || 0, route_url || '', brandId, activeVal]
     );
 
     const newId = insertResult.rows[0].id;
@@ -552,6 +613,8 @@ router.post('/partners/logos', verifyToken, async (req, res) => {
         l.sort_order,
         l.route_url,
         l.linked_brand_id,
+        COALESCE(l.is_active, true) AS is_active,
+        COALESCE(l.is_active, true) AS "isActive",
         CASE 
           WHEN b.id IS NOT NULL THEN json_build_object(
             'id', b.id,
@@ -583,19 +646,32 @@ router.post('/partners/logos', verifyToken, async (req, res) => {
 // PUT /api/home/partners/logos/:id (Protected - Update Partner Logo)
 router.put('/partners/logos/:id', verifyToken, async (req, res) => {
   const { id } = req.params;
-  const { name, image_url, sort_order, route_url, linked_brand_id } = req.body;
+  const { name, image_url, sort_order, route_url, linked_brand_id, is_active, isActive } = req.body;
 
   const brandId = linked_brand_id ? parseInt(linked_brand_id, 10) : null;
+  const explicitActive = is_active !== undefined ? is_active : isActive;
 
   try {
     await ensurePartnerLogosColumns();
-    const updateResult = await pool.query(
-      `UPDATE home_partners_logos
-       SET name = $1, image_url = $2, sort_order = $3, route_url = $4, linked_brand_id = $5
-       WHERE id = $6
-       RETURNING id`,
-      [name, image_url, sort_order || 0, route_url || '', brandId, id]
-    );
+
+    let query;
+    let params;
+    if (explicitActive !== undefined) {
+      const activeVal = explicitActive === true || explicitActive === 'true';
+      query = `UPDATE home_partners_logos
+               SET name = $1, image_url = $2, sort_order = $3, route_url = $4, linked_brand_id = $5, is_active = $6
+               WHERE id = $7
+               RETURNING id`;
+      params = [name, image_url, sort_order || 0, route_url || '', brandId, activeVal, id];
+    } else {
+      query = `UPDATE home_partners_logos
+               SET name = $1, image_url = $2, sort_order = $3, route_url = $4, linked_brand_id = $5
+               WHERE id = $6
+               RETURNING id`;
+      params = [name, image_url, sort_order || 0, route_url || '', brandId, id];
+    }
+
+    const updateResult = await pool.query(query, params);
 
     if (updateResult.rows.length === 0) {
       return res.status(404).json({ success: false, message: 'Partner logo not found.' });
@@ -609,6 +685,8 @@ router.put('/partners/logos/:id', verifyToken, async (req, res) => {
         l.sort_order,
         l.route_url,
         l.linked_brand_id,
+        COALESCE(l.is_active, true) AS is_active,
+        COALESCE(l.is_active, true) AS "isActive",
         CASE 
           WHEN b.id IS NOT NULL THEN json_build_object(
             'id', b.id,
@@ -636,6 +714,80 @@ router.put('/partners/logos/:id', verifyToken, async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to update partner logo.' });
   }
 });
+
+// PATCH /api/home/partners/logos/:id/toggle (Protected - Toggle partner logo visibility)
+const handleTogglePartnerLogo = async (req, res) => {
+  const { id } = req.params;
+  const { is_active, isActive } = req.body;
+
+  try {
+    await ensurePartnerLogosColumns();
+    const explicitActive = is_active !== undefined ? is_active : isActive;
+
+    let query;
+    let params;
+
+    if (explicitActive !== undefined) {
+      const boolVal = explicitActive === true || explicitActive === 'true';
+      query = `UPDATE home_partners_logos SET is_active = $1 WHERE id = $2 RETURNING *`;
+      params = [boolVal, id];
+    } else {
+      query = `UPDATE home_partners_logos SET is_active = NOT COALESCE(is_active, true) WHERE id = $1 RETURNING *`;
+      params = [id];
+    }
+
+    const updateRes = await pool.query(query, params);
+    if (updateRes.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Partner logo not found.' });
+    }
+
+    const updatedLogo = updateRes.rows[0];
+    const newActiveState = Boolean(updatedLogo.is_active);
+
+    // Fetch full joined record
+    const result = await pool.query(
+      `SELECT 
+        l.id,
+        l.name,
+        l.image_url,
+        l.sort_order,
+        l.route_url,
+        l.linked_brand_id,
+        COALESCE(l.is_active, true) AS is_active,
+        COALESCE(l.is_active, true) AS "isActive",
+        CASE 
+          WHEN b.id IS NOT NULL THEN json_build_object(
+            'id', b.id,
+            'name', b.name,
+            'slug', b.slug,
+            'category_id', b.category_id,
+            'category_slug', c.slug
+          )
+          ELSE NULL 
+        END AS linked_brand
+      FROM home_partners_logos l
+      LEFT JOIN brands b ON l.linked_brand_id = b.id
+      LEFT JOIN categories c ON b.category_id = c.id
+      WHERE l.id = $1`,
+      [id]
+    );
+
+    res.status(200).json({
+      success: true,
+      message: `Partner logo '${updatedLogo.name}' is now ${newActiveState ? 'active (visible on landing page)' : 'hidden (inactive)'}.`,
+      data: result.rows[0] || updatedLogo,
+      is_active: newActiveState,
+      isActive: newActiveState,
+    });
+  } catch (error) {
+    console.error('Error toggling partner logo visibility:', error);
+    res.status(500).json({ success: false, message: 'Failed to update partner logo visibility.' });
+  }
+};
+
+router.patch('/partners/logos/:id/toggle', verifyToken, handleTogglePartnerLogo);
+router.patch('/partners/logos/:id/toggle-status', verifyToken, handleTogglePartnerLogo);
+router.patch('/partners/logos/:id/visibility', verifyToken, handleTogglePartnerLogo);
 
 // DELETE /api/home/partners/logos/:id (Protected - Delete Partner Logo)
 router.delete('/partners/logos/:id', verifyToken, async (req, res) => {
